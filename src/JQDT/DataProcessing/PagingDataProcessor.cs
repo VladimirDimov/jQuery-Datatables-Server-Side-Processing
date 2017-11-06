@@ -3,11 +3,9 @@
     using JQDT.Models;
     using System.Linq;
 
-    internal class PagingDataProcessor : IDataProcess
+    internal class PagingDataProcessor : DataProcessBase
     {
-        public IQueryable<object> ProcessedData { get; set; }
-
-        public IQueryable<object> ProcessData(IQueryable<object> data, RequestInfoModel requestInfoModel)
+        public override IQueryable<object> OnProcessData(IQueryable<object> data, RequestInfoModel requestInfoModel)
         {
             var pagedData = data
                 .Skip(requestInfoModel.TableParameters.start)

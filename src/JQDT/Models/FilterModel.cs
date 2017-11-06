@@ -1,9 +1,9 @@
 ﻿namespace JQDT.Models
 {
-    public class RangeModel
+    public class FilterModel
     {
         public string Value { get; set; }
 
-        public RangeTypes Type { get; set; }
+        public FilterTypes Type { get; set; }
     }
 }

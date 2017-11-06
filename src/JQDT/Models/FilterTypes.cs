@@ -1,6 +1,6 @@
 ﻿namespace JQDT.Models
 {
-    public enum RangeTypes
+    public enum FilterTypes
     {
         gte = 0,
         gt = 1,

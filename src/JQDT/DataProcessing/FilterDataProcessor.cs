@@ -6,11 +6,9 @@
     using System.Linq;
     using System.Linq.Expressions;
 
-    internal class FilterDataProcessor : IDataProcess
+    internal class FilterDataProcessor : DataProcessBase
     {
-        public IQueryable<object> ProcessedData { get; set; }
-
-        public IQueryable<object> ProcessData(IQueryable<object> data, RequestInfoModel requestInfoModel)
+        public override IQueryable<object> OnProcessData(IQueryable<object> data, RequestInfoModel requestInfoModel)
         {
             if (string.IsNullOrWhiteSpace(requestInfoModel.TableParameters.search.value))
             {

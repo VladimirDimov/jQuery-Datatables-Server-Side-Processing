@@ -67,6 +67,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataProcessing\CustomFiltersDataProcessor.cs" />
+    <Compile Include="DataProcessing\DataProcessBase.cs" />
     <Compile Include="DataProcessing\FilterDataProcessor.cs" />
     <Compile Include="DataProcessing\DataProcessChain.cs" />
     <Compile Include="DataProcessing\IDataProcess.cs" />
@@ -80,8 +82,8 @@
     <Compile Include="Models\Custom.cs" />
     <Compile Include="Models\DataTableAjaxPostModel.cs" />
     <Compile Include="Models\Order.cs" />
-    <Compile Include="Models\RangeModel.cs" />
-    <Compile Include="Models\RangeTypes.cs" />
+    <Compile Include="Models\FilterModel.cs" />
+    <Compile Include="Models\FilterTypes.cs" />
     <Compile Include="Models\RequestHelpers.cs" />
     <Compile Include="Models\RequestInfoModel.cs" />
     <Compile Include="Models\Search.cs" />

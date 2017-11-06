@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace JQDT.DataProcessing
 {
-    internal class DataProcessChain : IDataProcess, IDataProcessChain
+    internal class DataProcessChain : DataProcessBase, IDataProcessChain
     {
         private ICollection<IDataProcess> dataProcessors;
         private Dictionary<string, object> intermidiateResults;
@@ -31,8 +31,6 @@ namespace JQDT.DataProcessing
             }
         }
 
-        public IQueryable<object> ProcessedData { get; set; }
-
         public void AddDataProcessor(IDataProcess dataProcessor)
         {
             this.dataProcessors.Add(dataProcessor);
@@ -43,7 +41,7 @@ namespace JQDT.DataProcessing
             this.intermidiateResults.Add(key, value);
         }
 
-        public IQueryable<object> ProcessData(IQueryable<object> data, RequestInfoModel requestInfoModel)
+        public override IQueryable<object> OnProcessData(IQueryable<object> data, RequestInfoModel requestInfoModel)
         {
             var currentDataState = data;
 
@@ -51,10 +49,7 @@ namespace JQDT.DataProcessing
             {
                 var processedData = dataProcessor.ProcessData(currentDataState, requestInfoModel);
                 currentDataState = processedData;
-                dataProcessor.ProcessedData = processedData;
             }
-
-            this.ProcessedData = currentDataState;
 
             return currentDataState;
         }

@@ -1,6 +1,6 @@
 ﻿namespace JQDT.Models
 {
-    internal class RequestInfoModel
+    public class RequestInfoModel
     {
         public DataTableAjaxPostModel TableParameters { get; set; }
 

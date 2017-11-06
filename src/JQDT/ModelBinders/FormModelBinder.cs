@@ -53,36 +53,36 @@
         {
             var custom = new Custom
             {
-                Ranges = this.GetCustomRanges(ajaxForm)
+                Filters = this.GetCustomFilters(ajaxForm)
             };
 
             return custom;
         }
 
-        private Dictionary<string, IEnumerable<RangeModel>> GetCustomRanges(NameValueCollection ajaxForm)
+        private Dictionary<string, IEnumerable<FilterModel>> GetCustomFilters(NameValueCollection ajaxForm)
         {
-            const string pattern = @"^custom\[ranges\]\[(.+)\]\[(gte|gt|lte|lt)\]$";
-            var ranges = new Dictionary<string, IEnumerable<RangeModel>>();
+            const string pattern = @"^custom\[filters\]\[(.+)\]\[(gte|gt|lte|lt)\]$";
+            var filters = new Dictionary<string, IEnumerable<FilterModel>>();
             foreach (var key in ajaxForm.AllKeys)
             {
                 var match = Regex.Match(key, pattern);
                 if (match.Success)
                 {
 
-                    if (!ranges.ContainsKey(match.Groups[1].Value))
+                    if (!filters.ContainsKey(match.Groups[1].Value))
                     {
-                        ranges[match.Groups[1].Value] = new List<RangeModel>();
+                        filters[match.Groups[1].Value] = new List<FilterModel>();
                     }
 
-                    ((ICollection<RangeModel>)ranges[match.Groups[1].Value]).Add(new RangeModel
+                    ((ICollection<FilterModel>)filters[match.Groups[1].Value]).Add(new FilterModel
                     {
-                        Type = (RangeTypes)Enum.Parse(typeof(RangeTypes), match.Groups[2].Value),
+                        Type = (FilterTypes)Enum.Parse(typeof(FilterTypes), match.Groups[2].Value),
                         Value = ajaxForm[key]
                     });
                 }
             }
 
-            return ranges;
+            return filters;
         }
 
         private List<Column> GetColumns(NameValueCollection ajaxForm)
