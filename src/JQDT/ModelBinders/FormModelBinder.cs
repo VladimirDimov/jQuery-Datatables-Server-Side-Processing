@@ -6,6 +6,7 @@
     using System.Linq;
     using System.Text.RegularExpressions;
     using System.Web.Mvc;
+    using System;
 
     internal class FormModelBinder
     {
@@ -32,7 +33,8 @@
                     value = ajaxForm["search[value]"]
                 },
                 order = this.GetOrderList(ajaxForm),
-                columns = this.GetColumns(ajaxForm)
+                columns = this.GetColumns(ajaxForm),
+                Custom = this.GetCustom(ajaxForm)
             };
 
             var requestInfoModel = new RequestInfoModel
@@ -45,6 +47,42 @@
             };
 
             return requestInfoModel;
+        }
+
+        private Custom GetCustom(NameValueCollection ajaxForm)
+        {
+            var custom = new Custom
+            {
+                Ranges = this.GetCustomRanges(ajaxForm)
+            };
+
+            return custom;
+        }
+
+        private Dictionary<string, IEnumerable<RangeModel>> GetCustomRanges(NameValueCollection ajaxForm)
+        {
+            const string pattern = @"^custom\[ranges\]\[(.+)\]\[(gte|gt|lte|lt)\]$";
+            var ranges = new Dictionary<string, IEnumerable<RangeModel>>();
+            foreach (var key in ajaxForm.AllKeys)
+            {
+                var match = Regex.Match(key, pattern);
+                if (match.Success)
+                {
+
+                    if (!ranges.ContainsKey(match.Groups[1].Value))
+                    {
+                        ranges[match.Groups[1].Value] = new List<RangeModel>();
+                    }
+
+                    ((ICollection<RangeModel>)ranges[match.Groups[1].Value]).Add(new RangeModel
+                    {
+                        Type = (RangeTypes)Enum.Parse(typeof(RangeTypes), match.Groups[2].Value),
+                        Value = ajaxForm[key]
+                    });
+                }
+            }
+
+            return ranges;
         }
 
         private List<Column> GetColumns(NameValueCollection ajaxForm)

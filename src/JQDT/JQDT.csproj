@@ -77,8 +77,11 @@
     <Compile Include="ModelBinders\FormModelBinder.cs" />
     <Compile Include="JQDataTableAttribute.cs" />
     <Compile Include="Models\Column.cs" />
+    <Compile Include="Models\Custom.cs" />
     <Compile Include="Models\DataTableAjaxPostModel.cs" />
     <Compile Include="Models\Order.cs" />
+    <Compile Include="Models\RangeModel.cs" />
+    <Compile Include="Models\RangeTypes.cs" />
     <Compile Include="Models\RequestHelpers.cs" />
     <Compile Include="Models\RequestInfoModel.cs" />
     <Compile Include="Models\Search.cs" />

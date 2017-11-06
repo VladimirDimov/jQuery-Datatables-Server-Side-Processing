@@ -16,5 +16,7 @@
         public Search search { get; set; }
 
         public List<Order> order { get; set; }
+
+        public Custom Custom { get; set; }
     }
 }

@@ -13,12 +13,17 @@ namespace WebApplication1.Controllers
 
         public ActionResult Index()
         {
-            return this.SimpleExample();
+            return this.RedirectToAction(nameof(this.SimpleExample));
         }
 
         public ActionResult SimpleExample()
         {
-            return this.View(nameof(HomeController.SimpleExample));
+            return this.View();
+        }
+
+        public ActionResult RangeExample()
+        {
+            return this.View();
         }
 
         [JQDataTable]
