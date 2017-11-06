@@ -20,6 +20,11 @@
             {
                 foreach (var filter in columnFilters.Value)
                 {
+                    if (string.IsNullOrEmpty(filter.Value))
+                    {
+                        continue;
+                    }
+
                     var expressionPredicate = this.GetCustomFilterExpressionProdicate(columnFilters.Key, filter);
                     processedData = processedData.Where(expressionPredicate);
                 }
@@ -69,11 +74,11 @@
                     break;
 
                 case FilterTypes.lt:
-                    rangeExpr = Expression.LessThanOrEqual(propertyExpr, parseExpr);
+                    rangeExpr = Expression.LessThan(propertyExpr, parseExpr);
                     break;
 
                 case FilterTypes.lte:
-                    rangeExpr = Expression.LessThan(propertyExpr, parseExpr);
+                    rangeExpr = Expression.LessThanOrEqual(propertyExpr, parseExpr);
                     break;
 
                 default:

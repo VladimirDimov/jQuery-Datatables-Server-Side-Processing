@@ -1,4 +1,8 @@
 ﻿<table id="SearchResultTable" class="display" cellspacing="0" width="100%">
+    <div>
+        Min Age: <input type="type" id="minAge" value="30" />
+        Max Age: <input type="type" id="maxAge" value="40" />
+    </div>
     <thead>
         <tr>
             <th>Id</th>
@@ -30,7 +34,7 @@
                 "data": function (d) {
                     d.custom = {
                         "filters": {
-                            "Age": { "gte": 30, "lte": 40 },
+                            "Age": { "gte": $('#minAge').val(), "lte": $('#maxAge').val() },
                         }
                     }
                 }
@@ -57,6 +61,10 @@
                },
                { "visible": true, "targets": [4] }
            ]
+        });
+
+        $('#minAge, #maxAge').on('change', function () {
+            table.ajax.reload();
         });
     </script>
 }
