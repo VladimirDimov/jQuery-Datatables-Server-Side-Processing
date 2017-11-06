@@ -35,7 +35,7 @@
             return
                 ((IDataProcessChain)dataProcessChain)
                     .DataProcessors
-                    .First(p => p.GetType() == typeof(FilterDataProcessor))
+                    .First(p => p.GetType() == typeof(CustomFiltersDataProcessor))
                     .ProcessedData.Count();
         }
 
@@ -43,6 +43,7 @@
         {
             var dataProcessChain = new DataProcessChain();
             dataProcessChain.AddDataProcessor(new FilterDataProcessor());
+            dataProcessChain.AddDataProcessor(new CustomFiltersDataProcessor());
             dataProcessChain.AddDataProcessor(new OrderDataProcessor());
             dataProcessChain.AddDataProcessor(new PagingDataProcessor());
 
