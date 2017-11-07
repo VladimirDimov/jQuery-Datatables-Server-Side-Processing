@@ -1,7 +1,9 @@
 ﻿<table id="SearchResultTable" class="display" cellspacing="0" width="100%">
     <div>
-        Min Age: <input type="type" id="minAge" value="30" />
-        Max Age: <input type="type" id="maxAge" value="40" />
+        Min Age: <input type="type" id="minAge" value="30" class="reload-table"/>
+        Max Age: <input type="type" id="maxAge" value="40" class="reload-table"/>
+        Min Srarting Date: <input type="type" id="minStartDate" value="" class="reload-table"/>
+        Max Srarting Date: <input type="type" id="maxStartDate" value="" class="reload-table"/>
     </div>
     <thead>
         <tr>
@@ -35,6 +37,7 @@
                     d.custom = {
                         "filters": {
                             "Age": { "gte": $('#minAge').val(), "lte": $('#maxAge').val() },
+                            "StartingDate": { "gte": formatDate($('#minStartDate').val()), "lte": formatDate($('#maxStartDate').val()) },
                         }
                     }
                 }
@@ -63,7 +66,13 @@
            ]
         });
 
-        $('#minAge, #maxAge').on('change', function () {
+        function formatDate(d) {
+            if (d === '') return '';
+
+            return new Date(d).toISOString();
+        }
+
+        $('.reload-table').on('change', function () {
             table.ajax.reload();
         });
     </script>

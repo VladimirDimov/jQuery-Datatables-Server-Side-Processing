@@ -11,6 +11,22 @@
     {
         public override void OnActionExecuted(ActionExecutedContext filterContext)
         {
+            try
+            {
+                this.Execute(filterContext);
+            }
+            catch (Exception ex)
+            {
+                filterContext.HttpContext.Response.StatusCode = 500;
+                filterContext.Result = this.FormatResult(new
+                {
+                    error = ex.Message
+                });
+            }
+        }
+
+        private void Execute(ActionExecutedContext filterContext)
+        {
             IQueryable<object> data = (IQueryable<object>)filterContext.Controller.ViewData.Model;
 
             var modelBinder = new FormModelBinder();

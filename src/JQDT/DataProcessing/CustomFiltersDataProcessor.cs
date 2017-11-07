@@ -85,7 +85,15 @@
                     throw new NotImplementedException();
             }
 
-            return (Expression<Func<object, bool>>)Expression.Lambda(rangeExpr, xExpr);
+            var tryBlock = Expression.Block(typeof(Boolean), rangeExpr);
+            var throwExpr = Expression.Throw(
+            Expression.Constant(
+                new FormatException($"Unable to parse value for property \"{key}\"")),
+            typeof(Boolean));
+            var catchBlock = Expression.Catch(typeof(FormatException), throwExpr);
+            var tryCatchExpr = Expression.TryCatch(tryBlock, catchBlock);
+
+            return (Expression<Func<object, bool>>)Expression.Lambda(tryCatchExpr, xExpr);
         }
     }
 }
