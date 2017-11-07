@@ -1,9 +1,24 @@
 ﻿namespace JQDT.Models
 {
+    /// <summary>
+    /// Order default model
+    /// </summary>
     public class Order
     {
-        public int column { get; set; }
+        /// <summary>
+        /// Gets or sets the column.
+        /// </summary>
+        /// <value>
+        /// The column.
+        /// </value>
+        public int Column { get; set; }
 
-        public string dir { get; set; }
+        /// <summary>
+        /// Gets or sets the dir.
+        /// </summary>
+        /// <value>
+        /// The dir.
+        /// </value>
+        public string Dir { get; set; }
     }
 }

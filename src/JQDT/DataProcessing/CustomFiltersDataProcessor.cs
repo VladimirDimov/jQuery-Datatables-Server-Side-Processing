@@ -1,15 +1,26 @@
 ﻿namespace JQDT.DataProcessing
 {
-    using JQDT.Models;
     using System;
     using System.Linq;
-    using System.Collections.Generic;
     using System.Linq.Expressions;
+    using JQDT.Models;
 
+    /// <summary>
+    /// Filters the data using the custom filters.
+    /// </summary>
+    /// <seealso cref="JQDT.DataProcessing.DataProcessBase" />
     internal class CustomFiltersDataProcessor : DataProcessBase
     {
         private RequestInfoModel requestInfoModel;
 
+        /// <summary>
+        /// Called when [process data].
+        /// </summary>
+        /// <param name="data">The data.</param>
+        /// <param name="requestInfoModel">The request information model.</param>
+        /// <returns>
+        ///   <see cref="IQueryable{object}" />
+        /// </returns>
         public override IQueryable<object> OnProcessData(IQueryable<object> data, RequestInfoModel requestInfoModel)
         {
             this.requestInfoModel = requestInfoModel;
@@ -42,6 +53,7 @@
                 case FilterTypes.lt:
                 case FilterTypes.lte:
                     return this.GetRangeExpression(key, filter, filter.Type);
+
                 default:
                     throw new NotImplementedException();
             }
@@ -50,12 +62,15 @@
         private Expression<Func<object, bool>> GetRangeExpression(string key, FilterModel filter, FilterTypes filterType)
         {
             // x
-            var propertyType = requestInfoModel.Helpers.ModelType.GetProperty(key).PropertyType;
+            var propertyType = this.requestInfoModel.Helpers.ModelType.GetProperty(key).PropertyType;
             var xExpr = Expression.Parameter(typeof(object), "x");
+            
             // (Type)x
             var castedXExpr = Expression.Convert(xExpr, this.requestInfoModel.Helpers.ModelType);
+            
             // ((Type)x).Property
             var propertyExpr = Expression.Property(castedXExpr, key);
+            
             // Type.Parse(value)
             var valueExpr = Expression.Constant(filter.Value);
             var gteMethodInfo = propertyType.GetMethods().First(x => x.Name == "Parse");
@@ -65,7 +80,7 @@
             switch (filter.Type)
             {
                 case FilterTypes.gte:
-                    // x >= (Type)value 
+                    // x >= (Type)value
                     rangeExpr = Expression.GreaterThanOrEqual(propertyExpr, parseExpr);
                     break;
 
@@ -85,11 +100,11 @@
                     throw new NotImplementedException();
             }
 
-            var tryBlock = Expression.Block(typeof(Boolean), rangeExpr);
+            var tryBlock = Expression.Block(typeof(bool), rangeExpr);
             var throwExpr = Expression.Throw(
             Expression.Constant(
                 new FormatException($"Unable to parse value for property \"{key}\". Value: {filter.Value}")),
-            typeof(Boolean));
+            typeof(bool));
             var catchBlock = Expression.Catch(typeof(FormatException), throwExpr);
             var tryCatchExpr = Expression.TryCatch(tryBlock, catchBlock);
 

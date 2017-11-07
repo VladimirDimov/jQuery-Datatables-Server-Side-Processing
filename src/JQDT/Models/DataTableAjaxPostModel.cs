@@ -2,21 +2,65 @@
 {
     using System.Collections.Generic;
 
+    /// <summary>
+    /// Default data table ajax model containing all default parameters.
+    /// </summary>
     public class DataTableAjaxPostModel
     {
-        // properties are not capital due to json mapping
-        public int draw { get; set; }
+        /// <summary>
+        /// Gets or sets the draw.
+        /// </summary>
+        /// <value>
+        /// The draw.
+        /// </value>
+        public int Draw { get; set; }
 
-        public int start { get; set; }
+        /// <summary>
+        /// Gets or sets the start.
+        /// </summary>
+        /// <value>
+        /// The start.
+        /// </value>
+        public int Start { get; set; }
 
-        public int length { get; set; }
+        /// <summary>
+        /// Gets or sets the length.
+        /// </summary>
+        /// <value>
+        /// The length.
+        /// </value>
+        public int Length { get; set; }
 
-        public List<Column> columns { get; set; }
+        /// <summary>
+        /// Gets or sets the columns.
+        /// </summary>
+        /// <value>
+        /// The columns.
+        /// </value>
+        public List<Column> Columns { get; set; }
 
-        public Search search { get; set; }
+        /// <summary>
+        /// Gets or sets the search.
+        /// </summary>
+        /// <value>
+        /// The search.
+        /// </value>
+        public Search Search { get; set; }
 
-        public List<Order> order { get; set; }
+        /// <summary>
+        /// Gets or sets the order.
+        /// </summary>
+        /// <value>
+        /// The order.
+        /// </value>
+        public List<Order> Order { get; set; }
 
+        /// <summary>
+        /// Gets or sets the custom.
+        /// </summary>
+        /// <value>
+        /// The custom.
+        /// </value>
         public Custom Custom { get; set; }
     }
 }

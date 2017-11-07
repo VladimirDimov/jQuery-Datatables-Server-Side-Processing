@@ -1,15 +1,23 @@
 ﻿namespace JQDT.ModelBinders
 {
-    using JQDT.Models;
+    using System;
     using System.Collections.Generic;
     using System.Collections.Specialized;
     using System.Linq;
     using System.Text.RegularExpressions;
     using System.Web.Mvc;
-    using System;
+    using JQDT.Models;
 
+    /// <summary>
+    /// Model binder for the ajax form.
+    /// </summary>
     internal class FormModelBinder
     {
+        /// <summary>
+        /// Binds the model to the ajax form content.
+        /// </summary>
+        /// <param name="filterContext">The filter context.</param>
+        /// <returns><see cref="RequestInfoModel"/></returns>
         public RequestInfoModel BindModel(ActionExecutedContext filterContext)
         {
             var controllerContext = filterContext.Controller.ControllerContext;
@@ -26,14 +34,14 @@
 
             var datatableModel = new DataTableAjaxPostModel
             {
-                start = start,
-                length = length,
-                search = new Search
+                Start = start,
+                Length = length,
+                Search = new Search
                 {
-                    value = ajaxForm["search[value]"]
+                    Value = ajaxForm["search[value]"]
                 },
-                order = this.GetOrderList(ajaxForm),
-                columns = this.GetColumns(ajaxForm),
+                Order = this.GetOrderList(ajaxForm),
+                Columns = this.GetColumns(ajaxForm),
                 Custom = this.GetCustom(ajaxForm)
             };
 
@@ -61,14 +69,13 @@
 
         private Dictionary<string, IEnumerable<FilterModel>> GetCustomFilters(NameValueCollection ajaxForm)
         {
-            const string pattern = @"^custom\[filters\]\[(.+)\]\[(gte|gt|lte|lt)\]$";
+            const string PATTERN = @"^custom\[filters\]\[(.+)\]\[(gte|gt|lte|lt)\]$";
             var filters = new Dictionary<string, IEnumerable<FilterModel>>();
             foreach (var key in ajaxForm.AllKeys)
             {
-                var match = Regex.Match(key, pattern);
+                var match = Regex.Match(key, PATTERN);
                 if (match.Success)
                 {
-
                     if (!filters.ContainsKey(match.Groups[1].Value))
                     {
                         filters[match.Groups[1].Value] = new List<FilterModel>();
@@ -104,7 +111,7 @@
             {
                 columns.Add(new Column
                 {
-                    data = item.Value
+                    Data = item.Value
                 });
             }
 
@@ -126,8 +133,8 @@
 
                     orders.Add(new Order
                     {
-                        column = int.Parse(form[columnKey]),
-                        dir = form[key]
+                        Column = int.Parse(form[columnKey]),
+                        Dir = form[key]
                     });
                 }
             }

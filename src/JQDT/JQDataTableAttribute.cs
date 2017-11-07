@@ -1,14 +1,22 @@
 ﻿namespace JQDT
 {
-    using JQDT.DataProcessing;
-    using JQDT.ModelBinders;
     using System;
     using System.Linq;
     using System.Web.Mvc;
+    using JQDT.DataProcessing;
+    using JQDT.ModelBinders;
 
+    /// <summary>
+    /// Used to decorate the action that returns data table response.
+    /// </summary>
+    /// <seealso cref="System.Web.Mvc.ActionFilterAttribute" />
     [AttributeUsage(validOn: AttributeTargets.Method, AllowMultiple = false)]
     public class JQDataTableAttribute : ActionFilterAttribute
     {
+        /// <summary>
+        /// Called by the ASP.NET MVC framework after the action method executes.
+        /// </summary>
+        /// <param name="filterContext">The filter context.</param>
         public override void OnActionExecuted(ActionExecutedContext filterContext)
         {
             try
@@ -37,7 +45,7 @@
 
             filterContext.Result = this.FormatResult(new
             {
-                draw = requestModel.TableParameters.draw,
+                draw = requestModel.TableParameters.Draw,
                 recordsTotal = data.Count(),
                 recordsFiltered = this.GetRecordsFiltered(dataProcessChain),
                 data = processedData.ToList()
@@ -60,7 +68,7 @@
             var dataProcessChain = new DataProcessChain();
             dataProcessChain.AddDataProcessor(new FilterDataProcessor());
             dataProcessChain.AddDataProcessor(new CustomFiltersDataProcessor());
-            dataProcessChain.AddDataProcessor(new OrderDataProcessor());
+            dataProcessChain.AddDataProcessor(new SortDataProcessor());
             dataProcessChain.AddDataProcessor(new PagingDataProcessor());
 
             return dataProcessChain;

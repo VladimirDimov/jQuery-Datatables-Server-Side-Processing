@@ -38,6 +38,9 @@
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
     </Reference>
+    <Reference Include="StyleCop, Version=5.0.0.0, Culture=neutral, PublicKeyToken=f904653c63bc2738, processorArchitecture=MSIL">
+      <HintPath>..\packages\StyleCop.5.0.0\lib\net40\StyleCop.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
@@ -70,10 +73,12 @@
     <Compile Include="DataProcessing\CustomFiltersDataProcessor.cs" />
     <Compile Include="DataProcessing\DataProcessBase.cs" />
     <Compile Include="DataProcessing\FilterDataProcessor.cs" />
-    <Compile Include="DataProcessing\DataProcessChain.cs" />
+    <Compile Include="DataProcessing\DataProcessChain.cs">
+      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
+    </Compile>
     <Compile Include="DataProcessing\IDataProcess.cs" />
     <Compile Include="DataProcessing\IDataProcessChain.cs" />
-    <Compile Include="DataProcessing\OrderDataProcessor.cs" />
+    <Compile Include="DataProcessing\SortDataProcessor.cs" />
     <Compile Include="DataProcessing\PagingDataProcessor.cs" />
     <Compile Include="GlobalConstants.cs" />
     <Compile Include="ModelBinders\FormModelBinder.cs" />
