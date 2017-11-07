@@ -1,9 +1,7 @@
 ﻿<table id="SearchResultTable" class="display" cellspacing="0" width="100%">
     <div>
-        Min Age: <input type="type" id="minAge" value="30" class="reload-table"/>
-        Max Age: <input type="type" id="maxAge" value="40" class="reload-table"/>
-        Min Srarting Date: <input type="type" id="minStartDate" value="" class="reload-table"/>
-        Max Srarting Date: <input type="type" id="maxStartDate" value="" class="reload-table"/>
+        <div>Age: from <input type="type" id="minAge" value="30" class="reload-table" /> to <input type="type" id="maxAge" value="40" class="reload-table" /></div>
+        <div>Srarting Date: from <input type="type" id="minStartDate" value="" class="reload-table" /> to <input type="type" id="maxStartDate" value="" class="reload-table" /></div>
     </div>
     <thead>
         <tr>
@@ -63,7 +61,8 @@
                    "targets": 4
                },
                { "visible": true, "targets": [4] }
-           ]
+           ],
+           searchDelay: 1000
         });
 
         function formatDate(d) {

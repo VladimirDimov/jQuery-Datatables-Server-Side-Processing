@@ -88,7 +88,7 @@
             var tryBlock = Expression.Block(typeof(Boolean), rangeExpr);
             var throwExpr = Expression.Throw(
             Expression.Constant(
-                new FormatException($"Unable to parse value for property \"{key}\"")),
+                new FormatException($"Unable to parse value for property \"{key}\". Value: {filter.Value}")),
             typeof(Boolean));
             var catchBlock = Expression.Catch(typeof(FormatException), throwExpr);
             var tryCatchExpr = Expression.TryCatch(tryBlock, catchBlock);

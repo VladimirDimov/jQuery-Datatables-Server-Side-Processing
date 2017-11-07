@@ -17,7 +17,15 @@
             {
                 var colName = requestInfoModel.TableParameters.columns[orderColumn.column].data;
                 var isAsc = orderColumn.dir == "asc";
-                var propType = modelType.GetProperty(colName).PropertyType;
+
+                // TODO: Extract to GetPropertyType method
+                var propInfo = modelType.GetProperties().FirstOrDefault(p => p.Name == colName);
+                if (propInfo == null)
+                {
+                    throw new ArgumentException($"Invalid property name. The property {colName} does not exist in the model.");
+                }
+
+                var propType = propInfo.PropertyType;
 
                 var lambdaExpr = OrderByExpression(propType, isAsc, isFirst);
                 var propertySelectExpr = GetPropertySelectExpression(modelType, colName);
