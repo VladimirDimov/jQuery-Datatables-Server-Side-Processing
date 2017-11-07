@@ -32,7 +32,7 @@
             return data;
         }
 
-        private Expression<Func<dynamic, bool>> BuildExpression(Type modelType, string search)
+        private Expression<Func<object, bool>> BuildExpression(Type modelType, string search)
         {
             // x
             var modelParamExpr = Expression.Parameter(typeof(object), "model");
@@ -49,7 +49,7 @@
 
             var lambda = Expression.Lambda(orExpr, modelParamExpr);
 
-            return (Expression<Func<dynamic, bool>>)lambda;
+            return (Expression<Func<object, bool>>)lambda;
         }
 
         private Expression GetOrExpr(List<MethodCallExpression> containExpressionCollection)
