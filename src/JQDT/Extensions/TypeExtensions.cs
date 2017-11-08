@@ -3,8 +3,12 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Linq.Expressions;
     using System.Reflection;
 
+    /// <summary>
+    /// Extension methods for <see cref="Type"/>
+    /// </summary>
     public static class TypeExptensions
     {
         /// <summary>
@@ -36,6 +40,36 @@
             }
 
             return propertyInfoPath;
+        }
+
+        /// <summary>
+        /// Gets the property select expression.
+        /// </summary>
+        /// <param name="modelType">Type of the model.</param>
+        /// <param name="propertyInfoPath">Collection of <see cref="PropertyInfo"/> describing the path from parent to target property.
+        /// </param>
+        /// <returns><see cref="LambdaExpression"/> Ex: "x => (ModelType)x.Property1.Property2"</returns>
+        public static LambdaExpression GetPropertySelectExpression(this Type modelType, IEnumerable<PropertyInfo> propertyInfoPath)
+        {
+            // x
+            ParameterExpression xExpr = Expression.Parameter(typeof(object), "x");
+
+            // (ModelType)x
+            var castExpr = Expression.Convert(xExpr, modelType);
+
+            // (ModelType)x.Property
+            MemberExpression propExpression = null;
+            foreach (var propInfo in propertyInfoPath)
+            {
+                propExpression = propExpression == null ?
+                    Expression.Property(castExpr, propInfo) :
+                    Expression.Property(propExpression, propInfo);
+            }
+
+            // x => (ModelType)x.Property
+            var lambda = Expression.Lambda(propExpression, xExpr);
+
+            return lambda;
         }
     }
 }
