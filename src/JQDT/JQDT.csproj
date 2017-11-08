@@ -70,6 +70,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Application.cs" />
     <Compile Include="DataProcessing\CustomFiltersDataProcessor.cs" />
     <Compile Include="DataProcessing\DataProcessBase.cs" />
     <Compile Include="DataProcessing\FilterDataProcessor.cs" />
@@ -93,6 +94,7 @@
     <Compile Include="Models\FilterTypes.cs" />
     <Compile Include="Models\RequestHelpers.cs" />
     <Compile Include="Models\RequestInfoModel.cs" />
+    <Compile Include="Models\ResultModel.cs" />
     <Compile Include="Models\Search.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -5,7 +5,6 @@
     using System.Collections.Specialized;
     using System.Linq;
     using System.Text.RegularExpressions;
-    using System.Web.Mvc;
     using JQDT.Models;
 
     /// <summary>
@@ -18,11 +17,10 @@
         /// </summary>
         /// <param name="filterContext">The filter context.</param>
         /// <returns><see cref="RequestInfoModel"/></returns>
-        public RequestInfoModel BindModel(ActionExecutedContext filterContext)
+        public RequestInfoModel BindModel(NameValueCollection ajaxForm, object resultModel)
         {
-            var controllerContext = filterContext.Controller.ControllerContext;
+            //var controllerContext = filterContext.Controller.ControllerContext;
 
-            var ajaxForm = ((System.Web.HttpRequestWrapper)((System.Web.HttpContextWrapper)filterContext.RequestContext.HttpContext).Request).Form;
             var lengthStr = ajaxForm["length"];
 
             // TODO: Throw appropriate exceptions when mandatory value is missing;
@@ -50,7 +48,8 @@
                 TableParameters = datatableModel,
                 Helpers = new RequestHelpers
                 {
-                    ModelType = ((ViewResultBase)filterContext.Result).Model.GetType().GenericTypeArguments.First()
+                    //ModelType = ((ViewResultBase)filterContext.Result).Model.GetType().GenericTypeArguments.First()
+                    ModelType = resultModel.GetType().GenericTypeArguments.First()
                 }
             };
 

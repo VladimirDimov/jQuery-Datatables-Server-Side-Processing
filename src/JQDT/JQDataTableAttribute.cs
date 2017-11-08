@@ -3,8 +3,6 @@
     using System;
     using System.Linq;
     using System.Web.Mvc;
-    using JQDT.DataProcessing;
-    using JQDT.ModelBinders;
 
     /// <summary>
     /// Used to decorate the action that returns data table response.
@@ -21,7 +19,19 @@
         {
             try
             {
-                this.Execute(filterContext);
+                var ajaxForm = ((System.Web.HttpRequestWrapper)((System.Web.HttpContextWrapper)filterContext.RequestContext.HttpContext).Request).Form;
+                IQueryable<object> data = (IQueryable<object>)filterContext.Controller.ViewData.Model;
+
+                var app = new Application();
+                var result = app.Execute(ajaxForm, data);
+
+                filterContext.Result = this.FormatResult(new
+                {
+                    draw = result.Draw,
+                    recordsTotal = result.RecordsTotal,
+                    recordsFiltered = result.RecordsFiltered,
+                    data = result.Data
+                });
             }
             catch (Exception ex)
             {
@@ -31,47 +41,8 @@
                     error = ex.Message
                 });
             }
-        }
-
-        private void Execute(ActionExecutedContext filterContext)
-        {
-            IQueryable<object> data = (IQueryable<object>)filterContext.Controller.ViewData.Model;
-
-            var modelBinder = new FormModelBinder();
-            var requestModel = modelBinder.BindModel(filterContext);
-
-            var dataProcessChain = this.GetDataProcessChain();
-            var processedData = dataProcessChain.ProcessData(data, requestModel);
-
-            filterContext.Result = this.FormatResult(new
-            {
-                draw = requestModel.TableParameters.Draw,
-                recordsTotal = data.Count(),
-                recordsFiltered = this.GetRecordsFiltered(dataProcessChain),
-                data = processedData.ToList()
-            });
 
             base.OnActionExecuted(filterContext);
-        }
-
-        private object GetRecordsFiltered(IDataProcess dataProcessChain)
-        {
-            return
-                ((IDataProcessChain)dataProcessChain)
-                    .DataProcessors
-                    .First(p => p.GetType() == typeof(CustomFiltersDataProcessor))
-                    .ProcessedData.Count();
-        }
-
-        private IDataProcess GetDataProcessChain()
-        {
-            var dataProcessChain = new DataProcessChain();
-            dataProcessChain.AddDataProcessor(new FilterDataProcessor());
-            dataProcessChain.AddDataProcessor(new CustomFiltersDataProcessor());
-            dataProcessChain.AddDataProcessor(new SortDataProcessor());
-            dataProcessChain.AddDataProcessor(new PagingDataProcessor());
-
-            return dataProcessChain;
         }
 
         private ActionResult FormatResult(object resultModel)
