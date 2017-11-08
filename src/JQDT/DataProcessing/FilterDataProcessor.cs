@@ -40,9 +40,9 @@
             var properties = ((System.Reflection.TypeInfo)modelType).DeclaredProperties;
             var containExpressionCollection = new List<MethodCallExpression>();
 
-            ICollection<ICollection<PropertyInfo>> propertiesMap = this.GetPropertiesMap(modelType);
+            ICollection<ICollection<PropertyInfo>> simplePropertiesMap = this.GetPropertiesMap(modelType);
 
-            foreach (var property in propertiesMap)
+            foreach (var property in simplePropertiesMap)
             {
                 var currentPropertyContainsExpression = this.GetSinglePropertyContainsExpression(modelType, search, property, modelParamExpr);
                 containExpressionCollection.Add(currentPropertyContainsExpression);
