@@ -20,5 +20,14 @@ namespace WebApplication1.Controllers
         public string City { get; set; }
 
         public string Country { get; set; }
+
+        public Street Street { get; set; }
+    }
+
+    public class Street
+    {
+        public string Name { get; set; }
+
+        public int Number { get; set; }
     }
 }

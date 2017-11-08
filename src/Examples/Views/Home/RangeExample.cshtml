@@ -1,14 +1,18 @@
 ﻿<table id="SearchResultTable" class="display" cellspacing="0" width="100%">
     <div>
-        <div>Age: from <input type="type" id="minAge" value="30" class="reload-table" /> to <input type="type" id="maxAge" value="40" class="reload-table" /></div>
-        <div>Srarting Date: from <input type="type" id="minStartDate" value="" class="reload-table" /> to <input type="type" id="maxStartDate" value="" class="reload-table" /></div>
+        <div>Age: from <input type="number" id="minAge" value="30" class="reload-table" /> to <input type="number" id="maxAge" value="40" class="reload-table" /></div>
+        <div>Srarting Date: from <input type="date" id="minStartDate" value="" class="reload-table" /> to <input type="date" id="maxStartDate" value="" class="reload-table" /></div>
+        <div>Street number: from <input type="number" id="minStreetNumber" value="" class="reload-table" /> to <input type="number" id="maxStreetNumber" value="" class="reload-table" /></div>
     </div>
     <thead>
         <tr>
             <th>Id</th>
             <th>Name</th>
             <th>Age</th>
-            <th>Town</th>
+            <th>Country</th>
+            <th>City</th>
+            <th>Street</th>
+            <th>Number</th>
             <th>Starting Date</th>
         </tr>
     </thead>
@@ -17,7 +21,10 @@
             <th>Id</th>
             <th>Name</th>
             <th>Age</th>
-            <th>Town</th>
+            <th>Country</th>
+            <th>City</th>
+            <th>Street</th>
+            <th>Number</th>
             <th>Starting Date</th>
         </tr>
     </tfoot>
@@ -36,6 +43,7 @@
                         "filters": {
                             "Age": { "gte": $('#minAge').val(), "lte": $('#maxAge').val() },
                             "StartingDate": { "gte": formatDate($('#minStartDate').val()), "lte": formatDate($('#maxStartDate').val()) },
+                            "Address.Street.Number": { "gte": $('#minStreetNumber').val(), "lte": $('#maxStreetNumber').val() },
                         }
                     }
                 }
@@ -48,7 +56,10 @@
                { "data": "Id", "name": "IdName" },
                { "data": "Name" },
                { "data": "Age", "orderData": [2,4] },
-               { "data": "Town" },
+               { "data": "Address.Country" },
+               { "data": "Address.City" },
+               { "data": "Address.Street.Name" },
+               { "data": "Address.Street.Number" },
                { "data": "StartingDate" }
             ],
            "columnDefs": [
@@ -58,9 +69,11 @@
 
                        return date.toLocaleDateString();
                    },
-                   "targets": 4
+                   "targets": 7
                },
-               { "visible": true, "targets": [4] }
+               {
+                   "visible": false, "targets": [4]
+               }
            ],
            searchDelay: 1000
         });

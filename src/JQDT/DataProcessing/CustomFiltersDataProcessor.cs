@@ -3,6 +3,7 @@
     using System;
     using System.Linq;
     using System.Linq.Expressions;
+    using JQDT.Extensions;
     using JQDT.Models;
 
     /// <summary>
@@ -62,15 +63,16 @@
         private Expression<Func<object, bool>> GetRangeExpression(string key, FilterModel filter, FilterTypes filterType)
         {
             // x
-            var propertyType = this.requestInfoModel.Helpers.ModelType.GetProperty(key).PropertyType;
+            var propertyInfoPath = this.requestInfoModel.Helpers.ModelType.GetPropertyInfoPath(key);
+            var propertyType = propertyInfoPath.Last().PropertyType;
             var xExpr = Expression.Parameter(typeof(object), "x");
-            
+
             // (Type)x
             var castedXExpr = Expression.Convert(xExpr, this.requestInfoModel.Helpers.ModelType);
-            
+
             // ((Type)x).Property
-            var propertyExpr = Expression.Property(castedXExpr, key);
-            
+            var propertyExpr = castedXExpr.NestedProperty(key);
+
             // Type.Parse(value)
             var valueExpr = Expression.Constant(filter.Value);
             var gteMethodInfo = propertyType.GetMethods().First(x => x.Name == "Parse");

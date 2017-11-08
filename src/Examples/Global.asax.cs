@@ -27,7 +27,12 @@
                     Address = new Address
                     {
                         City = $"City{random.Next(1, 10)}",
-                        Country = $"Country{random.Next(1, 3)}"
+                        Country = $"Country{random.Next(1, 3)}",
+                        Street = new Street
+                        {
+                            Name = $"Street_{random.Next(1, 5)}",
+                            Number = random.Next(1, 100)
+                        }
                     },
                     StartingDate = DateTime.Now.AddDays(random.Next(-5000, -30))
                 });

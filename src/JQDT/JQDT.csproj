@@ -80,6 +80,8 @@
     <Compile Include="DataProcessing\IDataProcessChain.cs" />
     <Compile Include="DataProcessing\SortDataProcessor.cs" />
     <Compile Include="DataProcessing\PagingDataProcessor.cs" />
+    <Compile Include="Extensions\ExpressionExtensions.cs" />
+    <Compile Include="Extensions\TypeExtensions.cs" />
     <Compile Include="GlobalConstants.cs" />
     <Compile Include="ModelBinders\FormModelBinder.cs" />
     <Compile Include="JQDataTableAttribute.cs" />
