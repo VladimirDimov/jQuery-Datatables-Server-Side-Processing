@@ -15,12 +15,11 @@
         /// <summary>
         /// Binds the model to the ajax form content.
         /// </summary>
-        /// <param name="filterContext">The filter context.</param>
+        /// <param name="ajaxForm">The ajax form.</param>
+        /// <param name="data">The data collection.</param>
         /// <returns><see cref="RequestInfoModel"/></returns>
-        public RequestInfoModel BindModel(NameValueCollection ajaxForm, object resultModel)
+        public RequestInfoModel BindModel(NameValueCollection ajaxForm, object data)
         {
-            //var controllerContext = filterContext.Controller.ControllerContext;
-
             var lengthStr = ajaxForm["length"];
 
             // TODO: Throw appropriate exceptions when mandatory value is missing;
@@ -48,8 +47,7 @@
                 TableParameters = datatableModel,
                 Helpers = new RequestHelpers
                 {
-                    //ModelType = ((ViewResultBase)filterContext.Result).Model.GetType().GenericTypeArguments.First()
-                    ModelType = resultModel.GetType().GenericTypeArguments.First()
+                    ModelType = data.GetType().GenericTypeArguments.First()
                 }
             };
 

@@ -6,8 +6,19 @@
     using JQDT.ModelBinders;
     using JQDT.Models;
 
+    /// <summary>
+    /// Application entry point.
+    /// The <see cref="Application.Execute(System.Collections.Specialized.NameValueCollection, System.Linq.IQueryable{object})"/> should be called
+    /// from the ActionFilter.
+    /// </summary>
     internal class Application
     {
+        /// <summary>
+        /// Application entry point method. Should be called from the ActionFilter.
+        /// </summary>
+        /// <param name="ajaxForm">The ajax form.</param>
+        /// <param name="data">The data.</param>
+        /// <returns><see cref="ResultModel"/></returns>
         public ResultModel Execute(NameValueCollection ajaxForm, IQueryable<object> data)
         {
             var modelBinder = new FormModelBinder();
