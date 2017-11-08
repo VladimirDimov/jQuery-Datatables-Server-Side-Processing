@@ -24,7 +24,11 @@
                     Id = i + 1,
                     Name = $"First{i + 1} Last{i + 1}",
                     Age = 10 + random.Next(0, 90),
-                    Town = $"Town{i + 1}",
+                    Address = new Address
+                    {
+                        City = $"City{random.Next(1, 10)}",
+                        Country = $"Country{random.Next(1, 3)}"
+                    },
                     StartingDate = DateTime.Now.AddDays(random.Next(-5000, -30))
                 });
             }

@@ -10,8 +10,15 @@ namespace WebApplication1.Controllers
 
         public int Age { get; internal set; }
 
-        public string Town { get; internal set; }
+        public Address Address { get; set; }
 
         public DateTime StartingDate { get; internal set; }
+    }
+
+    public class Address
+    {
+        public string City { get; set; }
+
+        public string Country { get; set; }
     }
 }

@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Linq.Expressions;
+    using System.Reflection;
     using JQDT.Models;
 
     /// <summary>
@@ -38,10 +39,12 @@
             var modelParamExpr = Expression.Parameter(typeof(object), "model");
             var properties = ((System.Reflection.TypeInfo)modelType).DeclaredProperties;
             var containExpressionCollection = new List<MethodCallExpression>();
-            foreach (var property in properties)
+
+            ICollection<ICollection<PropertyInfo>> propertiesMap = this.GetPropertiesMap(modelType);
+
+            foreach (var property in propertiesMap)
             {
-                var propName = property.Name;
-                var currentPropertyContainsExpression = this.GetSinglePropertyExpression(modelType, search, propName, modelParamExpr);
+                var currentPropertyContainsExpression = this.GetSinglePropertyContainsExpression(modelType, search, property, modelParamExpr);
                 containExpressionCollection.Add(currentPropertyContainsExpression);
             }
 
@@ -50,6 +53,34 @@
             var lambda = Expression.Lambda(orExpr, modelParamExpr);
 
             return (Expression<Func<object, bool>>)lambda;
+        }
+
+        private ICollection<ICollection<PropertyInfo>> GetPropertiesMap(Type modelType)
+        {
+            ICollection<ICollection<PropertyInfo>> propertiesMap = new List<ICollection<PropertyInfo>>();
+            ICollection<PropertyInfo> current = new List<PropertyInfo>();
+            this.GetPropertiesMapRecursive(modelType, ref propertiesMap, ref current);
+
+            return propertiesMap;
+        }
+
+        private void GetPropertiesMapRecursive(Type modelType, ref ICollection<ICollection<PropertyInfo>> propertiesMap, ref ICollection<PropertyInfo> current)
+        {
+            var properties = modelType.GetProperties();
+            foreach (var property in properties)
+            {
+                var copyOfCurrent = (ICollection<PropertyInfo>)current.Select(x => x).ToList();
+                copyOfCurrent.Add(property);
+
+                if (!(property.PropertyType.Namespace == "System"))
+                {
+                    this.GetPropertiesMapRecursive(property.PropertyType, ref propertiesMap, ref copyOfCurrent);
+                }
+                else
+                {
+                    propertiesMap.Add(copyOfCurrent);
+                }
+            }
         }
 
         private Expression GetOrExpr(List<MethodCallExpression> containExpressionCollection)
@@ -69,7 +100,7 @@
         }
 
         // Returns the "Contains" expression for a single property
-        private MethodCallExpression GetSinglePropertyExpression(Type modelType, string search, string propName, ParameterExpression modelParamExpr)
+        private MethodCallExpression GetSinglePropertyContainsExpression(Type modelType, string search, ICollection<PropertyInfo> propertyInfoPath, ParameterExpression modelParamExpr)
         {
             // searchVal
             var searchValExpr = Expression.Constant(search.ToLower());
@@ -78,7 +109,7 @@
             var convertExpr = Expression.Convert(modelParamExpr, modelType);
 
             // x.Name
-            var propExpr = Expression.Property(convertExpr, propName);
+            var propExpr = this.GetPropertySelectExpression(convertExpr, propertyInfoPath);
 
             // x.Name.ToString()
             var toStringMethodInfo = typeof(object).GetMethod("ToString");
@@ -93,6 +124,25 @@
             var containsExpr = Expression.Call(toLowerExpr, containsMethodInfo, searchValExpr);
 
             return containsExpr;
+        }
+
+        private MemberExpression GetPropertySelectExpression(UnaryExpression modelExpr, ICollection<PropertyInfo> propertyInfoPath)
+        {
+            MemberExpression propertySelectExpr = null;
+
+            foreach (var propertyInfo in propertyInfoPath)
+            {
+                if (propertySelectExpr == null)
+                {
+                    propertySelectExpr = Expression.Property(modelExpr, propertyInfo);
+                }
+                else
+                {
+                    propertySelectExpr = Expression.Property(propertySelectExpr, propertyInfo);
+                }
+            }
+
+            return propertySelectExpr;
         }
     }
 }
