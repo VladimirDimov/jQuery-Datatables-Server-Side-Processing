@@ -12,6 +12,8 @@
     /// </summary>
     internal class FormModelBinder
     {
+        private Dictionary<string, string> ajaxFormDictionary;
+
         /// <summary>
         /// Binds the model to the ajax form content.
         /// </summary>
@@ -20,6 +22,8 @@
         /// <returns><see cref="RequestInfoModel"/></returns>
         public RequestInfoModel BindModel(NameValueCollection ajaxForm, object data)
         {
+            InitializeAjaxFormDictionary(ajaxForm);
+
             var lengthStr = ajaxForm["length"];
 
             // TODO: Throw appropriate exceptions when mandatory value is missing;
@@ -52,6 +56,15 @@
             };
 
             return requestInfoModel;
+        }
+
+        private void InitializeAjaxFormDictionary(NameValueCollection ajaxForm)
+        {
+            this.ajaxFormDictionary = new Dictionary<string, string>();
+            foreach (var key in ajaxForm.AllKeys)
+            {
+                this.ajaxFormDictionary.Add(key, ajaxForm[key]);
+            }
         }
 
         private Custom GetCustom(NameValueCollection ajaxForm)
@@ -108,11 +121,39 @@
             {
                 columns.Add(new Column
                 {
-                    Data = item.Value
+                    Data = item.Value,
+                    Searchable = this.IsSearchable(item.Key, ajaxForm),
+                    Orderable = this.IsOrderable(item.Key, ajaxForm),
                 });
             }
 
             return columns;
+        }
+
+        private bool IsOrderable(int key, NameValueCollection ajaxForm)
+        {
+            string isOrderableStr;
+            if (!this.ajaxFormDictionary.TryGetValue($"columns[{key}][orderable]", out isOrderableStr))
+            {
+                return false;
+            }
+
+            var isOrderable = bool.Parse(isOrderableStr);
+
+            return isOrderable;
+        }
+
+        private bool IsSearchable(int key, NameValueCollection ajaxForm)
+        {
+            string isSearchableStr;
+            if (!this.ajaxFormDictionary.TryGetValue($"columns[{key}][searchable]", out isSearchableStr))
+            {
+                return false;
+            }
+
+            var isSearchable = bool.Parse(isSearchableStr);
+
+            return isSearchable;
         }
 
         private List<Order> GetOrderList(NameValueCollection form)

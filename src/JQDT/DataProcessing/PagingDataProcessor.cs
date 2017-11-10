@@ -19,6 +19,11 @@
         /// </returns>
         public override IQueryable<object> OnProcessData(IQueryable<object> data, RequestInfoModel requestInfoModel)
         {
+            if (requestInfoModel.TableParameters.Length < 0)
+            {
+                return data;
+            }
+
             var pagedData = data
                 .Skip(requestInfoModel.TableParameters.Start)
                 .Take(requestInfoModel.TableParameters.Length);

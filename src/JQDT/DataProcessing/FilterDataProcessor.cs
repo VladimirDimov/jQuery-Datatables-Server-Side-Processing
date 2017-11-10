@@ -5,6 +5,7 @@
     using System.Linq;
     using System.Linq.Expressions;
     using System.Reflection;
+    using JQDT.Extensions;
     using JQDT.Models;
 
     /// <summary>
@@ -12,6 +13,8 @@
     /// </summary>
     internal class FilterDataProcessor : DataProcessBase
     {
+        private RequestInfoModel requestInfoModel;
+
         /// <summary>
         /// Called when [process data].
         /// </summary>
@@ -27,6 +30,8 @@
                 return data.Select(x => x);
             }
 
+            this.requestInfoModel = requestInfoModel;
+
             var expr = this.BuildExpression(data.GetType().GetGenericArguments().First(), requestInfoModel.TableParameters.Search.Value);
             data = data.Where(expr);
 
@@ -40,11 +45,13 @@
             var properties = ((System.Reflection.TypeInfo)modelType).DeclaredProperties;
             var containExpressionCollection = new List<MethodCallExpression>();
 
-            ICollection<ICollection<PropertyInfo>> simplePropertiesMap = this.GetPropertiesMap(modelType);
+            var searchableProperties = this.requestInfoModel.TableParameters.Columns
+                .Where(col => col.Searchable)
+                .Select(col => col.Data);
 
-            foreach (var property in simplePropertiesMap)
+            foreach (var propertyPath in searchableProperties)
             {
-                var currentPropertyContainsExpression = this.GetSinglePropertyContainsExpression(modelType, search, property, modelParamExpr);
+                var currentPropertyContainsExpression = this.GetSinglePropertyContainsExpression(modelType, search, propertyPath, modelParamExpr);
                 containExpressionCollection.Add(currentPropertyContainsExpression);
             }
 
@@ -100,7 +107,7 @@
         }
 
         // Returns the "Contains" expression for a single property
-        private MethodCallExpression GetSinglePropertyContainsExpression(Type modelType, string search, ICollection<PropertyInfo> propertyInfoPath, ParameterExpression modelParamExpr)
+        private MethodCallExpression GetSinglePropertyContainsExpression(Type modelType, string search, string propertyPath, ParameterExpression modelParamExpr)
         {
             // searchVal
             var searchValExpr = Expression.Constant(search.ToLower());
@@ -109,7 +116,7 @@
             var convertExpr = Expression.Convert(modelParamExpr, modelType);
 
             // x.Name
-            var propExpr = this.GetPropertySelectExpression(convertExpr, propertyInfoPath);
+            var propExpr = convertExpr.NestedProperty(propertyPath);
 
             // x.Name.ToString()
             var toStringMethodInfo = typeof(object).GetMethod("ToString");

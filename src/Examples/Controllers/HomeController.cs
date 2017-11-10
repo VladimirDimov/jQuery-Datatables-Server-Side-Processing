@@ -26,6 +26,11 @@ namespace WebApplication1.Controllers
             return this.View();
         }
 
+        public ActionResult FeatureDisableExample()
+        {
+            return this.View();
+        }
+
         [JQDataTable]
         public ActionResult GetData()
         {

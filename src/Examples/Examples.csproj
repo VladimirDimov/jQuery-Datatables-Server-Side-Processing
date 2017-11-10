@@ -190,6 +190,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\SimpleExample.cshtml" />
     <Content Include="Views\Home\RangeExample.cshtml" />
+    <Content Include="Views\Home\FeatureDisableExample.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
