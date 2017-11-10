@@ -11,10 +11,12 @@
     {
         private IQueryable<SimpleDataModel> data;
         private Application application;
+        private AjaxFormBuilder ajaxFormBuilder;
 
         [SetUp]
         public void Init()
         {
+            this.ajaxFormBuilder = new AjaxFormBuilder();
             var dataGenerator = new DataGenerator();
             this.data = dataGenerator.GenerateSimpleData(5000, DateTime.Now.AddYears(-5), DateTime.Now);
             this.application = new Application();
@@ -23,9 +25,8 @@
         [Test]
         public void SimpleSortShouldWorkOnInteger()
         {
-            var ajaxData = new NameValueCollection();
-            ajaxData.Add("order[0][column]", "1");
-            
+            var ajaxData = this.ajaxFormBuilder.BuildForm(typeof(SimpleDataModel));
+
             var result = application.Execute(ajaxData, this.data);
         }
     }
