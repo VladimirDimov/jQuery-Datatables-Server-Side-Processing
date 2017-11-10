@@ -51,6 +51,7 @@
             var dataProcessChain = new DataProcessChain();
             dataProcessChain.AddDataProcessor(new FilterDataProcessor());
             dataProcessChain.AddDataProcessor(new CustomFiltersDataProcessor());
+            dataProcessChain.AddDataProcessor(new ColumnsFilterDataProcessor());
             dataProcessChain.AddDataProcessor(new SortDataProcessor());
             dataProcessChain.AddDataProcessor(new PagingDataProcessor());
 
