@@ -191,6 +191,7 @@
     <Content Include="Views\Home\SimpleExample.cshtml" />
     <Content Include="Views\Home\RangeExample.cshtml" />
     <Content Include="Views\Home\FeatureDisableExample.cshtml" />
+    <Content Include="Views\Home\EachColumnSearchExample.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

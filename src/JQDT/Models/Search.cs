@@ -19,6 +19,6 @@
         /// <value>
         /// The regex.
         /// </value>
-        public string Regex { get; set; }
+        public bool Regex { get; set; }
     }
 }

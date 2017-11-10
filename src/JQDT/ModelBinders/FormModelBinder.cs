@@ -22,6 +22,7 @@
         /// <returns><see cref="RequestInfoModel"/></returns>
         public RequestInfoModel BindModel(NameValueCollection ajaxForm, object data)
         {
+            /// TODO: All methods should use <see cref="FormModelBinder.ajaxFormDictionary"/>
             InitializeAjaxFormDictionary(ajaxForm);
 
             var lengthStr = ajaxForm["length"];
@@ -122,15 +123,40 @@
                 columns.Add(new Column
                 {
                     Data = item.Value,
-                    Searchable = this.IsSearchable(item.Key, ajaxForm),
-                    Orderable = this.IsOrderable(item.Key, ajaxForm),
+                    Searchable = this.IsSearchable(item.Key),
+                    Orderable = this.IsOrderable(item.Key),
+                    Search = this.GetSearch(item.Key)
                 });
             }
 
             return columns;
         }
 
-        private bool IsOrderable(int key, NameValueCollection ajaxForm)
+        private Search GetSearch(int key)
+        {
+            string searchValue = null;
+            if (!this.ajaxFormDictionary.TryGetValue($"columns[{key}][search][value]", out searchValue))
+            {
+                return null;
+            }
+
+            string isRegexStr = string.Empty;
+            bool isRegex = false;
+            if (this.ajaxFormDictionary.TryGetValue($"columns[{key}][search][regex]", out isRegexStr))
+            {
+                isRegex = bool.Parse(isRegexStr);
+            }
+
+            var search = new Search
+            {
+                Value = searchValue,
+                Regex = isRegex
+            };
+
+            return search;
+        }
+
+        private bool IsOrderable(int key)
         {
             string isOrderableStr;
             if (!this.ajaxFormDictionary.TryGetValue($"columns[{key}][orderable]", out isOrderableStr))
@@ -143,7 +169,7 @@
             return isOrderable;
         }
 
-        private bool IsSearchable(int key, NameValueCollection ajaxForm)
+        private bool IsSearchable(int key)
         {
             string isSearchableStr;
             if (!this.ajaxFormDictionary.TryGetValue($"columns[{key}][searchable]", out isSearchableStr))

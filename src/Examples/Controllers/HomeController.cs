@@ -31,6 +31,11 @@ namespace WebApplication1.Controllers
             return this.View();
         }
 
+        public ActionResult EachColumnSearchExample()
+        {
+            return this.View();
+        }
+
         [JQDataTable]
         public ActionResult GetData()
         {
