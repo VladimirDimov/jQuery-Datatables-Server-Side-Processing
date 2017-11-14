@@ -34,6 +34,8 @@
                 true.ToString(),
                 true.ToString().ToLower(),
                 true.ToString().ToUpper(),
+                randomModel.Integer.ToString(),
+                randomModel.DateTime.ToShortDateString()
             };
 
             using (var driver = new ChromeDriver())
@@ -48,7 +50,7 @@
                     var rows = page.GetRowElements();
                     var rowsText = rows.Select(e => e.Text);
 
-                    Assert.IsTrue(rowsText.All(x => x.ToLower().Contains(filter.ToLower())));
+                    Assert.IsTrue(rowsText.All(x => x.ToLower().Contains(filter.ToLower())), $"Test failed for filter value: {filter}");
                 }
             }
         }

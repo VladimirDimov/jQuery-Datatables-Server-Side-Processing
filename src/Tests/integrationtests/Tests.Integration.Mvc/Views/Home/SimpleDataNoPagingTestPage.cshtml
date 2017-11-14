@@ -43,7 +43,17 @@
                 { "data": "Double" },
                 { "data": "DateTime" },
                 { "data": "Boolean" }
-            ]
+            ],
+            "columnDefs": [
+                   {
+                       "render": function (data, type, row) {
+                           date = new Date(parseInt(row.DateTime.replace("/Date(", "").replace(")/", ""), 10));
+
+                           return date.toLocaleDateString();
+                       },
+                       "targets": 3
+                   }
+               ]
         });
     </script>
 }
