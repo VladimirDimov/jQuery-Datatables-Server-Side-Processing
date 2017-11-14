@@ -17,7 +17,7 @@
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
             var dataGenerator = new DataGenerator();
-            HomeController.SimpleData = dataGenerator.GenerateSimpleData(500, DateTime.Now.AddYears(-5), DateTime.Now);
+            HomeController.SimpleDataBig = dataGenerator.GenerateSimpleData(500, DateTime.Now.AddYears(-5), DateTime.Now);
         }
     }
 }
