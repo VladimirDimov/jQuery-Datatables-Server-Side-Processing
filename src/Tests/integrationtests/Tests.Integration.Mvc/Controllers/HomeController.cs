@@ -19,6 +19,11 @@
             return View();
         }
 
+        public ActionResult SimpleDataNoPagingTestPage()
+        {
+            return this.View();
+        }
+
         [JQDataTable]
         public ActionResult GetSimpleData(int take = int.MaxValue)
         {

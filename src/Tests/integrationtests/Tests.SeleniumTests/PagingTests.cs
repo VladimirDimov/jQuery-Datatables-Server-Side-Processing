@@ -23,7 +23,7 @@
             using (var driver = new ChromeDriver())
             {
                 var homePage = new HomePage(driver, settings);
-                var simpleDataPage = homePage.NavigateTo().SimpleDataPage();
+                var simpleDataPage = homePage.GoTo().GoToSimpleDataPage();
                 var rowElements = simpleDataPage.GetRowElements();
 
                 Assert.AreEqual(10, rowElements.Count);
@@ -41,7 +41,7 @@
             using (var driver = new ChromeDriver())
             {
                 var homePage = new HomePage(driver, settings);
-                var simpleDataPage = homePage.NavigateTo().SimpleDataPage();
+                var simpleDataPage = homePage.GoTo().GoToSimpleDataPage();
 
                 var table = driver.FindElement(By.CssSelector("table"));
                 var stringActualValues = TableHelpers.GetTableColumnValues(table, "String");

@@ -2,9 +2,8 @@
 {
     using OpenQA.Selenium;
     using Tests.SeleniumTests.Common;
-    using Tests.SeleniumTests.Pages.Contracts;
 
-    internal class HomePage : IWebPage<HomePage>
+    internal class HomePage
     {
         private IWebDriver driver;
         private ISettingsProvider settings;
@@ -15,14 +14,21 @@
             this.settings = settings;
         }
 
-        public HomePage NavigateTo()
+        public HomePage GoTo()
         {
             driver.Navigate().GoToUrl(this.settings["serverUrl"]);
 
             return this;
         }
 
-        public SimpleDataPage SimpleDataPage()
+        public SimpleDataNoPagingPage GoToSimpleDataNoPagingPage()
+        {
+            driver.Navigate().GoToUrl(this.settings["serverUrl"] + "/home/SimpleDataNoPagingTestPage");
+
+            return new SimpleDataNoPagingPage(this.driver);
+        }
+
+        public SimpleDataPage GoToSimpleDataPage()
         {
             this.driver.Navigate().GoToUrl(this.settings["serverUrl"] + "home/SimpleDataTestPage");
 
