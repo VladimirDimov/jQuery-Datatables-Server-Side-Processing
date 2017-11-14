@@ -1,0 +1,48 @@
+﻿@{
+    ViewBag.Title = "Simple Data";
+}
+
+<table id="table-simple" style="display: block;">
+    <thead>
+        <tr>
+            <th>String</th>
+            <th>Integer</th>
+            <th>Double</th>
+            <th>DateTime</th>
+            <th>Boolean</th>
+        </tr>
+    </thead>
+    <tfoot>
+        <tr>
+            <th>String</th>
+            <th>Integer</th>
+            <th>Double</th>
+            <th>DateTime</th>
+            <th>Boolean</th>
+        </tr>
+    </tfoot>
+    <tbody></tbody>
+</table>
+
+@section Scripts {
+    <script>
+        var table = $('#table-simple').DataTable({
+            "proccessing": true,
+            "serverSide": true,
+            "ajax": {
+                url: "/home/getsimpledata",
+                type: 'POST',
+                data: function (data) {
+                   
+                }
+            },
+            "columns": [
+                { "data": "String" },
+                { "data": "Integer" },
+                { "data": "Double" },
+                { "data": "DateTime" },
+                { "data": "Boolean" }
+            ]
+        });
+    </script>
+}
