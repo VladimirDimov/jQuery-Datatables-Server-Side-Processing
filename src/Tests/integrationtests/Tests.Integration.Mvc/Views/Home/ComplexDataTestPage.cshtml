@@ -85,7 +85,7 @@
                     "render": function (data, type, row) {
                         date = new Date(parseInt(row.DateTime.replace("/Date(", "").replace(")/", ""), 10));
 
-                        return date.toLocaleDateString();
+                        return date.toUTCString();
                     },
                     "targets": 3
                 },
@@ -94,7 +94,7 @@
                     "render": function (data, type, row) {
                         date = new Date(parseInt(row.ComplexModel.DateTime.replace("/Date(", "").replace(")/", ""), 10));
 
-                        return date.toLocaleDateString();
+                        return date.toUTCString();
                     },
                     "targets": 8
                 },
@@ -103,7 +103,7 @@
                     "render": function (data, type, row) {
                         date = new Date(parseInt(row.ComplexModel.SimpleModel.DateTime.replace("/Date(", "").replace(")/", ""), 10));
 
-                        return date.toLocaleDateString();
+                        return date.toUTCString();
                     },
                     "targets": 13
                 }

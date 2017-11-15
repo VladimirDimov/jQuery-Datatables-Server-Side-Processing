@@ -88,6 +88,34 @@
             "Double");
         }
 
+        [Test]
+        public void SortingSimpleDataByDateTimeNoPagingShouldWorkProperly()
+        {
+            List<DateTime> expectedData = null;
+
+            this.AssserSorting((isAsc, fullData, colValues) =>
+            {
+                if (isAsc)
+                {
+                    expectedData = fullData.OrderBy(x => x.DateTime).Select(x => x.DateTime.ToUniversalTime()).ToList();
+                }
+                else
+                {
+                    expectedData = fullData.OrderByDescending(x => x.DateTime).Select(x => x.DateTime.ToUniversalTime()).ToList();
+                }
+
+                for (int i = 0; i < expectedData.Count(); i++)
+                {
+                    var valueOnTable = DateTime.Parse(colValues[i]).ToUniversalTime();
+                    var expectedValue = expectedData[i];
+                    var expectedStr = expectedValue.ToString();
+                    var actualStr = valueOnTable.ToString();
+                    Assert.IsTrue(expectedStr == actualStr);
+                }
+            },
+            "DateTime");
+        }
+
         private void AssserSorting(Action<bool, List<SimpleDataModel>, List<string>> assert, string colName)
         {
             var homePage = new HomePage(driver, settings);
