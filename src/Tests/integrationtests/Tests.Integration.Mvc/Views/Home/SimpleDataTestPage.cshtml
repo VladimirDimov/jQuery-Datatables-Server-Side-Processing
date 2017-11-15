@@ -27,13 +27,14 @@
 @section Scripts {
     <script>
         var table = $('#table-simple').DataTable({
+            "paging": @this.ViewBag.IsPaged,
             "proccessing": true,
             "serverSide": true,
             "ajax": {
                 url: "/home/getsimpledata",
                 type: 'POST',
                 data: function (data) {
-                   
+
                 }
             },
             "columns": [

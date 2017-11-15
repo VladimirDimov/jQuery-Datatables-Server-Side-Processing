@@ -15,14 +15,11 @@
             return this.View();
         }
 
-        public ActionResult SimpleDataTestPage()
+        public ActionResult SimpleDataTestPage(bool isPaged = true)
         {
-            return View();
-        }
+            this.ViewBag.IsPaged = isPaged.ToString().ToLower();
 
-        public ActionResult SimpleDataNoPagingTestPage()
-        {
-            return this.View();
+            return View();
         }
 
         [JQDataTable]
