@@ -73,7 +73,6 @@
     <Compile Include="FilterTests.cs" />
     <Compile Include="Pages\ComplexDataPage.cs" />
     <Compile Include="Pages\HomePage.cs" />
-    <Compile Include="Pages\SimpleDataNoPagingPage.cs" />
     <Compile Include="Pages\SimpleDataPage.cs" />
     <Compile Include="PagingTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

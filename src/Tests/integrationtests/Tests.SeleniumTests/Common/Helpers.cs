@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using OpenQA.Selenium;
 
     public static class Helpers
     {
@@ -24,6 +25,13 @@
             return collection
                 .Skip((page - 1) * size)
                 .Take(size);
+        }
+
+        public static bool HasClass(this IWebElement element, string @class)
+        {
+            var classes = element.GetAttribute("class").Split(' ');
+
+            return classes.Contains(@class);
         }
     }
 }

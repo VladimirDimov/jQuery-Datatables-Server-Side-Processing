@@ -21,11 +21,11 @@
             return this;
         }
 
-        public SimpleDataNoPagingPage GoToSimpleDataNoPagingPage()
+        public SimpleDataPage GoToSimpleDataNoPagingPage()
         {
-            driver.Navigate().GoToUrl(this.settings["serverUrl"] + "/home/SimpleDataNoPagingTestPage");
+            driver.Navigate().GoToUrl(this.settings["serverUrl"] + "home/SimpleDataTestPage?isPaged=false");
 
-            return new SimpleDataNoPagingPage(this.driver);
+            return new SimpleDataPage(this.driver);
         }
 
         public SimpleDataPage GoToSimpleDataPage()

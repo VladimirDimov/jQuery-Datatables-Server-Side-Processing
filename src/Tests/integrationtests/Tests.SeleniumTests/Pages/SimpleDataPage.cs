@@ -1,6 +1,7 @@
 ﻿namespace Tests.SeleniumTests.Pages
 {
     using System.Collections.Generic;
+    using System.Linq;
     using OpenQA.Selenium;
     using OpenQA.Selenium.Support.UI;
 
@@ -23,6 +24,23 @@
             var pageLengthDropDownElement = driver.FindElement(By.CssSelector("[name=table-simple_length]"));
             var pageLengthSelect = new SelectElement(pageLengthDropDownElement);
             pageLengthSelect.SelectByValue(length.ToString());
+        }
+
+        internal IEnumerable<IWebElement> GetColumnHeaderElements()
+        {
+            var columnHeaderElements = this.driver.FindElements(By.CssSelector("thead th"));
+
+            return columnHeaderElements.ToList();
+        }
+
+        internal IWebElement GetTable()
+        {
+            return this.driver.FindElement(By.CssSelector("table"));
+        }
+
+        internal IWebElement GetFilterInputElement()
+        {
+            return this.driver.FindElement(By.CssSelector("#table-simple_filter input"));
         }
     }
 }
