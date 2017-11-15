@@ -5,18 +5,19 @@
     using System.Threading;
     using NUnit.Framework;
     using OpenQA.Selenium;
-    using OpenQA.Selenium.Chrome;
     using Tests.SeleniumTests.Common;
     using Tests.SeleniumTests.Pages;
 
     internal class FilterTests
     {
         private AppSettingsProvider settings;
+        private IWebDriver driver;
 
         [SetUp]
         public void SetUp()
         {
             this.settings = new AppSettingsProvider();
+            this.driver = DriverProvider.GetDriver();
         }
 
         [Test]
@@ -38,20 +39,17 @@
                 randomModel.DateTime.ToShortDateString()
             };
 
-            using (var driver = new ChromeDriver())
+            foreach (var filter in filterValues)
             {
-                foreach (var filter in filterValues)
-                {
-                    var page = new HomePage(driver, settings).GoToSimpleDataNoPagingPage();
-                    IWebElement filterInputElement = page.GetFilterInputElement();
+                var page = new HomePage(driver, settings).GoToSimpleDataNoPagingPage();
+                IWebElement filterInputElement = page.GetFilterInputElement();
 
-                    filterInputElement.SendKeys(filter);
-                    Thread.Sleep(1000);
-                    var rows = page.GetRowElements();
-                    var rowsText = rows.Select(e => e.Text);
+                filterInputElement.SendKeys(filter);
+                Thread.Sleep(1000);
+                var rows = page.GetRowElements();
+                var rowsText = rows.Select(e => e.Text);
 
-                    Assert.IsTrue(rowsText.All(x => x.ToLower().Contains(filter.ToLower())), $"Test failed for filter value: {filter}");
-                }
+                Assert.IsTrue(rowsText.All(x => x.ToLower().Contains(filter.ToLower())), $"Test failed for filter value: {filter}");
             }
         }
 
@@ -70,7 +68,6 @@
                 randomModel.ComplexModel.SimpleModel.Double.ToString(),
                 randomModel.ComplexModel.SimpleModel.DateTime.ToShortDateString(),
 
-
                 randomModel.String.Substring(1, 3),
                 randomModel.String.Substring(1, 3).ToLower(),
                 randomModel.String.Substring(1, 3).ToUpper(),
@@ -81,22 +78,19 @@
                 randomModel.DateTime.ToShortDateString()
             };
 
-            using (var driver = new ChromeDriver())
+            foreach (var filter in filterValues)
             {
-                foreach (var filter in filterValues)
-                {
-                    var page = isPaged ?
-                        new HomePage(driver, settings).GoToComplexDataPage() :
-                        new HomePage(driver, settings).GoToComplexDataNoPagingPage();
-                    IWebElement filterInputElement = page.GetFilterInputElement();
+                var page = isPaged ?
+                    new HomePage(driver, settings).GoToComplexDataPage() :
+                    new HomePage(driver, settings).GoToComplexDataNoPagingPage();
+                IWebElement filterInputElement = page.GetFilterInputElement();
 
-                    filterInputElement.SendKeys(filter);
-                    Thread.Sleep(1000);
-                    var rows = page.GetRowElements();
-                    var rowsText = rows.Select(e => e.Text);
+                filterInputElement.SendKeys(filter);
+                Thread.Sleep(1000);
+                var rows = page.GetRowElements();
+                var rowsText = rows.Select(e => e.Text);
 
-                    Assert.IsTrue(rowsText.All(x => x.ToLower().Contains(filter.ToLower())), $"Test failed for filter value: {filter}");
-                }
+                Assert.IsTrue(rowsText.All(x => x.ToLower().Contains(filter.ToLower())), $"Test failed for filter value: {filter}");
             }
         }
     }
