@@ -54,5 +54,50 @@
                 }
             }
         }
+
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        public void ShouldFilterByNestedPropertiesProperly(bool isPaged)
+        {
+            var allData = DataHelpers.GetComplexDataFull(this.settings);
+            var randomModel = allData.First(x => x.String.Length >= 6 && x.Double.ToString().Length > 6);
+            var filterValues = new List<string>()
+            {
+                randomModel.ComplexModel.String.Substring(1,3),
+                randomModel.ComplexModel.SimpleModel.String,
+                randomModel.ComplexModel.SimpleModel.Integer.ToString(),
+                randomModel.ComplexModel.SimpleModel.Double.ToString(),
+                randomModel.ComplexModel.SimpleModel.DateTime.ToShortDateString(),
+
+
+                randomModel.String.Substring(1, 3),
+                randomModel.String.Substring(1, 3).ToLower(),
+                randomModel.String.Substring(1, 3).ToUpper(),
+                randomModel.Integer.ToString(),
+                randomModel.Double.ToString().Substring(0, 4),
+                true.ToString(),
+                randomModel.Integer.ToString(),
+                randomModel.DateTime.ToShortDateString()
+            };
+
+            using (var driver = new ChromeDriver())
+            {
+                foreach (var filter in filterValues)
+                {
+                    var page = isPaged ?
+                        new HomePage(driver, settings).GoToComplexDataPage() :
+                        new HomePage(driver, settings).GoToComplexDataNoPagingPage();
+                    IWebElement filterInputElement = page.GetFilterInputElement();
+
+                    filterInputElement.SendKeys(filter);
+                    Thread.Sleep(1000);
+                    var rows = page.GetRowElements();
+                    var rowsText = rows.Select(e => e.Text);
+
+                    Assert.IsTrue(rowsText.All(x => x.ToLower().Contains(filter.ToLower())), $"Test failed for filter value: {filter}");
+                }
+            }
+        }
     }
 }

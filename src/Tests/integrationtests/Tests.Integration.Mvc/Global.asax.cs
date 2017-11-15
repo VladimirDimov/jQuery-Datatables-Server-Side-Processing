@@ -18,6 +18,7 @@
 
             var dataGenerator = new DataGenerator();
             HomeController.SimpleDataBig = dataGenerator.GenerateSimpleData(500, DateTime.Now.AddYears(-5), DateTime.Now);
+            HomeController.ComplexDataBig = dataGenerator.GenerateComplexData(500, DateTime.Now.AddYears(-5), DateTime.Now);
         }
     }
 }

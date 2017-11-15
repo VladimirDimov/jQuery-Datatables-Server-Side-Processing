@@ -34,5 +34,19 @@
 
             return new SimpleDataPage(driver);
         }
+
+        public ComplexDataPage GoToComplexDataNoPagingPage()
+        {
+            this.driver.Navigate().GoToUrl(this.settings["serverUrl"] + "home/ComplexDataTestPage?isPaged=false");
+
+            return new ComplexDataPage(driver);
+        }
+
+        internal ComplexDataPage GoToComplexDataPage()
+        {
+            this.driver.Navigate().GoToUrl(this.settings["serverUrl"] + "home/ComplexDataTestPage");
+
+            return new ComplexDataPage(driver);
+        }
     }
 }

@@ -187,6 +187,7 @@
     <Content Include="Views\Home\SimpleDataTestPage.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\SimpleDataNoPagingTestPage.cshtml" />
+    <None Include="Views\Home\ComplexDataTestPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
