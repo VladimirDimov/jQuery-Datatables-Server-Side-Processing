@@ -74,5 +74,17 @@
 
             return lambda;
         }
+
+        /// <summary>
+        /// Determines whether the specified type is a System type.
+        /// </summary>
+        /// <param name="type">The type.</param>
+        /// <returns>
+        ///   <c>true</c> if [is CLR library type] [the specified type]; otherwise, <c>false</c>.
+        /// </returns>
+        public static bool IsCLRLibraryType(this Type type)
+        {
+            return type.Module.ScopeName != "CommonLanguageRuntimeLibrary";
+        }
     }
 }

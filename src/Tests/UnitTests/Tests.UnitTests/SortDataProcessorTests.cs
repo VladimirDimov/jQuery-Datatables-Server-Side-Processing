@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using JQDT.DataProcessing;
 using JQDT.Models;
@@ -94,15 +95,118 @@ namespace Tests.UnitTests
         }
 
         [Test]
-        public void SortByMultiplePropertiesShouldReturnCorrectExpression()
+        [TestCase(true)]
+        [TestCase(false)]
+        public void SortByMultiplePropertiesShouldReturnCorrectExpression(bool isAsc)
         {
-            Assert.Fail("Not completed");
+            var requestModel = this.GetComplexRequestInfoModel();
+            requestModel.TableParameters.Columns = new List<Column>
+            {
+                new Column
+                {
+                    Data = "NestedComplexModel.String",
+                    Orderable = true
+                },
+                new Column
+                {
+                    Data = "NestedComplexModel.NestedComplexModel.String",
+                    Orderable = false
+                },
+                new Column
+                {
+                    Data = "NestedComplexModel.NestedComplexModel.SimpleModel.DateTime",
+                    Orderable = true
+                },
+            };
+
+            requestModel.TableParameters.Order = new List<Order>
+            {
+                new Order
+                {
+                    Column = 0,
+                    Dir = isAsc ? "asc" : "desc"
+                },
+                new Order
+                {
+                    Column = 1,
+                    Dir = isAsc ? "asc" : "desc"
+                },
+                new Order
+                {
+                    Column = 2,
+                    Dir = isAsc ? "asc" : "desc"
+                }
+            };
+
+            var actualExpr = this.filter.ProcessData(this.complexData, requestModel);
+            var actualExprStr = actualExpr.Expression.ToString();
+            var expectedExprStr = $"System.Collections.Generic.List`1[{typeof(ComplexModel).FullName}].OrderBy{(isAsc ? "" : "Descending")}(x => Convert(x).NestedComplexModel.String).ThenBy{(isAsc ? "" : "Descending")}(x => Convert(x).NestedComplexModel.NestedComplexModel.String).ThenBy{(isAsc ? "" : "Descending")}(x => Convert(x).NestedComplexModel.NestedComplexModel.SimpleModel.DateTime)";
+
+            Assert.AreEqual(expectedExprStr, actualExprStr);
+            Assert.DoesNotThrow(() =>
+            {
+                var tmp = actualExpr.ToList();
+            });
         }
 
         [Test]
-        public void SortByIncorrectColumnNameShouldThroAppropriateException()
+        [TestCase(true)]
+        [TestCase(false)]
+        public void SortByIncorrectColumnNameShouldThroAppropriateException(bool isAsc)
         {
-            Assert.Fail("Not completed");
+            var exception = Assert.Throws<ArgumentException>(() =>
+            {
+                var requestModel = this.GetComplexRequestInfoModel();
+                requestModel.TableParameters.Columns = new List<Column>
+                {
+                    new Column
+                    {
+                        Data = "NestedComplexModel.InvalidProperty"
+                    }
+                };
+
+                requestModel.TableParameters.Order = new List<Order>
+                {
+                    new Order
+                    {
+                        Column = 0,
+                        Dir = isAsc ? "asc" : "desc"
+                    }
+                };
+
+                var actualExpr = this.filter.ProcessData(this.complexData, requestModel);
+            });
+
+            Assert.IsTrue(exception.Message.ToLower().Contains("invalid property name"));
+        }
+
+        [Test]
+        public void ShouldThrowAppropriateExceptionWheSortByComplexProperty()
+        {
+            var exception = Assert.Throws<ArgumentException>(() =>
+            {
+                var requestModel = this.GetComplexRequestInfoModel();
+                requestModel.TableParameters.Columns = new List<Column>
+                {
+                    new Column
+                    {
+                        Data = "NestedComplexModel.SimpleModel"
+                    }
+                };
+
+                requestModel.TableParameters.Order = new List<Order>
+                {
+                    new Order
+                    {
+                        Column = 0,
+                        Dir = "asc"
+                    }
+                };
+
+                var actualExpr = this.filter.ProcessData(this.complexData, requestModel);
+            });
+
+            Assert.IsTrue(exception.Message.ToLower().Contains("invalid property type"));
         }
 
         private RequestInfoModel GetSimpleRequestInfoModel()

@@ -17,6 +17,7 @@
         private const string INVALID_PROPERTY_NAME_EXCEPTION = "Invalid property name. The property {0} does not exist in the model.";
 
         private const string MissingColumnNameException = @"Missing column name for column with index {0}. Make sure that the data property of the column is configured appropriately as described in jQuery Datatables documentation.";
+        private const string InvalidPropertyTypeException = "Invalid property type: {0}. Can sort only by simple types.";
 
         /// <summary>
         /// Called when [process data].
@@ -51,6 +52,11 @@
                 if (propInfoPath == null)
                 {
                     throw new ArgumentException(string.Format(INVALID_PROPERTY_NAME_EXCEPTION, colName));
+                }
+
+                if (propInfo.PropertyType.IsCLRLibraryType())
+                {
+                    throw new ArgumentException(string.Format(InvalidPropertyTypeException, propInfo.PropertyType.FullName));
                 }
 
                 var propType = propInfo.PropertyType;
