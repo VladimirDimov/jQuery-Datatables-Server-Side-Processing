@@ -1,8 +1,8 @@
 ﻿namespace JQDT
 {
     using System;
-    using System.Linq;
     using System.Web.Mvc;
+    using JQDT.Application;
 
     /// <summary>
     /// Used to decorate the action that returns data table response.
@@ -19,18 +19,16 @@
         {
             try
             {
-                var ajaxForm = ((System.Web.HttpRequestWrapper)((System.Web.HttpContextWrapper)filterContext.RequestContext.HttpContext).Request).Form;
-                IQueryable<object> data = (IQueryable<object>)filterContext.Controller.ViewData.Model;
-
-                var app = new Application();
-                var result = app.Execute(ajaxForm, data);
+                var app = new ApplicationMvc(filterContext);
+                var result = app.Execute();
 
                 filterContext.Result = this.FormatResult(new
                 {
                     draw = result.Draw,
                     recordsTotal = result.RecordsTotal,
                     recordsFiltered = result.RecordsFiltered,
-                    data = result.Data
+                    data = result.Data,
+                    error = result.Error
                 });
             }
             catch (Exception ex)
@@ -38,7 +36,7 @@
                 filterContext.HttpContext.Response.StatusCode = 500;
                 filterContext.Result = this.FormatResult(new
                 {
-                    error = ex.Message
+                    Error = ex.Message
                 });
             }
 

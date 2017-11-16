@@ -70,7 +70,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Application.cs" />
+    <Compile Include="Application\ApplicationBase.cs" />
+    <Compile Include="Application\ApplicationMvc.cs" />
     <Compile Include="DataProcessing\ColumnsFilterDataProcessor.cs" />
     <Compile Include="DataProcessing\CustomFiltersDataProcessor.cs" />
     <Compile Include="DataProcessing\DataProcessBase.cs" />

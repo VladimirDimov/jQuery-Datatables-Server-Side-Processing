@@ -38,5 +38,13 @@
         /// The data.
         /// </value>
         public List<object> Data { get; internal set; }
+
+        /// <summary>
+        /// Gets or sets the error.
+        /// </summary>
+        /// <value>
+        /// The error.
+        /// </value>
+        public string Error { get; set; }
     }
 }

@@ -16,10 +16,7 @@
 
         private const string INVALID_PROPERTY_NAME_EXCEPTION = "Invalid property name. The property {0} does not exist in the model.";
 
-        private const string MissingColumnNameException =
-            @"Missing column name for column with index {0}.
-            Make sure that the data property of the column is configured appropriately as described
-            in jQuery Datatables documentation: https://datatables.net/examples/ajax/objects.html";
+        private const string MissingColumnNameException = @"Missing column name for column with index {0}. Make sure that the data property of the column is configured appropriately as described in jQuery Datatables documentation.";
 
         /// <summary>
         /// Called when [process data].
@@ -43,7 +40,10 @@
 
                 if (string.IsNullOrEmpty(colName))
                 {
-                    throw new ArgumentException(string.Format(MissingColumnNameException, orderColumn.Column));
+                    var ex = new ArgumentException(string.Format(MissingColumnNameException, orderColumn.Column));
+                    ex.HelpLink = "https://datatables.net/examples/ajax/objects.html";
+
+                    throw ex;
                 }
 
                 var isAsc = orderColumn.Dir == ASC;
