@@ -36,7 +36,6 @@
                 true.ToString().ToLower(),
                 true.ToString().ToUpper(),
                 randomModel.Integer.ToString(),
-                randomModel.DateTime.ToShortDateString()
             };
 
             foreach (var filter in filterValues)
@@ -66,7 +65,6 @@
                 randomModel.ComplexModel.SimpleModel.String,
                 randomModel.ComplexModel.SimpleModel.Integer.ToString(),
                 randomModel.ComplexModel.SimpleModel.Double.ToString(),
-                randomModel.ComplexModel.SimpleModel.DateTime.ToShortDateString(),
 
                 randomModel.String.Substring(1, 3),
                 randomModel.String.Substring(1, 3).ToLower(),
@@ -75,7 +73,6 @@
                 randomModel.Double.ToString().Substring(0, 4),
                 true.ToString(),
                 randomModel.Integer.ToString(),
-                randomModel.DateTime.ToShortDateString()
             };
 
             foreach (var filter in filterValues)

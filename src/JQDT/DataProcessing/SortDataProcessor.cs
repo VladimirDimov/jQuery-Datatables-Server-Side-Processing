@@ -74,7 +74,6 @@
             var methodSuffix = isAsending ? string.Empty : "Descending";
             var orderMethodName = $"{methodPrefix}{methodSuffix}";
 
-            // TODO: Extract ThenBy on separate method. ThenBy is applied on IOrderedQueryable
             var orderByExpr = Expression.Call(typeof(Queryable), orderMethodName, new Type[] { typeof(object), propType }, dataExpr, selectorParamExpr);
 
             // data, selector => data.OrderBy(selector)
