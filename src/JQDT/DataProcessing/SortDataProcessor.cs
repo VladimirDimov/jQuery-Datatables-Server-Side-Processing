@@ -31,8 +31,6 @@
         {
             var modelType = requestInfoModel.Helpers.ModelType;
 
-            // TODO: Remove if unnecessary.
-            IQueryable<object> orderedData = data.Select(x => x);
             var isFirst = true;
             foreach (var orderColumn in requestInfoModel.TableParameters.Order)
             {
@@ -62,17 +60,17 @@
 
                 if (isFirst)
                 {
-                    orderedData = (IQueryable<object>)lambdaExpr.Compile().DynamicInvoke(data, propertySelectExpr);
+                    data = (IQueryable<object>)lambdaExpr.Compile().DynamicInvoke(data, propertySelectExpr);
                 }
                 else
                 {
-                    orderedData = (IOrderedQueryable<object>)lambdaExpr.Compile().DynamicInvoke(orderedData, propertySelectExpr);
+                    data = (IOrderedQueryable<object>)lambdaExpr.Compile().DynamicInvoke(data, propertySelectExpr);
                 }
 
                 isFirst = false;
             }
 
-            return orderedData;
+            return data;
         }
 
         private LambdaExpression OrderByExpression(Type propType, bool isAscending, bool isFirst)
