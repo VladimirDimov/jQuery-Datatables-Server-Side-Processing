@@ -13,6 +13,9 @@
     /// </summary>
     internal class FilterDataProcessor : DataProcessBase
     {
+        private const string NoSearchablePropertiesException = "A search value has been provided but no searchable properties were found. Make sure that the data property of the column is configured appropriately as described in jQuery Datatables documentation.";
+        private const string HelpLink = "https://datatables.net/examples/ajax/objects.html";
+
         private RequestInfoModel requestInfoModel;
 
         /// <summary>
@@ -32,7 +35,7 @@
 
             this.requestInfoModel = requestInfoModel;
 
-            var expr = this.BuildExpression(data.GetType().GetGenericArguments().First(), requestInfoModel.TableParameters.Search.Value);
+            var expr = this.BuildExpression(requestInfoModel.Helpers.ModelType, requestInfoModel.TableParameters.Search.Value);
             data = data.Where(expr);
 
             return data;
@@ -49,15 +52,32 @@
                 .Where(col => col.Searchable)
                 .Select(col => col.Data);
 
+            if (!searchableProperties.Any())
+            {
+                throw new ArgumentException(NoSearchablePropertiesException)
+                {
+                    HelpLink = HelpLink
+                };
+            }
+
             foreach (var propertyPath in searchableProperties)
             {
                 var currentPropertyContainsExpression = this.GetSinglePropertyContainsExpression(modelType, search, propertyPath, modelParamExpr);
                 containExpressionCollection.Add(currentPropertyContainsExpression);
             }
 
-            Expression orExpr = this.GetOrExpr(containExpressionCollection);
+            // If the search is performed on more than one property the Contain expressions must be joined with OR operator
+            Expression joinedExpressions = null;
+            if (containExpressionCollection.Count > 1)
+            {
+                joinedExpressions = this.GetOrExpr(containExpressionCollection);
+            }
+            else
+            {
+                joinedExpressions = containExpressionCollection.Single();
+            }
 
-            var lambda = Expression.Lambda(orExpr, modelParamExpr);
+            var lambda = Expression.Lambda(joinedExpressions, modelParamExpr);
 
             return (Expression<Func<object, bool>>)lambda;
         }

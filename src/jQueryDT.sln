@@ -17,6 +17,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests.Integration.Mvc", "te
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests.SeleniumTests", "tests\IntegrationTests\Tests.SeleniumTests\Tests.SeleniumTests.csproj", "{D43B1961-1C1A-4F9C-B25C-278C6547743A}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UnitTests", "UnitTests", "{B9F020C7-E6AF-4839-A5F6-2FA6EFBB9D95}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests.UnitTests", "Tests\UnitTests\Tests.UnitTests\Tests.UnitTests.csproj", "{647240F0-6F49-426C-A49F-BE7BA6DDBD81}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,6 +47,10 @@ Global
 		{D43B1961-1C1A-4F9C-B25C-278C6547743A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D43B1961-1C1A-4F9C-B25C-278C6547743A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D43B1961-1C1A-4F9C-B25C-278C6547743A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{647240F0-6F49-426C-A49F-BE7BA6DDBD81}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{647240F0-6F49-426C-A49F-BE7BA6DDBD81}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{647240F0-6F49-426C-A49F-BE7BA6DDBD81}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{647240F0-6F49-426C-A49F-BE7BA6DDBD81}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -52,6 +60,8 @@ Global
 		{2891DE1E-12C1-45B7-9C6A-B4356104F6DA} = {EDCECD8E-0A03-4B35-878C-567E148A83BD}
 		{D6951034-15BA-4526-AE6F-90F7F9A386B9} = {2891DE1E-12C1-45B7-9C6A-B4356104F6DA}
 		{D43B1961-1C1A-4F9C-B25C-278C6547743A} = {2891DE1E-12C1-45B7-9C6A-B4356104F6DA}
+		{B9F020C7-E6AF-4839-A5F6-2FA6EFBB9D95} = {EDCECD8E-0A03-4B35-878C-567E148A83BD}
+		{647240F0-6F49-426C-A49F-BE7BA6DDBD81} = {B9F020C7-E6AF-4839-A5F6-2FA6EFBB9D95}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {131DA7AE-7C14-4656-82C0-6F592D155809}
