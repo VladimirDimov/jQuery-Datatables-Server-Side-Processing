@@ -32,7 +32,10 @@
                 var propInfo = currentModelType.GetProperties().FirstOrDefault(p => p.Name == propName);
                 if (propInfo == null)
                 {
-                    throw new ArgumentException($"Invalid property name. The property {propertyName} does not exist in the model. Throw on {propName}");
+                    throw new ArgumentException(
+                        $@"Invalid property name. The property {propertyName} does not exist in the model.
+                         Make sure that the data property of the column is configured appropriately as described
+                        in jQuery Datatables documentation: https://datatables.net/examples/ajax/objects.html");
                 }
 
                 currentModelType = propInfo.PropertyType;
