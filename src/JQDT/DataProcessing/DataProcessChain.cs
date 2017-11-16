@@ -54,7 +54,7 @@
         /// <returns>
         ///   <see cref="IQueryable{object}" />
         /// </returns>
-        public override IQueryable<object> OnProcessData(IQueryable<object> data, RequestInfoModel requestInfoModel)
+        protected override IQueryable<object> OnProcessData(IQueryable<object> data, RequestInfoModel requestInfoModel)
         {
             var currentDataState = data;
 

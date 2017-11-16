@@ -46,6 +46,6 @@
         /// <param name="data">The data.</param>
         /// <param name="requestInfoModel">The request information model.</param>
         /// <returns><see cref="IQueryable{object}"/></returns>
-        public abstract IQueryable<object> OnProcessData(IQueryable<object> data, RequestInfoModel requestInfoModel);
+        protected abstract IQueryable<object> OnProcessData(IQueryable<object> data, RequestInfoModel requestInfoModel);
     }
 }

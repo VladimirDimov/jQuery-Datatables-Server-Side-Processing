@@ -15,7 +15,7 @@
         {
             var filterProc = new FilterDataProcessor();
             var data = new List<SimpleModel>().AsQueryable();
-            var processedData = filterProc.OnProcessData(data, new RequestInfoModel()
+            var processedData = filterProc.ProcessData(data, new RequestInfoModel()
             {
                 Helpers = new RequestHelpers { ModelType = typeof(SimpleModel) },
                 TableParameters = new DataTableAjaxPostModel
@@ -51,7 +51,7 @@
         {
             var filterProc = new FilterDataProcessor();
             var data = new List<SimpleModel>().AsQueryable();
-            var processedData = filterProc.OnProcessData(data, new RequestInfoModel()
+            var processedData = filterProc.ProcessData(data, new RequestInfoModel()
             {
                 Helpers = new RequestHelpers { ModelType = typeof(SimpleModel) },
                 TableParameters = new DataTableAjaxPostModel
@@ -84,7 +84,7 @@
             {
                 var filterProc = new FilterDataProcessor();
                 var data = new List<SimpleModel>().AsQueryable();
-                var processedData = filterProc.OnProcessData(data, new RequestInfoModel()
+                var processedData = filterProc.ProcessData(data, new RequestInfoModel()
                 {
                     Helpers = new RequestHelpers { ModelType = typeof(SimpleModel) },
                     TableParameters = new DataTableAjaxPostModel
@@ -112,7 +112,7 @@
         {
             var filterProc = new FilterDataProcessor();
             var data = new List<ComplexModel>().AsQueryable();
-            var processedData = filterProc.OnProcessData(data, new RequestInfoModel()
+            var processedData = filterProc.ProcessData(data, new RequestInfoModel()
             {
                 Helpers = new RequestHelpers { ModelType = typeof(ComplexModel) },
                 TableParameters = new DataTableAjaxPostModel
@@ -143,7 +143,7 @@
         {
             var filterProc = new FilterDataProcessor();
             var data = new List<ComplexModel>().AsQueryable();
-            var processedData = filterProc.OnProcessData(data, new RequestInfoModel()
+            var processedData = filterProc.ProcessData(data, new RequestInfoModel()
             {
                 Helpers = new RequestHelpers { ModelType = typeof(ComplexModel) },
                 TableParameters = new DataTableAjaxPostModel

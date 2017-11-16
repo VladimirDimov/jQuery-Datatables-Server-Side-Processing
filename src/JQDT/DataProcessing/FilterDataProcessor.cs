@@ -26,7 +26,7 @@
         /// <returns>
         ///   <see cref="IQueryable{object}" />
         /// </returns>
-        public override IQueryable<object> OnProcessData(IQueryable<object> data, RequestInfoModel requestInfoModel)
+        protected override IQueryable<object> OnProcessData(IQueryable<object> data, RequestInfoModel requestInfoModel)
         {
             if (string.IsNullOrWhiteSpace(requestInfoModel.TableParameters.Search.Value))
             {

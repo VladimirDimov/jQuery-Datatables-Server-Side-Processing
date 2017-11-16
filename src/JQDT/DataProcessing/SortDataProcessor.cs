@@ -27,7 +27,7 @@
         ///   <see cref="IQueryable{object}" />
         /// </returns>
         /// <exception cref="ArgumentException">Thrown when invalid property name is passed</exception>
-        public override IQueryable<object> OnProcessData(IQueryable<object> data, RequestInfoModel requestInfoModel)
+        protected override IQueryable<object> OnProcessData(IQueryable<object> data, RequestInfoModel requestInfoModel)
         {
             var modelType = requestInfoModel.Helpers.ModelType;
 
