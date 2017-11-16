@@ -28,6 +28,7 @@
     <script>
         var table = $('#table-simple').DataTable({
             "paging": @this.ViewBag.IsPaged,
+            "searching": @this.ViewBag.Searching,
             "proccessing": true,
             "serverSide": true,
             "ajax": {

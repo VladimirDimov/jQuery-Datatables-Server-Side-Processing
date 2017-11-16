@@ -15,9 +15,10 @@
             return this.View();
         }
 
-        public ActionResult SimpleDataTestPage(bool isPaged = true)
+        public ActionResult SimpleDataTestPage(bool isPaged = true, bool searching = true)
         {
             this.ViewBag.IsPaged = isPaged.ToString().ToLower();
+            this.ViewBag.Searching = searching.ToString().ToLower();
 
             return View();
         }
@@ -33,9 +34,10 @@
             return this.Json(HomeController.SimpleDataBig, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult ComplexDataTestPage(bool isPaged = true)
+        public ActionResult ComplexDataTestPage(bool isPaged = true, bool searching = true)
         {
             this.ViewBag.IsPaged = isPaged.ToString().ToLower();
+            this.ViewBag.Searching = searching.ToString().ToLower();
 
             return View();
         }
