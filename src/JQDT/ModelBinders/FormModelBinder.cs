@@ -22,8 +22,8 @@
         /// <returns><see cref="RequestInfoModel"/></returns>
         public RequestInfoModel BindModel(NameValueCollection ajaxForm, object data)
         {
-            /// TODO: All methods should use <see cref="FormModelBinder.ajaxFormDictionary"/>
-            InitializeAjaxFormDictionary(ajaxForm);
+            // TODO: All methods should use FormModelBinder.ajaxFormDictionary
+            this.InitializeAjaxFormDictionary(ajaxForm);
 
             var lengthStr = ajaxForm["length"];
 

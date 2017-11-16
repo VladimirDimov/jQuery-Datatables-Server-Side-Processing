@@ -16,10 +16,18 @@
     {
         private RequestInfoModel rquestInfoModel;
 
+        /// <summary>
+        /// Called when [process data].
+        /// </summary>
+        /// <param name="data">The data.</param>
+        /// <param name="requestInfoModel">The request information model.</param>
+        /// <returns>
+        ///   <see cref="IQueryable{object}" />
+        /// </returns>
         public override IQueryable<object> OnProcessData(IQueryable<object> data, RequestInfoModel requestInfoModel)
         {
             var columnsWithFilter = requestInfoModel.TableParameters.Columns
-                .Where(col => !String.IsNullOrEmpty(col.Search?.Value));
+                .Where(col => !string.IsNullOrEmpty(col.Search?.Value));
 
             if (columnsWithFilter.Count() == 0)
             {

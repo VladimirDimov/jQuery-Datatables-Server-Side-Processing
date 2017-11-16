@@ -58,8 +58,9 @@
             if (expression == null)
             {
                 throw new ArgumentNullException(
-                    string.Format(NullExpressionException,
-                    string.Join(".", propertyInfoPath.Select(x => x.Name))));
+                    string.Format(
+                        NullExpressionException,
+                        string.Join(".", propertyInfoPath.Select(x => x.Name))));
             }
 
             if (propertyInfoPath == null)

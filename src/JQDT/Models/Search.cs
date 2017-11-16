@@ -14,10 +14,10 @@
         public string Value { get; set; }
 
         /// <summary>
-        /// Gets or sets the regex.
+        /// Gets or sets a value indicating whether this <see cref="Search"/> is regex.
         /// </summary>
         /// <value>
-        /// The regex.
+        ///   <c>true</c> if regex; otherwise, <c>false</c>.
         /// </value>
         public bool Regex { get; set; }
     }
