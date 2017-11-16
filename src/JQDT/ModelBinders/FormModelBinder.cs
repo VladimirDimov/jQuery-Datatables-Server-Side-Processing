@@ -22,17 +22,16 @@
         /// <returns><see cref="RequestInfoModel"/></returns>
         public RequestInfoModel BindModel(NameValueCollection ajaxForm, object data)
         {
-            // TODO: All methods should use FormModelBinder.ajaxFormDictionary
             this.InitializeAjaxFormDictionary(ajaxForm);
 
-            var lengthStr = ajaxForm["length"];
+            var lengthStr = this.ajaxFormDictionary["length"];
 
             // TODO: Throw appropriate exceptions when mandatory value is missing;
             int start = 0;
-            int.TryParse(ajaxForm["start"], out start);
+            int.TryParse(this.ajaxFormDictionary["start"], out start);
 
             int length = 0;
-            int.TryParse(ajaxForm["length"], out length);
+            int.TryParse(this.ajaxFormDictionary["length"], out length);
 
             var datatableModel = new DataTableAjaxPostModel
             {
@@ -40,11 +39,11 @@
                 Length = length,
                 Search = new Search
                 {
-                    Value = ajaxForm["search[value]"]
+                    Value = this.ajaxFormDictionary["search[value]"]
                 },
-                Order = this.GetOrderList(ajaxForm),
-                Columns = this.GetColumns(ajaxForm),
-                Custom = this.GetCustom(ajaxForm)
+                Order = this.GetOrderList(),
+                Columns = this.GetColumns(),
+                Custom = this.GetCustom()
             };
 
             var requestInfoModel = new RequestInfoModel
@@ -68,21 +67,21 @@
             }
         }
 
-        private Custom GetCustom(NameValueCollection ajaxForm)
+        private Custom GetCustom()
         {
             var custom = new Custom
             {
-                Filters = this.GetCustomFilters(ajaxForm)
+                Filters = this.GetCustomFilters()
             };
 
             return custom;
         }
 
-        private Dictionary<string, IEnumerable<FilterModel>> GetCustomFilters(NameValueCollection ajaxForm)
+        private Dictionary<string, IEnumerable<FilterModel>> GetCustomFilters()
         {
             const string PATTERN = @"^custom\[filters\]\[(.+)\]\[(gte|gt|lte|lt)\]$";
             var filters = new Dictionary<string, IEnumerable<FilterModel>>();
-            foreach (var key in ajaxForm.AllKeys)
+            foreach (var key in this.ajaxFormDictionary.Keys)
             {
                 var match = Regex.Match(key, PATTERN);
                 if (match.Success)
@@ -95,7 +94,7 @@
                     ((ICollection<FilterModel>)filters[match.Groups[1].Value]).Add(new FilterModel
                     {
                         Type = (FilterTypes)Enum.Parse(typeof(FilterTypes), match.Groups[2].Value),
-                        Value = ajaxForm[key]
+                        Value = this.ajaxFormDictionary[key]
                     });
                 }
             }
@@ -103,18 +102,18 @@
             return filters;
         }
 
-        private List<Column> GetColumns(NameValueCollection ajaxForm)
+        private List<Column> GetColumns()
         {
             const string Pattern = @"^columns\[(\d+)\]\[data\]$";
             var columns = new List<Column>();
             var colData = new SortedList<int, string>();
-            foreach (var key in ajaxForm.AllKeys)
+            foreach (var key in this.ajaxFormDictionary.Keys)
             {
                 var matches = Regex.Match(key, Pattern);
 
                 if (matches.Success)
                 {
-                    colData.Add(int.Parse(matches.Groups[1].Value), ajaxForm[key]);
+                    colData.Add(int.Parse(matches.Groups[1].Value), this.ajaxFormDictionary[key]);
                 }
             }
 
@@ -182,12 +181,12 @@
             return isSearchable;
         }
 
-        private List<Order> GetOrderList(NameValueCollection form)
+        private List<Order> GetOrderList()
         {
             var orders = new List<Order>();
             const string DirectionPattern = @"^order\[(\d+)\]\[dir\]$";
             var colNumbers = new List<int>();
-            foreach (var key in form.AllKeys)
+            foreach (var key in this.ajaxFormDictionary.Keys)
             {
                 var match = Regex.Match(key, DirectionPattern);
                 if (match.Success)
@@ -197,13 +196,13 @@
 
                     orders.Add(new Order
                     {
-                        Column = int.Parse(form[columnKey]),
-                        Dir = form[key]
+                        Column = int.Parse(this.ajaxFormDictionary[columnKey]),
+                        Dir = this.ajaxFormDictionary[key]
                     });
                 }
             }
 
-            var col = form["order[0][column]"];
+            var col = this.ajaxFormDictionary["order[0][column]"];
 
             return orders;
         }
