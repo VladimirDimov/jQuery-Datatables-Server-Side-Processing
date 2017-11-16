@@ -30,7 +30,7 @@
         {
             if (string.IsNullOrWhiteSpace(requestInfoModel.TableParameters.Search.Value))
             {
-                return data.Select(x => x);
+                return data;
             }
 
             this.requestInfoModel = requestInfoModel;
@@ -82,34 +82,6 @@
             return (Expression<Func<object, bool>>)lambda;
         }
 
-        private ICollection<ICollection<PropertyInfo>> GetPropertiesMap(Type modelType)
-        {
-            ICollection<ICollection<PropertyInfo>> propertiesMap = new List<ICollection<PropertyInfo>>();
-            ICollection<PropertyInfo> current = new List<PropertyInfo>();
-            this.GetPropertiesMapRecursive(modelType, ref propertiesMap, ref current);
-
-            return propertiesMap;
-        }
-
-        private void GetPropertiesMapRecursive(Type modelType, ref ICollection<ICollection<PropertyInfo>> propertiesMap, ref ICollection<PropertyInfo> current)
-        {
-            var properties = modelType.GetProperties();
-            foreach (var property in properties)
-            {
-                var copyOfCurrent = (ICollection<PropertyInfo>)current.Select(x => x).ToList();
-                copyOfCurrent.Add(property);
-
-                if (!(property.PropertyType.Namespace == "System"))
-                {
-                    this.GetPropertiesMapRecursive(property.PropertyType, ref propertiesMap, ref copyOfCurrent);
-                }
-                else
-                {
-                    propertiesMap.Add(copyOfCurrent);
-                }
-            }
-        }
-
         private Expression GetOrExpr(List<MethodCallExpression> containExpressionCollection)
         {
             var numberOfExpressions = containExpressionCollection.Count;
@@ -151,25 +123,6 @@
             var containsExpr = Expression.Call(toLowerExpr, containsMethodInfo, searchValExpr);
 
             return containsExpr;
-        }
-
-        private MemberExpression GetPropertySelectExpression(UnaryExpression modelExpr, ICollection<PropertyInfo> propertyInfoPath)
-        {
-            MemberExpression propertySelectExpr = null;
-
-            foreach (var propertyInfo in propertyInfoPath)
-            {
-                if (propertySelectExpr == null)
-                {
-                    propertySelectExpr = Expression.Property(modelExpr, propertyInfo);
-                }
-                else
-                {
-                    propertySelectExpr = Expression.Property(propertySelectExpr, propertyInfo);
-                }
-            }
-
-            return propertySelectExpr;
         }
     }
 }

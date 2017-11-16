@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FilterDataProcessorTests.cs" />
+    <Compile Include="Models\ComplexModel.cs" />
     <Compile Include="Models\SimpleModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
