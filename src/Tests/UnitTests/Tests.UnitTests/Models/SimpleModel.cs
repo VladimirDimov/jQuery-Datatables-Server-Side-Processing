@@ -13,5 +13,7 @@
         public DateTime DateTime { get; set; }
 
         public bool Boolean { get; set; }
+
+        public char Char { get; set; }
     }
 }

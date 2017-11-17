@@ -1,0 +1,357 @@
+﻿namespace Tests.UnitTests
+{
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using JQDT.DataProcessing;
+    using JQDT.Models;
+    using NUnit.Framework;
+    using Tests.UnitTests.Common;
+    using Tests.UnitTests.Models;
+
+    internal class CustomFiltersDataProcessorTests
+    {
+        private CustomFiltersDataProcessor filter;
+        private IQueryable<SimpleModel> simpleData;
+        private IQueryable<ComplexModel> complexData;
+
+        [SetUp]
+        public void SetUp()
+        {
+            this.filter = new CustomFiltersDataProcessor();
+            this.simpleData = new List<SimpleModel>().AsQueryable();
+            this.complexData = new List<ComplexModel>().AsQueryable();
+        }
+
+        [Test]
+        [TestCase(FilterTypes.gt)]
+        [TestCase(FilterTypes.lt)]
+        [TestCase(FilterTypes.gte)]
+        [TestCase(FilterTypes.lte)]
+        public void ShouldReturnCorrectExpressionOnSingleColumnGreaterThanForSimpleInteger(FilterTypes filterType)
+        {
+            this.AssertShouldReturnCorrectExpressionOnSingleColumnGreaterThanForInteger(filterType, x => ((ComplexModel)x).Integer);
+        }
+
+        [Test]
+        [TestCase(FilterTypes.gt)]
+        [TestCase(FilterTypes.lt)]
+        [TestCase(FilterTypes.gte)]
+        [TestCase(FilterTypes.lte)]
+        public void ShouldReturnCorrectExpressionOnSingleColumnGreaterThanForNestedInteger(FilterTypes filterType)
+        {
+            this.AssertShouldReturnCorrectExpressionOnSingleColumnGreaterThanForInteger(filterType, x => ((ComplexModel)x).NestedComplexModel.SimpleModel.Integer);
+        }
+
+        [Test]
+        [TestCase(FilterTypes.gt)]
+        [TestCase(FilterTypes.lt)]
+        [TestCase(FilterTypes.gte)]
+        [TestCase(FilterTypes.lte)]
+        public void ShouldReturnCorrectExpressionOnSingleColumnGreaterThanForSimpleDouble(FilterTypes filterType)
+        {
+            this.AssertShouldReturnCorrectExpressionOnSingleColumnGreaterThanForDouble(filterType, x => ((ComplexModel)x).Double);
+        }
+
+        [Test]
+        [TestCase(FilterTypes.gt)]
+        [TestCase(FilterTypes.lt)]
+        [TestCase(FilterTypes.gte)]
+        [TestCase(FilterTypes.lte)]
+        public void ShouldReturnCorrectExpressionOnSingleColumnGreaterThanForNestedDouble(FilterTypes filterType)
+        {
+            this.AssertShouldReturnCorrectExpressionOnSingleColumnGreaterThanForDouble(filterType, x => ((ComplexModel)x).NestedComplexModel.Double);
+        }
+
+        [Test]
+        [TestCase(FilterTypes.gt)]
+        [TestCase(FilterTypes.lt)]
+        [TestCase(FilterTypes.gte)]
+        [TestCase(FilterTypes.lte)]
+        public void ShouldReturnCorrectExpressionOnSingleColumnGreaterThanForSimpleDateTime(FilterTypes filterType)
+        {
+            this.AssertShouldReturnCorrectExpressionOnSingleColumnGreaterThanForDateTime(filterType, x => ((ComplexModel)x).DateTime);
+        }
+
+        [Test]
+        [TestCase(FilterTypes.gt)]
+        [TestCase(FilterTypes.lt)]
+        [TestCase(FilterTypes.gte)]
+        [TestCase(FilterTypes.lte)]
+        public void ShouldReturnCorrectExpressionOnSingleColumnGreaterThanForNestedDateTime(FilterTypes filterType)
+        {
+            this.AssertShouldReturnCorrectExpressionOnSingleColumnGreaterThanForDateTime(filterType, x => ((ComplexModel)x).NestedComplexModel.SimpleModel.DateTime);
+        }
+
+        [Test]
+        [TestCase(FilterTypes.gt)]
+        [TestCase(FilterTypes.lt)]
+        [TestCase(FilterTypes.gte)]
+        [TestCase(FilterTypes.lte)]
+        public void ShouldReturnCorrectExpressionOnSingleColumnGreaterThanForChar(FilterTypes filterType)
+        {
+            this.AssertShouldReturnCorrectExpressionOnSingleColumnGreaterThanForChar(filterType, x => ((ComplexModel)x).Char);
+        }
+
+        [Test]
+        [TestCase(FilterTypes.gt)]
+        [TestCase(FilterTypes.lt)]
+        [TestCase(FilterTypes.gte)]
+        [TestCase(FilterTypes.lte)]
+        public void ShouldReturnCorrectExpressionOnSingleColumnGreaterThanForNestedChar(FilterTypes filterType)
+        {
+            this.AssertShouldReturnCorrectExpressionOnSingleColumnGreaterThanForChar(filterType, x => ((ComplexModel)x).SimpleModel.Char);
+        }
+
+        [Test]
+        public void ShouldThrowAppropriateExceptionIfIncorrectPropertyType()
+        {
+            var exception = Assert.Throws<ArgumentException>(() =>
+            {
+                var value = "l";
+
+                this.AssertFilter(
+                    new List<string> { "String" },
+                    new Dictionary<string, IEnumerable<FilterModel>>
+                    {
+                    { "String", new List<FilterModel>{ new FilterModel { Type = FilterTypes.gt, Value = value } } }
+                    },
+                    x => true);
+            });
+
+            Assert.IsTrue(exception.Message.StartsWith("Property String of type String is invalid for the requested filter"));
+        }
+
+        [Test]
+        public void ShouldReturnCorrectExpressionOnSingleColumnGreaterThanForChar()
+        {
+            var value = (char)50;
+
+            this.AssertFilter(
+                new List<string> { "Char" },
+                new Dictionary<string, IEnumerable<FilterModel>>
+                {
+                    { "Char", new List<FilterModel>{ new FilterModel { Type = FilterTypes.gt, Value = value.ToString() } } }
+                },
+                x => ((ComplexModel)x).Char > value);
+        }
+
+        private void AssertShouldReturnCorrectExpressionOnSingleColumnGreaterThanForChar(FilterTypes filterType, Func<object, char> selectProp)
+        {
+            char value = (char)50;
+            var col = "Char";
+            Func<object, bool> predicate = null;
+
+            switch (filterType)
+            {
+                case FilterTypes.gte:
+                    predicate = x => selectProp(x) >= value;
+                    break;
+
+                case FilterTypes.gt:
+                    predicate = x => selectProp(x) > value;
+                    break;
+
+                case FilterTypes.lt:
+                    predicate = x => selectProp(x) < value;
+                    break;
+
+                case FilterTypes.lte:
+                    predicate = x => selectProp(x) <= value;
+                    break;
+
+                default:
+                    break;
+            }
+
+            this.AssertFilter(
+                new List<string> { col },
+                new Dictionary<string, IEnumerable<FilterModel>>
+                {
+                    { col, new List<FilterModel>{ new FilterModel { Type = filterType, Value = value.ToString() } } }
+                },
+                predicate);
+        }
+
+        private void AssertShouldReturnCorrectExpressionOnSingleColumnGreaterThanForInteger(FilterTypes filterType, Func<object, int> selectProp)
+        {
+            double value = 50;
+
+            Func<object, bool> predicate = null;
+            var col = "Integer";
+
+            switch (filterType)
+            {
+                case FilterTypes.gte:
+                    predicate = x => selectProp(x) >= value;
+                    break;
+
+                case FilterTypes.gt:
+                    predicate = x => selectProp(x) > value;
+                    break;
+
+                case FilterTypes.lt:
+                    predicate = x => selectProp(x) < value;
+                    break;
+
+                case FilterTypes.lte:
+                    predicate = x => selectProp(x) <= value;
+                    break;
+
+                default:
+                    break;
+            }
+
+            this.AssertFilter(
+                new List<string> { col },
+                new Dictionary<string, IEnumerable<FilterModel>>
+                {
+                    { col, new List<FilterModel>{ new FilterModel { Type = filterType, Value = value.ToString() } } }
+                },
+                predicate);
+        }
+
+        private void AssertShouldReturnCorrectExpressionOnSingleColumnGreaterThanForDouble(FilterTypes filterType, Func<object, double> selectProp)
+        {
+            double value = (50 / 1000d);
+
+            Func<object, bool> predicate = null;
+            var col = "Double";
+
+            switch (filterType)
+            {
+                case FilterTypes.gte:
+                    predicate = x => selectProp(x) >= value;
+                    break;
+
+                case FilterTypes.gt:
+                    predicate = x => selectProp(x) > value;
+                    break;
+
+                case FilterTypes.lt:
+                    predicate = x => selectProp(x) < value;
+                    break;
+
+                case FilterTypes.lte:
+                    predicate = x => selectProp(x) <= value;
+                    break;
+
+                default:
+                    break;
+            }
+
+            this.AssertFilter(
+                new List<string> { col },
+                new Dictionary<string, IEnumerable<FilterModel>>
+                {
+                    { col, new List<FilterModel>{ new FilterModel { Type = filterType, Value = value.ToString() } } }
+                },
+                predicate);
+        }
+
+        private void AssertShouldReturnCorrectExpressionOnSingleColumnGreaterThanForDateTime(FilterTypes filterType, Func<object, DateTime> selectProp)
+        {
+            var value = new DateTime(2017, 1, 15);
+            Func<object, bool> predicate = null;
+            var col = "DateTime";
+
+            switch (filterType)
+            {
+                case FilterTypes.gte:
+                    predicate = x => selectProp(x) >= value;
+                    break;
+
+                case FilterTypes.gt:
+                    predicate = x => selectProp(x) > value;
+                    break;
+
+                case FilterTypes.lt:
+                    predicate = x => selectProp(x) < value;
+                    break;
+
+                case FilterTypes.lte:
+                    predicate = x => selectProp(x) <= value;
+                    break;
+
+                default:
+                    break;
+            }
+
+            this.AssertFilter(
+                new List<string> { col },
+                new Dictionary<string, IEnumerable<FilterModel>>
+                {
+                    { col, new List<FilterModel>{ new FilterModel { Type = filterType, Value = value.ToShortDateString() } } }
+                },
+                predicate);
+        }
+
+        private void AssertFilter(IEnumerable<string> columns, Dictionary<string, IEnumerable<FilterModel>> filterModels, Func<object, bool> predicate)
+        {
+            var requestModel = TestHelpers.GetComplexRequestInfoModel();
+            requestModel.TableParameters.Custom.Filters = filterModels;
+
+            foreach (var col in columns)
+            {
+                requestModel.TableParameters.Columns.Add(new Column { Data = col });
+            }
+
+            var data = this.GenerateComplexData(100);
+            var actualExpr = this.filter.ProcessData(data, requestModel);
+            var processedData = actualExpr.ToList();
+            Assert.IsTrue(processedData.All(predicate));
+            Assert.IsFalse(data.Except(processedData).Any(predicate));
+        }
+
+        private IQueryable<ComplexModel> GenerateComplexData(int numberOfItems)
+        {
+            var data = new List<ComplexModel>();
+
+            for (int i = 1; i <= numberOfItems; i++)
+            {
+                var boolean = i % 2 == 0;
+                var dateTime = new DateTime(2017, 1, ((i - 1) % 30) + 1);
+                var @double = i / 1000f;
+                var integer = i;
+                var @string = i % 2 == 0 ? "eVen" : "odD";
+
+                data.Add(new ComplexModel
+                {
+                    Boolean = boolean,
+                    DateTime = dateTime,
+                    Double = @double,
+                    Integer = integer,
+                    String = @string,
+                    Char = (char)i,
+                    SimpleModel = new SimpleModel
+                    {
+                        Boolean = boolean,
+                        DateTime = dateTime,
+                        Double = @double,
+                        Integer = integer,
+                        String = @string,
+                        Char = (char)i
+                    },
+                    NestedComplexModel = new ComplexModel
+                    {
+                        Boolean = boolean,
+                        DateTime = dateTime,
+                        Double = @double,
+                        Integer = integer,
+                        String = @string,
+                        SimpleModel = new SimpleModel
+                        {
+                            Boolean = boolean,
+                            DateTime = dateTime,
+                            Double = @double,
+                            Integer = integer,
+                            String = @string,
+                        }
+                    }
+                });
+            }
+
+            return data.AsQueryable();
+        }
+    }
+}

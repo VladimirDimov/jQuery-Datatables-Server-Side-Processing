@@ -53,6 +53,7 @@
   <ItemGroup>
     <Compile Include="ColumnsFilterDataProcessorTests.cs" />
     <Compile Include="Common\TestHelpers.cs" />
+    <Compile Include="CustomFiltersDataProcessorTests.cs" />
     <Compile Include="FilterDataProcessorTests.cs" />
     <Compile Include="Models\ComplexModel.cs" />
     <Compile Include="Models\SimpleModel.cs" />

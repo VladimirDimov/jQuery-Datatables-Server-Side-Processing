@@ -56,7 +56,8 @@
                             Data = "NestedComplexModel.NestedComplexModel.SimpleModel.String",
                             Orderable = true
                         }
-                    }
+                    },
+                    Custom = new Custom()
                 }
             };
         }
