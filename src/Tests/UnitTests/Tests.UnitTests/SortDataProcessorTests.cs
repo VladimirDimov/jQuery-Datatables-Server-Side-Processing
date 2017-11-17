@@ -4,6 +4,7 @@ using System.Linq;
 using JQDT.DataProcessing;
 using JQDT.Models;
 using NUnit.Framework;
+using Tests.UnitTests.Common;
 using Tests.UnitTests.Models;
 
 namespace Tests.UnitTests
@@ -27,7 +28,7 @@ namespace Tests.UnitTests
         [TestCase(false)]
         public void SortBySingleNonNestedPropertyShouldReturnCorrectExpression(bool isAsc)
         {
-            var requestModel = this.GetComplexRequestInfoModel();
+            var requestModel = TestHelpers.GetComplexRequestInfoModel();
             requestModel.TableParameters.Columns = new List<Column>
             {
                 new Column
@@ -63,7 +64,7 @@ namespace Tests.UnitTests
         [TestCase(false)]
         public void SortBySingleNestedPropertyShouldReturnCorrectExpression(bool isAsc)
         {
-            var requestModel = this.GetComplexRequestInfoModel();
+            var requestModel = TestHelpers.GetComplexRequestInfoModel();
             requestModel.TableParameters.Columns = new List<Column>
             {
                 new Column
@@ -99,7 +100,7 @@ namespace Tests.UnitTests
         [TestCase(false)]
         public void SortByMultiplePropertiesShouldReturnCorrectExpression(bool isAsc)
         {
-            var requestModel = this.GetComplexRequestInfoModel();
+            var requestModel = TestHelpers.GetComplexRequestInfoModel();
             requestModel.TableParameters.Columns = new List<Column>
             {
                 new Column
@@ -156,7 +157,7 @@ namespace Tests.UnitTests
         {
             var exception = Assert.Throws<ArgumentException>(() =>
             {
-                var requestModel = this.GetComplexRequestInfoModel();
+                var requestModel = TestHelpers.GetComplexRequestInfoModel();
                 requestModel.TableParameters.Columns = new List<Column>
                 {
                     new Column
@@ -185,7 +186,7 @@ namespace Tests.UnitTests
         {
             var exception = Assert.Throws<ArgumentException>(() =>
             {
-                var requestModel = this.GetComplexRequestInfoModel();
+                var requestModel = TestHelpers.GetComplexRequestInfoModel();
                 requestModel.TableParameters.Columns = new List<Column>
                 {
                     new Column
@@ -214,7 +215,7 @@ namespace Tests.UnitTests
         {
             var exception = Assert.Throws<ArgumentException>(() =>
             {
-                var requestModel = this.GetComplexRequestInfoModel();
+                var requestModel = TestHelpers.GetComplexRequestInfoModel();
                 requestModel.TableParameters.Columns = new List<Column>
                 {
                     new Column
@@ -236,61 +237,6 @@ namespace Tests.UnitTests
             });
 
             Assert.IsTrue(exception.Message.ToLower().Contains("missing column name"));
-        }
-
-        private RequestInfoModel GetSimpleRequestInfoModel()
-        {
-            return new RequestInfoModel()
-            {
-                Helpers = new RequestHelpers
-                {
-                    ModelType = typeof(SimpleModel)
-                },
-                TableParameters = new DataTableAjaxPostModel
-                {
-                    Search = new Search
-                    {
-                        Value = ""
-                    },
-                    Columns = new List<Column>
-                    {
-                        new Column{
-                            Data = "String",
-                            Orderable = true
-                        },
-                        new Column
-                        {
-                            Data = "Integer",
-                            Orderable = true
-                        }
-                    }
-                }
-            };
-        }
-
-        private RequestInfoModel GetComplexRequestInfoModel()
-        {
-            return new RequestInfoModel()
-            {
-                Helpers = new RequestHelpers
-                {
-                    ModelType = typeof(ComplexModel)
-                },
-                TableParameters = new DataTableAjaxPostModel
-                {
-                    Search = new Search
-                    {
-                        Value = ""
-                    },
-                    Columns = new List<Column>
-                    {
-                        new Column{
-                            Data = "NestedComplexModel.NestedComplexModel.SimpleModel.String",
-                            Orderable = true
-                        }
-                    }
-                }
-            };
         }
     }
 }

@@ -51,9 +51,11 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\TestHelpers.cs" />
     <Compile Include="FilterDataProcessorTests.cs" />
     <Compile Include="Models\ComplexModel.cs" />
     <Compile Include="Models\SimpleModel.cs" />
+    <Compile Include="PagingDataProcessorTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SortDataProcessorTests.cs" />
   </ItemGroup>
