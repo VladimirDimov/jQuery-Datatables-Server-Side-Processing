@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using JQDT.DataProcessing;
-using JQDT.Models;
-using NUnit.Framework;
-using Tests.UnitTests.Common;
-using Tests.UnitTests.Models;
-
-namespace Tests.UnitTests
+﻿namespace Tests.UnitTests
 {
-    class PagingDataProcessorTests
+    using System.Collections.Generic;
+    using System.Linq;
+    using JQDT.DataProcessing;
+    using NUnit.Framework;
+    using Tests.UnitTests.Common;
+    using Tests.UnitTests.Models;
+
+    internal class PagingDataProcessorTests
     {
         private PagingDataProcessor filter;
         private IQueryable<SimpleModel> simpleData;

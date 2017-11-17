@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using JQDT.DataProcessing;
-using JQDT.Models;
-using NUnit.Framework;
-using Tests.UnitTests.Common;
-using Tests.UnitTests.Models;
-
-namespace Tests.UnitTests
+﻿namespace Tests.UnitTests
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using JQDT.DataProcessing;
+    using JQDT.Models;
+    using NUnit.Framework;
+    using Tests.UnitTests.Common;
+    using Tests.UnitTests.Models;
+
     internal class SortDataProcessorTests
     {
         private SortDataProcessor filter;

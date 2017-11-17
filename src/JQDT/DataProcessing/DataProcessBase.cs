@@ -1,5 +1,6 @@
 ﻿namespace JQDT.DataProcessing
 {
+    using System;
     using System.Linq;
     using JQDT.Models;
 
@@ -9,6 +10,9 @@
     /// <seealso cref="JQDT.DataProcessing.IDataProcess" />
     public abstract class DataProcessBase : IDataProcess
     {
+        private const string NullDataExceptionMessage = "Invalid null value for data argument in data processor";
+        private const string NullRequestInfoModelExceptionMessage = "Invalid null value for request info model argument in data processor.";
+
         private IQueryable<object> processedData;
 
         /// <summary>
@@ -35,6 +39,16 @@
         /// </returns>
         public IQueryable<object> ProcessData(IQueryable<object> data, RequestInfoModel requestInfoModel)
         {
+            if (data == null)
+            {
+                throw new ArgumentNullException(NullDataExceptionMessage);
+            }
+
+            if (requestInfoModel == null)
+            {
+                throw new ArgumentNullException(NullRequestInfoModelExceptionMessage);
+            }
+
             this.processedData = this.OnProcessData(data, requestInfoModel);
 
             return this.ProcessedData;

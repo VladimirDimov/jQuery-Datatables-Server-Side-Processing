@@ -4,7 +4,6 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Linq.Expressions;
-    using System.Reflection;
     using JQDT.Extensions;
     using JQDT.Models;
 
@@ -14,6 +13,10 @@
     /// <seealso cref="JQDT.DataProcessing.DataProcessBase" />
     internal class ColumnsFilterDataProcessor : DataProcessBase
     {
+        private const string ToStringMethodName = "ToString";
+        private const string ToLowerMethodName = "ToLower";
+        private const string ContainsMethodName = "Contains";
+
         private RequestInfoModel rquestInfoModel;
 
         /// <summary>
@@ -26,7 +29,8 @@
         /// </returns>
         protected override IQueryable<object> OnProcessData(IQueryable<object> data, RequestInfoModel requestInfoModel)
         {
-            var columnsWithFilter = requestInfoModel.TableParameters.Columns
+            var columnsWithFilter =
+                requestInfoModel.TableParameters.Columns
                 .Where(col => !string.IsNullOrEmpty(col.Search?.Value));
 
             if (columnsWithFilter.Count() == 0)
@@ -78,19 +82,19 @@
             // (ModelType)m.Prop1.Prop2.ToString()
             var toStringMethodInfo = typeof(object)
                 .GetMethods()
-                .Where(m => m.Name == "ToString" && !m.GetParameters().Any())
+                .Where(m => m.Name == ToStringMethodName && !m.GetParameters().Any())
                 .Single();
             var toStringExpr = Expression.Call(propSelectExpr, toStringMethodInfo);
 
             // (ModelType)m.Prop1.Prop2.ToString().ToLower()
             var toLowerMethodInfo = typeof(string).GetMethods()
-                .Where(m => m.Name == "ToLower" && !m.GetParameters().Any())
+                .Where(m => m.Name == ToLowerMethodName && !m.GetParameters().Any())
                 .Single();
             var toLowerExpr = Expression.Call(toStringExpr, toLowerMethodInfo);
 
             // (ModelType)m.Prop1.Prop2.ToString().ToLower().Contains(substring)
             var containsMethodInfo = typeof(string).GetMethods()
-                .Where(m => m.Name == "Contains" && m.GetParameters().Count() == 1)
+                .Where(m => m.Name == ContainsMethodName && m.GetParameters().Count() == 1)
                 .Single();
             var searchParamExpr = Expression.Constant(column.Search.Value);
             var containsExpr = Expression.Call(toLowerExpr, containsMethodInfo, searchParamExpr);

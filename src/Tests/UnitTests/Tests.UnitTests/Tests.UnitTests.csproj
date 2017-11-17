@@ -51,6 +51,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ColumnsFilterDataProcessorTests.cs" />
     <Compile Include="Common\TestHelpers.cs" />
     <Compile Include="FilterDataProcessorTests.cs" />
     <Compile Include="Models\ComplexModel.cs" />
