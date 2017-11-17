@@ -18,8 +18,6 @@
         /// <summary>
         /// Application entry point method. Should be called from the ActionFilter.
         /// </summary>
-        /// <param name="ajaxForm">The ajax form.</param>
-        /// <param name="data">The data.</param>
         /// <returns><see cref="ResultModel"/></returns>
         public ResultModel Execute()
         {
@@ -52,8 +50,16 @@
             return resultModel;
         }
 
+        /// <summary>
+        /// Gets the ajax form as <see cref="NameValueCollection"/> from the request context.
+        /// </summary>
+        /// <returns>form data as <see cref="NameValueCollection"/></returns>
         protected abstract NameValueCollection GetAjaxForm();
 
+        /// <summary>
+        /// Gets the data collection as <see cref="IQueryable{object}"/> from the request context.
+        /// </summary>
+        /// <returns>Data collection as <see cref="IQueryable{object}"/></returns>
         protected abstract IQueryable<object> GetData();
 
         private string FormatException(Exception ex)
