@@ -30,7 +30,7 @@
         [TestCase(FilterTypes.lte)]
         public void ShouldReturnCorrectExpressionOnSingleColumnGreaterThanForSimpleInteger(FilterTypes filterType)
         {
-            this.AssertShouldReturnCorrectExpressionOnSingleColumnGreaterThanForInteger(filterType, x => ((ComplexModel)x).Integer);
+            this.AssertShouldReturnCorrectExpressionOnSingleColumnGreaterThanForInteger("Integer", filterType, x => ((ComplexModel)x).Integer);
         }
 
         [Test]
@@ -40,7 +40,7 @@
         [TestCase(FilterTypes.lte)]
         public void ShouldReturnCorrectExpressionOnSingleColumnGreaterThanForNestedInteger(FilterTypes filterType)
         {
-            this.AssertShouldReturnCorrectExpressionOnSingleColumnGreaterThanForInteger(filterType, x => ((ComplexModel)x).NestedComplexModel.SimpleModel.Integer);
+            this.AssertShouldReturnCorrectExpressionOnSingleColumnGreaterThanForInteger("NestedComplexModel.SimpleModel.Integer", filterType, x => ((ComplexModel)x).NestedComplexModel.SimpleModel.Integer);
         }
 
         [Test]
@@ -50,7 +50,7 @@
         [TestCase(FilterTypes.lte)]
         public void ShouldReturnCorrectExpressionOnSingleColumnGreaterThanForSimpleDouble(FilterTypes filterType)
         {
-            this.AssertShouldReturnCorrectExpressionOnSingleColumnGreaterThanForDouble(filterType, x => ((ComplexModel)x).Double);
+            this.AssertShouldReturnCorrectExpressionOnSingleColumnGreaterThanForDouble("Double", filterType, x => ((ComplexModel)x).Double);
         }
 
         [Test]
@@ -60,7 +60,7 @@
         [TestCase(FilterTypes.lte)]
         public void ShouldReturnCorrectExpressionOnSingleColumnGreaterThanForNestedDouble(FilterTypes filterType)
         {
-            this.AssertShouldReturnCorrectExpressionOnSingleColumnGreaterThanForDouble(filterType, x => ((ComplexModel)x).NestedComplexModel.Double);
+            this.AssertShouldReturnCorrectExpressionOnSingleColumnGreaterThanForDouble("NestedComplexModel.Double", filterType, x => ((ComplexModel)x).NestedComplexModel.Double);
         }
 
         [Test]
@@ -70,7 +70,7 @@
         [TestCase(FilterTypes.lte)]
         public void ShouldReturnCorrectExpressionOnSingleColumnGreaterThanForSimpleDateTime(FilterTypes filterType)
         {
-            this.AssertShouldReturnCorrectExpressionOnSingleColumnGreaterThanForDateTime(filterType, x => ((ComplexModel)x).DateTime);
+            this.AssertShouldReturnCorrectExpressionOnSingleColumnGreaterThanForDateTime("DateTime", filterType, x => ((ComplexModel)x).DateTime);
         }
 
         [Test]
@@ -80,7 +80,7 @@
         [TestCase(FilterTypes.lte)]
         public void ShouldReturnCorrectExpressionOnSingleColumnGreaterThanForNestedDateTime(FilterTypes filterType)
         {
-            this.AssertShouldReturnCorrectExpressionOnSingleColumnGreaterThanForDateTime(filterType, x => ((ComplexModel)x).NestedComplexModel.SimpleModel.DateTime);
+            this.AssertShouldReturnCorrectExpressionOnSingleColumnGreaterThanForDateTime("NestedComplexModel.SimpleModel.DateTime", filterType, x => ((ComplexModel)x).NestedComplexModel.SimpleModel.DateTime);
         }
 
         [Test]
@@ -90,7 +90,7 @@
         [TestCase(FilterTypes.lte)]
         public void ShouldReturnCorrectExpressionOnSingleColumnGreaterThanForChar(FilterTypes filterType)
         {
-            this.AssertShouldReturnCorrectExpressionOnSingleColumnGreaterThanForChar(filterType, x => ((ComplexModel)x).Char);
+            this.AssertShouldReturnCorrectExpressionOnSingleColumnGreaterThanForChar("Char", filterType, x => ((ComplexModel)x).Char);
         }
 
         [Test]
@@ -100,7 +100,7 @@
         [TestCase(FilterTypes.lte)]
         public void ShouldReturnCorrectExpressionOnSingleColumnGreaterThanForNestedChar(FilterTypes filterType)
         {
-            this.AssertShouldReturnCorrectExpressionOnSingleColumnGreaterThanForChar(filterType, x => ((ComplexModel)x).SimpleModel.Char);
+            this.AssertShouldReturnCorrectExpressionOnSingleColumnGreaterThanForChar("SimpleModel.Char", filterType, x => ((ComplexModel)x).SimpleModel.Char);
         }
 
         [Test]
@@ -136,10 +136,155 @@
                 x => ((ComplexModel)x).Char > value);
         }
 
-        private void AssertShouldReturnCorrectExpressionOnSingleColumnGreaterThanForChar(FilterTypes filterType, Func<object, char> selectProp)
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        public void ShouldReturnCorrectExpressionOnSingleColumnStrictRangeForInteger(bool isStrict)
+        {
+            const int Min = 30;
+            const int Max = 60;
+            string col = "Integer";
+            Func<object, int> propSelect = x => ((ComplexModel)x).Integer;
+            this.AssertSingleColumnStrinctRange<int>(Min, Max, col, x => ((ComplexModel)x).Integer, isStrict);
+        }
+
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        public void ShouldReturnCorrectExpressionOnSingleColumnStrictRangeForNestedInteger(bool isStrict)
+        {
+            const int Min = 30;
+            const int Max = 60;
+            string col = "NestedComplexModel.Integer";
+            Func<object, int> propSelect = x => ((ComplexModel)x).Integer;
+            this.AssertSingleColumnStrinctRange<int>(Min, Max, col, x => ((ComplexModel)x).NestedComplexModel.Integer, isStrict);
+        }
+
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        public void ShouldReturnCorrectExpressionOnSingleColumnStrictRangeForDouble(bool isStrict)
+        {
+            const double Min = 30 / 1000d;
+            const double Max = 60 / 1000d;
+            string col = "Double";
+            Func<object, double> propSelect = x => ((ComplexModel)x).Double;
+            this.AssertSingleColumnStrinctRange(Min, Max, col, x => ((ComplexModel)x).Double, isStrict);
+        }
+
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        public void ShouldReturnCorrectExpressionOnSingleColumnStrictRangeForNestedDouble(bool isStrict)
+        {
+            const double Min = 30 / 1000d;
+            const double Max = 60 / 1000d;
+            string col = "NestedComplexModel.Double";
+            Func<object, double> propSelect = x => ((ComplexModel)x).Double;
+            this.AssertSingleColumnStrinctRange(Min, Max, col, x => ((ComplexModel)x).NestedComplexModel.Double, isStrict);
+        }
+
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        public void ShouldReturnCorrectResultForFilterByRangeByMultipleProperties(bool isStrict)
+        {
+            const int MinInt = 30;
+            const int MaxInt = 55;
+            const double MinDouble = 50 / 1000d;
+            const double MaxDouble = 60 / 1000d;
+            var columns = new List<string> { "Integer", "" };
+            Func<object, int> selectInt = x => ((ComplexModel)x).Integer;
+            Func<object, double> selectDouble = x => ((ComplexModel)x).NestedComplexModel.Double;
+
+            var filterModels = new Dictionary<string, IEnumerable<FilterModel>>
+            {
+                {
+                    "Integer",
+                    new List<FilterModel>
+                    {
+                        new FilterModel
+                        {
+                            Type = isStrict ? FilterTypes.gt : FilterTypes.gte, Value = MinInt.ToString()
+                        },
+                        new FilterModel
+                        {
+                            Type = isStrict ? FilterTypes.lt : FilterTypes.lte, Value = MaxInt.ToString()
+                        }
+                    }
+                },
+
+                {
+                    "NestedComplexModel.Double",
+                    new List<FilterModel>
+                    {
+                        new FilterModel
+                        {
+                            Type = isStrict ? FilterTypes.gt : FilterTypes.gte, Value = MinDouble.ToString()
+                        },
+                        new FilterModel
+                        {
+                            Type = isStrict ? FilterTypes.lt : FilterTypes.lte, Value = MaxDouble.ToString()
+                        }
+                    }
+                }
+            };
+
+            if (isStrict)
+            {
+                this.AssertFilter(
+                    columns,
+                    filterModels,
+                    x =>
+                        MinInt < selectInt(x) && selectInt(x) < MaxInt &&
+                        MinDouble < selectDouble(x) && selectDouble(x) < MaxInt);
+            }
+            else
+            {
+                this.AssertFilter(
+                    columns,
+                    filterModels,
+                    x =>
+                        MinInt <= selectInt(x) && selectInt(x) <= MaxInt &&
+                        MinDouble <= selectDouble(x) && selectDouble(x) <= MaxInt);
+            }
+        }
+
+        private void AssertSingleColumnStrinctRange<T>(T min, T max, string col, Func<object, T> propSelect, bool isStrict)
+            where T : IComparable
+        {
+            var columns = new List<string> { col };
+            var filterModels = new Dictionary<string, IEnumerable<FilterModel>>
+            {
+                {
+                    col,
+                    new List<FilterModel>
+                    {
+                        new FilterModel
+                        {
+                            Type = isStrict ? FilterTypes.gt : FilterTypes.gte, Value = min.ToString()
+                        },
+                        new FilterModel
+                        {
+                            Type = isStrict ? FilterTypes.lt : FilterTypes.lte, Value = max.ToString()
+                        }
+                    }
+                }
+            };
+
+            if (isStrict)
+            {
+                this.AssertFilter(columns, filterModels, x => propSelect(x).CompareTo(min) > 0 && propSelect(x).CompareTo(max) < 0);
+            }
+            else
+            {
+                this.AssertFilter(columns, filterModels, x => propSelect(x).CompareTo(min) >= 0 && propSelect(x).CompareTo(max) <= 0);
+            }
+        }
+
+        private void AssertShouldReturnCorrectExpressionOnSingleColumnGreaterThanForChar(string col, FilterTypes filterType, Func<object, char> selectProp)
         {
             char value = (char)50;
-            var col = "Char";
             Func<object, bool> predicate = null;
 
             switch (filterType)
@@ -173,12 +318,11 @@
                 predicate);
         }
 
-        private void AssertShouldReturnCorrectExpressionOnSingleColumnGreaterThanForInteger(FilterTypes filterType, Func<object, int> selectProp)
+        private void AssertShouldReturnCorrectExpressionOnSingleColumnGreaterThanForInteger(string col, FilterTypes filterType, Func<object, int> selectProp)
         {
             double value = 50;
 
             Func<object, bool> predicate = null;
-            var col = "Integer";
 
             switch (filterType)
             {
@@ -211,12 +355,11 @@
                 predicate);
         }
 
-        private void AssertShouldReturnCorrectExpressionOnSingleColumnGreaterThanForDouble(FilterTypes filterType, Func<object, double> selectProp)
+        private void AssertShouldReturnCorrectExpressionOnSingleColumnGreaterThanForDouble(string col, FilterTypes filterType, Func<object, double> selectProp)
         {
             double value = (50 / 1000d);
 
             Func<object, bool> predicate = null;
-            var col = "Double";
 
             switch (filterType)
             {
@@ -249,11 +392,10 @@
                 predicate);
         }
 
-        private void AssertShouldReturnCorrectExpressionOnSingleColumnGreaterThanForDateTime(FilterTypes filterType, Func<object, DateTime> selectProp)
+        private void AssertShouldReturnCorrectExpressionOnSingleColumnGreaterThanForDateTime(string col, FilterTypes filterType, Func<object, DateTime> selectProp)
         {
             var value = new DateTime(2017, 1, 15);
             Func<object, bool> predicate = null;
-            var col = "DateTime";
 
             switch (filterType)
             {

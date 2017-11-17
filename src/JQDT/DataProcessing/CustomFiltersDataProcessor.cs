@@ -14,6 +14,7 @@
     internal class CustomFiltersDataProcessor : DataProcessBase
     {
         private const string InvalidPropertyTypeForRequestedFilterType = "Property {0} of type {1} is invalid for the requested filter of type {2}. It should be any of the supported types: {3}.";
+        private const string InvalidCustomOperatorException = "Invalid custom operator: {0}";
 
         private static HashSet<Type> comparissonOperatorsSupportedTypes;
 
@@ -69,7 +70,7 @@
                     return this.GetRangeExpression(key, filter, filter.Type);
 
                 default:
-                    throw new NotImplementedException();
+                    throw new NotImplementedException(string.Format(InvalidCustomOperatorException, filter.Type));
             }
         }
 
@@ -114,9 +115,6 @@
                     // x <= (Type)value
                     rangeExpr = Expression.LessThanOrEqual(propertyExpr, parseExpr);
                     break;
-
-                default:
-                    throw new NotImplementedException();
             }
 
             var tryBlock = Expression.Block(typeof(bool), rangeExpr);
