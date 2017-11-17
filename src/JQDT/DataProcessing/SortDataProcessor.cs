@@ -49,10 +49,6 @@
 
                 var propInfoPath = modelType.GetPropertyInfoPath(colName);
                 var propInfo = propInfoPath.Last();
-                if (propInfoPath == null)
-                {
-                    throw new ArgumentException(string.Format(INVALID_PROPERTY_NAME_EXCEPTION, colName));
-                }
 
                 if (propInfo.PropertyType.IsCLRLibraryType())
                 {

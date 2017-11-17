@@ -181,7 +181,7 @@ namespace Tests.UnitTests
         }
 
         [Test]
-        public void ShouldThrowAppropriateExceptionWheSortByComplexProperty()
+        public void ShouldThrowAppropriateExceptionWhenSortByComplexProperty()
         {
             var exception = Assert.Throws<ArgumentException>(() =>
             {
@@ -207,6 +207,35 @@ namespace Tests.UnitTests
             });
 
             Assert.IsTrue(exception.Message.ToLower().Contains("invalid property type"));
+        }
+
+        [Test]
+        public void ShouldThrowAppropriateExceptionWhenColumnNameIsMissing()
+        {
+            var exception = Assert.Throws<ArgumentException>(() =>
+            {
+                var requestModel = this.GetComplexRequestInfoModel();
+                requestModel.TableParameters.Columns = new List<Column>
+                {
+                    new Column
+                    {
+                        Data = string.Empty
+                    }
+                };
+
+                requestModel.TableParameters.Order = new List<Order>
+                {
+                    new Order
+                    {
+                        Column = 0,
+                        Dir = "asc"
+                    }
+                };
+
+                var actualExpr = this.filter.ProcessData(this.complexData, requestModel);
+            });
+
+            Assert.IsTrue(exception.Message.ToLower().Contains("missing column name"));
         }
 
         private RequestInfoModel GetSimpleRequestInfoModel()
