@@ -1,0 +1,41 @@
+﻿<table id="SearchResultTable" class="display" cellspacing="0" width="100%">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>FirstName</th>
+            <th>MiddleName</th>
+            <th>LastName</th>
+        </tr>
+    </thead>
+    <tfoot>
+        <tr>
+            <th>Title</th>
+            <th>FirstName</th>
+            <th>MiddleName</th>
+            <th>LastName</th>
+        </tr>
+    </tfoot>
+</table>
+
+@section Scripts {
+    <script>
+        var table = $('#SearchResultTable').DataTable({
+            "proccessing": true,
+            "serverSide": true,
+            "ajax": {
+                url: "@Url.Action("GetPeopleData", "AdventureWorks")",
+                type: 'POST'
+            },
+            "language": {
+                "search": "",
+                "searchPlaceholder": "Search..."
+            },
+           "columns": [
+               { "data": "Title" },
+               { "data": "FirstName" },
+               { "data": "MiddleName" },
+               { "data": "LastName"},
+            ]
+        });
+    </script>
+}

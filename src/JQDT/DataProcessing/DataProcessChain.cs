@@ -10,18 +10,18 @@
     /// </summary>
     /// <seealso cref="JQDT.DataProcessing.DataProcessBase" />
     /// <seealso cref="JQDT.DataProcessing.IDataProcessChain" />
-    internal class DataProcessChain : DataProcessBase, IDataProcessChain
+    internal class DataProcessChain<T> : DataProcessBase<T>, IDataProcessChain<T>
     {
-        private ICollection<IDataProcess> dataProcessors;
-        private Dictionary<string, object> intermidiateResults;
+        private ICollection<IDataProcess<T>> dataProcessors;
+        private Dictionary<string, T> intermidiateResults;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DataProcessChain"/> class.
         /// </summary>
         public DataProcessChain()
         {
-            this.dataProcessors = new LinkedList<IDataProcess>();
-            this.intermidiateResults = new Dictionary<string, object>();
+            this.dataProcessors = new LinkedList<IDataProcess<T>>();
+            this.intermidiateResults = new Dictionary<string, T>();
         }
 
         /// <summary>
@@ -30,7 +30,7 @@
         /// <value>
         /// The data processors.
         /// </value>
-        public IEnumerable<IDataProcess> DataProcessors
+        public IEnumerable<IDataProcess<T>> DataProcessors
         {
             get
             {
@@ -42,7 +42,7 @@
         /// Adds a data processor to the execution chain.
         /// </summary>
         /// <param name="dataProcessor">The data processor.</param>
-        public void AddDataProcessor(IDataProcess dataProcessor)
+        public void AddDataProcessor(IDataProcess<T> dataProcessor)
         {
             this.dataProcessors.Add(dataProcessor);
         }
@@ -53,9 +53,9 @@
         /// <param name="data">The data.</param>
         /// <param name="requestInfoModel">The request information model.</param>
         /// <returns>
-        ///   <see cref="IQueryable{object}" />
+        ///   <see cref="IQueryable{T}" />
         /// </returns>
-        protected override IQueryable<object> OnProcessData(IQueryable<object> data, RequestInfoModel requestInfoModel)
+        protected override IQueryable<T> OnProcessData(IQueryable<T> data, RequestInfoModel requestInfoModel)
         {
             var currentDataState = data;
 

@@ -8,12 +8,12 @@
     /// Base class for data processors.
     /// </summary>
     /// <seealso cref="JQDT.DataProcessing.IDataProcess" />
-    public abstract class DataProcessBase : IDataProcess
+    public abstract class DataProcessBase<T> : IDataProcess<T>
     {
         private const string NullDataExceptionMessage = "Invalid null value for data argument in data processor";
         private const string NullRequestInfoModelExceptionMessage = "Invalid null value for request info model argument in data processor.";
 
-        private IQueryable<object> processedData;
+        private IQueryable<T> processedData;
 
         /// <summary>
         /// Gets the processed data.
@@ -21,7 +21,7 @@
         /// <value>
         /// The processed data.
         /// </value>
-        public IQueryable<object> ProcessedData
+        public IQueryable<T> ProcessedData
         {
             get
             {
@@ -35,9 +35,9 @@
         /// <param name="data">The data.</param>
         /// <param name="requestInfoModel">The request information model.</param>
         /// <returns>
-        ///   <see cref="IQueryable{object} collection of the processed data." />
+        ///   <see cref="IQueryable{T} collection of the processed data." />
         /// </returns>
-        public IQueryable<object> ProcessData(IQueryable<object> data, RequestInfoModel requestInfoModel)
+        public IQueryable<T> ProcessData(IQueryable<T> data, RequestInfoModel requestInfoModel)
         {
             if (data == null)
             {
@@ -59,7 +59,7 @@
         /// </summary>
         /// <param name="data">The data.</param>
         /// <param name="requestInfoModel">The request information model.</param>
-        /// <returns><see cref="IQueryable{object}"/></returns>
-        protected abstract IQueryable<object> OnProcessData(IQueryable<object> data, RequestInfoModel requestInfoModel);
+        /// <returns><see cref="IQueryable{T}"/></returns>
+        protected abstract IQueryable<T> OnProcessData(IQueryable<T> data, RequestInfoModel requestInfoModel);
     }
 }

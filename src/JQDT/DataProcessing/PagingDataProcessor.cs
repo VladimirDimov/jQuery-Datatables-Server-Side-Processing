@@ -7,7 +7,7 @@
     /// Paging data processor
     /// </summary>
     /// <seealso cref="JQDT.DataProcessing.DataProcessBase" />
-    internal class PagingDataProcessor : DataProcessBase
+    internal class PagingDataProcessor<T> : DataProcessBase<T>
     {
         /// <summary>
         /// Called when [process data].
@@ -15,9 +15,9 @@
         /// <param name="data">The data.</param>
         /// <param name="requestInfoModel">The request information model.</param>
         /// <returns>
-        ///   <see cref="IQueryable{object}" />
+        ///   <see cref="IQueryable{T}" />
         /// </returns>
-        protected override IQueryable<object> OnProcessData(IQueryable<object> data, RequestInfoModel requestInfoModel)
+        protected override IQueryable<T> OnProcessData(IQueryable<T> data, RequestInfoModel requestInfoModel)
         {
             if (requestInfoModel.TableParameters.Length < 0)
             {

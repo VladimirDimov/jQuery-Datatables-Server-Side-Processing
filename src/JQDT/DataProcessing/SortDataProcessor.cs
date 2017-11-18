@@ -10,7 +10,7 @@
     /// Sort data processor.
     /// </summary>
     /// <seealso cref="JQDT.DataProcessing.DataProcessBase" />
-    internal class SortDataProcessor : DataProcessBase
+    internal class SortDataProcessor<T> : DataProcessBase<T>
     {
         private const string ASC = "asc";
 
@@ -25,10 +25,10 @@
         /// <param name="data">The data.</param>
         /// <param name="requestInfoModel">The request information model.</param>
         /// <returns>
-        ///   <see cref="IQueryable{object}" />
+        ///   <see cref="IQueryable{T}" />
         /// </returns>
         /// <exception cref="ArgumentException">Thrown when invalid property name is passed</exception>
-        protected override IQueryable<object> OnProcessData(IQueryable<object> data, RequestInfoModel requestInfoModel)
+        protected override IQueryable<T> OnProcessData(IQueryable<T> data, RequestInfoModel requestInfoModel)
         {
             var modelType = requestInfoModel.Helpers.ModelType;
 
@@ -62,11 +62,11 @@
 
                 if (isFirst)
                 {
-                    data = (IQueryable<object>)lambdaExpr.Compile().DynamicInvoke(data, propertySelectExpr);
+                    data = (IQueryable<T>)lambdaExpr.Compile().DynamicInvoke(data, propertySelectExpr);
                 }
                 else
                 {
-                    data = (IOrderedQueryable<object>)lambdaExpr.Compile().DynamicInvoke(data, propertySelectExpr);
+                    data = (IOrderedQueryable<T>)lambdaExpr.Compile().DynamicInvoke(data, propertySelectExpr);
                 }
 
                 isFirst = false;
@@ -78,11 +78,11 @@
         private LambdaExpression OrderByExpression(Type propType, bool isAscending, bool isFirst)
         {
             // data
-            var dataType = (isFirst ? typeof(IQueryable<>) : typeof(IOrderedQueryable<>)).MakeGenericType(typeof(object));
+            var dataType = (isFirst ? typeof(IQueryable<>) : typeof(IOrderedQueryable<>)).MakeGenericType(typeof(T));
             var dataExpr = Expression.Parameter(dataType, "x");
 
             // selector
-            var funcGenericType = typeof(Func<,>).MakeGenericType(typeof(object), propType);
+            var funcGenericType = typeof(Func<,>).MakeGenericType(typeof(T), propType);
             var selectorParamExpr = Expression.Parameter(typeof(Expression<>).MakeGenericType(funcGenericType), "selector");
 
             // data.OrderBy(selector)
@@ -90,7 +90,7 @@
             var orderByExpr = Expression.Call(
                 typeof(Queryable),
                 orderMethodName,
-                new Type[] { typeof(object), propType },
+                new Type[] { typeof(T), propType },
                 dataExpr,
                 selectorParamExpr);
 

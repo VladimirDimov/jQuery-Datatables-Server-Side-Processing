@@ -11,7 +11,7 @@
     /// Filters the data using the custom filters.
     /// </summary>
     /// <seealso cref="JQDT.DataProcessing.DataProcessBase" />
-    internal class CustomFiltersDataProcessor : DataProcessBase
+    internal class CustomFiltersDataProcessor<T> : DataProcessBase<T>
     {
         private const string InvalidPropertyTypeForRequestedFilterType = "Property {0} of type {1} is invalid for the requested filter of type {2}. It should be any of the supported types: {3}.";
         private const string InvalidCustomOperatorException = "Invalid custom operator: {0}";
@@ -34,9 +34,9 @@
         /// <param name="data">The data.</param>
         /// <param name="requestInfoModel">The request information model.</param>
         /// <returns>
-        ///   <see cref="IQueryable{object}" />
+        ///   <see cref="IQueryable{T}" />
         /// </returns>
-        protected override IQueryable<object> OnProcessData(IQueryable<object> data, RequestInfoModel requestInfoModel)
+        protected override IQueryable<T> OnProcessData(IQueryable<T> data, RequestInfoModel requestInfoModel)
         {
             this.requestInfoModel = requestInfoModel;
 
@@ -59,7 +59,7 @@
             return processedData;
         }
 
-        private Expression<Func<object, bool>> GetCustomFilterExpressionProdicate(string key, FilterModel filter)
+        private Expression<Func<T, bool>> GetCustomFilterExpressionProdicate(string key, FilterModel filter)
         {
             switch (filter.Type)
             {
@@ -74,13 +74,13 @@
             }
         }
 
-        private Expression<Func<object, bool>> GetRangeExpression(string key, FilterModel filter, FilterTypes filterType)
+        private Expression<Func<T, bool>> GetRangeExpression(string key, FilterModel filter, FilterTypes filterType)
         {
             // x
             var propertyInfoPath = this.requestInfoModel.Helpers.ModelType.GetPropertyInfoPath(key);
             var propertyType = propertyInfoPath.Last().PropertyType;
             this.ValidatePropertyType(key, propertyType, filterType);
-            var xExpr = Expression.Parameter(typeof(object), "x");
+            var xExpr = Expression.Parameter(typeof(T), "x");
 
             // (Type)x
             var castedXExpr = Expression.Convert(xExpr, this.requestInfoModel.Helpers.ModelType);
@@ -125,7 +125,7 @@
             var catchBlock = Expression.Catch(typeof(FormatException), throwExpr);
             var tryCatchExpr = Expression.TryCatch(tryBlock, catchBlock);
 
-            return (Expression<Func<object, bool>>)Expression.Lambda(tryCatchExpr, xExpr);
+            return (Expression<Func<T, bool>>)Expression.Lambda(tryCatchExpr, xExpr);
         }
 
         private void ValidatePropertyType(string propertyPath, Type propertyType, FilterTypes filterType)

@@ -6,7 +6,7 @@
     /// <summary>
     /// Data processor interface
     /// </summary>
-    internal interface IDataProcess
+    internal interface IDataProcess<T>
     {
         /// <summary>
         /// Gets the processed data.
@@ -14,7 +14,7 @@
         /// <value>
         /// The processed data.
         /// </value>
-        IQueryable<object> ProcessedData { get; }
+        IQueryable<T> ProcessedData { get; }
 
         /// <summary>
         /// Processes the data.
@@ -22,6 +22,6 @@
         /// <param name="data">The data.</param>
         /// <param name="requestInfoModel">The request information model.</param>
         /// <returns><see cref="IQueryable{object} collection of the processed data."/></returns>
-        IQueryable<object> ProcessData(IQueryable<object> data, RequestInfoModel requestInfoModel);
+        IQueryable<T> ProcessData(IQueryable<T> data, RequestInfoModel requestInfoModel);
     }
 }

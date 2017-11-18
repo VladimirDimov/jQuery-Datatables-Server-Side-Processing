@@ -8,7 +8,7 @@
     /// Entry point for MVC projects
     /// </summary>
     /// <seealso cref="JQDT.Application.ApplicationBase" />
-    internal class ApplicationMvc : ApplicationBase
+    internal class ApplicationMvc<T> : ApplicationBase<T>
     {
         private ActionExecutedContext filterContext;
 
@@ -42,9 +42,9 @@
         /// <returns>
         /// Data collection as <see cref="IQueryable{object}" />
         /// </returns>
-        protected override IQueryable<object> GetData()
+        protected override IQueryable<T> GetData()
         {
-            IQueryable<object> data = (IQueryable<object>)this.filterContext.Controller.ViewData.Model;
+            IQueryable<T> data = (IQueryable<T>)this.filterContext.Controller.ViewData.Model;
 
             return data;
         }

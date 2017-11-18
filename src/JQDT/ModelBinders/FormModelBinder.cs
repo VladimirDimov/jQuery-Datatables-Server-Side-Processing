@@ -40,7 +40,7 @@
         /// <param name="ajaxForm">The ajax form.</param>
         /// <param name="data">The data collection.</param>
         /// <returns><see cref="RequestInfoModel"/></returns>
-        public RequestInfoModel BindModel(NameValueCollection ajaxForm, object data)
+        public RequestInfoModel BindModel<T>(NameValueCollection ajaxForm, T data)
         {
             if (ajaxForm == null)
             {

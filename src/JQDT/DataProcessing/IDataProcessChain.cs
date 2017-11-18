@@ -5,7 +5,7 @@
     /// <summary>
     /// Chain data processor that calls all containing data processors in the added order.
     /// </summary>
-    internal interface IDataProcessChain
+    internal interface IDataProcessChain<T>
     {
         /// <summary>
         /// Gets collection of the containing data processors.
@@ -13,12 +13,12 @@
         /// <value>
         /// The data processors.
         /// </value>
-        IEnumerable<IDataProcess> DataProcessors { get; }
+        IEnumerable<IDataProcess<T>> DataProcessors { get; }
 
         /// <summary>
         /// Adds a data processor to the execution chain.
         /// </summary>
         /// <param name="dataProcessor">The data processor.</param>
-        void AddDataProcessor(IDataProcess dataProcessor);
+        void AddDataProcessor(IDataProcess<T> dataProcessor);
     }
 }

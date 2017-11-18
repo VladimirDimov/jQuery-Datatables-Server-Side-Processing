@@ -11,7 +11,7 @@
     /// <summary>
     /// Filters the data by a substring value. Looks for the substring in all public properties of the data model.
     /// </summary>
-    internal class FilterDataProcessor : DataProcessBase
+    internal class FilterDataProcessor<T> : DataProcessBase<T>
     {
         private const string NoSearchablePropertiesException = "A search value has been provided but no searchable properties were found. Make sure that the data property of the column is configured appropriately as described in jQuery Datatables documentation.";
         private const string HelpLink = "https://datatables.net/examples/ajax/objects.html";
@@ -24,9 +24,9 @@
         /// <param name="data">The data.</param>
         /// <param name="requestInfoModel">The request information model.</param>
         /// <returns>
-        ///   <see cref="IQueryable{object}" />
+        ///   <see cref="IQueryable{T}" />
         /// </returns>
-        protected override IQueryable<object> OnProcessData(IQueryable<object> data, RequestInfoModel requestInfoModel)
+        protected override IQueryable<T> OnProcessData(IQueryable<T> data, RequestInfoModel requestInfoModel)
         {
             if (string.IsNullOrWhiteSpace(requestInfoModel.TableParameters.Search.Value))
             {
@@ -41,10 +41,10 @@
             return data;
         }
 
-        private Expression<Func<object, bool>> BuildExpression(Type modelType, string search)
+        private Expression<Func<T, bool>> BuildExpression(Type modelType, string search)
         {
             // x
-            var modelParamExpr = Expression.Parameter(typeof(object), "model");
+            var modelParamExpr = Expression.Parameter(typeof(T), "model");
             var properties = ((System.Reflection.TypeInfo)modelType).DeclaredProperties;
             var containExpressionCollection = new List<MethodCallExpression>();
 
@@ -79,7 +79,7 @@
 
             var lambda = Expression.Lambda(joinedExpressions, modelParamExpr);
 
-            return (Expression<Func<object, bool>>)lambda;
+            return (Expression<Func<T, bool>>)lambda;
         }
 
         private Expression GetOrExpr(List<MethodCallExpression> containExpressionCollection)
@@ -111,7 +111,7 @@
             var propExpr = convertExpr.NestedProperty(propertyPath);
 
             // x.Name.ToString()
-            var toStringMethodInfo = typeof(object).GetMethod("ToString");
+            var toStringMethodInfo = typeof(T).GetMethod("ToString");
             var toStringExpr = Expression.Call(propExpr, toStringMethodInfo);
 
             // x.Name.ToString().ToLower()

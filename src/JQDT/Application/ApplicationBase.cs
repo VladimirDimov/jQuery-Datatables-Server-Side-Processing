@@ -1,6 +1,7 @@
 ﻿namespace JQDT.Application
 {
     using System;
+    using System.Collections.Generic;
     using System.Collections.Specialized;
     using System.Linq;
     using System.Text;
@@ -10,10 +11,10 @@
 
     /// <summary>
     /// Application entry point.
-    /// The <see cref="ApplicationBase.Execute(System.Collections.Specialized.NameValueCollection, System.Linq.IQueryable{object})"/> should be called
+    /// The <see cref="ApplicationBase.Execute(System.Collections.Specialized.NameValueCollection, System.Linq.IQueryable{T})"/> should be called
     /// from the ActionFilter.
     /// </summary>
-    internal abstract class ApplicationBase
+    internal abstract class ApplicationBase<T>
     {
         /// <summary>
         /// Application entry point method. Should be called from the ActionFilter.
@@ -36,7 +37,7 @@
                     Draw = requestModel.TableParameters.Draw,
                     RecordsTotal = data.Count(),
                     RecordsFiltered = this.GetRecordsFiltered(dataProcessChain),
-                    Data = processedData.ToList()
+                    Data = processedData.ToList().Select(x => (object)x).ToList()
                 };
             }
             catch (Exception ex)
@@ -57,10 +58,10 @@
         protected abstract NameValueCollection GetAjaxForm();
 
         /// <summary>
-        /// Gets the data collection as <see cref="IQueryable{object}"/> from the request context.
+        /// Gets the data collection as <see cref="IQueryable{T}"/> from the request context.
         /// </summary>
-        /// <returns>Data collection as <see cref="IQueryable{object}"/></returns>
-        protected abstract IQueryable<object> GetData();
+        /// <returns>Data collection as <see cref="IQueryable{T}"/></returns>
+        protected abstract IQueryable<T> GetData();
 
         private string FormatException(Exception ex)
         {
@@ -74,23 +75,23 @@
             return builder.ToString();
         }
 
-        private object GetRecordsFiltered(IDataProcess dataProcessChain)
+        private int GetRecordsFiltered(IDataProcess<T> dataProcessChain)
         {
             return
-                ((IDataProcessChain)dataProcessChain)
+                ((IDataProcessChain<T>)dataProcessChain)
                     .DataProcessors
-                    .First(p => p.GetType() == typeof(CustomFiltersDataProcessor))
+                    .First(p => p.GetType() == typeof(CustomFiltersDataProcessor<T>))
                     .ProcessedData.Count();
         }
 
-        private IDataProcess GetDataProcessChain()
+        private IDataProcess<T> GetDataProcessChain()
         {
-            var dataProcessChain = new DataProcessChain();
-            dataProcessChain.AddDataProcessor(new FilterDataProcessor());
-            dataProcessChain.AddDataProcessor(new CustomFiltersDataProcessor());
-            dataProcessChain.AddDataProcessor(new ColumnsFilterDataProcessor());
-            dataProcessChain.AddDataProcessor(new SortDataProcessor());
-            dataProcessChain.AddDataProcessor(new PagingDataProcessor());
+            var dataProcessChain = new DataProcessChain<T>();
+            dataProcessChain.AddDataProcessor(new FilterDataProcessor<T>());
+            dataProcessChain.AddDataProcessor(new CustomFiltersDataProcessor<T>());
+            dataProcessChain.AddDataProcessor(new ColumnsFilterDataProcessor<T>());
+            //dataProcessChain.AddDataProcessor(new SortDataProcessor());
+            dataProcessChain.AddDataProcessor(new PagingDataProcessor<T>());
 
             return dataProcessChain;
         }

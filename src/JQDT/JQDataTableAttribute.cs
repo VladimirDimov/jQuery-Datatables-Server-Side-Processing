@@ -19,7 +19,7 @@
         {
             try
             {
-                var app = new ApplicationMvc(filterContext);
+                var app = new ApplicationMvc<object>(filterContext);
                 var result = app.Execute();
 
                 filterContext.Result = this.FormatResult(new
