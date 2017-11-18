@@ -23,16 +23,10 @@ namespace Examples.Mvc.Controllers
         [JQDataTable]
         public ActionResult GetPeopleData()
         {
-            var d = this.context.People as IQueryable<object>;
-            var f = d.Where(x => ((Person)d).FirstName != null && ((Person)d).FirstName.Contains("z")).ToList();
+            // var d = this.context.People as IQueryable<object>;
+            // var f = d.Where(x => ((Person)d).FirstName != null && ((Person)d).FirstName.Contains("z")).ToList();
 
-            var people = this.context.People.Select(x => new PersonViewModel
-            {
-                Title = x.Title ?? "",
-                FirstName = x.FirstName ?? "",
-                MiddleName = x.MiddleName ?? "",
-                LastName = x.LastName ?? ""
-            }).AsQueryable().OrderBy(x => x.Title);
+            var people = this.context.People;
 
             return this.View(people);
         }

@@ -127,5 +127,11 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Examples\Examples.Data\Examples.Data.csproj">
+      <Project>{082a75a9-d2ae-4ba6-84ef-606852b1b88a}</Project>
+      <Name>Examples.Data</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

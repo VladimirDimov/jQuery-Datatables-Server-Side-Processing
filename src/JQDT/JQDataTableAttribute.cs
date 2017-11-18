@@ -2,7 +2,9 @@
 {
     using System;
     using System.Web.Mvc;
+    using Examples.Data;
     using JQDT.Application;
+    using JQDT.Models;
 
     /// <summary>
     /// Used to decorate the action that returns data table response.
@@ -19,8 +21,15 @@
         {
             try
             {
-                var app = new ApplicationMvc<object>(filterContext);
-                var result = app.Execute();
+                var appType = typeof(ApplicationMvc<>);
+                Type[] typeArgs = { typeof(Person) };
+                var makeme = appType.MakeGenericType(typeArgs);
+                object app = Activator.CreateInstance(makeme, filterContext);
+                var methodInfo = typeof(ApplicationMvc<>).GetMethod("Execute");
+                var result = (ResultModel)methodInfo.Invoke(app, null);
+
+                //var app = new ApplicationMvc<object>(filterContext);
+                //var result = app.Execute();
 
                 filterContext.Result = this.FormatResult(new
                 {
