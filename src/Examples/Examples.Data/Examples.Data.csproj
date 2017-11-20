@@ -126,6 +126,8 @@
     <Compile Include="Vendor.cs" />
     <Compile Include="ViewModels\EmployeeViewModel.cs" />
     <Compile Include="ViewModels\PersonViewModel.cs" />
+    <Compile Include="ViewModels\ProductModelViewModel.cs" />
+    <Compile Include="ViewModels\ProductViewModel.cs" />
     <Compile Include="WorkOrder.cs" />
     <Compile Include="WorkOrderRouting.cs" />
   </ItemGroup>

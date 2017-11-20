@@ -24,9 +24,6 @@ namespace Examples.Mvc.Controllers
         [JQDataTable]
         public ActionResult GetPeopleData()
         {
-            // var d = this.context.People as IQueryable<object>;
-            // var f = d.Where(x => ((Person)d).FirstName != null && ((Person)d).FirstName.Contains("z")).ToList();
-
             var people = this.context.People.Select(x => new PersonViewModel
             {
                 FirstName = x.FirstName,
@@ -41,7 +38,29 @@ namespace Examples.Mvc.Controllers
 
             return this.View(people);
         }
+
+        public ActionResult Products()
+        {
+            return View();
+        }
+
+        [JQDataTable]
+        public ActionResult GetProductsData()
+        {
+            var people = this.context.Products.Select(x => new ProductViewModel
+            {
+                Id = x.ProductID,
+                Name = x.Name,
+                ProductModel = new ProductModelViewModel
+                {
+                    Name = x.ProductModel.Name,
+                    ProductSubcategory = x.ProductSubcategory.Name
+                },
+                ModifiedDate = x.ModifiedDate,
+                DiscontinuedDate = x.DiscontinuedDate
+            });
+
+            return this.View(people);
+        }
     }
-
-
 }

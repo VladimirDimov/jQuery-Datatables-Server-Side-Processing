@@ -1,0 +1,56 @@
+﻿<table id="SearchResultTable" class="display" cellspacing="0" width="100%">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>ProductModel.Name</th>
+            <th>ProductModel.ProductSubcategory</th>
+            <th>ModifiedDate</th>
+            <th>DiscontinuedDate</th>
+        </tr>
+    </thead>
+</table>
+
+@section Scripts {
+    <script>
+        var table = $('#SearchResultTable').DataTable({
+            "proccessing": true,
+            "serverSide": true,
+            "ajax": {
+                url: "@Url.Action("GetProductsData", "AdventureWorks")",
+                type: 'POST'
+            },
+            "language": {
+                "search": "",
+                "searchPlaceholder": "Search..."
+            },
+           "columns": [
+               { "data": "Id" },
+               { "data": "Name" },
+               { "data": "ProductModel.Name" },
+               { "data": "ProductModel.ProductSubcategory"},
+               { "data": "ModifiedDate", "searchable": false },
+               { "data": "DiscontinuedDate", "searchable": false },
+            ],
+            "columnDefs": [
+                {
+                    "render": function (data, type, row) {
+                        date = new Date(parseInt(row.ModifiedDate.replace("/Date(", "").replace(")/", ""), 10));
+
+                        return date.toLocaleDateString();
+                    },
+                    "targets": 4
+                },
+                {
+                    "render": function (data, type, row) {
+                        if (!row.DiscontinuedDate) return '';
+                        date = new Date(parseInt(row.DiscontinuedDate.replace("/Date(", "").replace(")/", ""), 10));
+
+                        return date.toLocaleDateString();
+                    },
+                    "targets": 5
+                }
+            ]
+        });
+    </script>
+}

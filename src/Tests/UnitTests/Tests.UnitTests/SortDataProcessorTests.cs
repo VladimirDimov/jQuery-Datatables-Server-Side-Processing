@@ -51,7 +51,7 @@
             var actualExpr = this.complexFilter.ProcessData(this.complexData, requestModel);
             var actualExprStr = actualExpr.Expression.ToString();
             var postfix = isAsc ? string.Empty : "Descending";
-            var expectedExprStr = $"System.Collections.Generic.List`1[Tests.UnitTests.Models.ComplexModel].OrderBy(x => x.String)";
+            var expectedExprStr = $"System.Collections.Generic.List`1[Tests.UnitTests.Models.ComplexModel].OrderBy{postfix}(x => x.String)";
 
             Assert.AreEqual(expectedExprStr, actualExprStr);
 
@@ -87,7 +87,7 @@
             var actualExpr = this.complexFilter.ProcessData(this.complexData, requestModel);
             var actualExprStr = actualExpr.Expression.ToString();
             var postfix = isAsc ? string.Empty : "Descending";
-            var expectedExprStr = $"System.Collections.Generic.List`1[Tests.UnitTests.Models.ComplexModel].OrderBy(x => x.NestedComplexModel.NestedComplexModel.SimpleModel.String)";
+            var expectedExprStr = $"System.Collections.Generic.List`1[Tests.UnitTests.Models.ComplexModel].OrderBy{postfix}(x => x.NestedComplexModel.NestedComplexModel.SimpleModel.String)";
 
             Assert.AreEqual(expectedExprStr, actualExprStr);
 
@@ -143,7 +143,8 @@
 
             var actualExpr = this.complexFilter.ProcessData(this.complexData, requestModel);
             var actualExprStr = actualExpr.Expression.ToString();
-            var expectedExprStr = $"System.Collections.Generic.List`1[Tests.UnitTests.Models.ComplexModel].OrderBy(x => x.NestedComplexModel.String).ThenBy(x => x.NestedComplexModel.NestedComplexModel.String).ThenBy(x => x.NestedComplexModel.NestedComplexModel.SimpleModel.DateTime)";
+            var postfix = isAsc ? string.Empty : "Descending";
+            var expectedExprStr = $"System.Collections.Generic.List`1[Tests.UnitTests.Models.ComplexModel].OrderBy{postfix}(x => x.NestedComplexModel.String).ThenBy{postfix}(x => x.NestedComplexModel.NestedComplexModel.String).ThenBy{postfix}(x => x.NestedComplexModel.NestedComplexModel.SimpleModel.DateTime)";
 
             Assert.AreEqual(expectedExprStr, actualExprStr);
             Assert.DoesNotThrow(() =>
