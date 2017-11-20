@@ -84,7 +84,8 @@
                 TableParameters = datatableModel,
                 Helpers = new RequestHelpers
                 {
-                    ModelType = this.GetModelType(data)
+                    ModelType = this.GetModelType(data),
+                    DataCollectionType = data.GetType()
                 }
             };
 

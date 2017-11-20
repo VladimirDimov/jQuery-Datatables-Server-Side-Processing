@@ -3,9 +3,11 @@
     using System;
     using System.Collections.Generic;
     using System.Collections.Specialized;
+    using System.Data.Entity.Infrastructure;
     using System.Linq;
     using System.Text;
     using JQDT.DataProcessing;
+    using JQDT.DataProcessing.FilterDataProcessor;
     using JQDT.ModelBinders;
     using JQDT.Models;
 
@@ -23,14 +25,14 @@
         public ResultModel Execute()
         {
             ResultModel resultModel = null;
-            try
-            {
+            //try
+            //{
                 var modelBinder = new FormModelBinder();
                 var ajaxForm = this.GetAjaxForm();
                 var data = this.GetData();
                 var requestModel = modelBinder.BindModel(ajaxForm, data);
 
-                var dataProcessChain = this.GetDataProcessChain();
+                var dataProcessChain = this.GetDataProcessChain(requestModel.Helpers.DataCollectionType);
                 var processedData = dataProcessChain.ProcessData(data, requestModel);
                 resultModel = new ResultModel
                 {
@@ -39,14 +41,14 @@
                     RecordsFiltered = this.GetRecordsFiltered(dataProcessChain),
                     Data = processedData.ToList().Select(x => (object)x).ToList()
                 };
-            }
-            catch (Exception ex)
-            {
-                resultModel = new ResultModel
-                {
-                    Error = this.FormatException(ex)
-                };
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    resultModel = new ResultModel
+            //    {
+            //        Error = this.FormatException(ex)
+            //    };
+            //}
 
             return resultModel;
         }
@@ -84,10 +86,19 @@
                     .ProcessedData.Count();
         }
 
-        private IDataProcess<T> GetDataProcessChain()
+        private IDataProcess<T> GetDataProcessChain(Type dataCollectionType)
         {
             var dataProcessChain = new DataProcessChain<T>();
-            dataProcessChain.AddDataProcessor(new FilterDataProcessor<T>());
+
+            if (dataCollectionType.Name == "DbQuery`1")
+            {
+                dataProcessChain.AddDataProcessor(new FilterDataProcessor<T>(new FilterDataProcessorDbQueryBridge()));
+            }
+            else if (dataCollectionType.Name == "EnumerableQuery`1")
+            {
+                dataProcessChain.AddDataProcessor(new FilterDataProcessor<T>(new FilterDataProcessorEnumerableQueryBridge()));
+            }
+
             dataProcessChain.AddDataProcessor(new CustomFiltersDataProcessor<T>());
             dataProcessChain.AddDataProcessor(new ColumnsFilterDataProcessor<T>());
             dataProcessChain.AddDataProcessor(new SortDataProcessor<T>());

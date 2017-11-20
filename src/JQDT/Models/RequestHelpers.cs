@@ -14,5 +14,6 @@
         /// The type of the model.
         /// </value>
         public Type ModelType { get; set; }
+        public Type DataCollectionType { get; internal set; }
     }
 }

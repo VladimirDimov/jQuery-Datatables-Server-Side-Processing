@@ -1,6 +1,7 @@
 ﻿namespace JQDT
 {
     using System;
+    using System.Data.Entity.Infrastructure;
     using System.Linq;
     using System.Web.Mvc;
     using Examples.Data.ViewModels;
@@ -20,9 +21,19 @@
         /// <param name="filterContext">The filter context.</param>
         public override void OnActionExecuted(ActionExecutedContext filterContext)
         {
-            try
-            {
+            //try
+            //{
                 var modelType = filterContext.Controller.ViewData.Model.GetType();
+
+                if (modelType == typeof(EnumerableQuery<>))
+                {
+
+                }
+                else if (modelType == typeof(DbQuery<>))
+                {
+
+                }
+
                 var appType = typeof(ApplicationMvc<>);
                 Type[] typeArgs = { modelType.GenericTypeArguments.First() };
                 var genericAppType = appType.MakeGenericType(typeArgs);
@@ -41,15 +52,15 @@
                     data = result.Data,
                     error = result.Error
                 });
-            }
-            catch (Exception ex)
-            {
-                filterContext.HttpContext.Response.StatusCode = 500;
-                filterContext.Result = this.FormatResult(new
-                {
-                    Error = ex.Message
-                });
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    filterContext.HttpContext.Response.StatusCode = 500;
+            //    filterContext.Result = this.FormatResult(new
+            //    {
+            //        Error = ex.Message
+            //    });
+            //}
 
             base.OnActionExecuted(filterContext);
         }

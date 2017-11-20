@@ -5,6 +5,7 @@
     using System.Data.Entity.SqlServer;
     using System.Linq;
     using System.Linq.Expressions;
+    using JQDT.DataProcessing.FilterDataProcessor;
     using JQDT.Extensions;
     using JQDT.Models;
 
@@ -17,6 +18,12 @@
         private const string HelpLink = "https://datatables.net/examples/ajax/objects.html";
 
         private RequestInfoModel requestInfoModel;
+        private IFilterDataProcessorBridge filterDataProcessorBridge;
+
+        public FilterDataProcessor(IFilterDataProcessorBridge filterDataProcessorBridge)
+        {
+            this.filterDataProcessorBridge = filterDataProcessorBridge;
+        }
 
         /// <summary>
         /// Called when [process data].
@@ -46,7 +53,7 @@
             // x
             var modelParamExpr = Expression.Parameter(typeof(T), "model");
             var properties = ((System.Reflection.TypeInfo)modelType).DeclaredProperties;// TODO: Remove this line
-            var containExpressionCollection = new List<MethodCallExpression>();
+            var containExpressionCollection = new List<Expression>();
 
             var searchableProperties = this.requestInfoModel.TableParameters.Columns
                 .Where(col => col.Searchable)
@@ -82,14 +89,14 @@
             return (Expression<Func<T, bool>>)lambda;
         }
 
-        private Expression GetOrExpr(List<MethodCallExpression> containExpressionCollection)
+        private Expression GetOrExpr(List<Expression> containExpressionCollection)
         {
             var numberOfExpressions = containExpressionCollection.Count;
             var counter = 0;
             Expression orExpr = null;
             do
             {
-                orExpr = Expression.Or(orExpr ?? containExpressionCollection[counter], containExpressionCollection[counter + 1]);
+                orExpr = Expression.OrElse(orExpr ?? containExpressionCollection[counter], containExpressionCollection[counter + 1]);
 
                 counter++;
             }
@@ -98,8 +105,29 @@
             return orExpr;
         }
 
+        private Expression GetAndExpression(List<Expression> containExpressionCollection)
+        {
+            if (containExpressionCollection.Count == 1)
+            {
+                return containExpressionCollection.First();
+            }
+
+            var numberOfExpressions = containExpressionCollection.Count;
+            var counter = 0;
+            Expression andExpr = null;
+            do
+            {
+                andExpr = Expression.AndAlso(andExpr ?? containExpressionCollection[counter], containExpressionCollection[counter + 1]);
+
+                counter++;
+            }
+            while (counter < numberOfExpressions - 1);
+
+            return andExpr;
+        }
+
         // Returns the "Contains" expression for a single property
-        private MethodCallExpression GetSinglePropertyContainsExpression(Type modelType, string search, string propertyPath, ParameterExpression modelParamExpr)
+        private Expression GetSinglePropertyContainsExpression(Type modelType, string search, string propertyPath, ParameterExpression modelParamExpr)
         {
             // searchVal
             var searchValExpr = Expression.Constant(search.ToLower());
@@ -109,10 +137,11 @@
             // x.Name
             var propExpr = modelParamExpr.NestedProperty(propertyPath);
 
+            // x.Name != null
+            Expression nullCheckExpr = this.BuildNullCheckExpression(modelParamExpr, propertyPath);
+
             // x.Name.ToString()
-            //var toStringMethodInfo = typeof(T).GetMethod("ToString");
-            //var toStringExpr = Expression.Call(propExpr, toStringMethodInfo);
-            var toStringExpr = this.GetStringRepressentationExpression(propExpr);
+            var toStringExpr = this.filterDataProcessorBridge.GetStringContainsExpression(propExpr);
 
             // x.Name.ToString().ToLower()
             var toLowerMethodInfo = typeof(string).GetMethods().Where(m => m.Name == "ToLower" && !m.GetParameters().Any()).First();
@@ -122,7 +151,26 @@
             var containsMethodInfo = typeof(string).GetMethod("Contains");
             var containsExpr = Expression.Call(toLowerExpr, containsMethodInfo, searchValExpr);
 
-            return containsExpr;
+            var joinedExpr = Expression.AndAlso(nullCheckExpr, containsExpr);
+
+            return joinedExpr;
+        }
+
+        private Expression BuildNullCheckExpression(ParameterExpression modelParamExpr, string propertyPath)
+        {
+            var nullCheckExprCollection = new List<Expression>();
+            var propPathCollection = propertyPath.Split('.');
+            for (int i = 1; i < propPathCollection.Length + 1; i++)
+            {
+                var propSelectExpr = modelParamExpr.NestedProperty(string.Join(".", propPathCollection.Take(i)));
+                var nullCheckExpr = Expression.NotEqual(propSelectExpr, Expression.Constant(null));
+
+                nullCheckExprCollection.Add(nullCheckExpr);
+            }
+
+            var joinedAndExpr = this.GetAndExpression(nullCheckExprCollection);
+
+            return joinedAndExpr;
         }
 
         private Expression GetStringRepressentationExpression(MemberExpression memberExpr)
@@ -145,7 +193,7 @@
                             return false;
                         }
 
-                        if (parameters.First().ParameterType != typeof(decimal?))
+                        if (parameters.First().ParameterType != typeof(double))
                         {
                             return false;
                         }

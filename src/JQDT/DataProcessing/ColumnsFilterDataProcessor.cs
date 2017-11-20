@@ -61,7 +61,7 @@
             {
                 joinedExpressions = joinedExpressions == null ?
                     expr :
-                    Expression.And(joinedExpressions, expr);
+                    Expression.AndAlso(joinedExpressions, expr);
             }
 
             var lambda = Expression.Lambda(joinedExpressions, modelParam);

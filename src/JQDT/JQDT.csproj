@@ -86,10 +86,13 @@
     <Compile Include="DataProcessing\ColumnsFilterDataProcessor.cs" />
     <Compile Include="DataProcessing\CustomFiltersDataProcessor.cs" />
     <Compile Include="DataProcessing\DataProcessBase.cs" />
-    <Compile Include="DataProcessing\FilterDataProcessor.cs" />
+    <Compile Include="DataProcessing\FilterDataProcessor\FilterDataProcessor.cs" />
     <Compile Include="DataProcessing\DataProcessChain.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
+    <Compile Include="DataProcessing\FilterDataProcessor\FilterDataProcessorDbQueryBridge.cs" />
+    <Compile Include="DataProcessing\FilterDataProcessor\FilterDataProcessorEnumerableQueryBridge.cs" />
+    <Compile Include="DataProcessing\FilterDataProcessor\IFilterDataProcessorBridge.cs" />
     <Compile Include="DataProcessing\IDataProcess.cs" />
     <Compile Include="DataProcessing\IDataProcessChain.cs" />
     <Compile Include="DataProcessing\SortDataProcessor.cs" />
