@@ -2,7 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Data.Objects.SqlClient;
+    using System.Data.Entity.SqlServer;
     using System.Linq;
     using System.Linq.Expressions;
     using JQDT.Extensions;
@@ -131,7 +131,7 @@
             {
                 return memberExpr;
             }
-            else if (memberExpr.Type == typeof(int) || memberExpr.Type == typeof(long) || memberExpr.Type == typeof(double))
+            else if (memberExpr.Type == typeof(int) || memberExpr.Type == typeof(long) || memberExpr.Type == typeof(double) || memberExpr.Type == typeof(int?))
             {
                 // SqlFunctions.StringConvert((decimal)x.Property)
                 var stringConvertMethodInfo = typeof(SqlFunctions).GetMethods()
@@ -145,7 +145,7 @@
                             return false;
                         }
 
-                        if (parameters.First().GetType() != typeof(decimal))
+                        if (parameters.First().ParameterType != typeof(decimal?))
                         {
                             return false;
                         }
@@ -153,11 +153,13 @@
                         return true;
                     }).Single();
 
-                var castToDecimalExpr = Expression.Convert(memberExpr, typeof(decimal));
+                var castToDecimalExpr = Expression.Convert(memberExpr, typeof(decimal?));
                 var stringConvertExpr = Expression.Call(stringConvertMethodInfo, castToDecimalExpr);
+
+                return stringConvertExpr;
             }
 
-            return null;
+            throw new NotImplementedException($"Cannot filter by type: {memberExpr.Type.FullName}");
         }
     }
 }

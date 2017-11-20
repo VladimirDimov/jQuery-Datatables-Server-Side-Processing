@@ -32,12 +32,16 @@ namespace Examples.Mvc.Controllers
                 FirstName = x.FirstName,
                 LastName = x.LastName,
                 MiddleName = x.MiddleName,
-                Title = x.Title
+                Title = x.Title,
+                Employee = new EmployeeViewModel
+                {
+                    BusinessEntityID = x.Employee.BusinessEntityID
+                }
             });
 
             return this.View(people);
         }
     }
 
-    
+
 }
