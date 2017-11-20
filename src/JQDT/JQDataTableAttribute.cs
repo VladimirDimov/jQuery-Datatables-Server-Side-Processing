@@ -25,24 +25,12 @@
             //{
                 var modelType = filterContext.Controller.ViewData.Model.GetType();
 
-                if (modelType == typeof(EnumerableQuery<>))
-                {
-
-                }
-                else if (modelType == typeof(DbQuery<>))
-                {
-
-                }
-
                 var appType = typeof(ApplicationMvc<>);
                 Type[] typeArgs = { modelType.GenericTypeArguments.First() };
                 var genericAppType = appType.MakeGenericType(typeArgs);
                 object app = Activator.CreateInstance(genericAppType, filterContext);
                 var methodInfo = app.GetType().GetMethod("Execute");
                 var result = (ResultModel)methodInfo.Invoke(app, null);
-
-                //var app = new ApplicationMvc<object>(filterContext);
-                //var result = app.Execute();
 
                 filterContext.Result = this.FormatResult(new
                 {

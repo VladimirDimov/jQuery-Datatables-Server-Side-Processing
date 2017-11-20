@@ -1,12 +1,12 @@
 ﻿namespace JQDT.Application
 {
     using System;
-    using System.Collections.Generic;
     using System.Collections.Specialized;
-    using System.Data.Entity.Infrastructure;
     using System.Linq;
     using System.Text;
     using JQDT.DataProcessing;
+    using JQDT.DataProcessing.ColumnsFilter;
+    using JQDT.DataProcessing.Common;
     using JQDT.DataProcessing.FilterDataProcessor;
     using JQDT.ModelBinders;
     using JQDT.Models;
@@ -14,8 +14,8 @@
     /// <summary>
     /// Application entry point.
     /// The <see cref="ApplicationBase.Execute(System.Collections.Specialized.NameValueCollection, System.Linq.IQueryable{T})"/> should be called
-    /// from the ActionFilter.
     /// </summary>
+    /// <typeparam name="T">Data Collection Generic Type</typeparam>
     internal abstract class ApplicationBase<T>
     {
         /// <summary>
@@ -27,20 +27,20 @@
             ResultModel resultModel = null;
             //try
             //{
-                var modelBinder = new FormModelBinder();
-                var ajaxForm = this.GetAjaxForm();
-                var data = this.GetData();
-                var requestModel = modelBinder.BindModel(ajaxForm, data);
+            var modelBinder = new FormModelBinder();
+            var ajaxForm = this.GetAjaxForm();
+            var data = this.GetData();
+            var requestModel = modelBinder.BindModel(ajaxForm, data);
 
-                var dataProcessChain = this.GetDataProcessChain(requestModel.Helpers.DataCollectionType);
-                var processedData = dataProcessChain.ProcessData(data, requestModel);
-                resultModel = new ResultModel
-                {
-                    Draw = requestModel.TableParameters.Draw,
-                    RecordsTotal = data.Count(),
-                    RecordsFiltered = this.GetRecordsFiltered(dataProcessChain),
-                    Data = processedData.ToList().Select(x => (object)x).ToList()
-                };
+            var dataProcessChain = this.GetDataProcessChain(requestModel.Helpers.DataCollectionType);
+            var processedData = dataProcessChain.ProcessData(data, requestModel);
+            resultModel = new ResultModel
+            {
+                Draw = requestModel.TableParameters.Draw,
+                RecordsTotal = data.Count(),
+                RecordsFiltered = this.GetRecordsFiltered(dataProcessChain),
+                Data = processedData.ToList().Select(x => (object)x).ToList()
+            };
             //}
             //catch (Exception ex)
             //{
@@ -82,25 +82,28 @@
             return
                 ((IDataProcessChain<T>)dataProcessChain)
                     .DataProcessors
-                    .First(p => p.GetType() == typeof(CustomFiltersDataProcessor<T>))
+                    .Last(p => typeof(IDataFilter).IsAssignableFrom(p.GetType()))
                     .ProcessedData.Count();
         }
 
         private IDataProcess<T> GetDataProcessChain(Type dataCollectionType)
         {
             var dataProcessChain = new DataProcessChain<T>();
-
+            IFilterDataProcessorBridge filterDataProcessorBridge = null;
             if (dataCollectionType.Name == "DbQuery`1")
             {
-                dataProcessChain.AddDataProcessor(new FilterDataProcessor<T>(new FilterDataProcessorDbQueryBridge()));
+                filterDataProcessorBridge = new FilterDataProcessorDbQueryBridge();
             }
             else if (dataCollectionType.Name == "EnumerableQuery`1")
             {
-                dataProcessChain.AddDataProcessor(new FilterDataProcessor<T>(new FilterDataProcessorEnumerableQueryBridge()));
+                filterDataProcessorBridge = new FilterDataProcessorEnumerableQueryBridge();
             }
 
+            dataProcessChain.AddDataProcessor(
+                new FilterDataProcessor<T>(new FiltersCommonProcessor(filterDataProcessorBridge)));
             dataProcessChain.AddDataProcessor(new CustomFiltersDataProcessor<T>());
-            dataProcessChain.AddDataProcessor(new ColumnsFilterDataProcessor<T>());
+            dataProcessChain.AddDataProcessor(new ColumnsFilterDataProcessor<T>(
+                new FiltersCommonProcessor(filterDataProcessorBridge)));
             dataProcessChain.AddDataProcessor(new SortDataProcessor<T>());
             dataProcessChain.AddDataProcessor(new PagingDataProcessor<T>());
 

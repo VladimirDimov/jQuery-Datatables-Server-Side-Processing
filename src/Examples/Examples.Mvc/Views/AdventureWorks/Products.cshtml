@@ -9,10 +9,25 @@
             <th>DiscontinuedDate</th>
         </tr>
     </thead>
+    <tfoot>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>ProductModel.Name</th>
+            <th>ProductModel.ProductSubcategory</th>
+            <th>ModifiedDate</th>
+            <th>DiscontinuedDate</th>
+        </tr>
+    </tfoot>
 </table>
 
 @section Scripts {
     <script>
+        $('#SearchResultTable tfoot th').each(function () {
+            var title = $(this).text();
+            $(this).html('<input type="text" placeholder="Search ' + title + '" />');
+        });
+
         var table = $('#SearchResultTable').DataTable({
             "proccessing": true,
             "serverSide": true,
@@ -25,10 +40,10 @@
                 "searchPlaceholder": "Search..."
             },
            "columns": [
-               { "data": "Id" },
-               { "data": "Name" },
-               { "data": "ProductModel.Name" },
-               { "data": "ProductModel.ProductSubcategory"},
+               { "data": "Id", "searchable": true },
+               { "data": "Name", "searchable": true },
+               { "data": "ProductModel.Name", "searchable": true },
+               { "data": "ProductModel.ProductSubcategory", "searchable": true},
                { "data": "ModifiedDate", "searchable": false },
                { "data": "DiscontinuedDate", "searchable": false },
             ],
@@ -51,6 +66,18 @@
                     "targets": 5
                 }
             ]
+        });
+
+        table.columns().every(function () {
+            var that = this;
+
+            $('input', this.footer()).on('change', function () {
+                if (that.search() !== this.value) {
+                    that
+                        .search(this.value)
+                        .draw();
+                }
+            });
         });
     </script>
 }

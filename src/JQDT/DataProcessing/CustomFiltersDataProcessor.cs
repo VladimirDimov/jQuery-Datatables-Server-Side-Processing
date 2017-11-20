@@ -11,7 +11,7 @@
     /// Filters the data using the custom filters.
     /// </summary>
     /// <seealso cref="JQDT.DataProcessing.DataProcessBase" />
-    internal class CustomFiltersDataProcessor<T> : DataProcessBase<T>
+    internal class CustomFiltersDataProcessor<T> : DataProcessBase<T>, IDataFilter
     {
         private const string InvalidPropertyTypeForRequestedFilterType = "Property {0} of type {1} is invalid for the requested filter of type {2}. It should be any of the supported types: {3}.";
         private const string InvalidCustomOperatorException = "Invalid custom operator: {0}";

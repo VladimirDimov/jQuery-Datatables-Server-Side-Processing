@@ -83,7 +83,8 @@
   <ItemGroup>
     <Compile Include="Application\ApplicationBase.cs" />
     <Compile Include="Application\ApplicationMvc.cs" />
-    <Compile Include="DataProcessing\ColumnsFilterDataProcessor.cs" />
+    <Compile Include="DataProcessing\ColumnsFilter\ColumnsFilterDataProcessor.cs" />
+    <Compile Include="DataProcessing\Common\FiltersCommonProcessor.cs" />
     <Compile Include="DataProcessing\CustomFiltersDataProcessor.cs" />
     <Compile Include="DataProcessing\DataProcessBase.cs" />
     <Compile Include="DataProcessing\FilterDataProcessor\FilterDataProcessor.cs">
@@ -95,6 +96,7 @@
     <Compile Include="DataProcessing\FilterDataProcessor\FilterDataProcessorDbQueryBridge.cs" />
     <Compile Include="DataProcessing\FilterDataProcessor\FilterDataProcessorEnumerableQueryBridge.cs" />
     <Compile Include="DataProcessing\FilterDataProcessor\IFilterDataProcessorBridge.cs" />
+    <Compile Include="DataProcessing\IDataFilter.cs" />
     <Compile Include="DataProcessing\IDataProcess.cs" />
     <Compile Include="DataProcessing\IDataProcessChain.cs" />
     <Compile Include="DataProcessing\SortDataProcessor.cs" />
