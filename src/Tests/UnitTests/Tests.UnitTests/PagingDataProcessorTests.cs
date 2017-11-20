@@ -9,13 +9,13 @@
 
     internal class PagingDataProcessorTests
     {
-        private PagingDataProcessor filter;
+        private PagingDataProcessor<SimpleModel> filter;
         private IQueryable<SimpleModel> simpleData;
 
         [SetUp]
         public void SetUp()
         {
-            this.filter = new PagingDataProcessor();
+            this.filter = new PagingDataProcessor<SimpleModel>();
             this.simpleData = new List<SimpleModel>().AsQueryable();
         }
 

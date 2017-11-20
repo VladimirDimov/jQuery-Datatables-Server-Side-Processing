@@ -86,7 +86,9 @@
     <Compile Include="DataProcessing\ColumnsFilterDataProcessor.cs" />
     <Compile Include="DataProcessing\CustomFiltersDataProcessor.cs" />
     <Compile Include="DataProcessing\DataProcessBase.cs" />
-    <Compile Include="DataProcessing\FilterDataProcessor\FilterDataProcessor.cs" />
+    <Compile Include="DataProcessing\FilterDataProcessor\FilterDataProcessor.cs">
+      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
+    </Compile>
     <Compile Include="DataProcessing\DataProcessChain.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>

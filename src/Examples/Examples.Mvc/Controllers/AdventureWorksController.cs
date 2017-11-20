@@ -31,7 +31,7 @@ namespace Examples.Mvc.Controllers
             {
                 FirstName = x.FirstName,
                 LastName = x.LastName,
-                MiddleName = x.MiddleName ?? "",
+                MiddleName = x.MiddleName,
                 Title = x.Title,
                 Employee = new EmployeeViewModel
                 {

@@ -11,14 +11,14 @@
 
     internal class CustomFiltersDataProcessorTests
     {
-        private CustomFiltersDataProcessor filter;
+        private CustomFiltersDataProcessor<ComplexModel> filter;
         private IQueryable<SimpleModel> simpleData;
         private IQueryable<ComplexModel> complexData;
 
         [SetUp]
         public void SetUp()
         {
-            this.filter = new CustomFiltersDataProcessor();
+            this.filter = new CustomFiltersDataProcessor<ComplexModel>();
             this.simpleData = new List<SimpleModel>().AsQueryable();
             this.complexData = new List<ComplexModel>().AsQueryable();
         }

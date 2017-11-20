@@ -10,14 +10,16 @@
 
     internal class ColumnsFilterDataProcessorTests
     {
-        private ColumnsFilterDataProcessor filter;
+        private ColumnsFilterDataProcessor<SimpleModel> filterSimpleModel;
+        private ColumnsFilterDataProcessor<ComplexModel> filterComplexModel;
         private IQueryable<SimpleModel> simpleData;
         private IQueryable<ComplexModel> complexData;
 
         [SetUp]
         public void SetUp()
         {
-            this.filter = new ColumnsFilterDataProcessor();
+            this.filterSimpleModel = new ColumnsFilterDataProcessor<SimpleModel>();
+            this.filterComplexModel = new ColumnsFilterDataProcessor<ComplexModel>();
             this.simpleData = new List<SimpleModel>().AsQueryable();
             this.complexData = new List<ComplexModel>().AsQueryable();
         }
@@ -27,7 +29,7 @@
         {
             var requestModel = TestHelpers.GetSimpleRequestInfoModel();
 
-            var actualExpr = this.filter.ProcessData(this.simpleData, requestModel);
+            var actualExpr = this.filterSimpleModel.ProcessData(this.simpleData, requestModel);
             var actualExprStr = actualExpr.Expression.ToString();
             var expectedExprStr = $"System.Collections.Generic.List`1[{typeof(SimpleModel).FullName}]";
 
@@ -61,7 +63,7 @@
                 }
             });
 
-            var actualExpr = this.filter.ProcessData(this.complexData, requestModel);
+            var actualExpr = this.filterComplexModel.ProcessData(this.complexData, requestModel);
             var actualExprStr = actualExpr.Expression.ToString();
             var expectedExprStr = $"System.Collections.Generic.List`1[{typeof(ComplexModel).FullName}].Where(m => Convert(m).{column}.ToString().ToLower().Contains(\"{search}\"))";
 
@@ -111,9 +113,9 @@
                 }
             };
 
-            var actualExpr = this.filter.ProcessData(this.simpleData, requestModel);
+            var actualExpr = this.filterSimpleModel.ProcessData(this.simpleData, requestModel);
             var actualExprStr = actualExpr.Expression.ToString();
-            var expectedExprStr = $"System.Collections.Generic.List`1[{typeof(SimpleModel).FullName}].Where(m => ((Convert(m).{StringColumn}.ToString().ToLower().Contains(\"{StringColumnSearch}\") And Convert(m).{DateTimeColumn}.ToString().ToLower().Contains(\"{DateTimeColumnSearch}\")) And Convert(m).{IntegerColumn}.ToString().ToLower().Contains(\"{IntegerColumnSearch}\")))";
+            var expectedExprStr = $"System.Collections.Generic.List`1[Tests.UnitTests.Models.SimpleModel].Where(m => ((Convert(m).String.ToString().ToLower().Contains(\"asd\") AndAlso Convert(m).DateTime.ToString().ToLower().Contains(\"sad324\")) AndAlso Convert(m).Integer.ToString().ToLower().Contains(\"213hjv321uvg\")))";
 
             Assert.AreEqual(expectedExprStr, actualExprStr);
             Assert.DoesNotThrow(() =>
@@ -161,9 +163,9 @@
                 }
             };
 
-            var actualExpr = this.filter.ProcessData(this.complexData, requestModel);
+            var actualExpr = this.filterComplexModel.ProcessData(this.complexData, requestModel);
             var actualExprStr = actualExpr.Expression.ToString();
-            var expectedExprStr = $"System.Collections.Generic.List`1[{typeof(ComplexModel).FullName}].Where(m => ((Convert(m).{StringColumn}.ToString().ToLower().Contains(\"{StringColumnSearch}\") And Convert(m).{DateTimeColumn}.ToString().ToLower().Contains(\"{DateTimeColumnSearch}\")) And Convert(m).{IntegerColumn}.ToString().ToLower().Contains(\"{IntegerColumnSearch}\")))";
+            var expectedExprStr = $"System.Collections.Generic.List`1[Tests.UnitTests.Models.ComplexModel].Where(m => ((Convert(m).SimpleModel.String.ToString().ToLower().Contains(\"{StringColumnSearch}\") AndAlso Convert(m).NestedComplexModel.SimpleModel.DateTime.ToString().ToLower().Contains(\"{DateTimeColumnSearch}\")) AndAlso Convert(m).NestedComplexModel.SimpleModel.Integer.ToString().ToLower().Contains(\"{IntegerColumnSearch}\")))";
 
             Assert.AreEqual(expectedExprStr, actualExprStr);
             Assert.DoesNotThrow(() =>

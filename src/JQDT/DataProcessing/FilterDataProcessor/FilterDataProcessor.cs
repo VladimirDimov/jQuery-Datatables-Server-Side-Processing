@@ -52,7 +52,6 @@
         {
             // x
             var modelParamExpr = Expression.Parameter(typeof(T), "model");
-            var properties = ((System.Reflection.TypeInfo)modelType).DeclaredProperties;// TODO: Remove this line
             var containExpressionCollection = new List<Expression>();
 
             var searchableProperties = this.requestInfoModel.TableParameters.Columns
@@ -107,6 +106,11 @@
 
         private Expression GetAndExpression(List<Expression> containExpressionCollection)
         {
+            if (containExpressionCollection.Count == 0)
+            {
+                return null;
+            }
+
             if (containExpressionCollection.Count == 1)
             {
                 return containExpressionCollection.First();
@@ -151,7 +155,9 @@
             var containsMethodInfo = typeof(string).GetMethod("Contains");
             var containsExpr = Expression.Call(toLowerExpr, containsMethodInfo, searchValExpr);
 
-            var joinedExpr = Expression.AndAlso(nullCheckExpr, containsExpr);
+            var joinedExpr = nullCheckExpr == null ?
+                (Expression)containsExpr :
+                Expression.AndAlso(nullCheckExpr, containsExpr);
 
             return joinedExpr;
         }
@@ -163,6 +169,13 @@
             for (int i = 1; i < propPathCollection.Length + 1; i++)
             {
                 var propSelectExpr = modelParamExpr.NestedProperty(string.Join(".", propPathCollection.Take(i)));
+                var propertyType = propSelectExpr.Type;
+                if (!propertyType.IsClass || (propertyType.IsGenericType && propertyType.GetGenericTypeDefinition() == typeof(Nullable<>)))
+                {
+                    // Do not add a null check if the type is class or nullable struct;
+                    continue;
+                }
+
                 var nullCheckExpr = Expression.NotEqual(propSelectExpr, Expression.Constant(null));
 
                 nullCheckExprCollection.Add(nullCheckExpr);

@@ -11,14 +11,16 @@
 
     internal class SortDataProcessorTests
     {
-        private SortDataProcessor filter;
+        private SortDataProcessor<SimpleModel> simpleFilter;
+        private SortDataProcessor<ComplexModel> complexFilter;
         private IQueryable<SimpleModel> simpleData;
         private IQueryable<ComplexModel> complexData;
 
         [SetUp]
         public void SetUp()
         {
-            this.filter = new SortDataProcessor();
+            this.simpleFilter = new SortDataProcessor<SimpleModel>();
+            this.complexFilter = new SortDataProcessor<ComplexModel>();
             this.simpleData = new List<SimpleModel>().AsQueryable();
             this.complexData = new List<ComplexModel>().AsQueryable();
         }
@@ -46,10 +48,10 @@
                 }
             };
 
-            var actualExpr = this.filter.ProcessData(this.complexData, requestModel);
+            var actualExpr = this.complexFilter.ProcessData(this.complexData, requestModel);
             var actualExprStr = actualExpr.Expression.ToString();
             var postfix = isAsc ? string.Empty : "Descending";
-            var expectedExprStr = $"System.Collections.Generic.List`1[{typeof(ComplexModel).FullName}].OrderBy{postfix}(x => Convert(x).String)";
+            var expectedExprStr = $"System.Collections.Generic.List`1[Tests.UnitTests.Models.ComplexModel].OrderBy(x => x.String)";
 
             Assert.AreEqual(expectedExprStr, actualExprStr);
 
@@ -82,10 +84,10 @@
                 }
             };
 
-            var actualExpr = this.filter.ProcessData(this.complexData, requestModel);
+            var actualExpr = this.complexFilter.ProcessData(this.complexData, requestModel);
             var actualExprStr = actualExpr.Expression.ToString();
             var postfix = isAsc ? string.Empty : "Descending";
-            var expectedExprStr = $"System.Collections.Generic.List`1[{typeof(ComplexModel).FullName}].OrderBy{postfix}(x => Convert(x).NestedComplexModel.NestedComplexModel.SimpleModel.String)";
+            var expectedExprStr = $"System.Collections.Generic.List`1[Tests.UnitTests.Models.ComplexModel].OrderBy(x => x.NestedComplexModel.NestedComplexModel.SimpleModel.String)";
 
             Assert.AreEqual(expectedExprStr, actualExprStr);
 
@@ -139,9 +141,9 @@
                 }
             };
 
-            var actualExpr = this.filter.ProcessData(this.complexData, requestModel);
+            var actualExpr = this.complexFilter.ProcessData(this.complexData, requestModel);
             var actualExprStr = actualExpr.Expression.ToString();
-            var expectedExprStr = $"System.Collections.Generic.List`1[{typeof(ComplexModel).FullName}].OrderBy{(isAsc ? "" : "Descending")}(x => Convert(x).NestedComplexModel.String).ThenBy{(isAsc ? "" : "Descending")}(x => Convert(x).NestedComplexModel.NestedComplexModel.String).ThenBy{(isAsc ? "" : "Descending")}(x => Convert(x).NestedComplexModel.NestedComplexModel.SimpleModel.DateTime)";
+            var expectedExprStr = $"System.Collections.Generic.List`1[Tests.UnitTests.Models.ComplexModel].OrderBy(x => x.NestedComplexModel.String).ThenBy(x => x.NestedComplexModel.NestedComplexModel.String).ThenBy(x => x.NestedComplexModel.NestedComplexModel.SimpleModel.DateTime)";
 
             Assert.AreEqual(expectedExprStr, actualExprStr);
             Assert.DoesNotThrow(() =>
@@ -175,7 +177,7 @@
                     }
                 };
 
-                var actualExpr = this.filter.ProcessData(this.complexData, requestModel);
+                var actualExpr = this.complexFilter.ProcessData(this.complexData, requestModel);
             });
 
             Assert.IsTrue(exception.Message.ToLower().Contains("invalid property name"));
@@ -204,7 +206,7 @@
                     }
                 };
 
-                var actualExpr = this.filter.ProcessData(this.complexData, requestModel);
+                var actualExpr = this.complexFilter.ProcessData(this.complexData, requestModel);
             });
 
             Assert.IsTrue(exception.Message.ToLower().Contains("invalid property type"));
@@ -233,7 +235,7 @@
                     }
                 };
 
-                var actualExpr = this.filter.ProcessData(this.complexData, requestModel);
+                var actualExpr = this.complexFilter.ProcessData(this.complexData, requestModel);
             });
 
             Assert.IsTrue(exception.Message.ToLower().Contains("missing column name"));
