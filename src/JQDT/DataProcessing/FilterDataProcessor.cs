@@ -2,9 +2,9 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Data.Objects.SqlClient;
     using System.Linq;
     using System.Linq.Expressions;
-    using System.Reflection;
     using JQDT.Extensions;
     using JQDT.Models;
 
@@ -45,7 +45,7 @@
         {
             // x
             var modelParamExpr = Expression.Parameter(typeof(T), "model");
-            var properties = ((System.Reflection.TypeInfo)modelType).DeclaredProperties;
+            var properties = ((System.Reflection.TypeInfo)modelType).DeclaredProperties;// TODO: Remove this line
             var containExpressionCollection = new List<MethodCallExpression>();
 
             var searchableProperties = this.requestInfoModel.TableParameters.Columns
@@ -103,16 +103,16 @@
         {
             // searchVal
             var searchValExpr = Expression.Constant(search.ToLower());
-
             // (TypeOfX)x
-            var convertExpr = Expression.Convert(modelParamExpr, modelType);
+            // var convertExpr = Expression.Convert(modelParamExpr, modelType);
 
             // x.Name
-            var propExpr = convertExpr.NestedProperty(propertyPath);
+            var propExpr = modelParamExpr.NestedProperty(propertyPath);
 
             // x.Name.ToString()
-            var toStringMethodInfo = typeof(T).GetMethod("ToString");
-            var toStringExpr = Expression.Call(propExpr, toStringMethodInfo);
+            //var toStringMethodInfo = typeof(T).GetMethod("ToString");
+            //var toStringExpr = Expression.Call(propExpr, toStringMethodInfo);
+            var toStringExpr = this.GetStringRepressentationExpression(propExpr);
 
             // x.Name.ToString().ToLower()
             var toLowerMethodInfo = typeof(string).GetMethods().Where(m => m.Name == "ToLower" && !m.GetParameters().Any()).First();
@@ -123,6 +123,41 @@
             var containsExpr = Expression.Call(toLowerExpr, containsMethodInfo, searchValExpr);
 
             return containsExpr;
+        }
+
+        private Expression GetStringRepressentationExpression(MemberExpression memberExpr)
+        {
+            if (memberExpr.Type == typeof(string))
+            {
+                return memberExpr;
+            }
+            else if (memberExpr.Type == typeof(int) || memberExpr.Type == typeof(long) || memberExpr.Type == typeof(double))
+            {
+                // SqlFunctions.StringConvert((decimal)x.Property)
+                var stringConvertMethodInfo = typeof(SqlFunctions).GetMethods()
+                    .Where(m =>
+                    {
+                        if (m.Name != "StringConvert") return false;
+                        var parameters = m.GetParameters();
+                        var numberOfParameters = parameters.Count();
+                        if (numberOfParameters != 1)
+                        {
+                            return false;
+                        }
+
+                        if (parameters.First().GetType() != typeof(decimal))
+                        {
+                            return false;
+                        }
+
+                        return true;
+                    }).Single();
+
+                var castToDecimalExpr = Expression.Convert(memberExpr, typeof(decimal));
+                var stringConvertExpr = Expression.Call(stringConvertMethodInfo, castToDecimalExpr);
+            }
+
+            return null;
         }
     }
 }

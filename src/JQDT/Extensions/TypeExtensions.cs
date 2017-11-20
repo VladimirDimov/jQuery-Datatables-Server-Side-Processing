@@ -55,17 +55,17 @@
         public static LambdaExpression GetPropertySelectExpression(this Type modelType, IEnumerable<PropertyInfo> propertyInfoPath)
         {
             // x
-            ParameterExpression xExpr = Expression.Parameter(typeof(object), "x");
+            ParameterExpression xExpr = Expression.Parameter(modelType, "x");
 
-            // (ModelType)x
-            var castExpr = Expression.Convert(xExpr, modelType);
+            //// (ModelType)x
+            //var castExpr = Expression.Convert(xExpr, modelType);
 
             // (ModelType)x.Property
             MemberExpression propExpression = null;
             foreach (var propInfo in propertyInfoPath)
             {
                 propExpression = propExpression == null ?
-                    Expression.Property(castExpr, propInfo) :
+                    Expression.Property(xExpr, propInfo) :
                     Expression.Property(propExpression, propInfo);
             }
 

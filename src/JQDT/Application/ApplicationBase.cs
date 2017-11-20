@@ -90,7 +90,7 @@
             dataProcessChain.AddDataProcessor(new FilterDataProcessor<T>());
             dataProcessChain.AddDataProcessor(new CustomFiltersDataProcessor<T>());
             dataProcessChain.AddDataProcessor(new ColumnsFilterDataProcessor<T>());
-            //dataProcessChain.AddDataProcessor(new SortDataProcessor());
+            dataProcessChain.AddDataProcessor(new SortDataProcessor<T>());
             dataProcessChain.AddDataProcessor(new PagingDataProcessor<T>());
 
             return dataProcessChain;

@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Web.Mvc;
 using Examples.Data;
+using Examples.Data.ViewModels;
 using JQDT;
 
 namespace Examples.Mvc.Controllers
@@ -26,17 +27,17 @@ namespace Examples.Mvc.Controllers
             // var d = this.context.People as IQueryable<object>;
             // var f = d.Where(x => ((Person)d).FirstName != null && ((Person)d).FirstName.Contains("z")).ToList();
 
-            var people = this.context.People;
+            var people = this.context.People.Select(x => new PersonViewModel
+            {
+                FirstName = x.FirstName,
+                LastName = x.LastName,
+                MiddleName = x.MiddleName,
+                Title = x.Title
+            });
 
             return this.View(people);
         }
     }
 
-    public class PersonViewModel
-    {
-        public string Title { get; set; }
-        public string FirstName { get; internal set; }
-        public string MiddleName { get; internal set; }
-        public string LastName { get; internal set; }
-    }
+    
 }
