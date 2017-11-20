@@ -1,6 +1,7 @@
 ﻿namespace JQDT
 {
     using System;
+    using System.Linq;
     using System.Web.Mvc;
     using Examples.Data.ViewModels;
     using JQDT.Application;
@@ -21,8 +22,9 @@
         {
             try
             {
+                var modelType = filterContext.Controller.ViewData.Model.GetType();
                 var appType = typeof(ApplicationMvc<>);
-                Type[] typeArgs = { typeof(PersonViewModel) };
+                Type[] typeArgs = { modelType.GenericTypeArguments.First() };
                 var genericAppType = appType.MakeGenericType(typeArgs);
                 object app = Activator.CreateInstance(genericAppType, filterContext);
                 var methodInfo = app.GetType().GetMethod("Execute");
