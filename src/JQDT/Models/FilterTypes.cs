@@ -23,6 +23,7 @@
         /// <summary>
         /// Less than or equal
         /// </summary>
-        lte = 3
+        lte = 3,
+        eq = 4
     }
 }

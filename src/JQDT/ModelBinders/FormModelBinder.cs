@@ -19,7 +19,7 @@
         private const string LengthFormKey = "length";
         private const string StartFormKey = "start";
         private const string SearchValueFormKey = "search[value]";
-        private const string CustomFiltersPatternFormKey = @"^custom\[filters\]\[(.+)\]\[(gte|gt|lte|lt)\]$";
+        private const string CustomFiltersPatternFormKey = @"^custom\[filters\]\[(.+)\]\[(gte|gt|lte|lt|eq)\]$";
         private const string ColumnsOrderableFormKey = "columns[{0}][orderable]";
         private const string ColumnsSearchableFormKey = "columns[{0}][searchable]";
 

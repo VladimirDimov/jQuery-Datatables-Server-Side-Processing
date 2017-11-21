@@ -87,6 +87,7 @@
                 case FilterTypes.gt:
                 case FilterTypes.lt:
                 case FilterTypes.lte:
+                case FilterTypes.eq:
                     return this.GetRangeExpression(key, filter, filter.Type);
 
                 default:
@@ -129,6 +130,10 @@
                 case FilterTypes.lte:
                     // x <= Convert(value)
                     rangeExpr = Expression.LessThanOrEqual(propertyExpr, constantExpr);
+                    break;
+
+                case FilterTypes.eq:
+                    rangeExpr = Expression.Equal(propertyExpr, constantExpr);
                     break;
             }
 

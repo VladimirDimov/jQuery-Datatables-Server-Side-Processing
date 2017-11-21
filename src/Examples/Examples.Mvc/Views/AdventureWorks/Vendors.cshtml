@@ -1,7 +1,14 @@
-﻿<div>Age: from <input type="number" id="minCreditRating" value="1" class="reload-table" /> 
-    to <input type="number" id="maxCreditRating" value="3" class="reload-table" /></div>
+﻿<div>
+    Age: from <input type="number" id="minCreditRating" value="1" class="reload-table" />
+    to <input type="number" id="maxCreditRating" value="3" class="reload-table" />
+</div>
+
+<div>
+    Business Entity ID = <input type="number" id="businessEntityId" value="" class="reload-table" />
+</div>
+
 @*<div>Srarting Date: from <input type="date" id="minStartDate" value="" class="reload-table" /> to <input type="date" id="maxStartDate" value="" class="reload-table" /></div>
-<div>Street number: from <input type="number" id="minStreetNumber" value="" class="reload-table" /> to <input type="number" id="maxStreetNumber" value="" class="reload-table" /></div>*@
+    <div>Street number: from <input type="number" id="minStreetNumber" value="" class="reload-table" /> to <input type="number" id="maxStreetNumber" value="" class="reload-table" /></div>*@
 
 <table id="SearchResultTable" class="display" cellspacing="0" width="100">
     <thead>
@@ -36,6 +43,7 @@
                     d.custom = {
                         "filters": {
                             "CreditRating": { "gte": $('#minCreditRating').val(), "lte": $('#maxCreditRating').val() },
+                            "BusinessEntityID": { "eq": $('#businessEntityId').val() },
                         }
                     }
                 }
