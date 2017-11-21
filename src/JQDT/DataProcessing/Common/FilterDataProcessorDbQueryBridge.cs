@@ -77,10 +77,6 @@
 
                 return stringConvertExpr;
             }
-            else if(propertyExpression.Type == typeof(bool))
-            {
-
-            }
 
             throw new NotImplementedException($"Unsupported searchable type: {propertyExpression.Type.FullName}. Supported types: {string.Join(", ", supportedNumericTypes)}");
         }
