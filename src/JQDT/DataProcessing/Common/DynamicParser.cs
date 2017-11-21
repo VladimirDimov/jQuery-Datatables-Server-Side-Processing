@@ -29,7 +29,7 @@
             }
             catch (Exception)
             {
-                new ArgumentException($"Unable to parse value {value} to type {toType.FullName}.");
+                throw new ArgumentException($"Unable to parse value {value} to type {toType.FullName}.");
             }
 
             return result;

@@ -75,7 +75,7 @@ namespace Examples.Mvc.Controllers
             {
                 x.BusinessEntityID,
                 x.CreditRating,
-                x.ActiveFlag,
+                ActiveFlag = x.ActiveFlag.ToString(),
                 x.AccountNumber,
                 x.ModifiedDate
             });

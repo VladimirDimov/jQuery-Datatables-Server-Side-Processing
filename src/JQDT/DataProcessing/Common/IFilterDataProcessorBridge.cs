@@ -12,6 +12,6 @@
         /// </summary>
         /// <param name="propertyExpression">The property expression.</param>
         /// <returns>true if contains. False otherwise.</returns>
-        Expression GetStringContainsExpression(MemberExpression propertyExpression);
+        Expression GetConvertToStringExpression(MemberExpression propertyExpression);
     }
 }

@@ -16,7 +16,7 @@
         /// <returns>
         /// true if contains. False otherwise.
         /// </returns>
-        public Expression GetStringContainsExpression(MemberExpression propertyExpression)
+        public Expression GetConvertToStringExpression(MemberExpression propertyExpression)
         {
             // x.Name.ToString()
             var toStringMethodInfo = propertyExpression.Type.GetMethods().Where(x => x.Name == "ToString" && !x.GetGenericArguments().Any()).First();

@@ -4,6 +4,7 @@
     using System.Linq;
     using System.Web.Mvc;
     using JQDT.Application;
+    using JQDT.Exceptions;
     using JQDT.Models;
 
     /// <summary>
@@ -19,8 +20,18 @@
         /// <param name="filterContext">The filter context.</param>
         public override void OnActionExecuted(ActionExecutedContext filterContext)
         {
-            //try
-            //{
+            try
+            {
+                this.PerformOnActionExecuted(filterContext);
+            }
+            catch (Exception ex)
+            {
+                throw new JQDataTablesException("Unhandled JQDataTable exception", ex);
+            }
+        }
+
+        private void PerformOnActionExecuted(ActionExecutedContext filterContext)
+        {
             var modelType = filterContext.Controller.ViewData.Model.GetType();
 
             var appType = typeof(ApplicationMvc<>);
@@ -38,15 +49,6 @@
                 data = result.Data,
                 error = result.Error
             });
-            //}
-            //catch (Exception ex)
-            //{
-            //    filterContext.HttpContext.Response.StatusCode = 500;
-            //    filterContext.Result = this.FormatResult(new
-            //    {
-            //        Error = ex.Message
-            //    });
-            //}
 
             base.OnActionExecuted(filterContext);
         }

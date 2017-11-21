@@ -1,6 +1,7 @@
 ﻿namespace JQDT.DataProcessing.Common
 {
     using System;
+    using System.Collections.Generic;
     using System.Data.Entity.SqlServer;
     using System.Linq;
     using System.Linq.Expressions;
@@ -11,6 +12,26 @@
     /// <seealso cref="JQDT.DataProcessing.FilterDataProcessor.IFilterDataProcessorBridge" />
     internal class FilterDataProcessorDbQueryBridge : IFilterDataProcessorBridge
     {
+        private static HashSet<Type> supportedNumericTypes;
+
+        static FilterDataProcessorDbQueryBridge()
+        {
+            supportedNumericTypes = new HashSet<Type>
+            {
+                typeof(byte),
+                typeof(sbyte),
+                typeof(decimal),
+                typeof(double),
+                typeof(float),
+                typeof(int),
+                typeof(uint),
+                typeof(long),
+                typeof(ulong),
+                typeof(short),
+                typeof(ushort),
+            };
+        }
+
         /// <summary>
         /// Gets the string contains expression. Ex: x =&gt; x.Contains(value)
         /// </summary>
@@ -19,13 +40,13 @@
         /// true if contains. False otherwise.
         /// </returns>
         /// <exception cref="NotImplementedException">Thrown when the property is of unsupported type.</exception>
-        public Expression GetStringContainsExpression(MemberExpression propertyExpression)
+        public Expression GetConvertToStringExpression(MemberExpression propertyExpression)
         {
-            if (propertyExpression.Type == typeof(string))
+            if (propertyExpression.Type == typeof(string) || propertyExpression.Type == typeof(char))
             {
                 return propertyExpression;
             }
-            else if (propertyExpression.Type == typeof(int) || propertyExpression.Type == typeof(long) || propertyExpression.Type == typeof(double) || propertyExpression.Type == typeof(int?))
+            else if (supportedNumericTypes.Contains(propertyExpression.Type))
             {
                 // SqlFunctions.StringConvert((decimal)x.Property)
                 var stringConvertMethodInfo = typeof(SqlFunctions).GetMethods()
@@ -56,8 +77,12 @@
 
                 return stringConvertExpr;
             }
+            else if(propertyExpression.Type == typeof(bool))
+            {
 
-            throw new NotImplementedException($"Cannot filter by type: {propertyExpression.Type.FullName}");
+            }
+
+            throw new NotImplementedException($"Unsupported searchable type: {propertyExpression.Type.FullName}. Supported types: {string.Join(", ", supportedNumericTypes)}");
         }
     }
 }

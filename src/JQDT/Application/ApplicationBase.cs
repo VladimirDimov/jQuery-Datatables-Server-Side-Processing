@@ -23,9 +23,9 @@
         /// <returns><see cref="ResultModel"/></returns>
         public ResultModel Execute()
         {
-            ResultModel resultModel = null;
-            //try
-            //{
+            ResultModel result = new ResultModel();
+            try
+            {
                 var modelBinder = new FormModelBinder();
                 var ajaxForm = this.GetAjaxForm();
                 var data = this.GetData();
@@ -33,23 +33,18 @@
 
                 var dataProcessChain = this.GetDataProcessChain(requestModel.Helpers.DataCollectionType);
                 var processedData = dataProcessChain.ProcessData(data, requestModel);
-                resultModel = new ResultModel
-                {
-                    Draw = requestModel.TableParameters.Draw,
-                    RecordsTotal = data.Count(),
-                    RecordsFiltered = this.GetRecordsFiltered(dataProcessChain),
-                    Data = processedData.ToList().Select(x => (object)x).ToList()
-                };
-            //}
-            //catch (Exception ex)
-            //{
-            //    resultModel = new ResultModel
-            //    {
-            //        Error = this.FormatException(ex)
-            //    };
-            //}
 
-            return resultModel;
+                result.Draw = requestModel.TableParameters.Draw;
+                result.RecordsTotal = data.Count();
+                result.RecordsFiltered = this.GetRecordsFiltered(dataProcessChain);
+                result.Data = processedData.ToList().Select(x => (object)x).ToList();
+            }
+            catch (Exception ex)
+            {
+                result.Error = this.FormatException(ex);
+            }
+
+            return result;
         }
 
         /// <summary>

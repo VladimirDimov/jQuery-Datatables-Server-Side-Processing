@@ -41,7 +41,7 @@
             Expression nullCheckExpr = this.BuildNullCheckExpression(modelParamExpr, propertyPath);
 
             // x.Name.ToString()
-            var toStringExpr = this.filterDataProcessorBridge.GetStringContainsExpression(propExpr);
+            var toStringExpr = this.filterDataProcessorBridge.GetConvertToStringExpression(propExpr);
 
             // x.Name.ToString().ToLower()
             var toLowerMethodInfo = typeof(string).GetMethods().Where(m => m.Name == "ToLower" && !m.GetParameters().Any()).First();
