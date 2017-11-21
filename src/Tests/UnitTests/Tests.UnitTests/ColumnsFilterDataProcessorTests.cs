@@ -42,17 +42,15 @@
         }
 
         [Test]
-        [TestCase("String", "Asd")]
-        [TestCase("Integer", "123")]
-        [TestCase("Boolean", "true")]
-        [TestCase("DateTime", "12/24/2017")]
-        [TestCase("Double", "0.123")]
-        [TestCase("SimpleModel.String", "Asd")]
-        [TestCase("SimpleModel.Integer", "123")]
-        [TestCase("NestedComplexModel.Boolean", "true")]
-        [TestCase("NestedComplexModel.SimpleModel.DateTime", "12/24/2017")]
-        [TestCase("NestedComplexModel.SimpleModel.Double", "0.123")]
-        public void ShouldReturnCorrectExpressionOnSingleColumnFilter(string column, string search)
+        [TestCase("String", "Asd", "System.Collections.Generic.List`1[Tests.UnitTests.Models.ComplexModel].Where(m => ((m.String != null) AndAlso m.String.ToString().ToLower().Contains(\"asd\")))")]
+        [TestCase("Integer", "123", "System.Collections.Generic.List`1[Tests.UnitTests.Models.ComplexModel].Where(m => m.Integer.ToString().ToLower().Contains(\"123\"))")]
+        [TestCase("Boolean", "true", "System.Collections.Generic.List`1[Tests.UnitTests.Models.ComplexModel].Where(m => m.Boolean.ToString().ToLower().Contains(\"true\"))")]
+        [TestCase("Double", "0.123", "System.Collections.Generic.List`1[Tests.UnitTests.Models.ComplexModel].Where(m => m.Double.ToString().ToLower().Contains(\"0.123\"))")]
+        [TestCase("SimpleModel.String", "Asd", "System.Collections.Generic.List`1[Tests.UnitTests.Models.ComplexModel].Where(m => (((m.SimpleModel != null) AndAlso (m.SimpleModel.String != null)) AndAlso m.SimpleModel.String.ToString().ToLower().Contains(\"asd\")))")]
+        [TestCase("SimpleModel.Integer", "123", "System.Collections.Generic.List`1[Tests.UnitTests.Models.ComplexModel].Where(m => ((m.SimpleModel != null) AndAlso m.SimpleModel.Integer.ToString().ToLower().Contains(\"123\")))")]
+        [TestCase("NestedComplexModel.Boolean", "true", "System.Collections.Generic.List`1[Tests.UnitTests.Models.ComplexModel].Where(m => ((m.NestedComplexModel != null) AndAlso m.NestedComplexModel.Boolean.ToString().ToLower().Contains(\"true\")))")]
+        [TestCase("NestedComplexModel.SimpleModel.Double", "0.123", "System.Collections.Generic.List`1[Tests.UnitTests.Models.ComplexModel].Where(m => (((m.NestedComplexModel != null) AndAlso (m.NestedComplexModel.SimpleModel != null)) AndAlso m.NestedComplexModel.SimpleModel.Double.ToString().ToLower().Contains(\"0.123\")))")]
+        public void ShouldReturnCorrectExpressionOnSingleColumnFilter(string column, string search, string expectedExprStr)
         {
             var requestModel = TestHelpers.GetComplexRequestInfoModel();
             requestModel.TableParameters.Columns.Add(new Column
@@ -66,7 +64,6 @@
 
             var actualExpr = this.filterComplexModel.ProcessData(this.complexData, requestModel);
             var actualExprStr = actualExpr.Expression.ToString();
-            var expectedExprStr = $"System.Collections.Generic.List`1[Tests.UnitTests.Models.ComplexModel].Where(m => ((m.NestedComplexModel != null) AndAlso m.NestedComplexModel.Boolean.ToString().ToLower().Contains(\"true\")))";
 
             Assert.AreEqual(expectedExprStr, actualExprStr);
             Assert.DoesNotThrow(() =>
