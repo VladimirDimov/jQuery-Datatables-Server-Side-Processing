@@ -64,7 +64,7 @@
                 randomModel.ComplexModel.String.Substring(1,3),
                 randomModel.ComplexModel.SimpleModel.String,
                 randomModel.ComplexModel.SimpleModel.Integer.ToString(),
-                randomModel.ComplexModel.SimpleModel.Double.ToString(),
+                randomModel.ComplexModel.SimpleModel.Double.ToString().Substring(0, randomModel.ComplexModel.SimpleModel.Double.ToString().Length - 1),
 
                 randomModel.String.Substring(1, 3),
                 randomModel.String.Substring(1, 3).ToLower(),

@@ -7,6 +7,10 @@
     Business Entity ID = <input type="number" id="businessEntityId" value="" class="reload-table" />
 </div>
 
+<div>
+    Modified Date = <input type="date" id="modifiedDate" value="" class="reload-table" />
+</div>
+
 @*<div>Srarting Date: from <input type="date" id="minStartDate" value="" class="reload-table" /> to <input type="date" id="maxStartDate" value="" class="reload-table" /></div>
     <div>Street number: from <input type="number" id="minStreetNumber" value="" class="reload-table" /> to <input type="number" id="maxStreetNumber" value="" class="reload-table" /></div>*@
 
@@ -17,6 +21,7 @@
             <th>CreditRating</th>
             <th>ActiveFlag</th>
             <th>AccountNumber</th>
+            <th>ModifiedDate</th>
         </tr>
     </thead>
     <tfoot>
@@ -25,6 +30,7 @@
             <th>CreditRating</th>
             <th>ActiveFlag</th>
             <th>AccountNumber</th>
+            <th>ModifiedDate</th>
         </tr>
     </tfoot>
 </table>
@@ -44,6 +50,7 @@
                         "filters": {
                             "CreditRating": { "gte": $('#minCreditRating').val(), "lte": $('#maxCreditRating').val() },
                             "BusinessEntityID": { "eq": $('#businessEntityId').val() },
+                            "ModifiedDate": { "eq": $('#modifiedDate').val() },
                         }
                     }
                 }
@@ -56,8 +63,20 @@
                { "data": "BusinessEntityID" },
                { "data": "CreditRating" },
                { "data": "ActiveFlag" },
-               { "data": "AccountNumber"},
-            ]
+               { "data": "AccountNumber" },
+               { "data": "ModifiedDate"},
+            ],
+           "columnDefs": [
+               {
+                   "render": function (data, type, row) {
+                       date = new Date(parseInt(row.ModifiedDate.replace("/Date(", "").replace(")/", ""), 10));
+
+                       return date.toLocaleDateString();
+                   },
+                   "targets": 4
+               }
+           ]
+
         });
 
         $('.reload-table').on('change', function () {

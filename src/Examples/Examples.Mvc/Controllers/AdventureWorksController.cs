@@ -32,7 +32,7 @@ namespace Examples.Mvc.Controllers
                 Title = x.Title,
                 Employee = new EmployeeViewModel
                 {
-                    BusinessEntityID = x.Employee.BusinessEntityID
+                    BusinessEntityID = x.Employee.BusinessEntityID,
                 }
             });
 
@@ -76,7 +76,8 @@ namespace Examples.Mvc.Controllers
                 x.BusinessEntityID,
                 x.CreditRating,
                 x.ActiveFlag,
-                x.AccountNumber
+                x.AccountNumber,
+                x.ModifiedDate
             });
 
             return this.View(data);
