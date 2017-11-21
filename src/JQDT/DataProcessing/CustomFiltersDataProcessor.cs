@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Linq.Expressions;
+    using JQDT.DataProcessing.Common;
     using JQDT.Extensions;
     using JQDT.Models;
 
@@ -19,6 +20,12 @@
         private static HashSet<Type> comparissonOperatorsSupportedTypes;
 
         private RequestInfoModel requestInfoModel;
+        private readonly Common.FiltersCommonProcessor filterCommonProcessor;
+
+        public CustomFiltersDataProcessor(FiltersCommonProcessor filterCommonProcessor)
+        {
+            this.filterCommonProcessor = filterCommonProcessor;
+        }
 
         static CustomFiltersDataProcessor()
         {
@@ -74,58 +81,54 @@
             }
         }
 
-        private Expression<Func<T, bool>> GetRangeExpression(string key, FilterModel filter, FilterTypes filterType)
+        private Expression<Func<T, bool>> GetRangeExpression(string propertyPath, FilterModel filter, FilterTypes filterType)
         {
             // x
-            var propertyInfoPath = this.requestInfoModel.Helpers.ModelType.GetPropertyInfoPath(key);
+            var propertyInfoPath = this.requestInfoModel.Helpers.ModelType.GetPropertyInfoPath(propertyPath);
             var propertyType = propertyInfoPath.Last().PropertyType;
-            this.ValidatePropertyType(key, propertyType, filterType);
+            this.ValidatePropertyType(propertyPath, propertyType, filterType);
             var xExpr = Expression.Parameter(typeof(T), "x");
 
-            // (Type)x
-            var castedXExpr = Expression.Convert(xExpr, this.requestInfoModel.Helpers.ModelType);
-
             // ((Type)x).Property
-            var propertyExpr = castedXExpr.NestedProperty(key);
+            var propertyExpr = xExpr.NestedProperty(propertyPath);
 
             // Type.Parse(value)
             var valueExpr = Expression.Constant(filter.Value);
             var gteMethodInfo = propertyType.GetMethods().First(x => x.Name == "Parse");
             var parseExpr = Expression.Call(null, gteMethodInfo, valueExpr);
+            var parsedValue = new DynamicParser().DynamicParse(filter.Value, propertyType);
+            var constant = Expression.Constant(parsedValue);
+            var constantCast = Expression.Convert(constant, propertyType);
 
             BinaryExpression rangeExpr = null;
             switch (filter.Type)
             {
                 case FilterTypes.gte:
                     // x >= (Type)value
-                    rangeExpr = Expression.GreaterThanOrEqual(propertyExpr, parseExpr);
+                    rangeExpr = Expression.GreaterThanOrEqual(propertyExpr, /*parseExpr*/constantCast);
                     break;
 
                 case FilterTypes.gt:
                     // x > (Type)value
-                    rangeExpr = Expression.GreaterThan(propertyExpr, parseExpr);
+                    rangeExpr = Expression.GreaterThan(propertyExpr, /*parseExpr*/constantCast);
                     break;
 
                 case FilterTypes.lt:
                     // x < (Type)value
-                    rangeExpr = Expression.LessThan(propertyExpr, parseExpr);
+                    rangeExpr = Expression.LessThan(propertyExpr, /*parseExpr*/constantCast);
                     break;
 
                 case FilterTypes.lte:
                     // x <= (Type)value
-                    rangeExpr = Expression.LessThanOrEqual(propertyExpr, parseExpr);
+                    rangeExpr = Expression.LessThanOrEqual(propertyExpr, /*parseExpr*/constantCast);
                     break;
             }
 
-            var tryBlock = Expression.Block(typeof(bool), rangeExpr);
-            var throwExpr = Expression.Throw(
-            Expression.Constant(
-                new FormatException($"Unable to parse value for property \"{key}\". Value: {filter.Value}")),
-            typeof(bool));
-            var catchBlock = Expression.Catch(typeof(FormatException), throwExpr);
-            var tryCatchExpr = Expression.TryCatch(tryBlock, catchBlock);
+            var nullCheckExpr = this.filterCommonProcessor.BuildNullCheckExpression(xExpr, string.Join(".", propertyPath));
 
-            return (Expression<Func<T, bool>>)Expression.Lambda(tryCatchExpr, xExpr);
+            Expression joinedExpr = nullCheckExpr == null ? (Expression)rangeExpr : Expression.AndAlso(nullCheckExpr, rangeExpr);
+
+            return (Expression<Func<T, bool>>)Expression.Lambda(joinedExpr, xExpr);
         }
 
         private void ValidatePropertyType(string propertyPath, Type propertyType, FilterTypes filterType)

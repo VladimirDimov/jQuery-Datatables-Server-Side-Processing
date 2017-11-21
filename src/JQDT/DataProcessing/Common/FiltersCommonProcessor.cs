@@ -48,7 +48,7 @@
             return joinedExpr;
         }
 
-        private Expression BuildNullCheckExpression(ParameterExpression modelParamExpr, string propertyPath)
+        internal Expression BuildNullCheckExpression(ParameterExpression modelParamExpr, string propertyPath)
         {
             var nullCheckExprCollection = new List<Expression>();
             var propPathCollection = propertyPath.Split('.');
@@ -72,7 +72,7 @@
             return joinedAndExpr;
         }
 
-        private Expression GetAndExpression(List<Expression> containExpressionCollection)
+        public Expression GetAndExpression(List<Expression> containExpressionCollection)
         {
             if (containExpressionCollection.Count == 0)
             {

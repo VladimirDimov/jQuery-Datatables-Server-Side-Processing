@@ -62,5 +62,24 @@ namespace Examples.Mvc.Controllers
 
             return this.View(people);
         }
+
+        public ActionResult Vendors()
+        {
+            return this.View();
+        }
+
+        [JQDataTable]
+        public ActionResult GetVendorsData()
+        {
+            var data = this.context.Vendors.Select(x => new
+            {
+                x.BusinessEntityID,
+                x.CreditRating,
+                x.ActiveFlag,
+                x.AccountNumber
+            });
+
+            return this.View(data);
+        }
     }
 }

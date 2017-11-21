@@ -252,6 +252,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\AdventureWorks\Index.cshtml" />
     <Content Include="Views\AdventureWorks\Products.cshtml" />
+    <Content Include="Views\AdventureWorks\Vendors.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

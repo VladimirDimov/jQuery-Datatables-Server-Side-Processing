@@ -84,6 +84,7 @@
     <Compile Include="Application\ApplicationBase.cs" />
     <Compile Include="Application\ApplicationMvc.cs" />
     <Compile Include="DataProcessing\ColumnsFilter\ColumnsFilterDataProcessor.cs" />
+    <Compile Include="DataProcessing\Common\DynamicParser.cs" />
     <Compile Include="DataProcessing\Common\FiltersCommonProcessor.cs" />
     <Compile Include="DataProcessing\CustomFiltersDataProcessor.cs" />
     <Compile Include="DataProcessing\DataProcessBase.cs" />

@@ -1,0 +1,59 @@
+﻿<div>Age: from <input type="number" id="minCreditRating" value="1" class="reload-table" /> 
+    to <input type="number" id="maxCreditRating" value="3" class="reload-table" /></div>
+@*<div>Srarting Date: from <input type="date" id="minStartDate" value="" class="reload-table" /> to <input type="date" id="maxStartDate" value="" class="reload-table" /></div>
+<div>Street number: from <input type="number" id="minStreetNumber" value="" class="reload-table" /> to <input type="number" id="maxStreetNumber" value="" class="reload-table" /></div>*@
+
+<table id="SearchResultTable" class="display" cellspacing="0" width="100%">
+    <thead>
+        <tr>
+            <th>BusinessEntityID</th>
+            <th>CreditRating</th>
+            <th>ActiveFlag</th>
+            <th>AccountNumber</th>
+        </tr>
+    </thead>
+    <tfoot>
+        <tr>
+            <th>BusinessEntityID</th>
+            <th>CreditRating</th>
+            <th>ActiveFlag</th>
+            <th>AccountNumber</th>
+        </tr>
+    </tfoot>
+</table>
+
+@section Scripts {
+    <script>
+
+
+        var table = $('#SearchResultTable').DataTable({
+            "proccessing": true,
+            "serverSide": true,
+            "ajax": {
+                url: "@Url.Action("GetVendorsData", "AdventureWorks")",
+                type: 'POST',
+                "data": function (d) {
+                    d.custom = {
+                        "filters": {
+                            "CreditRating": { "gte": $('#minCreditRating').val(), "lte": $('#maxCreditRating').val() },
+                        }
+                    }
+                }
+            },
+            "language": {
+                "search": "",
+                "searchPlaceholder": "Search..."
+            },
+           "columns": [
+               { "data": "BusinessEntityID" },
+               { "data": "CreditRating" },
+               { "data": "ActiveFlag" },
+               { "data": "AccountNumber"},
+            ]
+        });
+
+        $('.reload-table').on('change', function () {
+            table.ajax.reload();
+        });
+    </script>
+}

@@ -101,7 +101,7 @@
 
             dataProcessChain.AddDataProcessor(
                 new FilterDataProcessor<T>(new FiltersCommonProcessor(filterDataProcessorBridge)));
-            dataProcessChain.AddDataProcessor(new CustomFiltersDataProcessor<T>());
+            dataProcessChain.AddDataProcessor(new CustomFiltersDataProcessor<T>(new FiltersCommonProcessor(filterDataProcessorBridge)));
             dataProcessChain.AddDataProcessor(new ColumnsFilterDataProcessor<T>(
                 new FiltersCommonProcessor(filterDataProcessorBridge)));
             dataProcessChain.AddDataProcessor(new SortDataProcessor<T>());
