@@ -34,48 +34,48 @@ Add the `[JQDataTable]` attribute to the ajax controller action. Return 'View(da
 
 ####
 `
-    <table id="SearchResultTable" class="display" cellspacing="0" width="100">
-    <thead>
-        <tr>
-            <th>Title</th>
-            <th>FirstName</th>
-            <th>MiddleName</th>
-            <th>LastName</th>
-            <th>BusinessEntityID</th>
-        </tr>
-    </thead>
-    <tfoot>
-        <tr>
-            <th>Title</th>
-            <th>FirstName</th>
-            <th>MiddleName</th>
-            <th>LastName</th>
-            <th>BusinessEntityID</th>
-        </tr>
-    </tfoot>
-</table>
+        <table id="SearchResultTable" class="display" cellspacing="0" width="100">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>FirstName</th>
+                    <th>MiddleName</th>
+                    <th>LastName</th>
+                    <th>BusinessEntityID</th>
+                </tr>
+            </thead>
+            <tfoot>
+                <tr>
+                    <th>Title</th>
+                    <th>FirstName</th>
+                    <th>MiddleName</th>
+                    <th>LastName</th>
+                    <th>BusinessEntityID</th>
+                </tr>
+            </tfoot>
+        </table>
 
-@section Scripts {
-    <script>
-        var table = $('#SearchResultTable').DataTable({
-            "proccessing": true,
-            "serverSide": true,
-            "ajax": {
-                url: "@Url.Action("GetPeopleData", "AdventureWorks")",
-                type: 'POST'
-            },
-            "language": {
-                "search": "",
-                "searchPlaceholder": "Search..."
-            },
-           "columns": [
-               { "data": "Title" },
-               { "data": "FirstName" },
-               { "data": "MiddleName" },
-               { "data": "LastName"},
-               { "data": "Employee.BusinessEntityID"},
-            ]
-        });
-    </script>
-}
+        @section Scripts {
+            <script>
+                var table = $('#SearchResultTable').DataTable({
+                    "proccessing": true,
+                    "serverSide": true,
+                    "ajax": {
+                        url: "@Url.Action("GetPeopleData", "AdventureWorks")",
+                        type: 'POST'
+                    },
+                    "language": {
+                        "search": "",
+                        "searchPlaceholder": "Search..."
+                    },
+                   "columns": [
+                       { "data": "Title" },
+                       { "data": "FirstName" },
+                       { "data": "MiddleName" },
+                       { "data": "LastName"},
+                       { "data": "Employee.BusinessEntityID"},
+                    ]
+                });
+            </script>
+        }
 `
