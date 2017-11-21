@@ -6,6 +6,7 @@
     /// <summary>
     /// Paging data processor
     /// </summary>
+    /// <typeparam name="T">Generic data model type.</typeparam>
     /// <seealso cref="JQDT.DataProcessing.DataProcessBase" />
     internal class PagingDataProcessor<T> : DataProcessBase<T>
     {

@@ -9,6 +9,7 @@
     /// <summary>
     /// Sort data processor.
     /// </summary>
+    /// <typeparam name="T">Generic data model type.</typeparam>
     /// <seealso cref="JQDT.DataProcessing.DataProcessBase" />
     internal class SortDataProcessor<T> : DataProcessBase<T>
     {

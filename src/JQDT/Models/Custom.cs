@@ -5,7 +5,7 @@
     /// <summary>
     /// Model for custom data
     /// </summary>
-    public class Custom
+    internal class Custom
     {
         /// <summary>
         /// Gets or sets the filters.
@@ -14,6 +14,6 @@
         /// <value>
         /// The filters.
         /// </value>
-        public Dictionary<string, IEnumerable<FilterModel>> Filters { get; set; }
+        internal Dictionary<string, IEnumerable<FilterModel>> Filters { get; set; }
     }
 }

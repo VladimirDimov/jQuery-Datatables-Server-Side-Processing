@@ -5,7 +5,7 @@
     /// <summary>
     /// Default data table ajax model containing all default parameters.
     /// </summary>
-    public class DataTableAjaxPostModel
+    internal class DataTableAjaxPostModel
     {
         /// <summary>
         /// Gets or sets the draw.
@@ -13,7 +13,7 @@
         /// <value>
         /// The draw.
         /// </value>
-        public int Draw { get; set; }
+        internal int Draw { get; set; }
 
         /// <summary>
         /// Gets or sets the start.
@@ -21,7 +21,7 @@
         /// <value>
         /// The start.
         /// </value>
-        public int Start { get; set; }
+        internal int Start { get; set; }
 
         /// <summary>
         /// Gets or sets the length.
@@ -29,7 +29,7 @@
         /// <value>
         /// The length.
         /// </value>
-        public int Length { get; set; }
+        internal int Length { get; set; }
 
         /// <summary>
         /// Gets or sets the columns.
@@ -37,7 +37,7 @@
         /// <value>
         /// The columns.
         /// </value>
-        public List<Column> Columns { get; set; }
+        internal List<Column> Columns { get; set; }
 
         /// <summary>
         /// Gets or sets the search.
@@ -45,7 +45,7 @@
         /// <value>
         /// The search.
         /// </value>
-        public Search Search { get; set; }
+        internal Search Search { get; set; }
 
         /// <summary>
         /// Gets or sets the order.
@@ -53,7 +53,7 @@
         /// <value>
         /// The order.
         /// </value>
-        public List<Order> Order { get; set; }
+        internal List<Order> Order { get; set; }
 
         /// <summary>
         /// Gets or sets the custom.
@@ -61,6 +61,6 @@
         /// <value>
         /// The custom.
         /// </value>
-        public Custom Custom { get; set; }
+        internal Custom Custom { get; set; }
     }
 }

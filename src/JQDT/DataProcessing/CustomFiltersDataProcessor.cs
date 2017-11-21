@@ -11,7 +11,9 @@
     /// <summary>
     /// Filters the data using the custom filters.
     /// </summary>
-    /// <seealso cref="JQDT.DataProcessing.DataProcessBase" />
+    /// <typeparam name="T">Generic type of the data model.</typeparam>
+    /// <seealso cref="JQDT.DataProcessing.DataProcessBase{T}" />
+    /// <seealso cref="JQDT.DataProcessing.IDataFilter" />
     internal class CustomFiltersDataProcessor<T> : DataProcessBase<T>, IDataFilter
     {
         private const string InvalidPropertyTypeForRequestedFilterType = "Property {0} of type {1} is invalid for the requested filter of type {2}. It should be any of the supported types: {3}.";
@@ -19,20 +21,31 @@
 
         private static HashSet<Type> comparissonOperatorsSupportedTypes;
 
-        private RequestInfoModel requestInfoModel;
         private readonly Common.FiltersCommonProcessor filterCommonProcessor;
+        private readonly DynamicParser dynamicParser;
 
-        public CustomFiltersDataProcessor(FiltersCommonProcessor filterCommonProcessor)
-        {
-            this.filterCommonProcessor = filterCommonProcessor;
-        }
+        private RequestInfoModel requestInfoModel;
 
+        /// <summary>
+        /// Initializes static members of the <see cref="CustomFiltersDataProcessor{T}"/> class.
+        /// </summary>
         static CustomFiltersDataProcessor()
         {
             comparissonOperatorsSupportedTypes = new HashSet<Type>()
             {
                 typeof(int), typeof(double), typeof(byte), typeof(long), typeof(DateTime), typeof(DateTimeOffset), typeof(char)
             };
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CustomFiltersDataProcessor{T}"/> class.
+        /// </summary>
+        /// <param name="filterCommonProcessor">The filter common processor.</param>
+        /// <param name="dynamicParser">The dynamic parser.</param>
+        internal CustomFiltersDataProcessor(FiltersCommonProcessor filterCommonProcessor, DynamicParser dynamicParser)
+        {
+            this.filterCommonProcessor = filterCommonProcessor;
+            this.dynamicParser = dynamicParser;
         }
 
         /// <summary>
@@ -89,38 +102,33 @@
             this.ValidatePropertyType(propertyPath, propertyType, filterType);
             var xExpr = Expression.Parameter(typeof(T), "x");
 
-            // ((Type)x).Property
+            // x.Property1.Property2
             var propertyExpr = xExpr.NestedProperty(propertyPath);
 
-            // Type.Parse(value)
-            var valueExpr = Expression.Constant(filter.Value);
-            var gteMethodInfo = propertyType.GetMethods().First(x => x.Name == "Parse");
-            var parseExpr = Expression.Call(null, gteMethodInfo, valueExpr);
-            var parsedValue = new DynamicParser().DynamicParse(filter.Value, propertyType);
-            var constant = Expression.Constant(parsedValue);
-            var constantCast = Expression.Convert(constant, propertyType);
+            // Convert(value)
+            Expression constantExpr = this.BuildConstantExpression(filter.Value, propertyType);
 
             BinaryExpression rangeExpr = null;
             switch (filter.Type)
             {
                 case FilterTypes.gte:
-                    // x >= (Type)value
-                    rangeExpr = Expression.GreaterThanOrEqual(propertyExpr, /*parseExpr*/constantCast);
+                    // x >= Convert(value)
+                    rangeExpr = Expression.GreaterThanOrEqual(propertyExpr, constantExpr);
                     break;
 
                 case FilterTypes.gt:
-                    // x > (Type)value
-                    rangeExpr = Expression.GreaterThan(propertyExpr, /*parseExpr*/constantCast);
+                    // x > Convert(value)
+                    rangeExpr = Expression.GreaterThan(propertyExpr, constantExpr);
                     break;
 
                 case FilterTypes.lt:
-                    // x < (Type)value
-                    rangeExpr = Expression.LessThan(propertyExpr, /*parseExpr*/constantCast);
+                    // x < Convert(value)
+                    rangeExpr = Expression.LessThan(propertyExpr, constantExpr);
                     break;
 
                 case FilterTypes.lte:
-                    // x <= (Type)value
-                    rangeExpr = Expression.LessThanOrEqual(propertyExpr, /*parseExpr*/constantCast);
+                    // x <= Convert(value)
+                    rangeExpr = Expression.LessThanOrEqual(propertyExpr, constantExpr);
                     break;
             }
 
@@ -129,6 +137,15 @@
             Expression joinedExpr = nullCheckExpr == null ? (Expression)rangeExpr : Expression.AndAlso(nullCheckExpr, rangeExpr);
 
             return (Expression<Func<T, bool>>)Expression.Lambda(joinedExpr, xExpr);
+        }
+
+        private Expression BuildConstantExpression(string value, Type propertyType)
+        {
+            var parsedValue = this.dynamicParser.DynamicParse(value, propertyType);
+            var constant = Expression.Constant(parsedValue);
+            var constantCast = Expression.Convert(constant, propertyType);
+
+            return constantCast;
         }
 
         private void ValidatePropertyType(string propertyPath, Type propertyType, FilterTypes filterType)

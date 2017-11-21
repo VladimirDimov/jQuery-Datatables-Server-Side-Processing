@@ -9,7 +9,7 @@
     /// <summary>
     /// Extension methods for <see cref="Type"/>
     /// </summary>
-    public static class TypeExptensions
+    internal static class TypeExptensions
     {
         /// <summary>
         /// Returns collection of <see cref="PropertyInfo"/>. The collection contains the <see cref="PropertyInfo"/> of
@@ -22,7 +22,7 @@
         /// </param>
         /// <returns><see cref="ICollection{PropertyInfo}"/></returns>
         /// <exception cref="ArgumentException">Thrown on invalid property name.</exception>
-        public static ICollection<PropertyInfo> GetPropertyInfoPath(this Type model, string propertyName)
+        internal static ICollection<PropertyInfo> GetPropertyInfoPath(this Type model, string propertyName)
         {
             var propertyNamePath = propertyName.Split('.');
             Type currentModelType = model;
@@ -52,13 +52,10 @@
         /// <param name="propertyInfoPath">Collection of <see cref="PropertyInfo"/> describing the path from parent to target property.
         /// </param>
         /// <returns><see cref="LambdaExpression"/> Ex: "x => (ModelType)x.Property1.Property2"</returns>
-        public static LambdaExpression GetPropertySelectExpression(this Type modelType, IEnumerable<PropertyInfo> propertyInfoPath)
+        internal static LambdaExpression GetPropertySelectExpression(this Type modelType, IEnumerable<PropertyInfo> propertyInfoPath)
         {
             // x
             ParameterExpression xExpr = Expression.Parameter(modelType, "x");
-
-            //// (ModelType)x
-            //var castExpr = Expression.Convert(xExpr, modelType);
 
             // (ModelType)x.Property
             MemberExpression propExpression = null;
@@ -82,7 +79,7 @@
         /// <returns>
         ///   <c>true</c> if [is CLR library type] [the specified type]; otherwise, <c>false</c>.
         /// </returns>
-        public static bool IsCLRLibraryType(this Type type)
+        internal static bool IsCLRLibraryType(this Type type)
         {
             return type.Module.ScopeName != "CommonLanguageRuntimeLibrary";
         }

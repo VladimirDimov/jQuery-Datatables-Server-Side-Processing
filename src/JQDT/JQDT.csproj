@@ -94,9 +94,9 @@
     <Compile Include="DataProcessing\DataProcessChain.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
-    <Compile Include="DataProcessing\FilterDataProcessor\FilterDataProcessorDbQueryBridge.cs" />
-    <Compile Include="DataProcessing\FilterDataProcessor\FilterDataProcessorEnumerableQueryBridge.cs" />
-    <Compile Include="DataProcessing\FilterDataProcessor\IFilterDataProcessorBridge.cs" />
+    <Compile Include="DataProcessing\Common\FilterDataProcessorDbQueryBridge.cs" />
+    <Compile Include="DataProcessing\Common\FilterDataProcessorEnumerableQueryBridge.cs" />
+    <Compile Include="DataProcessing\Common\IFilterDataProcessorBridge.cs" />
     <Compile Include="DataProcessing\IDataFilter.cs" />
     <Compile Include="DataProcessing\IDataProcess.cs" />
     <Compile Include="DataProcessing\IDataProcessChain.cs" />

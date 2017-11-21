@@ -3,9 +3,8 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Linq.Expressions;
     using JQDT.DataProcessing;
-    using JQDT.DataProcessing.FilterDataProcessor;
+    using JQDT.DataProcessing.Common;
     using JQDT.Models;
     using NUnit.Framework;
     using Tests.UnitTests.Models;
@@ -23,7 +22,7 @@
         [Test]
         public void SearchWithTwoSearchableProperties()
         {
-            var filterProc = new FilterDataProcessor<SimpleModel>(new FilterDataProcessorEnumerableQueryBridge());
+            var filterProc = new FilterDataProcessor<SimpleModel>(new FiltersCommonProcessor(new FilterDataProcessorEnumerableQueryBridge()));
             var data = new List<SimpleModel>().AsQueryable();
             var processedData = filterProc.ProcessData(data, new RequestInfoModel()
             {
@@ -59,7 +58,7 @@
         [Test]
         public void SearchWithSingleSearchableProperty()
         {
-            var filterProc = new FilterDataProcessor<SimpleModel>(new FilterDataProcessorEnumerableQueryBridge());
+            var filterProc = this.GetFilterDataProcessor<SimpleModel>();
             var data = new List<SimpleModel>().AsQueryable();
             var processedData = filterProc.ProcessData(data, new RequestInfoModel()
             {
@@ -92,7 +91,7 @@
         {
             var exception = Assert.Throws<ArgumentException>(() =>
             {
-                var filterProc = new FilterDataProcessor<SimpleModel>(new FilterDataProcessorEnumerableQueryBridge());
+                var filterProc = this.GetFilterDataProcessor<SimpleModel>();
                 var data = new List<SimpleModel>().AsQueryable();
                 var processedData = filterProc.ProcessData(data, new RequestInfoModel()
                 {
@@ -120,7 +119,7 @@
         [Test]
         public void SearchBySingleNestedPropertyShouldWork()
         {
-            var filterProc = new FilterDataProcessor<ComplexModel>(new FilterDataProcessorEnumerableQueryBridge());
+            var filterProc = this.GetFilterDataProcessor<ComplexModel>();
             var data = new List<ComplexModel>().AsQueryable();
             var processedData = filterProc.ProcessData(data, new RequestInfoModel()
             {
@@ -151,7 +150,7 @@
         [Test]
         public void ShouldReturnUntouchedDataIfNoSeachValue()
         {
-            var filterProc = new FilterDataProcessor<ComplexModel>(new FilterDataProcessorEnumerableQueryBridge());
+            var filterProc = this.GetFilterDataProcessor<ComplexModel>();
             var data = new List<ComplexModel>().AsQueryable();
             var processedData = filterProc.ProcessData(data, new RequestInfoModel()
             {
@@ -177,6 +176,13 @@
             var expectedExpressionStr = $"System.Collections.Generic.List`1[{typeof(ComplexModel).FullName}]";
 
             Assert.AreEqual(expectedExpressionStr, actualExpressionStr);
+        }
+
+        private FilterDataProcessor<T> GetFilterDataProcessor<T>()
+        {
+            var filterProc = new FilterDataProcessor<T>(new FiltersCommonProcessor(new FilterDataProcessorEnumerableQueryBridge()));
+
+            return filterProc;
         }
     }
 }

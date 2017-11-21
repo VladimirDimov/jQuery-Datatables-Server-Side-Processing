@@ -3,7 +3,7 @@
     /// <summary>
     /// Column Model
     /// </summary>
-    public class Column
+    internal class Column
     {
         /// <summary>
         /// Gets or sets the data.
@@ -11,7 +11,7 @@
         /// <value>
         /// The data.
         /// </value>
-        public string Data { get; set; }
+        internal string Data { get; set; }
 
         /// <summary>
         /// Gets or sets the name.
@@ -19,7 +19,7 @@
         /// <value>
         /// The name.
         /// </value>
-        public string Name { get; set; }
+        internal string Name { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether this <see cref="Column"/> is searchable.
@@ -27,7 +27,7 @@
         /// <value>
         ///   <c>true</c> if searchable; otherwise, <c>false</c>.
         /// </value>
-        public bool Searchable { get; set; }
+        internal bool Searchable { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether this <see cref="Column"/> is orderable.
@@ -35,7 +35,7 @@
         /// <value>
         ///   <c>true</c> if orderable; otherwise, <c>false</c>.
         /// </value>
-        public bool Orderable { get; set; }
+        internal bool Orderable { get; set; }
 
         /// <summary>
         /// Gets or sets the search.
@@ -43,6 +43,6 @@
         /// <value>
         /// The search.
         /// </value>
-        public Search Search { get; set; }
+        internal Search Search { get; set; }
     }
 }

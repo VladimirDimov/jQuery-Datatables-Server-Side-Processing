@@ -7,13 +7,14 @@
     /// <summary>
     /// Entry point for MVC projects
     /// </summary>
-    /// <seealso cref="JQDT.Application.ApplicationBase" />
+    /// <typeparam name="T">Generic data model type.</typeparam>
+    /// <seealso cref="JQDT.Application.ApplicationBase{T}" />
     internal class ApplicationMvc<T> : ApplicationBase<T>
     {
         private ActionExecutedContext filterContext;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ApplicationMvc"/> class.
+        /// Initializes a new instance of the <see cref="ApplicationMvc{T}"/> class.
         /// </summary>
         /// <param name="filterContext">The filter context.</param>
         public ApplicationMvc(ActionExecutedContext filterContext)

@@ -3,7 +3,7 @@
     /// <summary>
     /// Search default model
     /// </summary>
-    public class Search
+    internal class Search
     {
         /// <summary>
         /// Gets or sets the value.
@@ -11,7 +11,7 @@
         /// <value>
         /// The value.
         /// </value>
-        public string Value { get; set; }
+        internal string Value { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether this <see cref="Search"/> is regex.
@@ -19,6 +19,6 @@
         /// <value>
         ///   <c>true</c> if regex; otherwise, <c>false</c>.
         /// </value>
-        public bool Regex { get; set; }
+        internal bool Regex { get; set; }
     }
 }

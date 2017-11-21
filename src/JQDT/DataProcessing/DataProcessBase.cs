@@ -7,8 +7,9 @@
     /// <summary>
     /// Base class for data processors.
     /// </summary>
+    /// <typeparam name="T">Generic data model type.</typeparam>
     /// <seealso cref="JQDT.DataProcessing.IDataProcess" />
-    public abstract class DataProcessBase<T> : IDataProcess<T>
+    internal abstract class DataProcessBase<T> : IDataProcess<T>
     {
         private const string NullDataExceptionMessage = "Invalid null value for data argument in data processor";
         private const string NullRequestInfoModelExceptionMessage = "Invalid null value for request info model argument in data processor.";

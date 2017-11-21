@@ -2,7 +2,8 @@
 {
     using System.Collections.Generic;
     using System.Linq;
-    using JQDT.DataProcessing;
+    using JQDT.DataProcessing.ColumnsFilter;
+    using JQDT.DataProcessing.Common;
     using JQDT.Models;
     using NUnit.Framework;
     using Tests.UnitTests.Common;
@@ -18,8 +19,8 @@
         [SetUp]
         public void SetUp()
         {
-            this.filterSimpleModel = new ColumnsFilterDataProcessor<SimpleModel>();
-            this.filterComplexModel = new ColumnsFilterDataProcessor<ComplexModel>();
+            this.filterSimpleModel = new ColumnsFilterDataProcessor<SimpleModel>(new FiltersCommonProcessor(new FilterDataProcessorEnumerableQueryBridge()));
+            this.filterComplexModel = new ColumnsFilterDataProcessor<ComplexModel>(new FiltersCommonProcessor(new FilterDataProcessorEnumerableQueryBridge()));
             this.simpleData = new List<SimpleModel>().AsQueryable();
             this.complexData = new List<ComplexModel>().AsQueryable();
         }

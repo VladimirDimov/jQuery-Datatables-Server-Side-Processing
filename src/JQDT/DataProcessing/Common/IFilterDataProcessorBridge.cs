@@ -1,7 +1,10 @@
-﻿namespace JQDT.DataProcessing.FilterDataProcessor
+﻿namespace JQDT.DataProcessing.Common
 {
     using System.Linq.Expressions;
 
+    /// <summary>
+    /// Generic interface for the common filter logic.
+    /// </summary>
     internal interface IFilterDataProcessorBridge
     {
         /// <summary>

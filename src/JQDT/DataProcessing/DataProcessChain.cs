@@ -1,6 +1,5 @@
 ﻿namespace JQDT.DataProcessing
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using JQDT.Models;
@@ -18,7 +17,7 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="DataProcessChain"/> class.
         /// </summary>
-        public DataProcessChain()
+        internal DataProcessChain()
         {
             this.dataProcessors = new LinkedList<IDataProcess<T>>();
             this.intermidiateResults = new Dictionary<string, T>();

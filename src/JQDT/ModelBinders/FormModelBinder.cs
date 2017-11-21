@@ -39,8 +39,9 @@
         /// </summary>
         /// <param name="ajaxForm">The ajax form.</param>
         /// <param name="data">The data collection.</param>
+        /// <typeparam name="T">Generic data model type.</typeparam>
         /// <returns><see cref="RequestInfoModel"/></returns>
-        public RequestInfoModel BindModel<T>(NameValueCollection ajaxForm, T data)
+        internal RequestInfoModel BindModel<T>(NameValueCollection ajaxForm, T data)
         {
             if (ajaxForm == null)
             {

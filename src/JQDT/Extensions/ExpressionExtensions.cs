@@ -9,7 +9,7 @@
     /// <summary>
     /// Extension methods for <see cref="Expression"/>
     /// </summary>
-    public static class ExpressionExtensions
+    internal static class ExpressionExtensions
     {
         private const string NullExpressionException = "Cannot apply nested property on null expression. Nested property path: {0}";
         private const string NullEmptyOrWhitespacePropertyPathException = "Property path cannot be null, empty or whitespace.";
@@ -24,7 +24,7 @@
         /// <param name="expression">The expression.</param>
         /// <param name="propertyPath">The property path.</param>
         /// <returns>Property select expression as <see cref="MemberExpression"/></returns>
-        public static MemberExpression NestedProperty(this Expression expression, string propertyPath)
+        internal static MemberExpression NestedProperty(this Expression expression, string propertyPath)
         {
             if (expression == null)
             {
@@ -53,7 +53,7 @@
         /// <param name="expression">The expression.</param>
         /// <param name="propertyInfoPath">The property information path.</param>
         /// <returns>Property expression as <see cref="MemberExpression"/></returns>
-        public static MemberExpression NestedProperty(this Expression expression, IEnumerable<PropertyInfo> propertyInfoPath)
+        internal static MemberExpression NestedProperty(this Expression expression, IEnumerable<PropertyInfo> propertyInfoPath)
         {
             if (expression == null)
             {

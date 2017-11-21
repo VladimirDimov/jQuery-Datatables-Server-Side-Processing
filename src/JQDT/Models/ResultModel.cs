@@ -13,7 +13,7 @@
         /// <value>
         /// The draw.
         /// </value>
-        public int Draw { get; internal set; }
+        internal int Draw { get; set; }
 
         /// <summary>
         /// Gets or sets the records total.
@@ -21,7 +21,7 @@
         /// <value>
         /// The records total.
         /// </value>
-        public int RecordsTotal { get; internal set; }
+        internal int RecordsTotal { get; set; }
 
         /// <summary>
         /// Gets or sets the RecordsFiltered.
@@ -29,7 +29,7 @@
         /// <value>
         /// The records filtered.
         /// </value>
-        public object RecordsFiltered { get; internal set; }
+        internal object RecordsFiltered { get; set; }
 
         /// <summary>
         /// Gets or sets the data.
@@ -37,7 +37,7 @@
         /// <value>
         /// The data.
         /// </value>
-        public List<object> Data { get; internal set; }
+        internal List<object> Data { get; set; }
 
         /// <summary>
         /// Gets or sets the error.
@@ -45,6 +45,6 @@
         /// <value>
         /// The error.
         /// </value>
-        public string Error { get; set; }
+        internal string Error { get; set; }
     }
 }

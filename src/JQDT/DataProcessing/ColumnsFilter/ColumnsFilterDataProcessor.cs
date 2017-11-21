@@ -11,7 +11,9 @@
     /// <summary>
     /// Applies filtering on separate columns
     /// </summary>
-    /// <seealso cref="JQDT.DataProcessing.DataProcessBase" />
+    /// <typeparam name="T">Type of the data model.</typeparam>
+    /// <seealso cref="JQDT.DataProcessing.DataProcessBase{T}" />
+    /// <seealso cref="JQDT.DataProcessing.IDataFilter" />
     internal class ColumnsFilterDataProcessor<T> : DataProcessBase<T>, IDataFilter
     {
         private const string ToStringMethodName = "ToString";
@@ -25,7 +27,7 @@
         /// Initializes a new instance of the <see cref="ColumnsFilterDataProcessor{T}"/> class.
         /// </summary>
         /// <param name="commonProcessor">The common processor.</param>
-        public ColumnsFilterDataProcessor(FiltersCommonProcessor commonProcessor)
+        internal ColumnsFilterDataProcessor(FiltersCommonProcessor commonProcessor)
         {
             this.commonProcessor = commonProcessor;
         }
@@ -80,35 +82,5 @@
 
             return (Expression<Func<T, bool>>)lambda;
         }
-
-        //private Expression GenerateColumnContainsExpression(Column column, ParameterExpression modelParam)
-        //{
-        //    // res: m => m.Prop1.Prop2.ToString().ToLower().Contains(substring);
-
-        //    // (ModelType)m.Prop1.Prop2
-        //    var propSelectExpr = this.commonProcessor.GetSinglePropertyContainsExpression(column.Search.Value, column.Data, modelParam);
-
-        //    // (ModelType)m.Prop1.Prop2.ToString()
-        //    var toStringMethodInfo = typeof(T)
-        //        .GetMethods()
-        //        .Where(m => m.Name == ToStringMethodName && !m.GetParameters().Any())
-        //        .Single();
-        //    var toStringExpr = Expression.Call(propSelectExpr, toStringMethodInfo);
-
-        //    // (ModelType)m.Prop1.Prop2.ToString().ToLower()
-        //    var toLowerMethodInfo = typeof(string).GetMethods()
-        //        .Where(m => m.Name == ToLowerMethodName && !m.GetParameters().Any())
-        //        .Single();
-        //    var toLowerExpr = Expression.Call(toStringExpr, toLowerMethodInfo);
-
-        //    // (ModelType)m.Prop1.Prop2.ToString().ToLower().Contains(substring)
-        //    var containsMethodInfo = typeof(string).GetMethods()
-        //        .Where(m => m.Name == ContainsMethodName && m.GetParameters().Count() == 1)
-        //        .Single();
-        //    var searchParamExpr = Expression.Constant(column.Search.Value);
-        //    var containsExpr = Expression.Call(toLowerExpr, containsMethodInfo, searchParamExpr);
-
-        //    return containsExpr;
-        //}
     }
 }

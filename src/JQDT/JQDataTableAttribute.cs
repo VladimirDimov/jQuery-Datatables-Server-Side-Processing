@@ -1,10 +1,8 @@
 ﻿namespace JQDT
 {
     using System;
-    using System.Data.Entity.Infrastructure;
     using System.Linq;
     using System.Web.Mvc;
-    using Examples.Data.ViewModels;
     using JQDT.Application;
     using JQDT.Models;
 
@@ -23,23 +21,23 @@
         {
             //try
             //{
-                var modelType = filterContext.Controller.ViewData.Model.GetType();
+            var modelType = filterContext.Controller.ViewData.Model.GetType();
 
-                var appType = typeof(ApplicationMvc<>);
-                Type[] typeArgs = { modelType.GenericTypeArguments.First() };
-                var genericAppType = appType.MakeGenericType(typeArgs);
-                object app = Activator.CreateInstance(genericAppType, filterContext);
-                var methodInfo = app.GetType().GetMethod("Execute");
-                var result = (ResultModel)methodInfo.Invoke(app, null);
+            var appType = typeof(ApplicationMvc<>);
+            Type[] typeArgs = { modelType.GenericTypeArguments.First() };
+            var genericAppType = appType.MakeGenericType(typeArgs);
+            object app = Activator.CreateInstance(genericAppType, filterContext);
+            var methodInfo = app.GetType().GetMethod("Execute");
+            var result = (ResultModel)methodInfo.Invoke(app, null);
 
-                filterContext.Result = this.FormatResult(new
-                {
-                    draw = result.Draw,
-                    recordsTotal = result.RecordsTotal,
-                    recordsFiltered = result.RecordsFiltered,
-                    data = result.Data,
-                    error = result.Error
-                });
+            filterContext.Result = this.FormatResult(new
+            {
+                draw = result.Draw,
+                recordsTotal = result.RecordsTotal,
+                recordsFiltered = result.RecordsFiltered,
+                data = result.Data,
+                error = result.Error
+            });
             //}
             //catch (Exception ex)
             //{

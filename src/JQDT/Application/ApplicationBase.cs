@@ -7,7 +7,6 @@
     using JQDT.DataProcessing;
     using JQDT.DataProcessing.ColumnsFilter;
     using JQDT.DataProcessing.Common;
-    using JQDT.DataProcessing.FilterDataProcessor;
     using JQDT.ModelBinders;
     using JQDT.Models;
 
@@ -27,20 +26,20 @@
             ResultModel resultModel = null;
             //try
             //{
-            var modelBinder = new FormModelBinder();
-            var ajaxForm = this.GetAjaxForm();
-            var data = this.GetData();
-            var requestModel = modelBinder.BindModel(ajaxForm, data);
+                var modelBinder = new FormModelBinder();
+                var ajaxForm = this.GetAjaxForm();
+                var data = this.GetData();
+                var requestModel = modelBinder.BindModel(ajaxForm, data);
 
-            var dataProcessChain = this.GetDataProcessChain(requestModel.Helpers.DataCollectionType);
-            var processedData = dataProcessChain.ProcessData(data, requestModel);
-            resultModel = new ResultModel
-            {
-                Draw = requestModel.TableParameters.Draw,
-                RecordsTotal = data.Count(),
-                RecordsFiltered = this.GetRecordsFiltered(dataProcessChain),
-                Data = processedData.ToList().Select(x => (object)x).ToList()
-            };
+                var dataProcessChain = this.GetDataProcessChain(requestModel.Helpers.DataCollectionType);
+                var processedData = dataProcessChain.ProcessData(data, requestModel);
+                resultModel = new ResultModel
+                {
+                    Draw = requestModel.TableParameters.Draw,
+                    RecordsTotal = data.Count(),
+                    RecordsFiltered = this.GetRecordsFiltered(dataProcessChain),
+                    Data = processedData.ToList().Select(x => (object)x).ToList()
+                };
             //}
             //catch (Exception ex)
             //{
@@ -101,7 +100,7 @@
 
             dataProcessChain.AddDataProcessor(
                 new FilterDataProcessor<T>(new FiltersCommonProcessor(filterDataProcessorBridge)));
-            dataProcessChain.AddDataProcessor(new CustomFiltersDataProcessor<T>(new FiltersCommonProcessor(filterDataProcessorBridge)));
+            dataProcessChain.AddDataProcessor(new CustomFiltersDataProcessor<T>(new FiltersCommonProcessor(filterDataProcessorBridge), new DynamicParser()));
             dataProcessChain.AddDataProcessor(new ColumnsFilterDataProcessor<T>(
                 new FiltersCommonProcessor(filterDataProcessorBridge)));
             dataProcessChain.AddDataProcessor(new SortDataProcessor<T>());

@@ -7,7 +7,7 @@
     /// <summary>
     /// Utility methods related to CLR Types for SQL Server
     /// </summary>
-    public class Utilities
+    internal class Utilities
     {
         [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         private static extern IntPtr LoadLibrary(string libname);
@@ -19,7 +19,7 @@
         /// Root path of the current application. Use Server.MapPath(".") for ASP.NET applications
         /// and AppDomain.CurrentDomain.BaseDirectory for desktop applications.
         /// </param>
-        public static void LoadNativeAssemblies(string rootApplicationPath)
+        internal static void LoadNativeAssemblies(string rootApplicationPath)
         {
             var nativeBinaryPath = IntPtr.Size > 4
                 ? Path.Combine(rootApplicationPath, @"SqlServerTypes\x64\")

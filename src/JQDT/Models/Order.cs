@@ -3,7 +3,7 @@
     /// <summary>
     /// Order default model
     /// </summary>
-    public class Order
+    internal class Order
     {
         /// <summary>
         /// Gets or sets the column.
@@ -11,7 +11,7 @@
         /// <value>
         /// The column.
         /// </value>
-        public int Column { get; set; }
+        internal int Column { get; set; }
 
         /// <summary>
         /// Gets or sets the dir.
@@ -19,6 +19,6 @@
         /// <value>
         /// The dir.
         /// </value>
-        public string Dir { get; set; }
+        internal string Dir { get; set; }
     }
 }

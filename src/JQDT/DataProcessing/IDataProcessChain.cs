@@ -5,6 +5,7 @@
     /// <summary>
     /// Chain data processor that calls all containing data processors in the added order.
     /// </summary>
+    /// <typeparam name="T">Generic data model type.</typeparam>
     internal interface IDataProcessChain<T>
     {
         /// <summary>

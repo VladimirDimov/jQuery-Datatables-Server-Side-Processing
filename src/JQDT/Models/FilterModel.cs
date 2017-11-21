@@ -3,7 +3,7 @@
     /// <summary>
     /// Filter Model
     /// </summary>
-    public class FilterModel
+    internal class FilterModel
     {
         /// <summary>
         /// Gets or sets the value.
@@ -11,7 +11,7 @@
         /// <value>
         /// The value.
         /// </value>
-        public string Value { get; set; }
+        internal string Value { get; set; }
 
         /// <summary>
         /// Gets or sets the type.
@@ -19,6 +19,6 @@
         /// <value>
         /// The type.
         /// </value>
-        public FilterTypes Type { get; set; }
+        internal FilterTypes Type { get; set; }
     }
 }

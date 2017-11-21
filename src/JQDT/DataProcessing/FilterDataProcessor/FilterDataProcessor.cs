@@ -2,16 +2,13 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Data.Entity.SqlServer;
     using System.Linq;
     using System.Linq.Expressions;
     using JQDT.DataProcessing.Common;
-    using JQDT.DataProcessing.FilterDataProcessor;
-    using JQDT.Extensions;
     using JQDT.Models;
 
     /// <summary>
-    /// Filters the data by a substring value. Looks for the substring in all public properties of the data model.
+    /// Filters the data by a substring value. Looks for the substring in all internal properties of the data model.
     /// </summary>
     internal class FilterDataProcessor<T> : DataProcessBase<T>, IDataFilter
     {
@@ -21,7 +18,7 @@
         private RequestInfoModel requestInfoModel;
         private FiltersCommonProcessor commonProcessor;
 
-        public FilterDataProcessor(FiltersCommonProcessor commonProcessor)
+        internal FilterDataProcessor(FiltersCommonProcessor commonProcessor)
         {
             this.commonProcessor = commonProcessor;
         }

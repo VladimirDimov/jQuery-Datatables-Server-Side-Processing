@@ -1,4 +1,4 @@
-﻿namespace JQDT.DataProcessing.FilterDataProcessor
+﻿namespace JQDT.DataProcessing.Common
 {
     using System;
     using System.Data.Entity.SqlServer;
