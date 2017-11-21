@@ -33,7 +33,7 @@ Add the `[JQDataTable]` attribute to the ajax controller action. Return 'View(da
         }
 ```
 
-####
+#### Client
 ```html
         <table id="myTable" class="display" cellspacing="0" width="100">
             <thead>
