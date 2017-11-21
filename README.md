@@ -12,7 +12,7 @@ Add the `[JQDataTable]` attribute to the ajax controller action. Return 'View(da
 ### Example
 
 #### Server
-```
+```cs
         private ApplicationDbContext context;
         
         [JQDataTable]
@@ -35,7 +35,7 @@ Add the `[JQDataTable]` attribute to the ajax controller action. Return 'View(da
 
 ####
 ```html
-        <table id="SearchResultTable" class="display" cellspacing="0" width="100">
+        <table id="myTable" class="display" cellspacing="0" width="100">
             <thead>
                 <tr>
                     <th>Title</th>
@@ -58,7 +58,7 @@ Add the `[JQDataTable]` attribute to the ajax controller action. Return 'View(da
 
         @section Scripts {
             <script>
-                var table = $('#SearchResultTable').DataTable({
+                var table = $('#myTable').DataTable({
                     "proccessing": true,
                     "serverSide": true,
                     "ajax": {
