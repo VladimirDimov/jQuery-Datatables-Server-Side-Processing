@@ -12,7 +12,8 @@ Add the `[JQDataTable]` attribute to the ajax controller action. Return 'View(da
 ### Example
 
 #### Server
-`        private ApplicationDbContext context;
+```
+        private ApplicationDbContext context;
         
         [JQDataTable]
         public ActionResult GetVendorsData()
@@ -30,10 +31,10 @@ Add the `[JQDataTable]` attribute to the ajax controller action. Return 'View(da
 
             return this.View(data);
         }
-`
+```
 
 ####
-`
+```html
         <table id="SearchResultTable" class="display" cellspacing="0" width="100">
             <thead>
                 <tr>
@@ -78,4 +79,4 @@ Add the `[JQDataTable]` attribute to the ajax controller action. Return 'View(da
                 });
             </script>
         }
-`
+```
