@@ -66,7 +66,7 @@
 
             var actualExpr = this.filterComplexModel.ProcessData(this.complexData, requestModel);
             var actualExprStr = actualExpr.Expression.ToString();
-            var expectedExprStr = $"System.Collections.Generic.List`1[{typeof(ComplexModel).FullName}].Where(m => Convert(m).{column}.ToString().ToLower().Contains(\"{search}\"))";
+            var expectedExprStr = $"System.Collections.Generic.List`1[Tests.UnitTests.Models.ComplexModel].Where(m => ((m.NestedComplexModel != null) AndAlso m.NestedComplexModel.Boolean.ToString().ToLower().Contains(\"true\")))";
 
             Assert.AreEqual(expectedExprStr, actualExprStr);
             Assert.DoesNotThrow(() =>
@@ -116,7 +116,7 @@
 
             var actualExpr = this.filterSimpleModel.ProcessData(this.simpleData, requestModel);
             var actualExprStr = actualExpr.Expression.ToString();
-            var expectedExprStr = $"System.Collections.Generic.List`1[Tests.UnitTests.Models.SimpleModel].Where(m => ((Convert(m).String.ToString().ToLower().Contains(\"asd\") AndAlso Convert(m).DateTime.ToString().ToLower().Contains(\"sad324\")) AndAlso Convert(m).Integer.ToString().ToLower().Contains(\"213hjv321uvg\")))";
+            var expectedExprStr = "System.Collections.Generic.List`1[Tests.UnitTests.Models.SimpleModel].Where(m => ((((m.String != null) AndAlso m.String.ToString().ToLower().Contains(\"asd\")) AndAlso m.DateTime.ToString().ToLower().Contains(\"sad324\")) AndAlso m.Integer.ToString().ToLower().Contains(\"213hjv321uvg\")))";
 
             Assert.AreEqual(expectedExprStr, actualExprStr);
             Assert.DoesNotThrow(() =>
@@ -166,7 +166,7 @@
 
             var actualExpr = this.filterComplexModel.ProcessData(this.complexData, requestModel);
             var actualExprStr = actualExpr.Expression.ToString();
-            var expectedExprStr = $"System.Collections.Generic.List`1[Tests.UnitTests.Models.ComplexModel].Where(m => ((Convert(m).SimpleModel.String.ToString().ToLower().Contains(\"{StringColumnSearch}\") AndAlso Convert(m).NestedComplexModel.SimpleModel.DateTime.ToString().ToLower().Contains(\"{DateTimeColumnSearch}\")) AndAlso Convert(m).NestedComplexModel.SimpleModel.Integer.ToString().ToLower().Contains(\"{IntegerColumnSearch}\")))";
+            var expectedExprStr = "System.Collections.Generic.List`1[Tests.UnitTests.Models.ComplexModel].Where(m => (((((m.SimpleModel != null) AndAlso (m.SimpleModel.String != null)) AndAlso m.SimpleModel.String.ToString().ToLower().Contains(\"asd\")) AndAlso (((m.NestedComplexModel != null) AndAlso (m.NestedComplexModel.SimpleModel != null)) AndAlso m.NestedComplexModel.SimpleModel.DateTime.ToString().ToLower().Contains(\"sad324\"))) AndAlso (((m.NestedComplexModel != null) AndAlso (m.NestedComplexModel.SimpleModel != null)) AndAlso m.NestedComplexModel.SimpleModel.Integer.ToString().ToLower().Contains(\"213hjv321uvg\"))))";
 
             Assert.AreEqual(expectedExprStr, actualExprStr);
             Assert.DoesNotThrow(() =>
