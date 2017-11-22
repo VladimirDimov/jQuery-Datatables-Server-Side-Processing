@@ -22,9 +22,6 @@
         /// <returns>Returns the "Contains" expression for a single property</returns>
         internal Expression GetSinglePropertyContainsExpression(string search, string propertyPath, ParameterExpression modelParamExpr)
         {
-            // searchVal
-            var searchValExpr = Expression.Constant(search.ToLower());
-
             // x.Prop1.Prop2
             var propExpr = modelParamExpr.NestedProperty(propertyPath);
 
@@ -36,15 +33,13 @@
             }
 
             // x.Prop1 != null && x.Prop1.Prop2 != null
-            Expression nullCheckExpr = Expression.NotEqual(propExpr, Expression.Constant(null));
+            Expression nullCheckExpr = this.BuildNullCheckExpression(propExpr, propertyType);
 
             // x.Prop1.Prop2.ToLower()
-            var toLowerMethodInfo = typeof(string).GetMethods().Where(m => m.Name == "ToLower" && !m.GetParameters().Any()).First();
-            var toLowerExpr = Expression.Call(propExpr, toLowerMethodInfo);
+            Expression toLowerExpr = this.BuildToLowerExpression(propExpr);
 
             // x.Prop1.Prop2.Contains(searchVal)
-            var containsMethodInfo = typeof(string).GetMethod("Contains");
-            var containsExpr = Expression.Call(toLowerExpr, containsMethodInfo, searchValExpr);
+            Expression containsExpr = this.BuildComparissonExpression(propertyType, toLowerExpr, search);
 
             // join the null check expressions and the string.Contains() expression with a AND clause
             // If no null check expressions (when the property cannot be null) only the string.Contains() expression is used
@@ -53,6 +48,81 @@
                 Expression.AndAlso(nullCheckExpr, containsExpr);
 
             return joinedExpr;
+        }
+
+        private Expression BuildComparissonExpression(Type propertyType, Expression toLowerExpr, string search)
+        {
+            // searchVal
+            var searchValExpr = Expression.Constant(search.ToLower());
+
+            if (propertyType == typeof(string))
+            {
+                // x => x.Contains(search)
+                var containsMethodInfo = typeof(string).GetMethod("Contains");
+                var containsExpr = Expression.Call(toLowerExpr, containsMethodInfo, searchValExpr);
+
+                return containsExpr;
+            }
+            else
+            {
+                if (search.Length > 1)
+                {
+                    return Expression.Constant(false);
+                }
+
+                // x => x == search
+                var charValue = Char.Parse(search);
+                var charComparissonExpr = Expression.Equal(toLowerExpr, Expression.Constant(charValue));
+
+                return charComparissonExpr;
+            }
+        }
+
+        private Expression BuildToLowerExpression(MemberExpression propExpr)
+        {
+            var propertyType = propExpr.Type;
+
+            if (propExpr.Type == typeof(string))
+            {
+                var toLowerMethodInfo = propertyType.GetMethods().Where(m => m.Name == "ToLower" && !m.GetParameters().Any()).First();
+                var toLowerExpr = Expression.Call(propExpr, toLowerMethodInfo);
+
+                return toLowerExpr;
+            }
+            else if (propertyType == typeof(char) || propertyType == typeof(char?))
+            {
+                var toLowerMethodInfo = typeof(char).GetMethods().Where(m => m.Name == "ToLower" && m.GetParameters().Count() == 1).First();
+                if (propertyType == typeof(char?))
+                {
+                    var valueMethodInfo = typeof(Nullable<char>).GetMethods()
+                        .Where(x => x.Name == "GetValueOrDefault")
+                        .First(x => !x.GetGenericArguments().Any());
+
+                    var valueExpr = Expression.Call(propExpr, valueMethodInfo);
+
+                    return Expression.Call(null, toLowerMethodInfo, valueExpr);
+                }
+
+                var toLowerExpr = Expression.Call(null, toLowerMethodInfo, propExpr);
+
+                return toLowerExpr;
+            }
+            else
+            {
+                throw new InvalidTypeForOperationException();
+            }
+        }
+
+        private Expression BuildNullCheckExpression(MemberExpression propExpr, Type propertyType)
+        {
+            Expression nullCheckExpr = null;
+
+            if (propertyType == typeof(string) || propertyType == typeof(char?))
+            {
+                nullCheckExpr = Expression.NotEqual(propExpr, Expression.Constant(null));
+            }
+
+            return nullCheckExpr;
         }
 
         /// <summary>

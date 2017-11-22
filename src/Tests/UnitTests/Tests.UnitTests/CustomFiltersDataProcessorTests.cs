@@ -5,6 +5,7 @@
     using System.Linq;
     using JQDT.DataProcessing.Common;
     using JQDT.DataProcessing.CustomFiltersDataProcessing;
+    using JQDT.Exceptions;
     using JQDT.Models;
     using NUnit.Framework;
     using Tests.UnitTests.Common;
@@ -107,7 +108,7 @@
         [Test]
         public void ShouldThrowAppropriateExceptionIfIncorrectPropertyType()
         {
-            var exception = Assert.Throws<ArgumentException>(() =>
+            var exception = Assert.Throws<InvalidTypeForOperationException>(() =>
             {
                 var value = "l";
 
@@ -119,8 +120,6 @@
                     },
                     x => true);
             });
-
-            Assert.IsTrue(exception.Message.StartsWith("Property String of type String is invalid for the requested filter"));
         }
 
         [Test]

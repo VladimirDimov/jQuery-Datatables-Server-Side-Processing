@@ -15,5 +15,7 @@
         public bool Boolean { get; set; }
 
         public char Char { get; set; }
+
+        public char? CharNullable { get; set; }
     }
 }

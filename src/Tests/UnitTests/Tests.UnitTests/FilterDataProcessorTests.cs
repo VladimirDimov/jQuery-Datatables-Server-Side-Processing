@@ -3,8 +3,8 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using JQDT.DataProcessing;
     using JQDT.DataProcessing.Common;
+    using JQDT.DataProcessing.SearchDataProcessing;
     using JQDT.Models;
     using NUnit.Framework;
     using Tests.UnitTests.Models;
@@ -22,8 +22,14 @@
         [Test]
         public void SearchWithTwoSearchableProperties()
         {
-            var filterProc = new SearchDataProcessor<SimpleModel>(new SearchCommonProcessor(new FilterDataProcessorEnumerableQueryBridge()));
-            var data = new List<SimpleModel>().AsQueryable();
+            var filterProc = new SearchDataProcessor<SimpleModel>(new SearchCommonProcessor());
+            var data = new List<SimpleModel>()
+            {
+                new SimpleModel{ String = "aaa", Char = 'q' },
+                new SimpleModel{ String = null, Char = 'q', CharNullable = 'b' },
+                new SimpleModel{ String = "bbb", CharNullable = null },
+            }
+            .AsQueryable();
             var processedData = filterProc.ProcessData(data, new RequestInfoModel()
             {
                 Helpers = new RequestHelpers { ModelType = typeof(SimpleModel) },
@@ -36,30 +42,39 @@
                     Columns = new List<Column>
                     {
                         new Column{
-                            Data = "String",
+                            Data = nameof(SimpleModel.String),
                             Searchable = true
                         },
                         new Column
                         {
-                            Data = "Integer",
+                            Data = nameof(SimpleModel.Char),
+                            Searchable = true
+                        },
+                        new Column
+                        {
+                            Data = nameof(SimpleModel.CharNullable),
                             Searchable = true
                         }
                     }
                 }
-            });
+            })
+            .ToList();
 
-            var expression = ((System.Linq.IQueryable)processedData).Expression;
-            var actualExpressionStr = expression.ToString();
-            var expectedExpressionStr = $"System.Collections.Generic.List`1[Tests.UnitTests.Models.SimpleModel].Where(model => (((model.String != null) AndAlso model.String.ToString().ToLower().Contains(\"aaa\")) OrElse model.Integer.ToString().ToLower().Contains(\"aaa\")))";
-
-            Assert.AreEqual(expectedExpressionStr, actualExpressionStr);
+            Assert.AreEqual(1, processedData.Count);
         }
 
         [Test]
         public void SearchWithSingleSearchableProperty()
         {
             var filterProc = this.GetFilterDataProcessor<SimpleModel>();
-            var data = new List<SimpleModel>().AsQueryable();
+            var data = new List<SimpleModel>()
+            {
+                new SimpleModel{String = "aaa"},
+                new SimpleModel{String = null},
+                new SimpleModel{String = "bbb"},
+            }
+            .AsQueryable();
+
             var processedData = filterProc.ProcessData(data, new RequestInfoModel()
             {
                 Helpers = new RequestHelpers { ModelType = typeof(SimpleModel) },
@@ -77,13 +92,10 @@
                         }
                     }
                 }
-            });
+            })
+            .ToList();
 
-            var expression = ((System.Linq.IQueryable)processedData).Expression;
-            var actualExpressionStr = expression.ToString();
-            var expectedExpressionStr = $"System.Collections.Generic.List`1[Tests.UnitTests.Models.SimpleModel].Where(model => ((model.String != null) AndAlso model.String.ToString().ToLower().Contains(\"aaa\")))";
-
-            Assert.AreEqual(expectedExpressionStr, actualExpressionStr);
+            Assert.AreEqual(1, processedData.Count);
         }
 
         [Test]
@@ -142,7 +154,7 @@
 
             var expression = ((System.Linq.IQueryable)processedData).Expression;
             var actualExpressionStr = expression.ToString();
-            var expectedExpressionStr = $"System.Collections.Generic.List`1[Tests.UnitTests.Models.ComplexModel].Where(model => (((((model.NestedComplexModel != null) AndAlso (model.NestedComplexModel.NestedComplexModel != null)) AndAlso (model.NestedComplexModel.NestedComplexModel.SimpleModel != null)) AndAlso (model.NestedComplexModel.NestedComplexModel.SimpleModel.String != null)) AndAlso model.NestedComplexModel.NestedComplexModel.SimpleModel.String.ToString().ToLower().Contains(\"aaa\")))";
+            var expectedExpressionStr = $"System.Collections.Generic.List`1[Tests.UnitTests.Models.ComplexModel].Where(model => ((model.NestedComplexModel.NestedComplexModel.SimpleModel.String != null) AndAlso model.NestedComplexModel.NestedComplexModel.SimpleModel.String.ToLower().Contains(\"aaa\")))";
 
             Assert.AreEqual(expectedExpressionStr, actualExpressionStr);
         }
@@ -180,7 +192,7 @@
 
         private SearchDataProcessor<T> GetFilterDataProcessor<T>()
         {
-            var filterProc = new SearchDataProcessor<T>(new SearchCommonProcessor(new FilterDataProcessorEnumerableQueryBridge()));
+            var filterProc = new SearchDataProcessor<T>(new SearchCommonProcessor());
 
             return filterProc;
         }

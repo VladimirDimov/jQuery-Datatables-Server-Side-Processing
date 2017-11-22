@@ -19,8 +19,8 @@
         [SetUp]
         public void SetUp()
         {
-            this.filterSimpleModel = new ColumnsFilterDataProcessor<SimpleModel>(new SearchCommonProcessor(new FilterDataProcessorEnumerableQueryBridge()));
-            this.filterComplexModel = new ColumnsFilterDataProcessor<ComplexModel>(new SearchCommonProcessor(new FilterDataProcessorEnumerableQueryBridge()));
+            this.filterSimpleModel = new ColumnsFilterDataProcessor<SimpleModel>(new SearchCommonProcessor());
+            this.filterComplexModel = new ColumnsFilterDataProcessor<ComplexModel>(new SearchCommonProcessor());
             this.simpleData = new List<SimpleModel>().AsQueryable();
             this.complexData = new List<ComplexModel>().AsQueryable();
         }

@@ -119,7 +119,7 @@
 
             if (operationTypes.HasFlag(OperationTypesEnum.Search))
             {
-                var isSearchableType = (type == typeof(string)) || (type == typeof(char));
+                var isSearchableType = (type == typeof(string)) || (type == typeof(char) || type == typeof(char?));
                 if (!isSearchableType)
                 {
                     return false;
