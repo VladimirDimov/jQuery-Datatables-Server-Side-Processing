@@ -5,6 +5,7 @@
     using System.Linq;
     using JQDT.DataProcessing.ColumnsFilterDataProcessing;
     using JQDT.DataProcessing.Common;
+    using JQDT.Models;
     using NUnit.Framework;
     using Tests.UnitTests.Common;
     using Tests.UnitTests.Models;
@@ -45,30 +46,21 @@
         }
 
         [Test]
-        public void ColumnFilter_ShouldWorkAppropriateWithAllSupportedTypes()
+        [TestCase("Integer", "50")]
+        public void ColumnFilter_ShouldWorkAppropriateWithAllSupportedTypes(string column, string searchValue)
         {
-            var startDate = new DateTime(2017, 1, 1);
-            var data = new List<SimpleModel>();
-            for (int i = 0; i < 10; i++)
-            {
-                data.Add(new SimpleModel
-                {
-                    Boolean = i % 2 == 0,
-                    Char = i % 3 == 0 ? 'a' : 'b',
-                    CharNullable = i % 4 == 0 ? (char?)null : 'c',
-                    DateTime = startDate.AddDays(i),
-                    Double = 0 + i / 1000d,
-                    Integer = i,
-                    String = $"string_{i}"
-                });
-            }
+            var data = DataGenerator.GenerateSimpleData(10000);
+            var random = new Random();
 
             var requestModel = TestHelpers.GetSimpleRequestInfoModel();
-            requestModel.TableParameters.Columns = new List<JQDT.Models.Column>();
+            requestModel.TableParameters.Columns = new List<Column>
+            {
+                new Column{ Data = column, Search = new Search{ Value = searchValue } }
+            };
 
             var processedData = this.filterSimpleModelProcessor.ProcessData(data, requestModel).ToList();
 
-            Assert.AreEqual(data.Count(), processedData.Count);
+            Assert.IsTrue(processedData.All(x => x.Integer.ToString() == searchValue));
         }
     }
 }
