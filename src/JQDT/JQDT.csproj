@@ -35,12 +35,6 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
-    </Reference>
-    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.SqlServer.Types, Version=14.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.SqlServer.Types.14.0.314.76\lib\net40\Microsoft.SqlServer.Types.dll</HintPath>
       <Private>True</Private>
@@ -83,25 +77,21 @@
   <ItemGroup>
     <Compile Include="Application\ApplicationBase.cs" />
     <Compile Include="Application\ApplicationMvc.cs" />
-    <Compile Include="DataProcessing\ColumnsFilter\ColumnsFilterDataProcessor.cs" />
+    <Compile Include="DataProcessing\ColumnsFilterDataProcessing\ColumnsFilterDataProcessor.cs" />
     <Compile Include="DataProcessing\Common\DynamicParser.cs" />
-    <Compile Include="DataProcessing\Common\FiltersCommonProcessor.cs" />
-    <Compile Include="DataProcessing\CustomFiltersDataProcessor.cs" />
+    <Compile Include="DataProcessing\Common\SearchCommonProcessor.cs" />
+    <Compile Include="DataProcessing\CustomFiltersDataProcessing\CustomFiltersDataProcessor.cs" />
     <Compile Include="DataProcessing\DataProcessBase.cs" />
-    <Compile Include="DataProcessing\FilterDataProcessor\FilterDataProcessor.cs">
-      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
-    </Compile>
     <Compile Include="DataProcessing\DataProcessChain.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
-    <Compile Include="DataProcessing\Common\FilterDataProcessorDbQueryBridge.cs" />
-    <Compile Include="DataProcessing\Common\FilterDataProcessorEnumerableQueryBridge.cs" />
-    <Compile Include="DataProcessing\Common\IFilterDataProcessorBridge.cs" />
+    <Compile Include="DataProcessing\SearchDataProcessing\SearchDataProcessor.cs" />
     <Compile Include="DataProcessing\IDataFilter.cs" />
     <Compile Include="DataProcessing\IDataProcess.cs" />
     <Compile Include="DataProcessing\IDataProcessChain.cs" />
-    <Compile Include="DataProcessing\SortDataProcessor.cs" />
-    <Compile Include="DataProcessing\PagingDataProcessor.cs" />
+    <Compile Include="DataProcessing\SortDataProcessing\SortDataProcessor.cs" />
+    <Compile Include="DataProcessing\PagingDataProcessing\PagingDataProcessor.cs" />
+    <Compile Include="Enumerations\OperationTypesEnum.cs" />
     <Compile Include="Exceptions\JQDataTablesException.cs" />
     <Compile Include="Extensions\ExpressionExtensions.cs" />
     <Compile Include="Extensions\TypeExtensions.cs" />

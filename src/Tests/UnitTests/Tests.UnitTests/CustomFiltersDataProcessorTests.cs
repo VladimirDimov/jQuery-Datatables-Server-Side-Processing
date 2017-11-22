@@ -19,7 +19,7 @@
         [SetUp]
         public void SetUp()
         {
-            this.filter = new CustomFiltersDataProcessor<ComplexModel>(new FiltersCommonProcessor(new FilterDataProcessorEnumerableQueryBridge()), new DynamicParser());
+            this.filter = new CustomFiltersDataProcessor<ComplexModel>(new SearchCommonProcessor(new FilterDataProcessorEnumerableQueryBridge()), new DynamicParser());
             this.simpleData = new List<SimpleModel>().AsQueryable();
             this.complexData = new List<ComplexModel>().AsQueryable();
         }

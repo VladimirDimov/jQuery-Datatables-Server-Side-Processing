@@ -1,4 +1,4 @@
-﻿namespace JQDT.DataProcessing
+﻿namespace JQDT.DataProcessing.SortDataProcessing
 {
     using System;
     using System.Linq;

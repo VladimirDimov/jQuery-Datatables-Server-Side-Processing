@@ -58,7 +58,7 @@ namespace Examples.Mvc.Controllers
                 },
                 ModifiedDate = x.ModifiedDate,
                 DiscontinuedDate = x.DiscontinuedDate
-            })/*.ToList().AsQueryable()*/;
+            });
 
             return this.View(people);
         }

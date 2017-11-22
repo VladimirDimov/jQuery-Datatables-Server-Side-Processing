@@ -22,7 +22,7 @@
         [Test]
         public void SearchWithTwoSearchableProperties()
         {
-            var filterProc = new FilterDataProcessor<SimpleModel>(new FiltersCommonProcessor(new FilterDataProcessorEnumerableQueryBridge()));
+            var filterProc = new SearchDataProcessor<SimpleModel>(new SearchCommonProcessor(new FilterDataProcessorEnumerableQueryBridge()));
             var data = new List<SimpleModel>().AsQueryable();
             var processedData = filterProc.ProcessData(data, new RequestInfoModel()
             {
@@ -178,9 +178,9 @@
             Assert.AreEqual(expectedExpressionStr, actualExpressionStr);
         }
 
-        private FilterDataProcessor<T> GetFilterDataProcessor<T>()
+        private SearchDataProcessor<T> GetFilterDataProcessor<T>()
         {
-            var filterProc = new FilterDataProcessor<T>(new FiltersCommonProcessor(new FilterDataProcessorEnumerableQueryBridge()));
+            var filterProc = new SearchDataProcessor<T>(new SearchCommonProcessor(new FilterDataProcessorEnumerableQueryBridge()));
 
             return filterProc;
         }

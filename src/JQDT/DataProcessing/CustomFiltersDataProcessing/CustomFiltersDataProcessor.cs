@@ -1,4 +1,4 @@
-﻿namespace JQDT.DataProcessing
+﻿namespace JQDT.DataProcessing.CustomFiltersDataProcessing
 {
     using System;
     using System.Collections.Generic;
@@ -21,7 +21,7 @@
 
         private static HashSet<Type> comparissonOperatorsSupportedTypes;
 
-        private readonly Common.FiltersCommonProcessor filterCommonProcessor;
+        private readonly Common.SearchCommonProcessor filterCommonProcessor;
         private readonly DynamicParser dynamicParser;
 
         private RequestInfoModel requestInfoModel;
@@ -42,7 +42,7 @@
         /// </summary>
         /// <param name="filterCommonProcessor">The filter common processor.</param>
         /// <param name="dynamicParser">The dynamic parser.</param>
-        internal CustomFiltersDataProcessor(FiltersCommonProcessor filterCommonProcessor, DynamicParser dynamicParser)
+        internal CustomFiltersDataProcessor(SearchCommonProcessor filterCommonProcessor, DynamicParser dynamicParser)
         {
             this.filterCommonProcessor = filterCommonProcessor;
             this.dynamicParser = dynamicParser;

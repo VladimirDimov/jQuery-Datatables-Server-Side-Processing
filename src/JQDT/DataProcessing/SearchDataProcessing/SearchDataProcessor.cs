@@ -1,4 +1,4 @@
-﻿namespace JQDT.DataProcessing
+﻿namespace JQDT.DataProcessing.SearchDataProcessing
 {
     using System;
     using System.Collections.Generic;
@@ -10,15 +10,15 @@
     /// <summary>
     /// Filters the data by a substring value. Looks for the substring in all internal properties of the data model.
     /// </summary>
-    internal class FilterDataProcessor<T> : DataProcessBase<T>, IDataFilter
+    internal class SearchDataProcessor<T> : DataProcessBase<T>, IDataFilter
     {
         private const string NoSearchablePropertiesException = "A search value has been provided but no searchable properties were found. Make sure that the data property of the column is configured appropriately as described in jQuery Datatables documentation.";
         private const string HelpLink = "https://datatables.net/examples/ajax/objects.html";
 
         private RequestInfoModel requestInfoModel;
-        private FiltersCommonProcessor commonProcessor;
+        private SearchCommonProcessor commonProcessor;
 
-        internal FilterDataProcessor(FiltersCommonProcessor commonProcessor)
+        internal SearchDataProcessor(SearchCommonProcessor commonProcessor)
         {
             this.commonProcessor = commonProcessor;
         }

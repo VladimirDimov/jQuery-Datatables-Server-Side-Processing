@@ -1,4 +1,4 @@
-﻿namespace JQDT.DataProcessing.ColumnsFilter
+﻿namespace JQDT.DataProcessing.ColumnsFilterDataProcessing
 {
     using System;
     using System.Collections.Generic;
@@ -21,13 +21,13 @@
         private const string ContainsMethodName = "Contains";
 
         private RequestInfoModel rquestInfoModel;
-        private FiltersCommonProcessor commonProcessor;
+        private SearchCommonProcessor commonProcessor;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ColumnsFilterDataProcessor{T}"/> class.
         /// </summary>
         /// <param name="commonProcessor">The common processor.</param>
-        internal ColumnsFilterDataProcessor(FiltersCommonProcessor commonProcessor)
+        internal ColumnsFilterDataProcessor(SearchCommonProcessor commonProcessor)
         {
             this.commonProcessor = commonProcessor;
         }

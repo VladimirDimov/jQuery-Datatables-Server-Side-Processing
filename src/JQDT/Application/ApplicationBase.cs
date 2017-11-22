@@ -5,8 +5,12 @@
     using System.Linq;
     using System.Text;
     using JQDT.DataProcessing;
-    using JQDT.DataProcessing.ColumnsFilter;
+    using JQDT.DataProcessing.ColumnsFilterDataProcessing;
     using JQDT.DataProcessing.Common;
+    using JQDT.DataProcessing.CustomFiltersDataProcessing;
+    using JQDT.DataProcessing.PagingDataProcessing;
+    using JQDT.DataProcessing.SearchDataProcessing;
+    using JQDT.DataProcessing.SortDataProcessing;
     using JQDT.ModelBinders;
     using JQDT.Models;
 
@@ -34,10 +38,10 @@
                 var dataProcessChain = this.GetDataProcessChain(requestModel.Helpers.DataCollectionType);
                 var processedData = dataProcessChain.ProcessData(data, requestModel);
 
+                result.Data = processedData.ToList().Select(x => (object)x).ToList();
                 result.Draw = requestModel.TableParameters.Draw;
                 result.RecordsTotal = data.Count();
                 result.RecordsFiltered = this.GetRecordsFiltered(dataProcessChain);
-                result.Data = processedData.ToList().Select(x => (object)x).ToList();
             }
             catch (Exception ex)
             {
@@ -83,21 +87,10 @@
         private IDataProcess<T> GetDataProcessChain(Type dataCollectionType)
         {
             var dataProcessChain = new DataProcessChain<T>();
-            IFilterDataProcessorBridge filterDataProcessorBridge = null;
-            if (dataCollectionType.Name == "DbQuery`1")
-            {
-                filterDataProcessorBridge = new FilterDataProcessorDbQueryBridge();
-            }
-            else if (dataCollectionType.Name == "EnumerableQuery`1")
-            {
-                filterDataProcessorBridge = new FilterDataProcessorEnumerableQueryBridge();
-            }
 
-            dataProcessChain.AddDataProcessor(
-                new FilterDataProcessor<T>(new FiltersCommonProcessor(filterDataProcessorBridge)));
-            dataProcessChain.AddDataProcessor(new CustomFiltersDataProcessor<T>(new FiltersCommonProcessor(filterDataProcessorBridge), new DynamicParser()));
-            dataProcessChain.AddDataProcessor(new ColumnsFilterDataProcessor<T>(
-                new FiltersCommonProcessor(filterDataProcessorBridge)));
+            dataProcessChain.AddDataProcessor(new SearchDataProcessor<T>(new SearchCommonProcessor()));
+            dataProcessChain.AddDataProcessor(new CustomFiltersDataProcessor<T>(new SearchCommonProcessor(), new DynamicParser()));
+            dataProcessChain.AddDataProcessor(new ColumnsFilterDataProcessor<T>(new SearchCommonProcessor()));
             dataProcessChain.AddDataProcessor(new SortDataProcessor<T>());
             dataProcessChain.AddDataProcessor(new PagingDataProcessor<T>());
 

@@ -4,24 +4,14 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Linq.Expressions;
+    using JQDT.Enumerations;
     using JQDT.Extensions;
 
     /// <summary>
     /// Common logic for the filter processors
     /// </summary>
-    internal class FiltersCommonProcessor
+    internal class SearchCommonProcessor
     {
-        private IFilterDataProcessorBridge filterDataProcessorBridge;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="FiltersCommonProcessor"/> class.
-        /// </summary>
-        /// <param name="filterDataProcessorBridge">The filter data processor bridge.</param>
-        internal FiltersCommonProcessor(IFilterDataProcessorBridge filterDataProcessorBridge)
-        {
-            this.filterDataProcessorBridge = filterDataProcessorBridge;
-        }
-
         /// <summary>
         /// Gets the single property contains expression.
         /// </summary>
@@ -34,23 +24,29 @@
             // searchVal
             var searchValExpr = Expression.Constant(search.ToLower());
 
-            // x.Name
+            // x.Prop1.Prop2
             var propExpr = modelParamExpr.NestedProperty(propertyPath);
 
-            // x.Name != null
-            Expression nullCheckExpr = this.BuildNullCheckExpression(modelParamExpr, propertyPath);
+            // Validate that the property type is valid for a search operation
+            var propertyType = propExpr.Type;
+            if (!propertyType.IsValidForOperation(OperationTypesEnum.Search))
+            {
+                throw new ArgumentException($"Invalid search operation on type {propertyType}. A search operation can be performed only on string properties.");
+            }
 
-            // x.Name.ToString()
-            var toStringExpr = this.filterDataProcessorBridge.GetConvertToStringExpression(propExpr);
+            // x.Prop1 != null && x.Prop1.Prop2 != null
+            Expression nullCheckExpr = Expression.NotEqual(propExpr, Expression.Constant(null));
 
-            // x.Name.ToString().ToLower()
+            // x.Prop1.Prop2.ToLower()
             var toLowerMethodInfo = typeof(string).GetMethods().Where(m => m.Name == "ToLower" && !m.GetParameters().Any()).First();
-            var toLowerExpr = Expression.Call(toStringExpr, toLowerMethodInfo);
+            var toLowerExpr = Expression.Call(propExpr, toLowerMethodInfo);
 
-            // x.Name.ToString().Contains()
+            // x.Prop1.Prop2.Contains(searchVal)
             var containsMethodInfo = typeof(string).GetMethod("Contains");
             var containsExpr = Expression.Call(toLowerExpr, containsMethodInfo, searchValExpr);
 
+            // join the null check expressions and the string.Contains() expression with a AND clause
+            // If no null check expressions (when the property cannot be null) only the string.Contains() expression is used
             var joinedExpr = nullCheckExpr == null ?
                 (Expression)containsExpr :
                 Expression.AndAlso(nullCheckExpr, containsExpr);

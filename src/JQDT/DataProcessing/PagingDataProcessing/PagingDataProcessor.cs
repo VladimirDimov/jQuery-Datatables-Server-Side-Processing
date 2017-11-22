@@ -1,4 +1,4 @@
-﻿namespace JQDT.DataProcessing
+﻿namespace JQDT.DataProcessing.PagingDataProcessing
 {
     using System.Linq;
     using JQDT.Models;

@@ -5,6 +5,7 @@
     using System.Linq;
     using System.Linq.Expressions;
     using System.Reflection;
+    using JQDT.Enumerations;
 
     /// <summary>
     /// Extension methods for <see cref="Type"/>
@@ -82,6 +83,33 @@
         internal static bool IsCLRLibraryType(this Type type)
         {
             return type.Module.ScopeName != "CommonLanguageRuntimeLibrary";
+        }
+
+        /// <summary>
+        /// Determines whether a search operation can be performed on this type instance.
+        /// </summary>
+        /// <param name="type">The type.</param>
+        /// <returns>
+        ///   <c>true</c> if the specified type is searchable; otherwise, <c>false</c>.
+        /// </returns>
+        internal static bool IsValidForOperation(this Type type, OperationTypesEnum operationTypes)
+        {
+            if (operationTypes.HasFlag(OperationTypesEnum.Range))
+            {
+                // TODO: Add valid logic;
+                return true;
+            }
+
+            if (operationTypes.HasFlag(OperationTypesEnum.Search))
+            {
+                var isSearchableType = (type == typeof(string)) || (type == typeof(char));
+                if (!isSearchableType)
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
     }
 }

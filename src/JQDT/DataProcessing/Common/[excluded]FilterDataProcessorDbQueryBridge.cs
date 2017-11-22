@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Data.Entity.SqlServer;
     using System.Linq;
     using System.Linq.Expressions;
 
@@ -49,33 +48,33 @@
             else if (supportedNumericTypes.Contains(propertyExpression.Type))
             {
                 // SqlFunctions.StringConvert((decimal)x.Property)
-                var stringConvertMethodInfo = typeof(SqlFunctions).GetMethods()
-                    .Where(m =>
-                    {
-                        if (m.Name != "StringConvert")
-                        {
-                            return false;
-                        };
+                //var stringConvertMethodInfo = typeof(SqlFunctions).GetMethods()
+                //    .Where(m =>
+                //    {
+                //        if (m.Name != "StringConvert")
+                //        {
+                //            return false;
+                //        };
 
-                        var parameters = m.GetParameters();
-                        var numberOfParameters = parameters.Count();
-                        if (numberOfParameters != 1)
-                        {
-                            return false;
-                        }
+                //        var parameters = m.GetParameters();
+                //        var numberOfParameters = parameters.Count();
+                //        if (numberOfParameters != 1)
+                //        {
+                //            return false;
+                //        }
 
-                        if (parameters.First().ParameterType != typeof(decimal?))
-                        {
-                            return false;
-                        }
+                //        if (parameters.First().ParameterType != typeof(decimal?))
+                //        {
+                //            return false;
+                //        }
 
-                        return true;
-                    }).Single();
+                //        return true;
+                //    }).Single();
 
-                var castToDecimalExpr = Expression.Convert(propertyExpression, typeof(decimal?));
-                var stringConvertExpr = Expression.Call(stringConvertMethodInfo, castToDecimalExpr);
+                //var castToDecimalExpr = Expression.Convert(propertyExpression, typeof(decimal?));
+                //var stringConvertExpr = Expression.Call(stringConvertMethodInfo, castToDecimalExpr);
 
-                return stringConvertExpr;
+                //return stringConvertExpr;
             }
 
             throw new NotImplementedException($"Unsupported searchable type: {propertyExpression.Type.FullName}. Supported types: {string.Join(", ", supportedNumericTypes)}");
