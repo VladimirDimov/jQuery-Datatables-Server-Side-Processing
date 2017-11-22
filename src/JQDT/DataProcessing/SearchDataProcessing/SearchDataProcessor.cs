@@ -5,6 +5,7 @@
     using System.Linq;
     using System.Linq.Expressions;
     using JQDT.DataProcessing.Common;
+    using JQDT.Extensions;
     using JQDT.Models;
 
     /// <summary>
@@ -16,9 +17,9 @@
         private const string HelpLink = "https://datatables.net/examples/ajax/objects.html";
 
         private RequestInfoModel requestInfoModel;
-        private SearchCommonProcessor commonProcessor;
+        private CommonSearchProcessor commonProcessor;
 
-        internal SearchDataProcessor(SearchCommonProcessor commonProcessor)
+        internal SearchDataProcessor(CommonSearchProcessor commonProcessor)
         {
             this.commonProcessor = commonProcessor;
         }
@@ -66,7 +67,11 @@
 
             foreach (var propertyPath in searchableProperties)
             {
-                var currentPropertyContainsExpression = this.commonProcessor.GetSinglePropertyContainsExpression(search, propertyPath, modelParamExpr);
+                // x.Prop1.Prop2
+                var propExpr = modelParamExpr.NestedProperty(propertyPath);
+
+                // x.Prop1.Prop2.ToLower().Contains(search)
+                var currentPropertyContainsExpression = this.commonProcessor.GetSinglePropertyContainsExpression(search, propExpr);
                 containExpressionCollection.Add(currentPropertyContainsExpression);
             }
 

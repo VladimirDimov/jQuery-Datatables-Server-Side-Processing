@@ -20,8 +20,8 @@
         [SetUp]
         public void SetUp()
         {
-            this.filterSimpleModelProcessor = new ColumnsFilterDataProcessor<SimpleModel>(new SearchCommonProcessor());
-            this.filterComplexModelProcessor = new ColumnsFilterDataProcessor<ComplexModel>(new SearchCommonProcessor());
+            this.filterSimpleModelProcessor = new ColumnsFilterDataProcessor<SimpleModel>(new CommonSearchProcessor());
+            this.filterComplexModelProcessor = new ColumnsFilterDataProcessor<ComplexModel>(new CommonSearchProcessor());
             this.simpleData = new List<SimpleModel>().AsQueryable();
             this.complexData = new List<ComplexModel>().AsQueryable();
         }

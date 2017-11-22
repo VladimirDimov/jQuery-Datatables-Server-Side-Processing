@@ -1,7 +1,7 @@
 ﻿namespace JQDT.DataProcessing.Common
 {
     using System;
-    using System.Collections.Generic;
+    using System.Collections.Concurrent;
     using System.Linq;
     using System.Linq.Expressions;
 
@@ -11,7 +11,7 @@
     internal class DynamicParser
     {
         // provides caching for the parsing functions
-        private Dictionary<Type, Func<string, object>> parseFunctionsCache = new Dictionary<Type, Func<string, object>>();
+        private ConcurrentDictionary<Type, Func<string, object>> parseFunctionsCache = new ConcurrentDictionary<Type, Func<string, object>>();
 
         /// <summary>
         /// Dynamically parses a given string value.
@@ -43,7 +43,6 @@
         private Func<string, object> GetParseFunction(Type toType)
         {
             Func<string, object> func = null;
-
             if (!this.parseFunctionsCache.TryGetValue(toType, out func))
             {
                 var xExpr = Expression.Parameter(typeof(string), "x");
@@ -52,10 +51,11 @@
                 var castExpr = Expression.Convert(parseExpr, typeof(object));
 
                 var lambda = Expression.Lambda(castExpr, xExpr);
-                func = (Func<string, object>)lambda.Compile();
 
-                this.parseFunctionsCache.Add(toType, func);
+                this.parseFunctionsCache.TryAdd(toType, (Func<string, object>)lambda.Compile());
             }
+
+            this.parseFunctionsCache.TryGetValue(toType, out func);
 
             return func;
         }

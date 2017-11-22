@@ -5,6 +5,7 @@
     using System.Linq;
     using System.Linq.Expressions;
     using JQDT.DataProcessing.Common;
+    using JQDT.Enumerations;
     using JQDT.Extensions;
     using JQDT.Models;
 
@@ -21,13 +22,13 @@
         private const string ContainsMethodName = "Contains";
 
         private RequestInfoModel rquestInfoModel;
-        private SearchCommonProcessor commonProcessor;
+        private CommonSearchProcessor commonProcessor;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ColumnsFilterDataProcessor{T}"/> class.
         /// </summary>
         /// <param name="commonProcessor">The common processor.</param>
-        internal ColumnsFilterDataProcessor(SearchCommonProcessor commonProcessor)
+        internal ColumnsFilterDataProcessor(CommonSearchProcessor commonProcessor)
         {
             this.commonProcessor = commonProcessor;
         }
@@ -53,16 +54,26 @@
 
             this.rquestInfoModel = requestInfoModel;
 
-            var containseExpressions = new List<Expression>();
+            var predicateExpressions = new List<Expression>();
             var modelParam = Expression.Parameter(typeof(T), "m");
             foreach (var column in columnsWithFilter)
             {
-                Expression expr = this.commonProcessor
-                    .GetSinglePropertyContainsExpression(column.Search.Value, column.Data, modelParam);
-                containseExpressions.Add(expr);
+                var propExpr = modelParam.NestedProperty(column.Data);
+                var propType = propExpr.Type;
+                Expression currentPredicateExpr = null;
+                if (propType.IsValidForOperation(OperationTypesEnum.Search))
+                {
+                    currentPredicateExpr = this.commonProcessor.GetSinglePropertyContainsExpression(column.Search.Value, propExpr);
+                }
+                else if (propType.IsValidForOperation(OperationTypesEnum.Equals))
+                {
+                    // Add equals expression;
+                }
+
+                predicateExpressions.Add(currentPredicateExpr);
             }
 
-            Expression<Func<T, bool>> whereLambdaExpr = this.JoinContainsExpresions(containseExpressions, modelParam);
+            Expression<Func<T, bool>> whereLambdaExpr = this.JoinContainsExpresions(predicateExpressions, modelParam);
             var filteredData = data.Where(whereLambdaExpr);
 
             return filteredData;

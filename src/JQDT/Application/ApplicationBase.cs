@@ -88,9 +88,9 @@
         {
             var dataProcessChain = new DataProcessChain<T>();
 
-            dataProcessChain.AddDataProcessor(new SearchDataProcessor<T>(new SearchCommonProcessor()));
-            dataProcessChain.AddDataProcessor(new CustomFiltersDataProcessor<T>(new SearchCommonProcessor(), new DynamicParser()));
-            dataProcessChain.AddDataProcessor(new ColumnsFilterDataProcessor<T>(new SearchCommonProcessor()));
+            dataProcessChain.AddDataProcessor(new SearchDataProcessor<T>(new CommonSearchProcessor(new NullCheckExpressionBuilder())));
+            dataProcessChain.AddDataProcessor(new CustomFiltersDataProcessor<T>(new RangeOrEqualsExpressionBuilder(new OperationTypeValidator(), new ConstantExpressionBuilder(new DynamicParser()), new NullCheckExpressionBuilder())));
+            dataProcessChain.AddDataProcessor(new ColumnsFilterDataProcessor<T>(new CommonSearchProcessor(new NullCheckExpressionBuilder())));
             dataProcessChain.AddDataProcessor(new SortDataProcessor<T>());
             dataProcessChain.AddDataProcessor(new PagingDataProcessor<T>());
 

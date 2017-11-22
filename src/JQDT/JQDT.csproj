@@ -78,8 +78,12 @@
     <Compile Include="Application\ApplicationBase.cs" />
     <Compile Include="Application\ApplicationMvc.cs" />
     <Compile Include="DataProcessing\ColumnsFilterDataProcessing\ColumnsFilterDataProcessor.cs" />
+    <Compile Include="DataProcessing\Common\ConstantExpressionBuilder.cs" />
     <Compile Include="DataProcessing\Common\DynamicParser.cs" />
-    <Compile Include="DataProcessing\Common\SearchCommonProcessor.cs" />
+    <Compile Include="DataProcessing\Common\NullCheckExpressionBuilder.cs" />
+    <Compile Include="DataProcessing\Common\OperationTypeValidator.cs" />
+    <Compile Include="DataProcessing\Common\CommonSearchProcessor.cs" />
+    <Compile Include="DataProcessing\Common\RangeOrEqualsExpressionBuilder.cs" />
     <Compile Include="DataProcessing\CustomFiltersDataProcessing\CustomFiltersDataProcessor.cs" />
     <Compile Include="DataProcessing\DataProcessBase.cs" />
     <Compile Include="DataProcessing\DataProcessChain.cs">
