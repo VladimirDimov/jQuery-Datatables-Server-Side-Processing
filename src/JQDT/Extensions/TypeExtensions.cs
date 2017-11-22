@@ -14,17 +14,73 @@
     {
         private static HashSet<Type> supportedRangeOperationTypes = new HashSet<Type>()
         {
-            typeof(int), typeof(double), typeof(byte), typeof(long), typeof(DateTime), typeof(DateTimeOffset), typeof(char),
-            typeof(int?), typeof(double?), typeof(byte?), typeof(long?), typeof(DateTime?), typeof(DateTimeOffset?), typeof(char?),
+            typeof(int),
+            typeof(int?),
+            typeof(uint),
+            typeof(uint?),
+
+            typeof(long),
+            typeof(long?),
+            typeof(ulong),
+            typeof(ulong?),
+
+            typeof(double),
+            typeof(double?),
+
+            typeof(short),
+            typeof(short?),
+            typeof(ushort),
+            typeof(ushort?),
+
+            typeof(byte),
+            typeof(byte?),
+            typeof(sbyte),
+            typeof(sbyte?),
+
+            typeof(char),
+            typeof(char?),
+
+            typeof(DateTime),
+            typeof(DateTime?),
+            typeof(DateTimeOffset),
+            typeof(DateTimeOffset?),
         };
 
         private static HashSet<Type> supportedEqualOperationTypes = new HashSet<Type>()
         {
-            typeof(int), typeof(double), typeof(byte), typeof(long), typeof(DateTime), typeof(DateTimeOffset), typeof(char),
-            typeof(int?), typeof(double?), typeof(byte?), typeof(long?), typeof(DateTime?), typeof(DateTimeOffset?), typeof(char?),
-            typeof(string)
-        };
+            typeof(string),
 
+            typeof(int),
+            typeof(int?),
+            typeof(uint),
+            typeof(uint?),
+
+            typeof(long),
+            typeof(long?),
+            typeof(ulong),
+            typeof(ulong?),
+
+            typeof(double),
+            typeof(double?),
+
+            typeof(short),
+            typeof(short?),
+            typeof(ushort),
+            typeof(ushort?),
+
+            typeof(byte),
+            typeof(byte?),
+            typeof(sbyte),
+            typeof(sbyte?),
+
+            typeof(char),
+            typeof(char?),
+
+            typeof(DateTime),
+            typeof(DateTime?),
+            typeof(DateTimeOffset),
+            typeof(DateTimeOffset?),
+        };
 
         /// <summary>
         /// Returns collection of <see cref="PropertyInfo"/>. The collection contains the <see cref="PropertyInfo"/> of
