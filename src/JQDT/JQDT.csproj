@@ -92,6 +92,7 @@
     <Compile Include="DataProcessing\SortDataProcessing\SortDataProcessor.cs" />
     <Compile Include="DataProcessing\PagingDataProcessing\PagingDataProcessor.cs" />
     <Compile Include="Enumerations\OperationTypesEnum.cs" />
+    <Compile Include="Exceptions\InvalidTypeForOperationException.cs" />
     <Compile Include="Exceptions\JQDataTablesException.cs" />
     <Compile Include="Extensions\ExpressionExtensions.cs" />
     <Compile Include="Extensions\TypeExtensions.cs" />

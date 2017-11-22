@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Linq;
-    using JQDT.DataProcessing;
+    using JQDT.DataProcessing.PagingDataProcessing;
     using NUnit.Framework;
     using Tests.UnitTests.Common;
     using Tests.UnitTests.Models;

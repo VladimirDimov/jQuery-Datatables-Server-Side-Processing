@@ -5,6 +5,7 @@
     using System.Linq;
     using System.Linq.Expressions;
     using JQDT.Enumerations;
+    using JQDT.Exceptions;
     using JQDT.Extensions;
 
     /// <summary>
@@ -31,7 +32,7 @@
             var propertyType = propExpr.Type;
             if (!propertyType.IsValidForOperation(OperationTypesEnum.Search))
             {
-                throw new ArgumentException($"Invalid search operation on type {propertyType}. A search operation can be performed only on string properties.");
+                throw new InvalidTypeForOperationException($"Invalid search operation on type {propertyType}. A search operation can be performed only on string properties.");
             }
 
             // x.Prop1 != null && x.Prop1.Prop2 != null

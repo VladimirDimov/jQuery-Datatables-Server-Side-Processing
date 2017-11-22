@@ -13,8 +13,13 @@
         Search = 1,
 
         /// <summary>
-        /// Range operations including: =, <, >, <=, >=
+        /// Range operations including: <, >, <=, >=
         /// </summary>
         Range = 2,
+
+        /// <summary>
+        /// Equals operation
+        /// </summary>
+        Equals = 4,
     }
 }

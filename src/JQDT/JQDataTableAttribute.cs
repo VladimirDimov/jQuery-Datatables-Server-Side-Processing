@@ -55,9 +55,11 @@
 
         private ActionResult FormatResult(object resultModel)
         {
-            var jsonResult = new JsonResult();
-            jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
-            jsonResult.Data = resultModel;
+            var jsonResult = new JsonResult
+            {
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet,
+                Data = resultModel
+            };
 
             return jsonResult;
         }

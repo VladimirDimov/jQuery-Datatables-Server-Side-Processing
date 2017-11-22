@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using JQDT.DataProcessing;
+    using JQDT.DataProcessing.SortDataProcessing;
     using JQDT.Models;
     using NUnit.Framework;
     using Tests.UnitTests.Common;

@@ -3,8 +3,8 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using JQDT.DataProcessing;
     using JQDT.DataProcessing.Common;
+    using JQDT.DataProcessing.CustomFiltersDataProcessing;
     using JQDT.Models;
     using NUnit.Framework;
     using Tests.UnitTests.Common;
@@ -19,7 +19,7 @@
         [SetUp]
         public void SetUp()
         {
-            this.filter = new CustomFiltersDataProcessor<ComplexModel>(new SearchCommonProcessor(new FilterDataProcessorEnumerableQueryBridge()), new DynamicParser());
+            this.filter = new CustomFiltersDataProcessor<ComplexModel>(new SearchCommonProcessor(), new DynamicParser());
             this.simpleData = new List<SimpleModel>().AsQueryable();
             this.complexData = new List<ComplexModel>().AsQueryable();
         }

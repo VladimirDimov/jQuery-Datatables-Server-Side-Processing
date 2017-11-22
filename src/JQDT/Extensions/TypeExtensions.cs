@@ -12,6 +12,20 @@
     /// </summary>
     internal static class TypeExptensions
     {
+        private static HashSet<Type> supportedRangeOperationTypes = new HashSet<Type>()
+        {
+            typeof(int), typeof(double), typeof(byte), typeof(long), typeof(DateTime), typeof(DateTimeOffset), typeof(char),
+            typeof(int?), typeof(double?), typeof(byte?), typeof(long?), typeof(DateTime?), typeof(DateTimeOffset?), typeof(char?),
+        };
+
+        private static HashSet<Type> supportedEqualOperationTypes = new HashSet<Type>()
+        {
+            typeof(int), typeof(double), typeof(byte), typeof(long), typeof(DateTime), typeof(DateTimeOffset), typeof(char),
+            typeof(int?), typeof(double?), typeof(byte?), typeof(long?), typeof(DateTime?), typeof(DateTimeOffset?), typeof(char?),
+            typeof(string)
+        };
+
+
         /// <summary>
         /// Returns collection of <see cref="PropertyInfo"/>. The collection contains the <see cref="PropertyInfo"/> of
         /// the model properties from the parent properties to the target property.
@@ -96,8 +110,11 @@
         {
             if (operationTypes.HasFlag(OperationTypesEnum.Range))
             {
-                // TODO: Add valid logic;
-                return true;
+                var isValidForRangeOperations = supportedRangeOperationTypes.Contains(type);
+                if (!isValidForRangeOperations)
+                {
+                    return false;
+                }
             }
 
             if (operationTypes.HasFlag(OperationTypesEnum.Search))
