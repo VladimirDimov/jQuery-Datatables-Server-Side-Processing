@@ -73,11 +73,11 @@ namespace Examples.Mvc.Controllers
         {
             var data = this.context.Vendors.Select(x => new
             {
-                x.BusinessEntityID,
-                x.CreditRating,
-                ActiveFlag = x.ActiveFlag.ToString(),
-                x.AccountNumber,
-                x.ModifiedDate
+                BusinessEntityID = x.BusinessEntityID,
+                CreditRating = x.CreditRating,
+                ActiveFlag = x.ActiveFlag,
+                AccountNumber = x.AccountNumber,
+                ModifiedDate = x.ModifiedDate
             });
 
             return this.View(data);
