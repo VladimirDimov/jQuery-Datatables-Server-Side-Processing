@@ -3,8 +3,8 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using JQDT.DataProcessing.Common;
-    using JQDT.DataProcessing.CustomFiltersDataProcessing;
+    using JQDT.DataProcessing;
+    using JQDT.DI;
     using JQDT.Exceptions;
     using JQDT.Models;
     using NUnit.Framework;
@@ -13,14 +13,15 @@
 
     internal class CustomFiltersDataProcessorTests
     {
-        private CustomFiltersDataProcessor<ComplexModel> filter;
+        private IDataProcess<ComplexModel> filter;
         private IQueryable<SimpleModel> simpleData;
         private IQueryable<ComplexModel> complexData;
 
         [SetUp]
         public void SetUp()
         {
-            this.filter = new CustomFiltersDataProcessor<ComplexModel>(new ContainsExpressionBuilder(), new DynamicParser());
+            var resolver = new DependencyResolver();
+            this.filter = resolver.GetCustomFiltersDataProcessor<ComplexModel>();
             this.simpleData = new List<SimpleModel>().AsQueryable();
             this.complexData = new List<ComplexModel>().AsQueryable();
         }

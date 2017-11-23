@@ -3,8 +3,10 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using JQDT.DataProcessing;
     using JQDT.DataProcessing.ColumnsFilterDataProcessing;
     using JQDT.DataProcessing.Common;
+    using JQDT.DI;
     using JQDT.Models;
     using NUnit.Framework;
     using Tests.UnitTests.Common;
@@ -12,16 +14,17 @@
 
     internal class ColumnsFilterDataProcessorTests
     {
-        private ColumnsFilterDataProcessor<SimpleModel> filterSimpleModelProcessor;
-        private ColumnsFilterDataProcessor<ComplexModel> filterComplexModelProcessor;
+        private IDataProcess<SimpleModel> filterSimpleModelProcessor;
+        private IDataProcess<ComplexModel> filterComplexModelProcessor;
         private IQueryable<SimpleModel> simpleData;
         private IQueryable<ComplexModel> complexData;
 
         [SetUp]
         public void SetUp()
         {
-            this.filterSimpleModelProcessor = new ColumnsFilterDataProcessor<SimpleModel>(new ContainsExpressionBuilder());
-            this.filterComplexModelProcessor = new ColumnsFilterDataProcessor<ComplexModel>(new ContainsExpressionBuilder());
+            var resolver = new DependencyResolver();
+            this.filterSimpleModelProcessor = resolver.GetColumnsFilterDataProcessor<SimpleModel>();
+            this.filterComplexModelProcessor = resolver.GetColumnsFilterDataProcessor<ComplexModel>();
             this.simpleData = new List<SimpleModel>().AsQueryable();
             this.complexData = new List<ComplexModel>().AsQueryable();
         }

@@ -3,8 +3,10 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using JQDT.DataProcessing;
     using JQDT.DataProcessing.Common;
     using JQDT.DataProcessing.SearchDataProcessing;
+    using JQDT.DI;
     using JQDT.Models;
     using NUnit.Framework;
     using Tests.UnitTests.Models;
@@ -22,7 +24,7 @@
         [Test]
         public void SearchWithTwoSearchableProperties()
         {
-            var filterProc = new SearchDataProcessor<SimpleModel>(new ContainsExpressionBuilder());
+            var filterProc = new DependencyResolver().GetSearchDataProcessor<SimpleModel>();
             var data = new List<SimpleModel>()
             {
                 new SimpleModel{ String = "aaa", Char = 'q' },
@@ -190,9 +192,9 @@
             Assert.AreEqual(expectedExpressionStr, actualExpressionStr);
         }
 
-        private SearchDataProcessor<T> GetFilterDataProcessor<T>()
+        private IDataProcess<T> GetFilterDataProcessor<T>()
         {
-            var filterProc = new SearchDataProcessor<T>(new ContainsExpressionBuilder());
+            var filterProc = new DependencyResolver().GetSearchDataProcessor<T>();
 
             return filterProc;
         }
