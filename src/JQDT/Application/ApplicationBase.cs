@@ -24,6 +24,10 @@
     {
         private readonly IDependencyResolver dependencyResolver;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ApplicationBase{T}"/> class.
+        /// </summary>
+        /// <param name="dependencyResolver">The dependency resolver.</param>
         public ApplicationBase(IDependencyResolver dependencyResolver)
         {
             this.dependencyResolver = dependencyResolver;

@@ -17,6 +17,7 @@
         /// Initializes a new instance of the <see cref="ApplicationMvc{T}"/> class.
         /// </summary>
         /// <param name="filterContext">The filter context.</param>
+        /// <param name="dependencyResolver">The dependency resolver.</param>
         public ApplicationMvc(ActionExecutedContext filterContext, DI.IDependencyResolver dependencyResolver)
             : base(dependencyResolver)
         {
