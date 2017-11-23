@@ -1,5 +1,6 @@
 ﻿namespace Tests.UnitTests.Common
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using JQDT.Models;
@@ -61,6 +62,19 @@
                     Custom = new Custom()
                 }
             };
+        }
+
+        public static object GetRandomPropertyValue<T>(IQueryable<T> data, string property)
+        {
+            var random = new Random();
+            var startIndex = random.Next(0, data.Count() / 2);
+            var partData = data.Skip(startIndex).Take(data.Count() - startIndex);
+
+            var propInfo = typeof(T).GetProperty(property);
+            var isNullable = propInfo.PropertyType.IsGenericType;
+            var item = partData.First(x => !isNullable || propInfo.GetValue(x) != null);
+
+            return propInfo.GetValue(item);
         }
     }
 }

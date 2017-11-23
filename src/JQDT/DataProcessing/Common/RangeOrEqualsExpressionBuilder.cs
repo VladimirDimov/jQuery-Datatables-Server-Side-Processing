@@ -44,6 +44,7 @@
             // x
             var modelType = modelExpr.Type;
             var propertyInfoPath = modelType.GetPropertyInfoPath(propertyPath);
+
             var propertyType = propertyInfoPath.Last().PropertyType;
             this.operationTypeValidator.ValidatePropertyType(propertyType, filter.Type);
 

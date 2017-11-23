@@ -43,19 +43,29 @@
         private Func<string, object> GetParseFunction(Type toType)
         {
             Func<string, object> func = null;
-            if (!this.parseFunctionsCache.TryGetValue(toType, out func))
+            Type innerType = null;
+            if (toType.IsGenericType)
+            {
+                innerType = toType.GetGenericArguments().Single();
+            }
+            else
+            {
+                innerType = toType;
+            }
+
+            if (!this.parseFunctionsCache.TryGetValue(innerType, out func))
             {
                 var xExpr = Expression.Parameter(typeof(string), "x");
-                var gteMethodInfo = toType.GetMethods().First(x => x.Name == "Parse");
+                var gteMethodInfo = innerType.GetMethods().First(x => x.Name == "Parse");
                 var parseExpr = Expression.Call(null, gteMethodInfo, xExpr);
                 var castExpr = Expression.Convert(parseExpr, typeof(object));
 
                 var lambda = Expression.Lambda(castExpr, xExpr);
 
-                this.parseFunctionsCache.TryAdd(toType, (Func<string, object>)lambda.Compile());
+                this.parseFunctionsCache.TryAdd(innerType, (Func<string, object>)lambda.Compile());
             }
 
-            this.parseFunctionsCache.TryGetValue(toType, out func);
+            this.parseFunctionsCache.TryGetValue(innerType, out func);
 
             return func;
         }

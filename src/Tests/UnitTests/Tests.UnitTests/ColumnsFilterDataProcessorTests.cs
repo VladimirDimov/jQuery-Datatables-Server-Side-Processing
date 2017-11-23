@@ -2,10 +2,9 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Linq;
     using JQDT.DataProcessing;
-    using JQDT.DataProcessing.ColumnsFilterDataProcessing;
-    using JQDT.DataProcessing.Common;
     using JQDT.DI;
     using JQDT.Models;
     using NUnit.Framework;
@@ -50,9 +49,40 @@
 
         [Test]
         [TestCase("Integer", "50")]
-        public void ColumnFilter_ShouldWorkAppropriateWithAllSupportedTypes(string column, string searchValue)
+        [TestCase("IntegerNullable", "50")]
+        [TestCase("UInt", "30")]
+        [TestCase("UIntNullable", "30")]
+        [TestCase("Long", "100")]
+        [TestCase("LongNullable", "-100")]
+        [TestCase("ULong", "100")]
+        [TestCase("ULongNullable", "100")]
+        [TestCase("Short", "-30")]
+        [TestCase("ShortNullable", "30")]
+        [TestCase("UShort", "30")]
+        [TestCase("UShortNullable", "30")]
+        [TestCase("Byte", "20")]
+        [TestCase("ByteNullable", "20")]
+        [TestCase("SByte", "-20")]
+        [TestCase("SByteNullable", null)]
+        [TestCase("Double", null)]
+        [TestCase("DoubleNullable", null)]
+        [TestCase("DateTime", null)]
+        [TestCase("DateTimeNullable", null)]
+        [TestCase("DateTimeOffset", null)]
+        [TestCase("DateTimeOffsetNullable", null)]
+        [TestCase("Boolean", "true")]
+        [TestCase("BooleanNullable", "false")]
+        [TestCase("Char", null)]
+        [TestCase("CharNullable", null)]
+        public void ColumnFilter_ShouldWorkAppropriateWithAllSupportedTypesNoNestedProperties(string column, string searchValue)
         {
             var data = DataGenerator.GenerateSimpleData(10000);
+
+            if (string.IsNullOrEmpty(searchValue))
+            {
+                searchValue = TestHelpers.GetRandomPropertyValue(data, column).ToString();
+            }
+
             var random = new Random();
 
             var requestModel = TestHelpers.GetSimpleRequestInfoModel();
@@ -63,7 +93,8 @@
 
             var processedData = this.filterSimpleModelProcessor.ProcessData(data, requestModel).ToList();
 
-            Assert.IsTrue(processedData.All(x => x.Integer.ToString() == searchValue));
+            Assert.IsTrue(processedData.All(x => x.GetType().GetProperty(column).GetValue(x).ToString().ToLower() == searchValue.ToLower()));
+            Trace.WriteLine(nameof(ColumnFilter_ShouldWorkAppropriateWithAllSupportedTypesNoNestedProperties) + $" number of items: {processedData.Count}  case: {column}");
         }
     }
 }
