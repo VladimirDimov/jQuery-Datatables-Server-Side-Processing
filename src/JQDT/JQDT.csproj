@@ -97,6 +97,8 @@
     <Compile Include="DataProcessing\IDataProcessChain.cs" />
     <Compile Include="DataProcessing\SortDataProcessing\SortDataProcessor.cs" />
     <Compile Include="DataProcessing\PagingDataProcessing\PagingDataProcessor.cs" />
+    <Compile Include="DI\DependencyResolver.cs" />
+    <Compile Include="DI\IDependencyResolver.cs" />
     <Compile Include="Enumerations\OperationTypesEnum.cs" />
     <Compile Include="Exceptions\InvalidTypeForOperationException.cs" />
     <Compile Include="Exceptions\JQDataTablesException.cs" />

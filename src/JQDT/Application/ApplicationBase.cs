@@ -11,6 +11,7 @@
     using JQDT.DataProcessing.PagingDataProcessing;
     using JQDT.DataProcessing.SearchDataProcessing;
     using JQDT.DataProcessing.SortDataProcessing;
+    using JQDT.DI;
     using JQDT.ModelBinders;
     using JQDT.Models;
 
@@ -21,6 +22,13 @@
     /// <typeparam name="T">Data Collection Generic Type</typeparam>
     internal abstract class ApplicationBase<T>
     {
+        private readonly IDependencyResolver dependencyResolver;
+
+        public ApplicationBase(IDependencyResolver dependencyResolver)
+        {
+            this.dependencyResolver = dependencyResolver;
+        }
+
         /// <summary>
         /// Application entry point method. Should be called from the ActionFilter.
         /// </summary>

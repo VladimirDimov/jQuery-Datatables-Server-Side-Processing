@@ -33,7 +33,8 @@
         {
             var modelType = filterContext.Controller.ViewData.Model.GetType();
             var applicationExecuteFunction = ExecuteFunctionProvider.GetExecuteFunction(modelType, typeof(ApplicationMvc<>));
-            var result = (ResultModel)applicationExecuteFunction(filterContext);
+            var dependencyResolver = new DI.DependencyResolver();
+            var result = (ResultModel)applicationExecuteFunction(filterContext, dependencyResolver);
 
             filterContext.Result = this.FormatResult(new
             {

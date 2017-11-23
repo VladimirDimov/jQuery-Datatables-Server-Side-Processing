@@ -11,7 +11,7 @@
     /// </summary>
     internal static class ExecuteFunctionProvider
     {
-        private static ConcurrentDictionary<Type, Func<ActionExecutedContext, object>> mvcExecuteFunctionsCache = new ConcurrentDictionary<Type, Func<ActionExecutedContext, object>>();
+        private static ConcurrentDictionary<Type, Func<ActionExecutedContext, DI.IDependencyResolver, object>> mvcExecuteFunctionsCache = new ConcurrentDictionary<Type, Func<ActionExecutedContext, DI.IDependencyResolver, object>>();
 
         /// <summary>
         /// Gets the execute function.
@@ -19,10 +19,10 @@
         /// <param name="modelType">Type of the model.</param>
         /// <param name="appType">Type of the application.</param>
         /// <returns>Application execute function.</returns>
-        internal static Func<ActionExecutedContext, object> GetExecuteFunction(Type modelType, Type appType)
+        internal static Func<ActionExecutedContext, DI.IDependencyResolver, object> GetExecuteFunction(Type modelType, Type appType)
         {
             var cache = GetCurrentCache(appType);
-            Func<ActionExecutedContext, object> executeFunc = null;
+            Func<ActionExecutedContext, DI.IDependencyResolver, object> executeFunc = null;
 
             if (!cache.TryGetValue(modelType, out executeFunc))
             {
@@ -30,20 +30,21 @@
                 var genericAppType = appType.MakeGenericType(typeArgs);
 
                 var contextExpr = Expression.Parameter(typeof(ActionExecutedContext), "context");
+                var dependencyResolverExpr = Expression.Parameter(typeof(DI.IDependencyResolver));
                 var appConstructorInfo = genericAppType.GetConstructors().First();
                 var newAppExpr = Expression.New(appConstructorInfo, contextExpr);
                 var executeMethodInfo = genericAppType.GetMethod("Execute");
                 var executeCallExpr = Expression.Call(newAppExpr, executeMethodInfo);
-                var lambda = Expression.Lambda(executeCallExpr, contextExpr);
+                var lambda = Expression.Lambda(executeCallExpr, contextExpr, dependencyResolverExpr);
 
-                executeFunc = (Func<ActionExecutedContext, object>)lambda.Compile();
+                executeFunc = (Func<ActionExecutedContext, DI.IDependencyResolver, object>)lambda.Compile();
                 cache.TryAdd(modelType, executeFunc);
             }
 
             return executeFunc;
         }
 
-        private static ConcurrentDictionary<Type, Func<ActionExecutedContext, object>> GetCurrentCache(Type appType)
+        private static ConcurrentDictionary<Type, Func<ActionExecutedContext, DI.IDependencyResolver, object>> GetCurrentCache(Type appType)
         {
             if (appType == typeof(ApplicationMvc<>))
             {
