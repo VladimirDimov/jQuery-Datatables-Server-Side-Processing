@@ -29,6 +29,9 @@
         public double Double { get; set; }
         public double? DoubleNullable { get; set; }
 
+        public decimal Decimal { get; set; }
+        public decimal? DecimalNullable { get; set; }
+
         public DateTime DateTime { get; set; }
         public DateTime? DateTimeNullable { get; set; }
         public DateTimeOffset DateTimeOffset { get; set; }

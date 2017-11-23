@@ -31,6 +31,9 @@ namespace Tests.UnitTests.Common
                     Double = NumberData.GetDouble(),
                     DoubleNullable = RandomiseNullable(NumberData.GetDouble()),
 
+                    Decimal = (decimal)NumberData.GetDouble(),
+                    DecimalNullable = (decimal?)RandomiseNullable(NumberData.GetDouble()),
+
                     Short = (short)NumberData.GetNumber(min, max),
                     ShortNullable = (short?)(NumberData.GetNumber(min, max)),
                     UShort = (ushort)NumberData.GetNumber(0, max),
