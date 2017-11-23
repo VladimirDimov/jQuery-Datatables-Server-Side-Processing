@@ -15,11 +15,10 @@ namespace JQDT.DataProcessing.Common
         /// <summary>
         /// Validates the type of the property for operation type.
         /// </summary>
-        /// <param name="propertyPath">The property path.</param>
         /// <param name="propertyType">Type of the property.</param>
         /// <param name="filterType">Type of the filter.</param>
         /// <exception cref="JQDT.Exceptions.InvalidTypeForOperationException">Throw when property type is invalid for the requested operation.</exception>
-        internal void ValidatePropertyType(string propertyPath, Type propertyType, FilterTypes filterType)
+        internal void ValidatePropertyType(Type propertyType, FilterTypes filterType)
         {
             bool isValidForOperation = true;
             var operationType = this.GetOperationType(filterType);

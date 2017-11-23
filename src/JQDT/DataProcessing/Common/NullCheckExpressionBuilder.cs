@@ -25,7 +25,7 @@
         /// <param name="modelParamExpr">The model parameter expr.</param>
         /// <param name="propertyPath">The property path.</param>
         /// <returns><see cref="Expression"/></returns>
-        internal Expression BuildNullCheckExpression(ParameterExpression modelParamExpr, string propertyPath)
+        internal Expression BuildExpression(ParameterExpression modelParamExpr, string propertyPath)
         {
             var nullCheckExprCollection = new List<Expression>();
             var propPathCollection = propertyPath.Split('.');
@@ -44,7 +44,7 @@
                 nullCheckExprCollection.Add(nullCheckExpr);
             }
 
-            var joinedAndExpr = this.andExpressionBuilder.BuildAndExpression(nullCheckExprCollection);
+            var joinedAndExpr = this.andExpressionBuilder.BuildExpression(nullCheckExprCollection);
 
             return joinedAndExpr;
         }

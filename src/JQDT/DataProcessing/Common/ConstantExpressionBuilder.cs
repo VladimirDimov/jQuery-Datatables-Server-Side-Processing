@@ -18,7 +18,7 @@ namespace JQDT.DataProcessing.Common
         /// <param name="value">The value.</param>
         /// <param name="propertyType">Type of the property.</param>
         /// <returns><see cref="ConstantExpression"/> of the provided value and type</returns>
-        internal Expression BuildConstantExpression(string value, Type propertyType)
+        internal Expression BuildExpression(string value, Type propertyType)
         {
             if (propertyType == typeof(string))
             {

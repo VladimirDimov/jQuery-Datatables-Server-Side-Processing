@@ -21,12 +21,14 @@
 
         /// <summary>
         /// Gets the single property contains expression.
+        /// If property type is <see cref="string"/> generates Contains expression.
+        /// If the property type is <see cref="char"/> gererates Equal expression.
         /// </summary>
         /// <param name="search">The search.</param>
         /// <param name="propertyPath">The property path.</param>
         /// <param name="modelParamExpr">The model parameter expr.</param>
         /// <returns>Returns the "Contains" expression for a single property</returns>
-        internal Expression GetSinglePropertyContainsExpression(string search, MemberExpression propExpr)
+        internal Expression BuildExpression(string search, MemberExpression propExpr)
         {
             // Validate that the property type is valid for a search operation
             var propertyType = propExpr.Type;

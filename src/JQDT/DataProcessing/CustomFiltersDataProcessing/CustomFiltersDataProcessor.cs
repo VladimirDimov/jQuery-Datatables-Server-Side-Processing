@@ -73,7 +73,7 @@
                 case FilterTypes.lt:
                 case FilterTypes.lte:
                 case FilterTypes.eq:
-                    rangeOrEqualExpression = this.rangeOrEqualsExpressionBuilder.GetRangeOrEqualsExpression<T>(xExpr, key, filter);
+                    rangeOrEqualExpression = this.rangeOrEqualsExpressionBuilder.BuildExpression(xExpr, key, filter);
                     break;
 
                 default:

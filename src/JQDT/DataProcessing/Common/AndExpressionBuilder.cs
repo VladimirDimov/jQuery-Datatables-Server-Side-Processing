@@ -14,7 +14,7 @@ namespace JQDT.DataProcessing.Common
         /// </summary>
         /// <param name="expressions">The contain expression collection.</param>
         /// <returns>Joined <see cref="Expression"/></returns>
-        internal Expression BuildAndExpression(List<Expression> expressions)
+        internal Expression BuildExpression(List<Expression> expressions)
         {
             if (expressions.Count == 0)
             {

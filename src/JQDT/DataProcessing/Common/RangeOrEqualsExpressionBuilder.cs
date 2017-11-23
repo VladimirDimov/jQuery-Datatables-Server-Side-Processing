@@ -16,7 +16,7 @@ namespace JQDT.DataProcessing.Common
         private readonly NullCheckExpressionBuilder nullCheckExpressionBuilder;
 
         public RangeOrEqualsExpressionBuilder(
-            OperationTypeValidator operationTypeValidator, 
+            OperationTypeValidator operationTypeValidator,
             ConstantExpressionBuilder constantExpressionBuilder,
             NullCheckExpressionBuilder nullCheckExpressionBuilder)
         {
@@ -26,19 +26,27 @@ namespace JQDT.DataProcessing.Common
         }
 
         // TODO: Check the case when nullable type property is null
-        // TODO: Remove the generic parameter
-        internal Expression GetRangeOrEqualsExpression<T>(ParameterExpression xExpr, string propertyPath, FilterModel filter)
+        // TODO: Remove the generic parameter        
+        /// <summary>
+        /// Builds the expression. A null check expression is attached to the primary expression.
+        /// </summary>
+        /// <param name="modelExpr">The model expr.</param>
+        /// <param name="propertyPath">The property path.</param>
+        /// <param name="filter">The filter.</param>
+        /// <returns></returns>
+        internal Expression BuildExpression(ParameterExpression modelExpr, string propertyPath, FilterModel filter)
         {
             // x
-            var propertyInfoPath = typeof(T).GetPropertyInfoPath(propertyPath);
+            var modelType = modelExpr.Type;
+            var propertyInfoPath = modelType.GetPropertyInfoPath(propertyPath);
             var propertyType = propertyInfoPath.Last().PropertyType;
-            this.operationTypeValidator.ValidatePropertyType(propertyPath, propertyType, filter.Type);
+            this.operationTypeValidator.ValidatePropertyType(propertyType, filter.Type);
 
             // x.Property1.Property2
-            var propertyExpr = xExpr.NestedProperty(propertyPath);
+            var propertyExpr = modelExpr.NestedProperty(propertyPath);
 
             // Convert(value)
-            Expression constantExpr = this.constantExpressionBuilder.BuildConstantExpression(filter.Value, propertyType);
+            Expression constantExpr = this.constantExpressionBuilder.BuildExpression(filter.Value, propertyType);
 
             BinaryExpression rangeExpr = null;
             switch (filter.Type)
@@ -69,7 +77,7 @@ namespace JQDT.DataProcessing.Common
                     break;
             }
 
-            var nullCheckExpr = this.nullCheckExpressionBuilder.BuildNullCheckExpression(xExpr, string.Join(".", propertyPath));
+            var nullCheckExpr = this.nullCheckExpressionBuilder.BuildExpression(modelExpr, string.Join(".", propertyPath));
 
             Expression joinedExpr = nullCheckExpr == null ? (Expression)rangeExpr : Expression.AndAlso(nullCheckExpr, rangeExpr);
 

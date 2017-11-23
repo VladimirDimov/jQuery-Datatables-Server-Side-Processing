@@ -65,11 +65,11 @@
                 Expression currentPredicateExpr = null;
                 if (propType.IsValidForOperation(OperationTypesEnum.Search))
                 {
-                    currentPredicateExpr = this.containsExpressionBuilder.GetSinglePropertyContainsExpression(column.Search.Value, propExpr);
+                    currentPredicateExpr = this.containsExpressionBuilder.BuildExpression(column.Search.Value, propExpr);
                 }
                 else if (propType.IsValidForOperation(OperationTypesEnum.Equals))
                 {
-                    currentPredicateExpr = this.rangeOrEqualsExpressionBuilder.GetRangeOrEqualsExpression<T>(modelParam, column.Data, new FilterModel { Type = FilterTypes.eq, Value = column.Search.Value });
+                    currentPredicateExpr = this.rangeOrEqualsExpressionBuilder.BuildExpression(modelParam, column.Data, new FilterModel { Type = FilterTypes.eq, Value = column.Search.Value });
                 }
 
                 predicateExpressions.Add(currentPredicateExpr);

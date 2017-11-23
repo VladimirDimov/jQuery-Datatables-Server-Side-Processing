@@ -71,7 +71,7 @@
                 var propExpr = modelParamExpr.NestedProperty(propertyPath);
 
                 // x.Prop1.Prop2.ToLower().Contains(search)
-                var currentPropertyContainsExpression = this.commonProcessor.GetSinglePropertyContainsExpression(search, propExpr);
+                var currentPropertyContainsExpression = this.commonProcessor.BuildExpression(search, propExpr);
                 containExpressionCollection.Add(currentPropertyContainsExpression);
             }
 
