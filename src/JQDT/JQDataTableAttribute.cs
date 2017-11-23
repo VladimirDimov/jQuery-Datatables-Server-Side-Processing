@@ -1,7 +1,6 @@
 ﻿namespace JQDT
 {
     using System;
-    using System.Linq;
     using System.Web.Mvc;
     using JQDT.Application;
     using JQDT.Exceptions;
@@ -33,13 +32,8 @@
         private void PerformOnActionExecuted(ActionExecutedContext filterContext)
         {
             var modelType = filterContext.Controller.ViewData.Model.GetType();
-
-            var appType = typeof(ApplicationMvc<>);
-            Type[] typeArgs = { modelType.GenericTypeArguments.First() };
-            var genericAppType = appType.MakeGenericType(typeArgs);
-            object app = Activator.CreateInstance(genericAppType, filterContext);
-            var methodInfo = app.GetType().GetMethod("Execute");
-            var result = (ResultModel)methodInfo.Invoke(app, null);
+            var applicationExecuteFunction = ExecuteFunctionProvider.GetExecuteFunction(modelType, typeof(ApplicationMvc<>));
+            var result = (ResultModel)applicationExecuteFunction(filterContext);
 
             filterContext.Result = this.FormatResult(new
             {
