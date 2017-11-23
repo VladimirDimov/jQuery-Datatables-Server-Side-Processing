@@ -20,7 +20,7 @@
         [SetUp]
         public void SetUp()
         {
-            this.filter = new CustomFiltersDataProcessor<ComplexModel>(new CommonSearchProcessor(), new DynamicParser());
+            this.filter = new CustomFiltersDataProcessor<ComplexModel>(new ContainsExpressionBuilder(), new DynamicParser());
             this.simpleData = new List<SimpleModel>().AsQueryable();
             this.complexData = new List<ComplexModel>().AsQueryable();
         }

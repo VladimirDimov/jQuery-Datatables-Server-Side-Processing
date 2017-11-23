@@ -17,9 +17,9 @@
         private const string HelpLink = "https://datatables.net/examples/ajax/objects.html";
 
         private RequestInfoModel requestInfoModel;
-        private CommonSearchProcessor commonProcessor;
+        private ContainsExpressionBuilder commonProcessor;
 
-        internal SearchDataProcessor(CommonSearchProcessor commonProcessor)
+        internal SearchDataProcessor(ContainsExpressionBuilder commonProcessor)
         {
             this.commonProcessor = commonProcessor;
         }

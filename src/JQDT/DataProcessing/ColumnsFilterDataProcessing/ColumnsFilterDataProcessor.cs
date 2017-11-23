@@ -22,15 +22,17 @@
         private const string ContainsMethodName = "Contains";
 
         private RequestInfoModel rquestInfoModel;
-        private CommonSearchProcessor commonProcessor;
+        private ContainsExpressionBuilder containsExpressionBuilder;
+        private readonly RangeOrEqualsExpressionBuilder rangeOrEqualsExpressionBuilder;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ColumnsFilterDataProcessor{T}"/> class.
         /// </summary>
-        /// <param name="commonProcessor">The common processor.</param>
-        internal ColumnsFilterDataProcessor(CommonSearchProcessor commonProcessor)
+        /// <param name="containsExpressionBuilder">The common processor.</param>
+        internal ColumnsFilterDataProcessor(ContainsExpressionBuilder containsExpressionBuilder, RangeOrEqualsExpressionBuilder rangeOrEqualsExpressionBuilder)
         {
-            this.commonProcessor = commonProcessor;
+            this.containsExpressionBuilder = containsExpressionBuilder;
+            this.rangeOrEqualsExpressionBuilder = rangeOrEqualsExpressionBuilder;
         }
 
         /// <summary>
@@ -63,11 +65,11 @@
                 Expression currentPredicateExpr = null;
                 if (propType.IsValidForOperation(OperationTypesEnum.Search))
                 {
-                    currentPredicateExpr = this.commonProcessor.GetSinglePropertyContainsExpression(column.Search.Value, propExpr);
+                    currentPredicateExpr = this.containsExpressionBuilder.GetSinglePropertyContainsExpression(column.Search.Value, propExpr);
                 }
                 else if (propType.IsValidForOperation(OperationTypesEnum.Equals))
                 {
-                    // Add equals expression;
+                    currentPredicateExpr = this.rangeOrEqualsExpressionBuilder.GetRangeOrEqualsExpression<T>(modelParam, column.Data, new FilterModel { Type = FilterTypes.eq, Value = column.Search.Value });
                 }
 
                 predicateExpressions.Add(currentPredicateExpr);

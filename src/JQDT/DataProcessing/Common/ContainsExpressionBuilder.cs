@@ -10,11 +10,11 @@
     /// <summary>
     /// Common logic for the filter processors
     /// </summary>
-    internal class CommonSearchProcessor
+    internal class ContainsExpressionBuilder
     {
         private readonly NullCheckExpressionBuilder nullCheckExpressionBuilder;
 
-        public CommonSearchProcessor(NullCheckExpressionBuilder nullCheckExpressionBuilder)
+        public ContainsExpressionBuilder(NullCheckExpressionBuilder nullCheckExpressionBuilder)
         {
             this.nullCheckExpressionBuilder = nullCheckExpressionBuilder;
         }

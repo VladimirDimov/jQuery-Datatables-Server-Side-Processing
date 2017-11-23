@@ -63,6 +63,9 @@
 
         private Expression<Func<T, bool>> GetCustomFilterExpressionPredicate(string key, FilterModel filter)
         {
+            Expression rangeOrEqualExpression = null;
+            var xExpr = Expression.Parameter(typeof(T), "x");
+
             switch (filter.Type)
             {
                 case FilterTypes.gte:
@@ -70,11 +73,14 @@
                 case FilterTypes.lt:
                 case FilterTypes.lte:
                 case FilterTypes.eq:
-                    return this.rangeOrEqualsExpressionBuilder.GetRangeOrEqualsExpression<T>(key, filter);
+                    rangeOrEqualExpression = this.rangeOrEqualsExpressionBuilder.GetRangeOrEqualsExpression<T>(xExpr, key, filter);
+                    break;
 
                 default:
                     throw new NotImplementedException(string.Format(InvalidCustomOperatorException, filter.Type));
             }
+
+            return (Expression<Func<T, bool>>)Expression.Lambda(rangeOrEqualExpression, xExpr);
         }
     }
 }

@@ -26,13 +26,13 @@ namespace JQDT.DataProcessing.Common
         }
 
         // TODO: Check the case when nullable type property is null
-        internal Expression<Func<T, bool>> GetRangeOrEqualsExpression<T>(string propertyPath, FilterModel filter)
+        // TODO: Remove the generic parameter
+        internal Expression GetRangeOrEqualsExpression<T>(ParameterExpression xExpr, string propertyPath, FilterModel filter)
         {
             // x
             var propertyInfoPath = typeof(T).GetPropertyInfoPath(propertyPath);
             var propertyType = propertyInfoPath.Last().PropertyType;
             this.operationTypeValidator.ValidatePropertyType(propertyPath, propertyType, filter.Type);
-            var xExpr = Expression.Parameter(typeof(T), "x");
 
             // x.Property1.Property2
             var propertyExpr = xExpr.NestedProperty(propertyPath);
@@ -73,7 +73,7 @@ namespace JQDT.DataProcessing.Common
 
             Expression joinedExpr = nullCheckExpr == null ? (Expression)rangeExpr : Expression.AndAlso(nullCheckExpr, rangeExpr);
 
-            return (Expression<Func<T, bool>>)Expression.Lambda(joinedExpr, xExpr);
+            return joinedExpr;
         }
     }
 }

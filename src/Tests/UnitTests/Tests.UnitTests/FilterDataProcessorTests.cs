@@ -22,7 +22,7 @@
         [Test]
         public void SearchWithTwoSearchableProperties()
         {
-            var filterProc = new SearchDataProcessor<SimpleModel>(new CommonSearchProcessor());
+            var filterProc = new SearchDataProcessor<SimpleModel>(new ContainsExpressionBuilder());
             var data = new List<SimpleModel>()
             {
                 new SimpleModel{ String = "aaa", Char = 'q' },
@@ -192,7 +192,7 @@
 
         private SearchDataProcessor<T> GetFilterDataProcessor<T>()
         {
-            var filterProc = new SearchDataProcessor<T>(new CommonSearchProcessor());
+            var filterProc = new SearchDataProcessor<T>(new ContainsExpressionBuilder());
 
             return filterProc;
         }
