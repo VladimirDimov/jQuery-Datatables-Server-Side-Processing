@@ -21,14 +21,16 @@
         private const string ToLowerMethodName = "ToLower";
         private const string ContainsMethodName = "Contains";
 
-        private RequestInfoModel rquestInfoModel;
-        private ContainsExpressionBuilder containsExpressionBuilder;
+        private readonly ContainsExpressionBuilder containsExpressionBuilder;
         private readonly RangeOrEqualsExpressionBuilder rangeOrEqualsExpressionBuilder;
+
+        private RequestInfoModel rquestInfoModel;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ColumnsFilterDataProcessor{T}"/> class.
         /// </summary>
-        /// <param name="containsExpressionBuilder">The common processor.</param>
+        /// <param name="containsExpressionBuilder">The contains expression builder.</param>
+        /// <param name="rangeOrEqualsExpressionBuilder">The range or equals expression builder.</param>
         internal ColumnsFilterDataProcessor(ContainsExpressionBuilder containsExpressionBuilder, RangeOrEqualsExpressionBuilder rangeOrEqualsExpressionBuilder)
         {
             this.containsExpressionBuilder = containsExpressionBuilder;

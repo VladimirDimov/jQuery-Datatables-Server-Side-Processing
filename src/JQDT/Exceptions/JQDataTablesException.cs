@@ -2,6 +2,10 @@
 {
     using System;
 
+    /// <summary>
+    /// Base jQuery data tables exception class.
+    /// </summary>
+    /// <seealso cref="System.Exception" />
     [Serializable]
     internal class JQDataTablesException : Exception
     {

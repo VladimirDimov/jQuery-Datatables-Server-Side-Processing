@@ -1,16 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using JQDT.Enumerations;
-using JQDT.Exceptions;
-using JQDT.Extensions;
-using JQDT.Models;
-
-namespace JQDT.DataProcessing.Common
+﻿namespace JQDT.DataProcessing.Common
 {
-    class OperationTypeValidator
+    using System;
+    using JQDT.Enumerations;
+    using JQDT.Exceptions;
+    using JQDT.Extensions;
+    using JQDT.Models;
+
+    /// <summary>
+    /// Provides validation of a type for an operation type
+    /// </summary>
+    internal class OperationTypeValidator
     {
         /// <summary>
         /// Validates the type of the property for operation type.

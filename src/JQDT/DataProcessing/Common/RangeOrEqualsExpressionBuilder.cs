@@ -1,20 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
-using JQDT.Extensions;
-using JQDT.Models;
-
-namespace JQDT.DataProcessing.Common
+﻿namespace JQDT.DataProcessing.Common
 {
-    class RangeOrEqualsExpressionBuilder
+    using System.Linq;
+    using System.Linq.Expressions;
+    using JQDT.Extensions;
+    using JQDT.Models;
+
+    /// <summary>
+    /// Builds range or equal expression with corresponding null checks
+    /// </summary>
+    internal class RangeOrEqualsExpressionBuilder
     {
         private readonly OperationTypeValidator operationTypeValidator;
         private readonly ConstantExpressionBuilder constantExpressionBuilder;
         private readonly NullCheckExpressionBuilder nullCheckExpressionBuilder;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RangeOrEqualsExpressionBuilder"/> class.
+        /// </summary>
+        /// <param name="operationTypeValidator">The operation type validator.</param>
+        /// <param name="constantExpressionBuilder">The constant expression builder.</param>
+        /// <param name="nullCheckExpressionBuilder">The null check expression builder.</param>
         public RangeOrEqualsExpressionBuilder(
             OperationTypeValidator operationTypeValidator,
             ConstantExpressionBuilder constantExpressionBuilder,
@@ -25,17 +30,17 @@ namespace JQDT.DataProcessing.Common
             this.nullCheckExpressionBuilder = nullCheckExpressionBuilder;
         }
 
-        // TODO: Check the case when nullable type property is null
-        // TODO: Remove the generic parameter        
         /// <summary>
         /// Builds the expression. A null check expression is attached to the primary expression.
         /// </summary>
         /// <param name="modelExpr">The model expr.</param>
         /// <param name="propertyPath">The property path.</param>
         /// <param name="filter">The filter.</param>
-        /// <returns></returns>
+        /// <returns>Range or equal <see cref="Expression"/></returns>
         internal Expression BuildExpression(ParameterExpression modelExpr, string propertyPath, FilterModel filter)
         {
+            // TODO: Check the case when nullable type property is null
+            // TODO: Remove the generic parameter
             // x
             var modelType = modelExpr.Type;
             var propertyInfoPath = modelType.GetPropertyInfoPath(propertyPath);

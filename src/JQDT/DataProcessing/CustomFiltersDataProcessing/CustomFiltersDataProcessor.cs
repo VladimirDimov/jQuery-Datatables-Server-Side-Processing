@@ -23,8 +23,7 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="CustomFiltersDataProcessor{T}"/> class.
         /// </summary>
-        /// <param name="filterCommonProcessor">The filter common processor.</param>
-        /// <param name="dynamicParser">The dynamic parser.</param>
+        /// <param name="rangeOrEqualsExpressionBuilder">The range or equals expression builder.</param>
         internal CustomFiltersDataProcessor(RangeOrEqualsExpressionBuilder rangeOrEqualsExpressionBuilder)
         {
             this.rangeOrEqualsExpressionBuilder = rangeOrEqualsExpressionBuilder;

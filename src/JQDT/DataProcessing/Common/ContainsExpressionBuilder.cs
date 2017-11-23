@@ -14,6 +14,10 @@
     {
         private readonly NullCheckExpressionBuilder nullCheckExpressionBuilder;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ContainsExpressionBuilder"/> class.
+        /// </summary>
+        /// <param name="nullCheckExpressionBuilder">The null check expression builder.</param>
         public ContainsExpressionBuilder(NullCheckExpressionBuilder nullCheckExpressionBuilder)
         {
             this.nullCheckExpressionBuilder = nullCheckExpressionBuilder;
@@ -22,12 +26,12 @@
         /// <summary>
         /// Gets the single property contains expression.
         /// If property type is <see cref="string"/> generates Contains expression.
-        /// If the property type is <see cref="char"/> gererates Equal expression.
+        /// If the property type is <see cref="char"/> generates Equal expression.
         /// </summary>
-        /// <param name="search">The search.</param>
-        /// <param name="propertyPath">The property path.</param>
-        /// <param name="modelParamExpr">The model parameter expr.</param>
+        /// <param name="search">The search value.</param>
+        /// <param name="propExpr">The property <see cref="MemberExpression"/>.</param>
         /// <returns>Returns the "Contains" expression for a single property</returns>
+        /// <exception cref="JQDT.Exceptions.InvalidTypeForOperationException">Thrown if the property type is invalid for search operation.</exception>
         internal Expression BuildExpression(string search, MemberExpression propExpr)
         {
             // Validate that the property type is valid for a search operation
@@ -76,7 +80,7 @@
                 }
 
                 // x => x == search
-                var charValue = Char.Parse(search);
+                var charValue = char.Parse(search);
                 var charComparissonExpr = Expression.Equal(toLowerExpr, Expression.Constant(charValue));
 
                 return charComparissonExpr;

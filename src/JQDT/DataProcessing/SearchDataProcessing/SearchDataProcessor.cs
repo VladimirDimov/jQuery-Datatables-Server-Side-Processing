@@ -11,6 +11,9 @@
     /// <summary>
     /// Filters the data by a substring value. Looks for the substring in all internal properties of the data model.
     /// </summary>
+    /// <typeparam name="T">Generic data model type</typeparam>
+    /// <seealso cref="JQDT.DataProcessing.DataProcessBase{T}" />
+    /// <seealso cref="JQDT.DataProcessing.IDataFilter" />
     internal class SearchDataProcessor<T> : DataProcessBase<T>, IDataFilter
     {
         private const string NoSearchablePropertiesException = "A search value has been provided but no searchable properties were found. Make sure that the data property of the column is configured appropriately as described in jQuery Datatables documentation.";
@@ -19,6 +22,10 @@
         private RequestInfoModel requestInfoModel;
         private ContainsExpressionBuilder commonProcessor;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SearchDataProcessor{T}"/> class.
+        /// </summary>
+        /// <param name="commonProcessor">The common processor.</param>
         internal SearchDataProcessor(ContainsExpressionBuilder commonProcessor)
         {
             this.commonProcessor = commonProcessor;

@@ -1,12 +1,19 @@
-﻿using System;
-using System.Linq.Expressions;
-
-namespace JQDT.DataProcessing.Common
+﻿namespace JQDT.DataProcessing.Common
 {
+    using System;
+    using System.Linq.Expressions;
+
+    /// <summary>
+    /// Builds constant expression
+    /// </summary>
     internal class ConstantExpressionBuilder
     {
         private readonly DynamicParser dynamicParser;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ConstantExpressionBuilder"/> class.
+        /// </summary>
+        /// <param name="dynamicParser">The dynamic parser.</param>
         public ConstantExpressionBuilder(DynamicParser dynamicParser)
         {
             this.dynamicParser = dynamicParser;

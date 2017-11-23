@@ -2,9 +2,15 @@
 {
     using System;
 
+    /// <summary>
+    /// Operation types
+    /// </summary>
     [Flags]
     internal enum OperationTypesEnum
     {
+        /// <summary>
+        /// The default
+        /// </summary>
         Default = 0,
 
         /// <summary>
@@ -13,7 +19,7 @@
         Search = 1,
 
         /// <summary>
-        /// Range operations including: <, >, <=, >=
+        /// Range operations including: greater than, greater than or equal, less than and less than or equal
         /// </summary>
         Range = 2,
 

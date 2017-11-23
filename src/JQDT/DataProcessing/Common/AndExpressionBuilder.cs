@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace JQDT.DataProcessing.Common
+﻿namespace JQDT.DataProcessing.Common
 {
-    class AndExpressionBuilder
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Linq.Expressions;
+
+    /// <summary>
+    /// Builds And clause binary expression
+    /// </summary>
+    internal class AndExpressionBuilder
     {
         /// <summary>
         /// Joins the expressions inside a collection of <see cref="Expression"/> with AND clause.

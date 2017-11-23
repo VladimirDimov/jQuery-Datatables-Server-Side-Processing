@@ -6,10 +6,19 @@
     using System.Linq.Expressions;
     using System.Web.Mvc;
 
+    /// <summary>
+    /// Creates and caches application execute function.
+    /// </summary>
     internal static class ExecuteFunctionProvider
     {
         private static ConcurrentDictionary<Type, Func<ActionExecutedContext, object>> mvcExecuteFunctionsCache = new ConcurrentDictionary<Type, Func<ActionExecutedContext, object>>();
 
+        /// <summary>
+        /// Gets the execute function.
+        /// </summary>
+        /// <param name="modelType">Type of the model.</param>
+        /// <param name="appType">Type of the application.</param>
+        /// <returns>Application execute function.</returns>
         internal static Func<ActionExecutedContext, object> GetExecuteFunction(Type modelType, Type appType)
         {
             var cache = GetCurrentCache(appType);

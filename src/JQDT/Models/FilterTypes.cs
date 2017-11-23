@@ -24,6 +24,10 @@
         /// Less than or equal
         /// </summary>
         lte = 3,
+
+        /// <summary>
+        /// Equal operation
+        /// </summary>
         eq = 4
     }
 }

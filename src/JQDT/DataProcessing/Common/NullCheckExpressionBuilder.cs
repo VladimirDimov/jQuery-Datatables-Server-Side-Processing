@@ -6,6 +6,9 @@
     using System.Linq.Expressions;
     using JQDT.Extensions;
 
+    /// <summary>
+    /// Expression builder for null check expression
+    /// </summary>
     internal class NullCheckExpressionBuilder
     {
         private readonly AndExpressionBuilder andExpressionBuilder;

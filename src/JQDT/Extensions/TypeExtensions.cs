@@ -159,8 +159,9 @@
         /// Determines whether a search operation can be performed on this type instance.
         /// </summary>
         /// <param name="type">The type.</param>
+        /// <param name="operationTypes">The operation types.</param>
         /// <returns>
-        ///   <c>true</c> if the specified type is searchable; otherwise, <c>false</c>.
+        ///   <c>true</c> if [is valid for operation] [the specified operation types]; otherwise, <c>false</c>.
         /// </returns>
         internal static bool IsValidForOperation(this Type type, OperationTypesEnum operationTypes)
         {
