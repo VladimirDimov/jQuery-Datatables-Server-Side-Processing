@@ -21,6 +21,7 @@
         /// <param name="operationTypeValidator">The operation type validator.</param>
         /// <param name="constantExpressionBuilder">The constant expression builder.</param>
         /// <param name="nullCheckExpressionBuilder">The null check expression builder.</param>
+        /// <param name="equalExpressionBuilder">Equality check expression builder.</param>
         public RangeOrEqualsExpressionBuilder(
             OperationTypeValidator operationTypeValidator,
             ConstantExpressionBuilder constantExpressionBuilder,

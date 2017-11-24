@@ -1,18 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq.Expressions;
-
-namespace JQDT.DataProcessing.Common
+﻿namespace JQDT.DataProcessing.Common
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq.Expressions;
+
+    /// <summary>
+    /// Builds equality check expression
+    /// </summary>
     internal class EqualExpressionBuilder
     {
         private readonly AndExpressionBuilder andExpressionBuilder;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EqualExpressionBuilder"/> class.
+        /// </summary>
+        /// <param name="andExpressionBuilder">The and expression builder.</param>
         public EqualExpressionBuilder(AndExpressionBuilder andExpressionBuilder)
         {
             this.andExpressionBuilder = andExpressionBuilder;
         }
 
+        /// <summary>
+        /// Builds the expression. Ads null checks where needed.
+        /// </summary>
+        /// <param name="propertyExpr">The property expr.</param>
+        /// <param name="constantExpr">The constant expr.</param>
+        /// <returns><see cref="Expression"/></returns>
         internal Expression BuildExpression(MemberExpression propertyExpr, Expression constantExpr)
         {
             // TODO: Add validation for operation type
@@ -63,10 +76,10 @@ namespace JQDT.DataProcessing.Common
         {
             if (isNullable)
             {
-                return BuildNullablePropertyExpression;
+                return this.BuildNullablePropertyExpression;
             }
 
-            return BuildNonNullablePropertyExpression;
+            return this.BuildNonNullablePropertyExpression;
         }
 
         private MemberExpression BuildNonNullablePropertyExpression(Expression member, string propName)
