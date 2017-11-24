@@ -32,7 +32,7 @@
                 var contextExpr = Expression.Parameter(typeof(ActionExecutedContext), "context");
                 var dependencyResolverExpr = Expression.Parameter(typeof(DI.IDependencyResolver));
                 var appConstructorInfo = genericAppType.GetConstructors().First();
-                var newAppExpr = Expression.New(appConstructorInfo, contextExpr);
+                var newAppExpr = Expression.New(appConstructorInfo, contextExpr, dependencyResolverExpr);
                 var executeMethodInfo = genericAppType.GetMethod("Execute");
                 var executeCallExpr = Expression.Call(newAppExpr, executeMethodInfo);
                 var lambda = Expression.Lambda(executeCallExpr, contextExpr, dependencyResolverExpr);

@@ -6,6 +6,7 @@
     using JQDT.DataProcessing.CustomFiltersDataProcessing;
     using JQDT.DataProcessing.PagingDataProcessing;
     using JQDT.DataProcessing.SearchDataProcessing;
+    using JQDT.DataProcessing.SortDataProcessing;
 
     /// <summary>
     /// Dependency Resolver
@@ -39,7 +40,8 @@
                     new ConstantExpressionBuilder(
                         new DynamicParser()),
                     new NullCheckExpressionBuilder(
-                        new AndExpressionBuilder())));
+                        new AndExpressionBuilder()),
+                    new EqualExpressionBuilder(new AndExpressionBuilder())));
         }
 
         /// <summary>
@@ -58,7 +60,8 @@
                     new ConstantExpressionBuilder(
                         new DynamicParser()),
                     new NullCheckExpressionBuilder(
-                        new AndExpressionBuilder())));
+                        new AndExpressionBuilder()),
+                    new EqualExpressionBuilder(new AndExpressionBuilder())));
         }
 
         /// <summary>
@@ -68,13 +71,7 @@
         /// <returns>Instance of sort data processor</returns>
         public IDataProcess<T> GetSortDataProcessor<T>()
         {
-            return new CustomFiltersDataProcessor<T>(
-                new RangeOrEqualsExpressionBuilder(
-                    new OperationTypeValidator(),
-                    new ConstantExpressionBuilder(
-                        new DynamicParser()),
-                    new NullCheckExpressionBuilder(
-                        new AndExpressionBuilder())));
+            return new SortDataProcessor<T>();
         }
 
         /// <summary>

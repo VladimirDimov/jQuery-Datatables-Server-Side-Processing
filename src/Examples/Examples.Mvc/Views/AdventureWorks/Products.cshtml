@@ -52,7 +52,7 @@
                     "render": function (data, type, row) {
                         date = new Date(parseInt(row.ModifiedDate.replace("/Date(", "").replace(")/", ""), 10));
 
-                        return date.toLocaleDateString();
+                        return date.toISOString();
                     },
                     "targets": 4
                 },

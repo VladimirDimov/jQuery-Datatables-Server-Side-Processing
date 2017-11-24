@@ -5,12 +5,6 @@
     using System.Linq;
     using System.Text;
     using JQDT.DataProcessing;
-    using JQDT.DataProcessing.ColumnsFilterDataProcessing;
-    using JQDT.DataProcessing.Common;
-    using JQDT.DataProcessing.CustomFiltersDataProcessing;
-    using JQDT.DataProcessing.PagingDataProcessing;
-    using JQDT.DataProcessing.SearchDataProcessing;
-    using JQDT.DataProcessing.SortDataProcessing;
     using JQDT.DI;
     using JQDT.ModelBinders;
     using JQDT.Models;
@@ -100,11 +94,11 @@
         {
             var dataProcessChain = new DataProcessChain<T>();
 
-            dataProcessChain.AddDataProcessor(new SearchDataProcessor<T>(new ContainsExpressionBuilder(new NullCheckExpressionBuilder(new AndExpressionBuilder()))));
-            dataProcessChain.AddDataProcessor(new CustomFiltersDataProcessor<T>(new RangeOrEqualsExpressionBuilder(new OperationTypeValidator(), new ConstantExpressionBuilder(new DynamicParser()), new NullCheckExpressionBuilder(new AndExpressionBuilder()))));
-            dataProcessChain.AddDataProcessor(new ColumnsFilterDataProcessor<T>(new ContainsExpressionBuilder(new NullCheckExpressionBuilder(new AndExpressionBuilder())), new RangeOrEqualsExpressionBuilder(new OperationTypeValidator(), new ConstantExpressionBuilder(new DynamicParser()), new NullCheckExpressionBuilder(new AndExpressionBuilder()))));
-            dataProcessChain.AddDataProcessor(new SortDataProcessor<T>());
-            dataProcessChain.AddDataProcessor(new PagingDataProcessor<T>());
+            dataProcessChain.AddDataProcessor(this.dependencyResolver.GetSearchDataProcessor<T>());
+            dataProcessChain.AddDataProcessor(this.dependencyResolver.GetCustomFiltersDataProcessor<T>());
+            dataProcessChain.AddDataProcessor(this.dependencyResolver.GetColumnsFilterDataProcessor<T>());
+            dataProcessChain.AddDataProcessor(this.dependencyResolver.GetSortDataProcessor<T>());
+            dataProcessChain.AddDataProcessor(this.dependencyResolver.GetPagingDataProcessor<T>());
 
             return dataProcessChain;
         }

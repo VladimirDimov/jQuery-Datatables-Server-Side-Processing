@@ -13,6 +13,7 @@
         private readonly OperationTypeValidator operationTypeValidator;
         private readonly ConstantExpressionBuilder constantExpressionBuilder;
         private readonly NullCheckExpressionBuilder nullCheckExpressionBuilder;
+        private readonly EqualExpressionBuilder equalExpressionBuilder;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RangeOrEqualsExpressionBuilder"/> class.
@@ -23,11 +24,13 @@
         public RangeOrEqualsExpressionBuilder(
             OperationTypeValidator operationTypeValidator,
             ConstantExpressionBuilder constantExpressionBuilder,
-            NullCheckExpressionBuilder nullCheckExpressionBuilder)
+            NullCheckExpressionBuilder nullCheckExpressionBuilder,
+            EqualExpressionBuilder equalExpressionBuilder)
         {
             this.operationTypeValidator = operationTypeValidator;
             this.constantExpressionBuilder = constantExpressionBuilder;
             this.nullCheckExpressionBuilder = nullCheckExpressionBuilder;
+            this.equalExpressionBuilder = equalExpressionBuilder;
         }
 
         /// <summary>
@@ -54,7 +57,7 @@
             // Convert(value)
             Expression constantExpr = this.constantExpressionBuilder.BuildExpression(filter.Value, propertyType);
 
-            BinaryExpression rangeExpr = null;
+            Expression rangeExpr = null;
             switch (filter.Type)
             {
                 case FilterTypes.gte:
@@ -79,7 +82,7 @@
 
                 // x == value
                 case FilterTypes.eq:
-                    rangeExpr = Expression.Equal(propertyExpr, constantExpr);
+                    rangeExpr = this.equalExpressionBuilder.BuildExpression(propertyExpr, constantExpr);
                     break;
             }
 

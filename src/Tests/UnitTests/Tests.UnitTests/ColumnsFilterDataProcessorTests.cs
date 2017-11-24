@@ -85,7 +85,7 @@
         [TestCase("CharNullable", null)]
         public void ColumnFilter_ShouldWorkAppropriateWithAllSupportedTypesNoNestedProperties(string column, string searchValue)
         {
-            var data = DataGenerator.GenerateSimpleData(10000);
+            var data = DataGenerator.GenerateSimpleData(3);
 
             if (string.IsNullOrEmpty(searchValue))
             {

@@ -55,10 +55,6 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
-    <Reference Include="JQDT, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>dll\JQDT.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.AI.Agent.Intercept, Version=2.4.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.ApplicationInsights.Agent.Intercept.2.4.0\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
     </Reference>
@@ -275,6 +271,10 @@
     <Content Include="Scripts\jquery-3.2.1.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\JQDT\JQDT.csproj">
+      <Project>{c82e4675-88ab-4b78-8475-f1521bdae330}</Project>
+      <Name>JQDT</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Examples.Data\Examples.Data.csproj">
       <Project>{082A75A9-D2AE-4BA6-84EF-606852B1B88A}</Project>
       <Name>Examples.Data</Name>

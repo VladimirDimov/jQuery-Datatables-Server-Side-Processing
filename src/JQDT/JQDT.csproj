@@ -83,6 +83,7 @@
     <Compile Include="DataProcessing\Common\ContainsExpressionBuilder.cs" />
     <Compile Include="DataProcessing\Common\DynamicParser.cs" />
     <Compile Include="DataProcessing\Common\AndExpressionBuilder.cs" />
+    <Compile Include="DataProcessing\Common\EqualExpressionBuilder.cs" />
     <Compile Include="DataProcessing\Common\NullCheckExpressionBuilder.cs" />
     <Compile Include="DataProcessing\Common\OperationTypeValidator.cs" />
     <Compile Include="DataProcessing\Common\RangeOrEqualsExpressionBuilder.cs" />
