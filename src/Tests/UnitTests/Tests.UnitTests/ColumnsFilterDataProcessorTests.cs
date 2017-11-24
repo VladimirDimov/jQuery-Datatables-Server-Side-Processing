@@ -105,5 +105,49 @@
             Assert.IsTrue(processedData.All(x => x.GetType().GetProperty(column).GetValue(x).ToString().ToLower() == searchValue.ToLower()));
             Trace.WriteLine(nameof(ColumnFilter_ShouldWorkAppropriateWithAllSupportedTypesNoNestedProperties) + $" number of items: {processedData.Count}  case: {column} / {searchValue}");
         }
+
+        [Test]
+        public void ColumnFilter_ShouldWorkAppropriateWithNestedNullable()
+        {
+            var data = DataGenerator.GenerateSimpleData(1000);
+            var column = "NestedModel.IntegerNullable";
+
+            var searchValue = data.First(x => x.NestedModel.IntegerNullable.HasValue).NestedModel.IntegerNullable.Value.ToString();
+
+            var random = new Random();
+
+            var requestModel = TestHelpers.GetSimpleRequestInfoModel();
+            requestModel.TableParameters.Columns = new List<Column>
+            {
+                new Column{ Data = column, Search = new Search{ Value = searchValue } }
+            };
+
+            var processedData = this.filterSimpleModelProcessor.ProcessData(data, requestModel).ToList();
+
+            Assert.IsTrue(processedData.All(x => x.NestedModel.IntegerNullable.HasValue && x.NestedModel.IntegerNullable.ToString().ToLower() == searchValue.ToLower()));
+            Trace.WriteLine(nameof(ColumnFilter_ShouldWorkAppropriateWithAllSupportedTypesNoNestedProperties) + $" number of items: {processedData.Count}  case: {column} / {searchValue}");
+        }
+
+        [Test]
+        public void ColumnFilter_ShouldWorkAppropriateWithNestedNullableDateTime()
+        {
+            var data = DataGenerator.GenerateSimpleData(1000);
+            var column = "NestedModel.DateTimeNullable";
+
+            var searchValue = data.First(x => x.NestedModel.DateTimeNullable.HasValue).NestedModel.DateTimeNullable.Value.ToString();
+
+            var random = new Random();
+
+            var requestModel = TestHelpers.GetSimpleRequestInfoModel();
+            requestModel.TableParameters.Columns = new List<Column>
+            {
+                new Column{ Data = column, Search = new Search{ Value = searchValue } }
+            };
+
+            var processedData = this.filterSimpleModelProcessor.ProcessData(data, requestModel).ToList();
+
+            Assert.IsTrue(processedData.All(x => x.NestedModel.DateTimeNullable.HasValue && x.NestedModel.DateTimeNullable.ToString().ToLower() == searchValue.ToLower()));
+            Trace.WriteLine(nameof(ColumnFilter_ShouldWorkAppropriateWithAllSupportedTypesNoNestedProperties) + $" number of items: {processedData.Count}  case: {column} / {searchValue}");
+        }
     }
 }

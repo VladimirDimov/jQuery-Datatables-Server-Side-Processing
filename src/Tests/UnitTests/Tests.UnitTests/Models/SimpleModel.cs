@@ -42,5 +42,7 @@
 
         public char Char { get; set; }
         public char? CharNullable { get; set; }
+
+        public SimpleModel NestedModel { get; set; }
     }
 }
