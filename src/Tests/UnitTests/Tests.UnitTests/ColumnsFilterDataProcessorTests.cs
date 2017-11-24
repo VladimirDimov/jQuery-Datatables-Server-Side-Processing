@@ -13,6 +13,8 @@
 
     internal class ColumnsFilterDataProcessorTests
     {
+        // TODO: Add case "Filter by more than one columns"
+
         private IDataProcess<SimpleModel> filterSimpleModelProcessor;
         private IDataProcess<ComplexModel> filterComplexModelProcessor;
         private IQueryable<SimpleModel> simpleData;

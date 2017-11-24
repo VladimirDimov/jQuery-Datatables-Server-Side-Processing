@@ -7,6 +7,7 @@
     using JQDT.DI;
     using JQDT.Models;
     using NUnit.Framework;
+    using Tests.UnitTests.Common;
     using Tests.UnitTests.Models;
 
     public class SearchDataProcessorTests
@@ -129,34 +130,61 @@
         }
 
         [Test]
-        public void SearchBySingleNestedPropertyShouldWork()
+        public void SearchBySingleNestedStringPropertyShouldWork()
         {
-            var filterProc = this.GetFilterDataProcessor<ComplexModel>();
-            var data = new List<ComplexModel>().AsQueryable();
+            var filterProc = this.GetFilterDataProcessor<SimpleModel>();
+            var data = DataGenerator.GenerateSimpleData(5000);
+            var searchValue = "z";
+
             var processedData = filterProc.ProcessData(data, new RequestInfoModel()
             {
-                Helpers = new RequestHelpers { ModelType = typeof(ComplexModel) },
+                Helpers = new RequestHelpers { ModelType = typeof(SimpleModel) },
                 TableParameters = new DataTableAjaxPostModel
                 {
                     Search = new Search
                     {
-                        Value = "aaa"
+                        Value = searchValue
                     },
                     Columns = new List<Column>
                     {
                         new Column{
-                            Data = "NestedComplexModel.NestedComplexModel.SimpleModel.String",
+                            Data = "NestedModel.String",
                             Searchable = true
                         }
                     }
                 }
             });
 
-            var expression = ((System.Linq.IQueryable)processedData).Expression;
-            var actualExpressionStr = expression.ToString();
-            var expectedExpressionStr = $"System.Collections.Generic.List`1[Tests.UnitTests.Models.ComplexModel].Where(model => ((model.NestedComplexModel.NestedComplexModel.SimpleModel.String != null) AndAlso model.NestedComplexModel.NestedComplexModel.SimpleModel.String.ToLower().Contains(\"aaa\")))";
+            Assert.IsTrue(processedData.All(x => x.NestedModel.String != null && x.NestedModel.String.ToLower().Contains(searchValue.ToLower())));
+        }
 
-            Assert.AreEqual(expectedExpressionStr, actualExpressionStr);
+        [Test]
+        public void SearchBySingleNestedCharPropertyShouldWork()
+        {
+            var filterProc = this.GetFilterDataProcessor<SimpleModel>();
+            var data = DataGenerator.GenerateSimpleData(5000);
+            char searchValue = 'Z';
+
+            var processedData = filterProc.ProcessData(data, new RequestInfoModel()
+            {
+                Helpers = new RequestHelpers { ModelType = typeof(SimpleModel) },
+                TableParameters = new DataTableAjaxPostModel
+                {
+                    Search = new Search
+                    {
+                        Value = searchValue.ToString()
+                    },
+                    Columns = new List<Column>
+                    {
+                        new Column{
+                            Data = "NestedModel.Char",
+                            Searchable = true
+                        }
+                    }
+                }
+            });
+
+            Assert.IsTrue(processedData.All(x => x.NestedModel.Char.ToString().ToLower()[0] == searchValue));
         }
 
         [Test]

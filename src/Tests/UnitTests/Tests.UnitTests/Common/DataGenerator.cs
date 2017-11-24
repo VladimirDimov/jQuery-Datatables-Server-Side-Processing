@@ -61,7 +61,7 @@
                 Boolean = BooleanData.GetBoolean(),
                 BooleanNullable = RandomiseNullable(BooleanData.GetBoolean()),
 
-                String = TextData.GetAlphaNumeric(NumberData.GetNumber(0, 20)),
+                String = RandomiseNullable(TextData.GetAlphaNumeric(NumberData.GetNumber(0, 20)), 0.3),
 
                 DateTime = RandomDate(max),
                 DateTimeNullable = RandomiseNullable(RandomDate(max)),
@@ -98,6 +98,18 @@
             var isNull = FakeData.BooleanData.GetBoolean();
 
             return isNull ? new Nullable<T>() : new Nullable<T>(value);
+        }
+
+        public static T RandomiseNullable<T>(T value, double nullFraction)
+            where T : class
+        {
+            var rnd = NumberData.GetNumber(0, 100);
+            if (rnd / 100d <= nullFraction)
+            {
+                return null;
+            }
+
+            return value;
         }
     }
 }
