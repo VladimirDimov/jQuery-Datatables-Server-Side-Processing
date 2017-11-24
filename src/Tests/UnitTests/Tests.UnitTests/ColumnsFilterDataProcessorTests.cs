@@ -48,26 +48,26 @@
         }
 
         [Test]
-        [TestCase("Integer", "50")]
+        [TestCase("Integer", null)]
         [TestCase("Integer", "2147483647")]
         [TestCase("Integer", "-2147483648")]
-        [TestCase("IntegerNullable", "50")]
-        [TestCase("UInt", "30")]
-        [TestCase("UIntNullable", "30")]
-        [TestCase("Long", "100")]
+        [TestCase("IntegerNullable", null)]
+        [TestCase("UInt", null)]
+        [TestCase("UIntNullable", null)]
+        [TestCase("Long", null)]
         [TestCase("Long", "9223372036854775807")]
         [TestCase("Long", "-9223372036854775808")]
-        [TestCase("LongNullable", "-100")]
-        [TestCase("ULong", "100")]
+        [TestCase("LongNullable", null)]
+        [TestCase("ULong", null)]
         [TestCase("ULong", "18446744073709551615")]
-        [TestCase("ULongNullable", "100")]
-        [TestCase("Short", "-30")]
-        [TestCase("ShortNullable", "30")]
-        [TestCase("UShort", "30")]
-        [TestCase("UShortNullable", "30")]
-        [TestCase("Byte", "20")]
-        [TestCase("ByteNullable", "20")]
-        [TestCase("SByte", "-20")]
+        [TestCase("ULongNullable", null)]
+        [TestCase("Short", null)]
+        [TestCase("ShortNullable", null)]
+        [TestCase("UShort", null)]
+        [TestCase("UShortNullable", null)]
+        [TestCase("Byte", null)]
+        [TestCase("ByteNullable", null)]
+        [TestCase("SByte", null)]
         [TestCase("SByteNullable", null)]
         [TestCase("Double", null)]
         [TestCase("DoubleNullable", null)]
@@ -85,7 +85,7 @@
         [TestCase("CharNullable", null)]
         public void ColumnFilter_ShouldWorkAppropriateWithAllSupportedTypesNoNestedProperties(string column, string searchValue)
         {
-            var data = DataGenerator.GenerateSimpleData(3);
+            var data = DataGenerator.GenerateSimpleData(1000);
 
             if (string.IsNullOrEmpty(searchValue))
             {
@@ -103,7 +103,7 @@
             var processedData = this.filterSimpleModelProcessor.ProcessData(data, requestModel).ToList();
 
             Assert.IsTrue(processedData.All(x => x.GetType().GetProperty(column).GetValue(x).ToString().ToLower() == searchValue.ToLower()));
-            Trace.WriteLine(nameof(ColumnFilter_ShouldWorkAppropriateWithAllSupportedTypesNoNestedProperties) + $" number of items: {processedData.Count}  case: {column}");
+            Trace.WriteLine(nameof(ColumnFilter_ShouldWorkAppropriateWithAllSupportedTypesNoNestedProperties) + $" number of items: {processedData.Count}  case: {column} / {searchValue}");
         }
     }
 }

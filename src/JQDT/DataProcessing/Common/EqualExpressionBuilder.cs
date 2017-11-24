@@ -18,29 +18,35 @@ namespace JQDT.DataProcessing.Common
             // TODO: Add validation for operation type
             if (propertyExpr.Type == typeof(DateTime) || propertyExpr.Type == typeof(DateTimeOffset) || propertyExpr.Type == typeof(DateTime?) || propertyExpr.Type == typeof(DateTimeOffset?))
             {
-                var propYearEpxpr = Expression.Property(propertyExpr, "Year");
-                var propMonthEpxpr = Expression.Property(propertyExpr, "Month");
-                var propDayEpxpr = Expression.Property(propertyExpr, "Day");
-                var propHourEpxpr = Expression.Property(propertyExpr, "Hour");
-                var propMinutesEpxpr = Expression.Property(propertyExpr, "Minute");
-                var propSecondsEpxpr = Expression.Property(propertyExpr, "Second");
+                var propertyExpressionBuilderFunction = this.GetPropertyExpressionFunction(propertyExpr.Type.IsGenericType);
 
-                var constYearEpxpr = Expression.Property(constantExpr, "Year");
-                var constMonthEpxpr = Expression.Property(constantExpr, "Month");
-                var constDayEpxpr = Expression.Property(constantExpr, "Day");
-                var constHourEpxpr = Expression.Property(constantExpr, "Hour");
-                var constMinutesEpxpr = Expression.Property(constantExpr, "Minute");
-                var constSecondsEpxpr = Expression.Property(constantExpr, "Second");
+                var propYearEpxpr = propertyExpressionBuilderFunction(propertyExpr, "Year");
+                var propMonthEpxpr = propertyExpressionBuilderFunction(propertyExpr, "Month");
+                var propDayEpxpr = propertyExpressionBuilderFunction(propertyExpr, "Day");
+                var propHourEpxpr = propertyExpressionBuilderFunction(propertyExpr, "Hour");
+                var propMinutesEpxpr = propertyExpressionBuilderFunction(propertyExpr, "Minute");
+                var propSecondsEpxpr = propertyExpressionBuilderFunction(propertyExpr, "Second");
 
-                var comparissonExpressions = new List<Expression>
+                var constYearEpxpr = propertyExpressionBuilderFunction(constantExpr, "Year");
+                var constMonthEpxpr = propertyExpressionBuilderFunction(constantExpr, "Month");
+                var constDayEpxpr = propertyExpressionBuilderFunction(constantExpr, "Day");
+                var constHourEpxpr = propertyExpressionBuilderFunction(constantExpr, "Hour");
+                var constMinutesEpxpr = propertyExpressionBuilderFunction(constantExpr, "Minute");
+                var constSecondsEpxpr = propertyExpressionBuilderFunction(constantExpr, "Second");
+
+                var comparissonExpressions = new List<Expression>();
+                if (propertyExpr.Type.IsGenericType)
                 {
-                    Expression.Equal(propYearEpxpr, constYearEpxpr),
-                    Expression.Equal(propMonthEpxpr, constMonthEpxpr),
-                    Expression.Equal(propDayEpxpr, constDayEpxpr),
-                    Expression.Equal(propHourEpxpr, constHourEpxpr),
-                    Expression.Equal(propMinutesEpxpr, constMinutesEpxpr),
-                    Expression.Equal(propSecondsEpxpr, constSecondsEpxpr),
-                };
+                    // Add null check expression if needed!
+                    comparissonExpressions.Add(Expression.Property(propertyExpr, "HasValue"));
+                }
+
+                comparissonExpressions.Add(Expression.Equal(propYearEpxpr, constYearEpxpr));
+                comparissonExpressions.Add(Expression.Equal(propMonthEpxpr, constMonthEpxpr));
+                comparissonExpressions.Add(Expression.Equal(propDayEpxpr, constDayEpxpr));
+                comparissonExpressions.Add(Expression.Equal(propHourEpxpr, constHourEpxpr));
+                comparissonExpressions.Add(Expression.Equal(propMinutesEpxpr, constMinutesEpxpr));
+                comparissonExpressions.Add(Expression.Equal(propSecondsEpxpr, constSecondsEpxpr));
 
                 var joinedComparissonExpr = this.andExpressionBuilder.BuildExpression(comparissonExpressions);
 
@@ -51,6 +57,31 @@ namespace JQDT.DataProcessing.Common
                 // prop == const
                 return Expression.Equal(propertyExpr, constantExpr);
             }
+        }
+
+        private Func<Expression, string, MemberExpression> GetPropertyExpressionFunction(bool isNullable)
+        {
+            if (isNullable)
+            {
+                return BuildNullablePropertyExpression;
+            }
+
+            return BuildNonNullablePropertyExpression;
+        }
+
+        private MemberExpression BuildNonNullablePropertyExpression(Expression member, string propName)
+        {
+            var propExpr = Expression.Property(member, propName);
+
+            return propExpr;
+        }
+
+        private MemberExpression BuildNullablePropertyExpression(Expression member, string propName)
+        {
+            var valueExpr = Expression.Property(member, "Value");
+            var propExpr = Expression.Property(valueExpr, propName);
+
+            return propExpr;
         }
     }
 }
