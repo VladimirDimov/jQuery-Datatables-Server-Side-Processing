@@ -21,15 +21,15 @@
         public ushort UShort { get; set; }
         public ushort? UShortNullable { get; set; }
 
-        public byte Byte { get; set; }
+        public byte ByteProperty { get; set; }
         public byte? ByteNullable { get; set; }
-        public sbyte SByte { get; set; }
+        public sbyte SByteProperty { get; set; }
         public sbyte? SByteNullable { get; set; }
 
-        public double Double { get; set; }
+        public double DoubleProperty { get; set; }
         public double? DoubleNullable { get; set; }
 
-        public decimal Decimal { get; set; }
+        public decimal DecimalProperty { get; set; }
         public decimal? DecimalNullable { get; set; }
 
         public DateTime DateTime { get; set; }

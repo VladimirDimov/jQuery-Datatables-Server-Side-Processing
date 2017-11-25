@@ -24,6 +24,9 @@
             typeof(ulong),
             typeof(ulong?),
 
+            typeof(decimal),
+            typeof(decimal?),
+
             typeof(double),
             typeof(double?),
 

@@ -39,10 +39,10 @@
                 UInt = (uint)NumberData.GetNumber(0, max),
                 UIntNullable = (uint?)RandomiseNullable(NumberData.GetNumber(0, max)),
 
-                Double = NumberData.GetDouble(),
+                DoubleProperty = NumberData.GetDouble(),
                 DoubleNullable = RandomiseNullable(NumberData.GetDouble()),
 
-                Decimal = (decimal)NumberData.GetDouble(),
+                DecimalProperty = (decimal)NumberData.GetDouble(),
                 DecimalNullable = (decimal?)RandomiseNullable(NumberData.GetDouble()),
 
                 Short = (short)NumberData.GetNumber(min, max),
@@ -50,9 +50,9 @@
                 UShort = (ushort)NumberData.GetNumber(0, max),
                 UShortNullable = (ushort?)RandomiseNullable(NumberData.GetNumber(0, max)),
 
-                Byte = RandomByte(),
+                ByteProperty = RandomByte(),
                 ByteNullable = RandomiseNullable(RandomByte()),
-                SByte = RandomSByte(),
+                SByteProperty = RandomSByte(),
                 SByteNullable = RandomiseNullable(RandomSByte()),
 
                 Char = FakeData.TextData.GetAlphabetical(1)[0],
