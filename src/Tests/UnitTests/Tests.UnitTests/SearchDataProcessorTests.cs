@@ -26,9 +26,9 @@
             var filterProc = new DependencyResolver().GetSearchDataProcessor<SimpleModel>();
             var data = new List<SimpleModel>()
             {
-                new SimpleModel{ String = "aaa", Char = 'q' },
-                new SimpleModel{ String = null, Char = 'q', CharNullable = 'b' },
-                new SimpleModel{ String = "bbb", CharNullable = null },
+                new SimpleModel{ StringProperty = "aaa", CharProperty = 'q' },
+                new SimpleModel{ StringProperty = null, CharProperty = 'q', CharNullable = 'b' },
+                new SimpleModel{ StringProperty = "bbb", CharNullable = null },
             }
             .AsQueryable();
             var processedData = filterProc.ProcessData(data, new RequestInfoModel()
@@ -43,12 +43,12 @@
                     Columns = new List<Column>
                     {
                         new Column{
-                            Data = nameof(SimpleModel.String),
+                            Data = nameof(SimpleModel.StringProperty),
                             Searchable = true
                         },
                         new Column
                         {
-                            Data = nameof(SimpleModel.Char),
+                            Data = nameof(SimpleModel.CharProperty),
                             Searchable = true
                         },
                         new Column
@@ -70,9 +70,9 @@
             var filterProc = this.GetFilterDataProcessor<SimpleModel>();
             var data = new List<SimpleModel>()
             {
-                new SimpleModel{String = "aaa"},
-                new SimpleModel{String = null},
-                new SimpleModel{String = "bbb"},
+                new SimpleModel{StringProperty = "aaa"},
+                new SimpleModel{StringProperty = null},
+                new SimpleModel{StringProperty = "bbb"},
             }
             .AsQueryable();
 
@@ -88,7 +88,7 @@
                     Columns = new List<Column>
                     {
                         new Column{
-                            Data = "String",
+                            Data = "StringProperty",
                             Searchable = true
                         }
                     }
@@ -118,7 +118,7 @@
                         Columns = new List<Column>
                     {
                         new Column{
-                            Data = "String",
+                            Data = "StringProperty",
                             Searchable = false
                         }
                     }
@@ -148,14 +148,14 @@
                     Columns = new List<Column>
                     {
                         new Column{
-                            Data = "NestedModel.String",
+                            Data = "NestedModel.StringProperty",
                             Searchable = true
                         }
                     }
                 }
             });
 
-            Assert.IsTrue(processedData.All(x => x.NestedModel.String != null && x.NestedModel.String.ToLower().Contains(searchValue.ToLower())));
+            Assert.IsTrue(processedData.All(x => x.NestedModel.StringProperty != null && x.NestedModel.StringProperty.ToLower().Contains(searchValue.ToLower())));
         }
 
         [Test]
@@ -177,14 +177,14 @@
                     Columns = new List<Column>
                     {
                         new Column{
-                            Data = "NestedModel.Char",
+                            Data = "NestedModel.CharProperty",
                             Searchable = true
                         }
                     }
                 }
             });
 
-            Assert.IsTrue(processedData.All(x => x.NestedModel.Char.ToString().ToLower()[0] == searchValue));
+            Assert.IsTrue(processedData.All(x => x.NestedModel.CharProperty.ToString().ToLower()[0] == searchValue));
         }
 
         [Test]

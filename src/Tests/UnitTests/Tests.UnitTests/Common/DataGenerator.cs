@@ -55,13 +55,13 @@
                 SByteProperty = RandomSByte(),
                 SByteNullable = RandomiseNullable(RandomSByte()),
 
-                Char = FakeData.TextData.GetAlphabetical(1)[0],
+                CharProperty = FakeData.TextData.GetAlphabetical(1)[0],
                 CharNullable = RandomiseNullable(FakeData.TextData.GetAlphabetical(1)[0]),
 
-                Boolean = BooleanData.GetBoolean(),
+                BooleanProperty = BooleanData.GetBoolean(),
                 BooleanNullable = RandomiseNullable(BooleanData.GetBoolean()),
 
-                String = RandomiseNullable(TextData.GetAlphaNumeric(NumberData.GetNumber(0, 20)), 0.3),
+                StringProperty = RandomiseNullable(TextData.GetAlphaNumeric(NumberData.GetNumber(0, 20)), 0.3),
 
                 DateTime = RandomDate(max),
                 DateTimeNullable = RandomiseNullable(RandomDate(max)),

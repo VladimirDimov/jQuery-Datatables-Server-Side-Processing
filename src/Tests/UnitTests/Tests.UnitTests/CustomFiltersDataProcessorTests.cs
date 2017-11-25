@@ -7,6 +7,7 @@
     using System.Linq.Dynamic;
     using JQDT.DataProcessing;
     using JQDT.DI;
+    using JQDT.Exceptions;
     using JQDT.Models;
     using NUnit.Framework;
     using Tests.UnitTests.Common;
@@ -238,7 +239,7 @@
         [TestCase("NestedModel.UShortNullable", FilterTypes.eq, "9999")]
         [TestCase("NestedModel.UShortNullable", FilterTypes.eq, ushort.MaxValue)]
         [TestCase("NestedModel.UShortNullable", FilterTypes.eq, ushort.MinValue)]
-        // ---------------------------------------------------------------      
+        // ---------------------------------------------------------------
         [TestCase("ByteProperty", FilterTypes.gt, "25")]
         [TestCase("ByteProperty", FilterTypes.gte, "25")]
         [TestCase("ByteProperty", FilterTypes.lt, "25")]
@@ -247,15 +248,15 @@
         [TestCase("ByteProperty", FilterTypes.eq, "0")]
         [TestCase("ByteProperty", FilterTypes.eq, byte.MaxValue)]
         [TestCase("ByteProperty", FilterTypes.eq, byte.MinValue)]
-        [TestCase("NestedModel.Byte", FilterTypes.gt, "25")]
-        [TestCase("NestedModel.Byte", FilterTypes.gte, "25")]
-        [TestCase("NestedModel.Byte", FilterTypes.lt, "25")]
-        [TestCase("NestedModel.Byte", FilterTypes.lte, "25")]
-        [TestCase("NestedModel.Byte", FilterTypes.eq, "25")]
-        [TestCase("NestedModel.Byte", FilterTypes.eq, "0")]
-        [TestCase("NestedModel.Byte", FilterTypes.eq, byte.MaxValue)]
-        [TestCase("NestedModel.Byte", FilterTypes.eq, byte.MinValue)]
-        // ---------------------------------------------------------------      
+        [TestCase("NestedModel.ByteProperty", FilterTypes.gt, "25")]
+        [TestCase("NestedModel.ByteProperty", FilterTypes.gte, "25")]
+        [TestCase("NestedModel.ByteProperty", FilterTypes.lt, "25")]
+        [TestCase("NestedModel.ByteProperty", FilterTypes.lte, "25")]
+        [TestCase("NestedModel.ByteProperty", FilterTypes.eq, "25")]
+        [TestCase("NestedModel.ByteProperty", FilterTypes.eq, "0")]
+        [TestCase("NestedModel.ByteProperty", FilterTypes.eq, byte.MaxValue)]
+        [TestCase("NestedModel.ByteProperty", FilterTypes.eq, byte.MinValue)]
+        // ---------------------------------------------------------------
         [TestCase("ByteNullable", FilterTypes.gt, "25")]
         [TestCase("ByteNullable", FilterTypes.gte, "25")]
         [TestCase("ByteNullable", FilterTypes.lt, "25")]
@@ -272,7 +273,7 @@
         [TestCase("NestedModel.ByteNullable", FilterTypes.eq, "0")]
         [TestCase("NestedModel.ByteNullable", FilterTypes.eq, byte.MaxValue)]
         [TestCase("NestedModel.ByteNullable", FilterTypes.eq, byte.MinValue)]
-        // ---------------------------------------------------------------      
+        // ---------------------------------------------------------------
         [TestCase("SByteProperty", FilterTypes.gt, "25")]
         [TestCase("SByteProperty", FilterTypes.gte, "25")]
         [TestCase("SByteProperty", FilterTypes.lt, "25")]
@@ -291,7 +292,7 @@
         [TestCase("NestedModel.SByteProperty", FilterTypes.eq, "0")]
         [TestCase("NestedModel.SByteProperty", FilterTypes.eq, sbyte.MaxValue)]
         [TestCase("NestedModel.SByteProperty", FilterTypes.eq, sbyte.MinValue)]
-        // ---------------------------------------------------------------      
+        // ---------------------------------------------------------------
         [TestCase("SByteNullable", FilterTypes.gt, "25")]
         [TestCase("SByteNullable", FilterTypes.gte, "25")]
         [TestCase("SByteNullable", FilterTypes.lt, "25")]
@@ -310,7 +311,7 @@
         [TestCase("NestedModel.SByteNullable", FilterTypes.eq, "0")]
         [TestCase("NestedModel.SByteNullable", FilterTypes.eq, sbyte.MaxValue)]
         [TestCase("NestedModel.SByteNullable", FilterTypes.eq, sbyte.MinValue)]
-        // ---------------------------------------------------------------      
+        // ---------------------------------------------------------------
         [TestCase("DoubleProperty", FilterTypes.gt, "25.1543254325")]
         [TestCase("DoubleProperty", FilterTypes.gte, "25.1543254325")]
         [TestCase("DoubleProperty", FilterTypes.lt, "25.1543254325")]
@@ -329,7 +330,7 @@
         [TestCase("NestedModel.DoubleProperty", FilterTypes.eq, "0")]
         [TestCase("NestedModel.DoubleProperty", FilterTypes.eq, 1.7976931348623157)]
         [TestCase("NestedModel.DoubleProperty", FilterTypes.eq, -1.7976931348623157)]
-        // ---------------------------------------------------------------      
+        // ---------------------------------------------------------------
         [TestCase("DoubleNullable", FilterTypes.gt, "25.1543254325")]
         [TestCase("DoubleNullable", FilterTypes.gte, "25.1543254325")]
         [TestCase("DoubleNullable", FilterTypes.lt, "25.1543254325")]
@@ -348,7 +349,7 @@
         [TestCase("NestedModel.DoubleNullable", FilterTypes.eq, "0")]
         [TestCase("NestedModel.DoubleNullable", FilterTypes.eq, 1.7976931348623157)]
         [TestCase("NestedModel.DoubleNullable", FilterTypes.eq, -1.7976931348623157)]
-        // ---------------------------------------------------------------      
+        // ---------------------------------------------------------------
         [TestCase("DecimalProperty", FilterTypes.gt, "25.1543254325")]
         [TestCase("DecimalProperty", FilterTypes.gte, "25.1543254325")]
         [TestCase("DecimalProperty", FilterTypes.lt, "25.1543254325")]
@@ -363,7 +364,7 @@
         [TestCase("NestedModel.DecimalProperty", FilterTypes.eq, "25.1543254325")]
         [TestCase("NestedModel.DecimalProperty", FilterTypes.eq, "-25.1543254325")]
         [TestCase("NestedModel.DecimalProperty", FilterTypes.eq, "0")]
-        // ---------------------------------------------------------------      
+        // ---------------------------------------------------------------
         [TestCase("DecimalNullable", FilterTypes.gt, "25.1543254325")]
         [TestCase("DecimalNullable", FilterTypes.gte, "25.1543254325")]
         [TestCase("DecimalNullable", FilterTypes.lt, "25.1543254325")]
@@ -378,7 +379,61 @@
         [TestCase("NestedModel.DecimalNullable", FilterTypes.eq, "25.1543254325")]
         [TestCase("NestedModel.DecimalNullable", FilterTypes.eq, "-25.1543254325")]
         [TestCase("NestedModel.DecimalNullable", FilterTypes.eq, "0")]
-        public void CustomFilters_ShouldWorkProperlyForRangeWithAllSupportedTypes(string column, FilterTypes filterType, object value)
+        // ---------------------------------------------------------------
+        [TestCase("BooleanProperty", FilterTypes.gt, typeof(InvalidTypeForOperationException))]
+        [TestCase("BooleanProperty", FilterTypes.gte, typeof(InvalidTypeForOperationException))]
+        [TestCase("BooleanProperty", FilterTypes.lt, typeof(InvalidTypeForOperationException))]
+        [TestCase("BooleanProperty", FilterTypes.lte, typeof(InvalidTypeForOperationException))]
+        [TestCase("BooleanProperty", FilterTypes.eq, "true")]
+        [TestCase("BooleanProperty", FilterTypes.eq, "fALse")]
+        [TestCase("NestedModel.BooleanProperty", FilterTypes.gt, typeof(InvalidTypeForOperationException))]
+        [TestCase("NestedModel.BooleanProperty", FilterTypes.gte, typeof(InvalidTypeForOperationException))]
+        [TestCase("NestedModel.BooleanProperty", FilterTypes.lt, typeof(InvalidTypeForOperationException))]
+        [TestCase("NestedModel.BooleanProperty", FilterTypes.lte, typeof(InvalidTypeForOperationException))]
+        [TestCase("NestedModel.BooleanProperty", FilterTypes.eq, "true")]
+        [TestCase("NestedModel.BooleanProperty", FilterTypes.eq, "fALse")]
+        // ---------------------------------------------------------------
+        [TestCase("BooleanNullable", FilterTypes.gt, typeof(InvalidTypeForOperationException))]
+        [TestCase("BooleanNullable", FilterTypes.gte, typeof(InvalidTypeForOperationException))]
+        [TestCase("BooleanNullable", FilterTypes.lt, typeof(InvalidTypeForOperationException))]
+        [TestCase("BooleanNullable", FilterTypes.lte, typeof(InvalidTypeForOperationException))]
+        [TestCase("BooleanNullable", FilterTypes.eq, "true")]
+        [TestCase("BooleanNullable", FilterTypes.eq, "fALse")]
+        [TestCase("NestedModel.BooleanNullable", FilterTypes.gt, typeof(InvalidTypeForOperationException))]
+        [TestCase("NestedModel.BooleanNullable", FilterTypes.gte, typeof(InvalidTypeForOperationException))]
+        [TestCase("NestedModel.BooleanNullable", FilterTypes.lt, typeof(InvalidTypeForOperationException))]
+        [TestCase("NestedModel.BooleanNullable", FilterTypes.lte, typeof(InvalidTypeForOperationException))]
+        [TestCase("NestedModel.BooleanNullable", FilterTypes.eq, "true")]
+        [TestCase("NestedModel.BooleanNullable", FilterTypes.eq, "fALse")]
+        // ---------------------------------------------------------------
+        [TestCase("CharProperty", FilterTypes.gt, "n", @"'n'")]
+        [TestCase("CharProperty", FilterTypes.gte, "n", @"'n'")]
+        [TestCase("CharProperty", FilterTypes.lt, 'n', @"'n'")]
+        [TestCase("CharProperty", FilterTypes.lte, 'n', @"'n'")]
+        [TestCase("CharProperty", FilterTypes.eq, "n", @"'n'")]
+        [TestCase("NestedModel.CharProperty", FilterTypes.gt, "n", @"'n'")]
+        [TestCase("NestedModel.CharProperty", FilterTypes.gte, "n", @"'n'")]
+        [TestCase("NestedModel.CharProperty", FilterTypes.lt, 'n', @"'n'")]
+        [TestCase("NestedModel.CharProperty", FilterTypes.lte, 'n', @"'n'")]
+        [TestCase("NestedModel.CharProperty", FilterTypes.eq, "n", @"'n'")]
+        // ---------------------------------------------------------------
+        [TestCase("CharNullable", FilterTypes.gt, "n", @"'n'")]
+        [TestCase("CharNullable", FilterTypes.gte, "n", @"'n'")]
+        [TestCase("CharNullable", FilterTypes.lt, 'n', @"'n'")]
+        [TestCase("CharNullable", FilterTypes.lte, 'n', @"'n'")]
+        [TestCase("CharNullable", FilterTypes.eq, "n", @"'n'")]
+        [TestCase("NestedModel.CharNullable", FilterTypes.gt, "n", @"'n'")]
+        [TestCase("NestedModel.CharNullable", FilterTypes.gte, "n", @"'n'")]
+        [TestCase("NestedModel.CharNullable", FilterTypes.lt, 'n', @"'n'")]
+        [TestCase("NestedModel.CharNullable", FilterTypes.lte, 'n', @"'n'")]
+        [TestCase("NestedModel.CharNullable", FilterTypes.eq, "n", @"'n'")]
+        // ---------------------------------------------------------------
+        [TestCase("StringProperty", FilterTypes.gt, typeof(InvalidTypeForOperationException))]
+        [TestCase("StringProperty", FilterTypes.gte, typeof(InvalidTypeForOperationException))]
+        [TestCase("StringProperty", FilterTypes.lt, typeof(InvalidTypeForOperationException))]
+        [TestCase("StringProperty", FilterTypes.lte, typeof(InvalidTypeForOperationException))]
+        [TestCase("StringProperty", FilterTypes.eq, "z", "\"z\"")]
+        public void CustomFilters_ShouldWorkProperlyForRangeWithAllSupportedTypes(string column, FilterTypes filterType, object value, string valueFormatOnAssert = null)
         {
             var requestModel = new RequestInfoModel
             {
@@ -399,8 +454,19 @@
                 }
             };
 
+            var typeValue = value as Type;
+            if (typeValue != null && typeValue == typeof(InvalidTypeForOperationException))
+            {
+                Assert.Throws<InvalidTypeForOperationException>(() =>
+                {
+                    var tmp = filter.ProcessData(data, requestModel);
+                });
+
+                return;
+            }
+
             var processedData = filter.ProcessData(data, requestModel);
-            var predicate = $"{column} {this.GetFilterCsRepresentation(filterType)} {value.ToString()}";
+            var predicate = $"{column} {this.GetFilterCsRepresentation(filterType)} {valueFormatOnAssert ?? value.ToString()}";
             var expectedData = data.ToList().Where(predicate);
 
             Trace.WriteLine($"Number of results: {processedData.Count()}");

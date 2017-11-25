@@ -4,7 +4,7 @@
 
     internal class SimpleModel
     {
-        public string String { get; set; }
+        public string StringProperty { get; set; }
 
         public int Integer { get; set; }
         public int? IntegerNullable { get; set; }
@@ -37,10 +37,10 @@
         public DateTimeOffset DateTimeOffset { get; set; }
         public DateTimeOffset? DateTimeOffsetNullable { get; set; }
 
-        public bool Boolean { get; set; }
+        public bool BooleanProperty { get; set; }
         public bool? BooleanNullable { get; set; }
 
-        public char Char { get; set; }
+        public char CharProperty { get; set; }
         public char? CharNullable { get; set; }
 
         public SimpleModel NestedModel { get; set; }

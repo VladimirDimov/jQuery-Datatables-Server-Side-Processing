@@ -71,7 +71,7 @@
             {
                 new Column
                 {
-                    Data = "NestedComplexModel.NestedComplexModel.SimpleModel.String"
+                    Data = "NestedComplexModel.NestedComplexModel.SimpleModel.StringProperty"
                 }
             };
 
@@ -87,7 +87,7 @@
             var actualExpr = this.complexFilter.ProcessData(this.complexData, requestModel);
             var actualExprStr = actualExpr.Expression.ToString();
             var postfix = isAsc ? string.Empty : "Descending";
-            var expectedExprStr = $"System.Collections.Generic.List`1[Tests.UnitTests.Models.ComplexModel].OrderBy{postfix}(x => x.NestedComplexModel.NestedComplexModel.SimpleModel.String)";
+            var expectedExprStr = $"System.Collections.Generic.List`1[Tests.UnitTests.Models.ComplexModel].OrderBy{postfix}(x => x.NestedComplexModel.NestedComplexModel.SimpleModel.StringProperty)";
 
             Assert.AreEqual(expectedExprStr, actualExprStr);
 
