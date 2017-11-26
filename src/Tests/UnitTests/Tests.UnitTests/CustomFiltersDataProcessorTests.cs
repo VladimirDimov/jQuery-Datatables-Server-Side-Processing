@@ -17,13 +17,14 @@
     {
         private IDataProcess<SimpleModel> filter;
         private IQueryable<SimpleModel> data;
+        private const int RangeConstant = 50;
 
         [SetUp]
         public void SetUp()
         {
             var resolver = new DependencyResolver();
             this.filter = resolver.GetCustomFiltersDataProcessor<SimpleModel>();
-            this.data = DataGenerator.GenerateSimpleData(5000, 50);
+            this.data = DataGenerator.GenerateSimpleData(5000, RangeConstant);
         }
 
         [Test]
@@ -433,6 +434,7 @@
         [TestCase("StringProperty", FilterTypes.lt, typeof(InvalidTypeForOperationException))]
         [TestCase("StringProperty", FilterTypes.lte, typeof(InvalidTypeForOperationException))]
         [TestCase("StringProperty", FilterTypes.eq, "z", "\"z\"")]
+        [TestCase("StringProperty", FilterTypes.eq, "", "\"\"")]
         public void CustomFilters_ShouldWorkProperlyForRangeWithAllSupportedTypes(string column, FilterTypes filterType, object value, string valueFormatOnAssert = null)
         {
             var requestModel = new RequestInfoModel
@@ -467,6 +469,84 @@
 
             var processedData = filter.ProcessData(data, requestModel);
             var predicate = $"{column} {this.GetFilterCsRepresentation(filterType)} {valueFormatOnAssert ?? value.ToString()}";
+            var expectedData = data.ToList().Where(predicate);
+
+            Trace.WriteLine($"Number of results: {processedData.Count()}");
+            Assert.AreEqual(processedData.Count(), expectedData.Count());
+        }
+
+        [Test]
+        [TestCase(1)]
+        [TestCase(2)]
+        public void CustomFilters_ShouldWorkProperlyWithMultipleFilters(int testCaseKey)
+        {
+            var min = (RangeConstant / 5).ToString();
+            var max = (RangeConstant / 2).ToString();
+
+            var testCases = new Dictionary<int, Custom>
+            {
+                {
+                    1,
+                    new Custom
+                    {
+                        Filters = new Dictionary<string, IEnumerable<FilterModel>>
+                        {
+                            {
+                                "Integer",
+                                new List<FilterModel>
+                                {
+                                    new FilterModel {Type = FilterTypes.gt, Value = min},
+                                    new FilterModel {Type = FilterTypes.lt, Value = max},
+                                }
+                            }
+                        }
+                    }
+                },
+
+                {
+                    2,
+                    new Custom
+                    {
+                        Filters = new Dictionary<string, IEnumerable<FilterModel>>
+                        {
+                            {
+                                "Integer",
+                                new List<FilterModel>
+                                {
+                                    new FilterModel {Type = FilterTypes.gt, Value = min},
+                                    new FilterModel {Type = FilterTypes.lt, Value = max},
+                                }
+                            },
+                            {
+                                "CharProperty",
+                                new List<FilterModel>
+                                {
+                                    new FilterModel {Type = FilterTypes.eq, Value = "a" },
+                                }
+                            }
+                        }
+                    }
+                }
+            };
+
+            var predicates = new Dictionary<int, string>
+            {
+                { 1, $"Integer > {min} && Integer < {max}" },
+                { 2, $"Integer > {min} && Integer < {max} && CharProperty == 'a'" },
+            };
+
+            var custom = testCases[testCaseKey];
+
+            var requestModel = new RequestInfoModel
+            {
+                TableParameters = new DataTableAjaxPostModel
+                {
+                    Custom = custom
+                }
+            };
+
+            var processedData = filter.ProcessData(data, requestModel);
+            var predicate = predicates[testCaseKey];
             var expectedData = data.ToList().Where(predicate);
 
             Trace.WriteLine($"Number of results: {processedData.Count()}");
