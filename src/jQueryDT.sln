@@ -25,6 +25,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Examples.Mvc", "Examples\Ex
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests.UnitTests", "Tests\UnitTests\Tests.UnitTests\Tests.UnitTests.csproj", "{647240F0-6F49-426C-A49F-BE7BA6DDBD81}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JQDT.MVC", "JQDT.MVC\JQDT.MVC.csproj", "{D845AB6D-1887-4597-9256-148AD0A11459}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JQDT.WebAPI", "JQDT.WebAPI\JQDT.WebAPI.csproj", "{A57F2EDC-8DC9-4A9A-BD3D-5CA31EE56910}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -59,6 +63,14 @@ Global
 		{647240F0-6F49-426C-A49F-BE7BA6DDBD81}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{647240F0-6F49-426C-A49F-BE7BA6DDBD81}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{647240F0-6F49-426C-A49F-BE7BA6DDBD81}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D845AB6D-1887-4597-9256-148AD0A11459}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D845AB6D-1887-4597-9256-148AD0A11459}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D845AB6D-1887-4597-9256-148AD0A11459}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D845AB6D-1887-4597-9256-148AD0A11459}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A57F2EDC-8DC9-4A9A-BD3D-5CA31EE56910}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A57F2EDC-8DC9-4A9A-BD3D-5CA31EE56910}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A57F2EDC-8DC9-4A9A-BD3D-5CA31EE56910}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A57F2EDC-8DC9-4A9A-BD3D-5CA31EE56910}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
