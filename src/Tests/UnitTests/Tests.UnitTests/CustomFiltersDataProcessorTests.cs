@@ -475,6 +475,81 @@
         }
 
         [Test]
+        [TestCase(nameof(AllTypesModel.DateTimeProperty), FilterTypes.gt)]
+        [TestCase(nameof(AllTypesModel.DateTimeProperty), FilterTypes.lt)]
+        [TestCase(nameof(AllTypesModel.DateTimeProperty), FilterTypes.gte)]
+        [TestCase(nameof(AllTypesModel.DateTimeProperty), FilterTypes.lte)]
+        [TestCase(nameof(AllTypesModel.DateTimeProperty), FilterTypes.eq)]
+        // -----------------------------------------------------------------
+        [TestCase(nameof(AllTypesModel.DateTimeNullable), FilterTypes.gt)]
+        [TestCase(nameof(AllTypesModel.DateTimeNullable), FilterTypes.lt)]
+        [TestCase(nameof(AllTypesModel.DateTimeNullable), FilterTypes.gte)]
+        [TestCase(nameof(AllTypesModel.DateTimeNullable), FilterTypes.lte)]
+        [TestCase(nameof(AllTypesModel.DateTimeNullable), FilterTypes.eq)]
+        // -----------------------------------------------------------------
+        [TestCase(nameof(AllTypesModel.DateTimeOffsetProperty), FilterTypes.gt)]
+        [TestCase(nameof(AllTypesModel.DateTimeOffsetProperty), FilterTypes.lt)]
+        [TestCase(nameof(AllTypesModel.DateTimeOffsetProperty), FilterTypes.gte)]
+        [TestCase(nameof(AllTypesModel.DateTimeOffsetProperty), FilterTypes.lte)]
+        [TestCase(nameof(AllTypesModel.DateTimeOffsetProperty), FilterTypes.eq)]
+        // -----------------------------------------------------------------
+        [TestCase(nameof(AllTypesModel.DateTimeOffsetNullable), FilterTypes.gt)]
+        [TestCase(nameof(AllTypesModel.DateTimeOffsetNullable), FilterTypes.lt)]
+        [TestCase(nameof(AllTypesModel.DateTimeOffsetNullable), FilterTypes.gte)]
+        [TestCase(nameof(AllTypesModel.DateTimeOffsetNullable), FilterTypes.lte)]
+        [TestCase(nameof(AllTypesModel.DateTimeOffsetNullable), FilterTypes.eq)]
+        public void CustomFilters_ShouldWorkProperlyForRangeWithDateTimes(string column, FilterTypes filterType)
+        {
+            var random = new Random();
+            var dateToCompare = this.data.ToList()[random.Next(0, data.Count() - 1)].DateTimeProperty;
+            var value = dateToCompare.ToString();
+
+            var requestModel = new RequestInfoModel
+            {
+                TableParameters = new DataTableAjaxPostModel
+                {
+                    Custom = new Custom
+                    {
+                        Filters = new Dictionary<string, IEnumerable<FilterModel>>
+                        {
+                            {
+                                column, new List<FilterModel>
+                                {
+                                    new FilterModel { Type = filterType, Value = value.ToString() }
+                                }
+                            }
+                        }
+                    }
+                }
+            };
+
+            var processedData = filter.ProcessData(data, requestModel);
+            string predicate = null;
+            var propType = typeof(AllTypesModel).GetProperty(column).PropertyType;
+            var propTypeGenericName = propType.IsGenericType ? propType.GenericTypeArguments.First().Name : propType.Name;
+            if (filterType != FilterTypes.eq)
+            {
+                predicate = $"{column} {this.GetFilterCsRepresentation(filterType)} {propTypeGenericName}.Parse(\"{value}\")";
+            }
+            else
+            {
+                if (propType.IsGenericType)
+                {
+                    predicate = $"{column}.HasValue && {column}.Value.Year == {dateToCompare.Year} && {column}.Value.Month == {dateToCompare.Month} && {column}.Value.Day == {dateToCompare.Day} && {column}.Value.Hour == {dateToCompare.Hour} && {column}.Value.Minute == {dateToCompare.Minute} && {column}.Value.Second == {dateToCompare.Second}";
+                }
+                else
+                {
+                    predicate = $"{column} != null && {column}.Year == {dateToCompare.Year} && {column}.Month == {dateToCompare.Month} && {column}.Day == {dateToCompare.Day} && {column}.Hour == {dateToCompare.Hour} && {column}.Minute == {dateToCompare.Minute} && {column}.Second == {dateToCompare.Second}";
+                }
+            }
+
+            var expectedData = data.ToList().Where(predicate);
+
+            Trace.WriteLine($"Number of results: {processedData.Count()}");
+            Assert.AreEqual(processedData.Count(), expectedData.Count());
+        }
+
+        [Test]
         [TestCase(1)]
         [TestCase(2)]
         public void CustomFilters_ShouldWorkProperlyWithMultipleFilters(int testCaseKey)

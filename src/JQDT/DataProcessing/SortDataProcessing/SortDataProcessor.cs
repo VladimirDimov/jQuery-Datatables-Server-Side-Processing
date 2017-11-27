@@ -31,7 +31,7 @@
         /// <exception cref="ArgumentException">Thrown when invalid property name is passed</exception>
         protected override IQueryable<T> OnProcessData(IQueryable<T> data, RequestInfoModel requestInfoModel)
         {
-            var modelType = requestInfoModel.Helpers.ModelType;
+            var modelType = typeof(T);
 
             var isFirst = true;
             foreach (var orderColumn in requestInfoModel.TableParameters.Order)

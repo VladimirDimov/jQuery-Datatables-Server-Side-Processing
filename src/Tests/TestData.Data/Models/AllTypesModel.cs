@@ -32,9 +32,9 @@
         public decimal DecimalProperty { get; set; }
         public decimal? DecimalNullable { get; set; }
 
-        public DateTime DateTime { get; set; }
+        public DateTime DateTimeProperty { get; set; }
         public DateTime? DateTimeNullable { get; set; }
-        public DateTimeOffset DateTimeOffset { get; set; }
+        public DateTimeOffset DateTimeOffsetProperty { get; set; }
         public DateTimeOffset? DateTimeOffsetNullable { get; set; }
 
         public bool BooleanProperty { get; set; }

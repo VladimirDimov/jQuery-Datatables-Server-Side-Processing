@@ -63,9 +63,9 @@
 
                 StringProperty = RandomiseNullable(TextData.GetAlphaNumeric(NumberData.GetNumber(0, 20)), 0.3),
 
-                DateTime = RandomDate(max),
+                DateTimeProperty = RandomDate(max),
                 DateTimeNullable = RandomiseNullable(RandomDate(max)),
-                DateTimeOffset = RandomDateTimeOffset(max),
+                DateTimeOffsetProperty = RandomDateTimeOffset(max),
                 DateTimeOffsetNullable = RandomiseNullable(RandomDateTimeOffset(max))
             };
 
