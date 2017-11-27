@@ -11,7 +11,7 @@
     /// </summary>
     internal static class ExecuteFunctionProvider
     {
-        private static ConcurrentDictionary<Type, Func<ActionExecutedContext, DI.IDependencyResolver, object>> mvcExecuteFunctionsCache = new ConcurrentDictionary<Type, Func<ActionExecutedContext, DI.IDependencyResolver, object>>();
+        private static ConcurrentDictionary<Type, Func<ActionExecutedContext, DI.IDependencyResolver, object>> executionFunctionsCache = new ConcurrentDictionary<Type, Func<ActionExecutedContext, DI.IDependencyResolver, object>>();
 
         /// <summary>
         /// Gets the execute function.
@@ -21,10 +21,9 @@
         /// <returns>Application execute function.</returns>
         internal static Func<ActionExecutedContext, DI.IDependencyResolver, object> GetExecuteFunction(Type modelType, Type appType)
         {
-            var cache = GetCurrentCache(appType);
             Func<ActionExecutedContext, DI.IDependencyResolver, object> executeFunc = null;
 
-            if (!cache.TryGetValue(modelType, out executeFunc))
+            if (!executionFunctionsCache.TryGetValue(modelType, out executeFunc))
             {
                 Type[] typeArgs = { modelType.GenericTypeArguments.First() };
                 var genericAppType = appType.MakeGenericType(typeArgs);
@@ -38,22 +37,10 @@
                 var lambda = Expression.Lambda(executeCallExpr, contextExpr, dependencyResolverExpr);
 
                 executeFunc = (Func<ActionExecutedContext, DI.IDependencyResolver, object>)lambda.Compile();
-                cache.TryAdd(modelType, executeFunc);
+                executionFunctionsCache.TryAdd(modelType, executeFunc);
             }
 
             return executeFunc;
-        }
-
-        private static ConcurrentDictionary<Type, Func<ActionExecutedContext, DI.IDependencyResolver, object>> GetCurrentCache(Type appType)
-        {
-            if (appType == typeof(ApplicationMvc<>))
-            {
-                return mvcExecuteFunctionsCache;
-            }
-            else
-            {
-                throw new ArgumentException($"Unsupported application type: {appType.FullName}");
-            }
         }
     }
 }
