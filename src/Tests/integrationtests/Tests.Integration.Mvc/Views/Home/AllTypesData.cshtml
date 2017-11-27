@@ -1,0 +1,286 @@
+﻿@{
+    ViewBag.Title = "Simple Data";
+}
+
+<table id="table-simple">
+    <thead>
+        <tr>
+            <th>StringProperty</th>
+            <th>Integer</th>
+            <th>IntegerNullable</th>
+            <th>UInt</th>
+            <th>UIntNullable</th>
+
+            <th>Long</th>
+            <th>LongNullable</th>
+            <th>ULong</th>
+            <th>ULongNullable</th>
+
+            <th>Short</th>`
+            <th>ShortNullable</th>
+            <th>UShort</th>
+            <th>UShortNullable</th>
+
+            <th>ByteProperty</th>
+            <th>ByteNullable</th>
+            <th>SByteProperty</th>
+            <th>SByteNullable</th>
+
+            <th>DoubleProperty</th>
+            <th>DoubleNullable</th>
+
+            <th>DecimalProperty</th>
+            <th>DecimalNullable</th>
+
+            <th>DateTime</th>
+            <th>DateTimeNullable</th>
+            <th>DateTimeOffset</th>
+            <th>DateTimeOffsetNullable</th>
+
+            <th>BooleanProperty</th>
+            <th>BooleanNullable</th>
+
+            <th>CharProperty</th>
+            <th>CharNullable</th>
+
+            <th>NestedModel.StringProperty</th>
+            <th>NestedModel.Integer</th>
+            <th>NestedModel.IntegerNullable</th>
+            <th>NestedModel.UInt</th>
+            <th>NestedModel.UIntNullable</th>
+
+            <th>NestedModel.Long</th>
+            <th>NestedModel.LongNullable</th>
+            <th>NestedModel.ULong</th>
+            <th>NestedModel.ULongNullable</th>
+
+            <th>NestedModel.Short</th>
+            <th>NestedModel.ShortNullable</th>
+            <th>NestedModel.UShort</th>
+            <th>NestedModel.UShortNullable</th>
+
+            <th>NestedModel.ByteProperty</th>
+            <th>NestedModel.ByteNullable</th>
+            <th>NestedModel.SByteProperty</th>
+            <th>NestedModel.SByteNullable</th>
+
+            <th>NestedModel.DoubleProperty</th>
+            <th>NestedModel.DoubleNullable</th>
+
+            <th>NestedModel.DecimalProperty</th>
+            <th>NestedModel.DecimalNullable</th>
+
+            <th>NestedModel.DateTime</th>
+            <th>NestedModel.DateTimeNullable</th>
+            <th>NestedModel.DateTimeOffset</th>
+            <th>NestedModel.DateTimeOffsetNullable</th>
+
+            <th>NestedModel.BooleanProperty</th>
+            <th>NestedModel.BooleanNullable</th>
+
+            <th>NestedModel.CharProperty</th>
+            <th>NestedModel.CharNullable</th>
+        </tr>
+    </thead>
+    <tfoot>
+        <tr>
+            <th>StringProperty</th>
+            <th>Integer</th>
+            <th>IntegerNullable</th>
+            <th>UInt</th>
+            <th>UIntNullable</th>
+
+            <th>Long</th>
+            <th>LongNullable</th>
+            <th>ULong</th>
+            <th>ULongNullable</th>
+
+            <th>Short</th>
+            <th>ShortNullable</th>
+            <th>UShort</th>
+            <th>UShortNullable</th>
+
+            <th>ByteProperty</th>
+            <th>ByteNullable</th>
+            <th>SByteProperty</th>
+            <th>SByteNullable</th>
+
+            <th>DoubleProperty</th>
+            <th>DoubleNullable</th>
+
+            <th>DecimalProperty</th>
+            <th>DecimalNullable</th>
+
+            <th>DateTime</th>
+            <th>DateTimeNullable</th>
+            <th>DateTimeOffset</th>
+            <th>DateTimeOffsetNullable</th>
+
+            <th>BooleanProperty</th>
+            <th>BooleanNullable</th>
+
+            <th>CharProperty</th>
+            <th>CharNullable</th>
+
+            <th>NestedModel.StringProperty</th>
+            <th>NestedModel.Integer</th>
+            <th>NestedModel.IntegerNullable</th>
+            <th>NestedModel.UInt</th>
+            <th>NestedModel.UIntNullable</th>
+
+            <th>NestedModel.Long</th>
+            <th>NestedModel.LongNullable</th>
+            <th>NestedModel.ULong</th>
+            <th>NestedModel.ULongNullable</th>
+
+            <th>NestedModel.Short</th>
+            <th>NestedModel.ShortNullable</th>
+            <th>NestedModel.UShort</th>
+            <th>NestedModel.UShortNullable</th>
+
+            <th>NestedModel.ByteProperty</th>
+            <th>NestedModel.ByteNullable</th>
+            <th>NestedModel.SByteProperty</th>
+            <th>NestedModel.SByteNullable</th>
+
+            <th>NestedModel.DoubleProperty</th>
+            <th>NestedModel.DoubleNullable</th>
+
+            <th>NestedModel.DecimalProperty</th>
+            <th>NestedModel.DecimalNullable</th>
+
+            <th>NestedModel.DateTime</th>
+            <th>NestedModel.DateTimeNullable</th>
+            <th>NestedModel.DateTimeOffset</th>
+            <th>NestedModel.DateTimeOffsetNullable</th>
+
+            <th>NestedModel.BooleanProperty</th>
+            <th>NestedModel.BooleanNullable</th>
+
+            <th>NestedModel.CharProperty</th>
+            <th>NestedModel.CharNullable</th>
+        </tr>
+    </tfoot>
+    <tbody></tbody>
+</table>
+
+@section Scripts {
+    <script>
+        var table = $('#table-simple').DataTable({
+            //"paging": true,
+            //"searching": true,
+            "proccessing": true,
+            "serverSide": true,
+            "ajax": {
+                url: "/home/GetData",
+                type: 'POST'
+            },
+            "columns": [
+                { "data": "StringProperty" },
+
+                { "data": "Integer" },
+                { "data": "IntegerNullable" },
+                { "data": "UInt" },
+                { "data": "UIntNullable" },
+
+                { "data": "Long" },
+                { "data": "LongNullable" },
+                { "data": "ULong" },
+                { "data": "ULongNullable" },
+
+                { "data": "Short" },
+                { "data": "ShortNullable" },
+                { "data": "UShort" },
+                { "data": "UShortNullable" },
+
+                { "data": "ByteProperty" },
+                { "data": "ByteNullable" },
+                { "data": "SByteProperty" },
+                { "data": "SByteNullable" },
+
+                { "data": "DoubleProperty" },
+                { "data": "DoubleNullable" },
+
+                { "data": "DecimalProperty" },
+                { "data": "DecimalNullable" },
+
+                { "data": "DateTime" },
+                { "data": "DateTimeNullable" },
+                { "data": "DateTimeOffset" },
+                { "data": "DateTimeOffsetNullable" },
+
+                { "data": "BooleanProperty" },
+                { "data": "BooleanNullable" },
+
+                { "data": "CharProperty" },
+                { "data": "CharNullable" },
+
+                { "data": "NestedModel.StringProperty" },
+                { "data": "NestedModel.Integer" },
+                { "data": "NestedModel.IntegerNullable" },
+                { "data": "NestedModel.UInt" },
+                { "data": "NestedModel.UIntNullable" },
+
+                { "data": "NestedModel.Long" },
+                { "data": "NestedModel.LongNullable" },
+                { "data": "NestedModel.ULong" },
+                { "data": "NestedModel.ULongNullable" },
+
+                { "data": "NestedModel.Short" },
+                { "data": "NestedModel.ShortNullable" },
+                { "data": "NestedModel.UShort" },
+                { "data": "NestedModel.UShortNullable" },
+
+                { "data": "NestedModel.ByteProperty" },
+                { "data": "NestedModel.ByteNullable" },
+                { "data": "NestedModel.SByteProperty" },
+                { "data": "NestedModel.SByteNullable" },
+
+                { "data": "NestedModel.DoubleProperty" },
+                { "data": "NestedModel.DoubleNullable" },
+
+                { "data": "NestedModel.DecimalProperty" },
+                { "data": "NestedModel.DecimalNullable" },
+
+                { "data": "NestedModel.DateTime" },
+                { "data": "NestedModel.DateTimeNullable" },
+                { "data": "NestedModel.DateTimeOffset" },
+                { "data": "NestedModel.DateTimeOffsetNullable" },
+
+                { "data": "NestedModel.BooleanProperty" },
+                { "data": "NestedModel.BooleanNullable" },
+
+                { "data": "NestedModel.CharProperty" },
+                { "data": "NestedModel.CharNullable" },
+            ],
+            "columnDefs": [
+                //{
+                //    "render": function (data, type, row) {
+                //        date = new Date(parseInt(row.DateTime.replace("/Date(", "").replace(")/", ""), 10));
+
+                //        return date.toUTCString();
+                //    },
+                //    "targets": 3
+                //},
+
+                //{
+                //    "render": function (data, type, row) {
+                //        date = new Date(parseInt(row.ComplexModel.DateTime.replace("/Date(", "").replace(")/", ""), 10));
+
+                //        return date.toUTCString();
+                //    },
+                //    "targets": 8
+                //},
+
+                //{
+                //    "render": function (data, type, row) {
+                //        date = new Date(parseInt(row.ComplexModel.SimpleModel.DateTime.replace("/Date(", "").replace(")/", ""), 10));
+
+                //        return date.toUTCString();
+                //    },
+                //    "targets": 13
+                //}
+            ]
+        });
+    </script>
+}
