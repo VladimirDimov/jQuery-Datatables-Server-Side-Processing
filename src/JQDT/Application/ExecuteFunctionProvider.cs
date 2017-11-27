@@ -8,6 +8,7 @@
     /// <summary>
     /// Creates and caches application execute function.
     /// </summary>
+    /// <typeparam name="TContext">The type of the request context.</typeparam>
     public static class ExecuteFunctionProvider<TContext>
     {
         private static ConcurrentDictionary<Type, Func<TContext, DI.IDependencyResolver, object>> executionFunctionsCache = new ConcurrentDictionary<Type, Func<TContext, DI.IDependencyResolver, object>>();
@@ -16,6 +17,7 @@
         /// Gets the execute function.
         /// </summary>
         /// <param name="modelType">Type of the model.</param>
+        /// <param name="appType">Type of the application.</param>
         /// <returns>Application execute function.</returns>
         public static Func<TContext, DI.IDependencyResolver, object> GetExecuteFunction(Type modelType, Type appType)
         {
