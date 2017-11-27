@@ -58,11 +58,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ColumnsFilterDataProcessorTests.cs" />
-    <Compile Include="Common\DataGenerator.cs" />
     <Compile Include="Common\TestHelpers.cs" />
     <Compile Include="CustomFiltersDataProcessorTests.cs" />
-    <Compile Include="Models\ComplexModel.cs" />
-    <Compile Include="Models\SimpleModel.cs" />
     <Compile Include="PagingDataProcessorTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SearchDataProcessorTests.cs" />
@@ -75,6 +72,10 @@
     <ProjectReference Include="..\..\..\JQDT\JQDT.csproj">
       <Project>{c82e4675-88ab-4b78-8475-f1521bdae330}</Project>
       <Name>JQDT</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\TestData.Data\TestData.Data.csproj">
+      <Project>{f7f12de8-f3c3-42a4-bbe4-1868d287d388}</Project>
+      <Name>TestData.Data</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />

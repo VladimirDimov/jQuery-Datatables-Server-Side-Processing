@@ -15,15 +15,15 @@
 
     internal class CustomFiltersDataProcessorTests
     {
-        private IDataProcess<SimpleModel> filter;
-        private IQueryable<SimpleModel> data;
+        private IDataProcess<AllTypesModel> filter;
+        private IQueryable<AllTypesModel> data;
         private const int RangeConstant = 50;
 
         [SetUp]
         public void SetUp()
         {
             var resolver = new DependencyResolver();
-            this.filter = resolver.GetCustomFiltersDataProcessor<SimpleModel>();
+            this.filter = resolver.GetCustomFiltersDataProcessor<AllTypesModel>();
             this.data = DataGenerator.GenerateSimpleData(5000, RangeConstant);
         }
 
@@ -434,7 +434,6 @@
         [TestCase("StringProperty", FilterTypes.lt, typeof(InvalidTypeForOperationException))]
         [TestCase("StringProperty", FilterTypes.lte, typeof(InvalidTypeForOperationException))]
         [TestCase("StringProperty", FilterTypes.eq, "z", "\"z\"")]
-        [TestCase("StringProperty", FilterTypes.eq, "", "\"\"")]
         public void CustomFilters_ShouldWorkProperlyForRangeWithAllSupportedTypes(string column, FilterTypes filterType, object value, string valueFormatOnAssert = null)
         {
             var requestModel = new RequestInfoModel

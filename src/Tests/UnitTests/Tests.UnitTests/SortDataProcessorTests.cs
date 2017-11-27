@@ -11,17 +11,17 @@
 
     internal class SortDataProcessorTests
     {
-        private SortDataProcessor<SimpleModel> simpleFilter;
+        private SortDataProcessor<AllTypesModel> simpleFilter;
         private SortDataProcessor<ComplexModel> complexFilter;
-        private IQueryable<SimpleModel> simpleData;
+        private IQueryable<AllTypesModel> simpleData;
         private IQueryable<ComplexModel> complexData;
 
         [SetUp]
         public void SetUp()
         {
-            this.simpleFilter = new SortDataProcessor<SimpleModel>();
+            this.simpleFilter = new SortDataProcessor<AllTypesModel>();
             this.complexFilter = new SortDataProcessor<ComplexModel>();
-            this.simpleData = new List<SimpleModel>().AsQueryable();
+            this.simpleData = new List<AllTypesModel>().AsQueryable();
             this.complexData = new List<ComplexModel>().AsQueryable();
         }
 

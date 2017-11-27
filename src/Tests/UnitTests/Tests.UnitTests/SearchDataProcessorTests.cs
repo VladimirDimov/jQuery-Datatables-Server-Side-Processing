@@ -23,17 +23,17 @@
         [Test]
         public void SearchWithTwoSearchableProperties()
         {
-            var filterProc = new DependencyResolver().GetSearchDataProcessor<SimpleModel>();
-            var data = new List<SimpleModel>()
+            var filterProc = new DependencyResolver().GetSearchDataProcessor<AllTypesModel>();
+            var data = new List<AllTypesModel>()
             {
-                new SimpleModel{ StringProperty = "aaa", CharProperty = 'q' },
-                new SimpleModel{ StringProperty = null, CharProperty = 'q', CharNullable = 'b' },
-                new SimpleModel{ StringProperty = "bbb", CharNullable = null },
+                new AllTypesModel{ StringProperty = "aaa", CharProperty = 'q' },
+                new AllTypesModel{ StringProperty = null, CharProperty = 'q', CharNullable = 'b' },
+                new AllTypesModel{ StringProperty = "bbb", CharNullable = null },
             }
             .AsQueryable();
             var processedData = filterProc.ProcessData(data, new RequestInfoModel()
             {
-                Helpers = new RequestHelpers { ModelType = typeof(SimpleModel) },
+                Helpers = new RequestHelpers { ModelType = typeof(AllTypesModel) },
                 TableParameters = new DataTableAjaxPostModel
                 {
                     Search = new Search
@@ -43,17 +43,17 @@
                     Columns = new List<Column>
                     {
                         new Column{
-                            Data = nameof(SimpleModel.StringProperty),
+                            Data = nameof(AllTypesModel.StringProperty),
                             Searchable = true
                         },
                         new Column
                         {
-                            Data = nameof(SimpleModel.CharProperty),
+                            Data = nameof(AllTypesModel.CharProperty),
                             Searchable = true
                         },
                         new Column
                         {
-                            Data = nameof(SimpleModel.CharNullable),
+                            Data = nameof(AllTypesModel.CharNullable),
                             Searchable = true
                         }
                     }
@@ -67,18 +67,18 @@
         [Test]
         public void SearchWithSingleSearchableProperty()
         {
-            var filterProc = this.GetFilterDataProcessor<SimpleModel>();
-            var data = new List<SimpleModel>()
+            var filterProc = this.GetFilterDataProcessor<AllTypesModel>();
+            var data = new List<AllTypesModel>()
             {
-                new SimpleModel{StringProperty = "aaa"},
-                new SimpleModel{StringProperty = null},
-                new SimpleModel{StringProperty = "bbb"},
+                new AllTypesModel{StringProperty = "aaa"},
+                new AllTypesModel{StringProperty = null},
+                new AllTypesModel{StringProperty = "bbb"},
             }
             .AsQueryable();
 
             var processedData = filterProc.ProcessData(data, new RequestInfoModel()
             {
-                Helpers = new RequestHelpers { ModelType = typeof(SimpleModel) },
+                Helpers = new RequestHelpers { ModelType = typeof(AllTypesModel) },
                 TableParameters = new DataTableAjaxPostModel
                 {
                     Search = new Search
@@ -104,11 +104,11 @@
         {
             var exception = Assert.Throws<ArgumentException>(() =>
             {
-                var filterProc = this.GetFilterDataProcessor<SimpleModel>();
-                var data = new List<SimpleModel>().AsQueryable();
+                var filterProc = this.GetFilterDataProcessor<AllTypesModel>();
+                var data = new List<AllTypesModel>().AsQueryable();
                 var processedData = filterProc.ProcessData(data, new RequestInfoModel()
                 {
-                    Helpers = new RequestHelpers { ModelType = typeof(SimpleModel) },
+                    Helpers = new RequestHelpers { ModelType = typeof(AllTypesModel) },
                     TableParameters = new DataTableAjaxPostModel
                     {
                         Search = new Search
@@ -132,13 +132,13 @@
         [Test]
         public void SearchBySingleNestedStringPropertyShouldWork()
         {
-            var filterProc = this.GetFilterDataProcessor<SimpleModel>();
+            var filterProc = this.GetFilterDataProcessor<AllTypesModel>();
             var data = DataGenerator.GenerateSimpleData(5000);
             var searchValue = "z";
 
             var processedData = filterProc.ProcessData(data, new RequestInfoModel()
             {
-                Helpers = new RequestHelpers { ModelType = typeof(SimpleModel) },
+                Helpers = new RequestHelpers { ModelType = typeof(AllTypesModel) },
                 TableParameters = new DataTableAjaxPostModel
                 {
                     Search = new Search
@@ -161,13 +161,13 @@
         [Test]
         public void SearchBySingleNestedCharPropertyShouldWork()
         {
-            var filterProc = this.GetFilterDataProcessor<SimpleModel>();
+            var filterProc = this.GetFilterDataProcessor<AllTypesModel>();
             var data = DataGenerator.GenerateSimpleData(5000);
             char searchValue = 'Z';
 
             var processedData = filterProc.ProcessData(data, new RequestInfoModel()
             {
-                Helpers = new RequestHelpers { ModelType = typeof(SimpleModel) },
+                Helpers = new RequestHelpers { ModelType = typeof(AllTypesModel) },
                 TableParameters = new DataTableAjaxPostModel
                 {
                     Search = new Search

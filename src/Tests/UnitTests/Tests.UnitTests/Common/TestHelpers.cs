@@ -16,7 +16,7 @@
             {
                 Helpers = new RequestHelpers
                 {
-                    ModelType = typeof(SimpleModel)
+                    ModelType = typeof(AllTypesModel)
                 },
                 TableParameters = new DataTableAjaxPostModel
                 {

@@ -1,65 +1,115 @@
-﻿namespace TestData.Data
+﻿namespace Tests.UnitTests.Common
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using FakeData;
-    using TestData.Data.Models;
+    using Tests.UnitTests.Models;
 
-    public class DataGenerator
+    public static class DataGenerator
     {
-        public IQueryable<SimpleDataModel> GenerateSimpleData(int numberOfRecords, DateTime minDate, DateTime maxDate)
+        public static IQueryable<AllTypesModel> GenerateSimpleData(uint numberOfItems, int minMax = 500)
         {
-            var data = new List<SimpleDataModel>();
+            var min = minMax * -1;
+            var max = minMax;
+            var data = new List<AllTypesModel>();
             var random = new Random();
-            for (int i = 0; i < numberOfRecords; i++)
+            for (int i = 0; i < numberOfItems; i++)
             {
-                data.Add(new SimpleDataModel
-                {
-                    String = TextData.GetAlphabetical(random.Next(3, 20)),
-                    Integer = NumberData.GetNumber(-5000, 5000),
-                    Double = NumberData.GetDouble(),
-                    Boolean = BooleanData.GetBoolean(),
-                    DateTime = DateTimeData.GetDatetime(minDate, maxDate)
-                });
+                var itemToAdd = GenerateSimpleModel(random, min, max);
+                itemToAdd.NestedModel = GenerateSimpleModel(random, min, max);
+
+                data.Add(itemToAdd);
             }
 
             return data.AsQueryable();
         }
 
-        public IQueryable<ComplexDataModel> GenerateComplexData(int numberOfRecords, DateTime minDate, DateTime maxDate)
+        private static AllTypesModel GenerateSimpleModel(Random random, int min, int max)
         {
-            var data = new List<ComplexDataModel>();
-            var random = new Random();
-            for (int i = 0; i < numberOfRecords; i++)
+            var itemToAdd = new AllTypesModel
             {
-                data.Add(new ComplexDataModel
-                {
-                    String = TextData.GetAlphabetical(random.Next(3, 20)),
-                    Integer = NumberData.GetNumber(-5000, 5000),
-                    Double = NumberData.GetDouble(),
-                    Boolean = BooleanData.GetBoolean(),
-                    DateTime = DateTimeData.GetDatetime(minDate, maxDate),
-                    ComplexModel = new ComplexDataModel
-                    {
-                        String = TextData.GetAlphabetical(random.Next(3, 20)),
-                        Integer = NumberData.GetNumber(-5000, 5000),
-                        Double = NumberData.GetDouble(),
-                        Boolean = BooleanData.GetBoolean(),
-                        DateTime = DateTimeData.GetDatetime(minDate, maxDate),
-                        SimpleModel = new SimpleDataModel
-                        {
-                            String = TextData.GetAlphabetical(random.Next(3, 20)),
-                            Integer = NumberData.GetNumber(-5000, 5000),
-                            Double = NumberData.GetDouble(),
-                            Boolean = BooleanData.GetBoolean(),
-                            DateTime = DateTimeData.GetDatetime(minDate, maxDate)
-                        }
-                    }
-                });
+                Long = NumberData.GetNumber(min, max),
+                LongNullable = RandomiseNullable(NumberData.GetNumber(min, max)),
+                ULong = (ulong)NumberData.GetNumber(0, max),
+                ULongNullable = RandomiseNullable((ulong)NumberData.GetNumber(0, max)),
+
+                Integer = random.Next(min, max),
+                IntegerNullable = RandomiseNullable(FakeData.NumberData.GetNumber(min, max)),
+                UInt = (uint)NumberData.GetNumber(0, max),
+                UIntNullable = (uint?)RandomiseNullable(NumberData.GetNumber(0, max)),
+
+                DoubleProperty = NumberData.GetDouble(),
+                DoubleNullable = RandomiseNullable(NumberData.GetDouble()),
+
+                DecimalProperty = (decimal)NumberData.GetDouble(),
+                DecimalNullable = (decimal?)RandomiseNullable(NumberData.GetDouble()),
+
+                Short = (short)NumberData.GetNumber(min, max),
+                ShortNullable = (short?)(NumberData.GetNumber(min, max)),
+                UShort = (ushort)NumberData.GetNumber(0, max),
+                UShortNullable = (ushort?)RandomiseNullable(NumberData.GetNumber(0, max)),
+
+                ByteProperty = RandomByte(),
+                ByteNullable = RandomiseNullable(RandomByte()),
+                SByteProperty = RandomSByte(),
+                SByteNullable = RandomiseNullable(RandomSByte()),
+
+                CharProperty = FakeData.TextData.GetAlphabetical(1)[0],
+                CharNullable = RandomiseNullable(FakeData.TextData.GetAlphabetical(1)[0]),
+
+                BooleanProperty = BooleanData.GetBoolean(),
+                BooleanNullable = RandomiseNullable(BooleanData.GetBoolean()),
+
+                StringProperty = RandomiseNullable(TextData.GetAlphaNumeric(NumberData.GetNumber(0, 20)), 0.3),
+
+                DateTime = RandomDate(max),
+                DateTimeNullable = RandomiseNullable(RandomDate(max)),
+                DateTimeOffset = RandomDateTimeOffset(max),
+                DateTimeOffsetNullable = RandomiseNullable(RandomDateTimeOffset(max))
+            };
+
+            return itemToAdd;
+        }
+
+        private static DateTimeOffset RandomDateTimeOffset(int max)
+        {
+            return new DateTimeOffset(RandomDate(max));
+        }
+
+        private static DateTime RandomDate(int max)
+        {
+            return DateTime.Now.AddDays(NumberData.GetNumber(max * (-1), 0));
+        }
+
+        private static sbyte RandomSByte()
+        {
+            return (sbyte)NumberData.GetNumber(sbyte.MinValue, sbyte.MaxValue);
+        }
+
+        private static byte RandomByte()
+        {
+            return (byte)NumberData.GetNumber(byte.MinValue, byte.MaxValue);
+        }
+
+        public static Nullable<T> RandomiseNullable<T>(T value)
+            where T : struct
+        {
+            var isNull = FakeData.BooleanData.GetBoolean();
+
+            return isNull ? new Nullable<T>() : new Nullable<T>(value);
+        }
+
+        public static T RandomiseNullable<T>(T value, double nullFraction)
+            where T : class
+        {
+            var rnd = NumberData.GetNumber(0, 100);
+            if (rnd / 100d <= nullFraction)
+            {
+                return null;
             }
 
-            return data.AsQueryable();
+            return value;
         }
     }
 }

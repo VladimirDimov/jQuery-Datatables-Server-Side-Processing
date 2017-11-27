@@ -1,8 +1,8 @@
-﻿namespace TestData.Data.Models
+﻿namespace Tests.UnitTests.Models
 {
     using System;
 
-    public class SimpleDataModel
+    public class ComplexModel
     {
         public string String { get; set; }
 
@@ -13,5 +13,11 @@
         public DateTime DateTime { get; set; }
 
         public bool Boolean { get; set; }
+
+        public char Char { get; set; }
+
+        public AllTypesModel SimpleModel { get; set; }
+
+        public ComplexModel NestedComplexModel { get; set; }
     }
 }

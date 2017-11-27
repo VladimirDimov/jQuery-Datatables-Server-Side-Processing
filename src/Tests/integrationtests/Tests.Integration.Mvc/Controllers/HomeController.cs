@@ -1,14 +1,11 @@
 ﻿namespace Tests.Integration.Mvc.Controllers
 {
-    using System.Linq;
     using System.Web.Mvc;
-    using JQDT.MVC;
-    using TestData.Data.Models;
 
     public class HomeController : Controller
     {
-        public static IQueryable<SimpleDataModel> SimpleDataBig { get; set; }
-        public static IQueryable<ComplexDataModel> ComplexDataBig { get; internal set; }
+        //public static IQueryable<SimpleDataModel> SimpleDataBig { get; set; }
+        //public static IQueryable<ComplexDataModel> ComplexDataBig { get; internal set; }
 
         public ActionResult Index()
         {
@@ -23,16 +20,16 @@
             return View();
         }
 
-        [JQDataTable]
-        public ActionResult GetSimpleData(int take = int.MaxValue)
-        {
-            return this.View(HomeController.SimpleDataBig.Take(take));
-        }
+        //[JQDataTable]
+        //public ActionResult GetSimpleData(int take = int.MaxValue)
+        //{
+        //    return this.View(HomeController.SimpleDataBig.Take(take));
+        //}
 
-        public ActionResult GetSimpleDataFull()
-        {
-            return this.Json(HomeController.SimpleDataBig, JsonRequestBehavior.AllowGet);
-        }
+        //public ActionResult GetSimpleDataFull()
+        //{
+        //    return this.Json(HomeController.SimpleDataBig, JsonRequestBehavior.AllowGet);
+        //}
 
         public ActionResult ComplexDataTestPage(bool isPaged = true, bool searching = true)
         {
@@ -42,15 +39,15 @@
             return View();
         }
 
-        [JQDataTable]
-        public ActionResult GetComplexData(int take = int.MaxValue)
-        {
-            return this.View(HomeController.ComplexDataBig.Take(take));
-        }
+        //[JQDataTable]
+        //public ActionResult GetComplexData(int take = int.MaxValue)
+        //{
+        //    return this.View(HomeController.ComplexDataBig.Take(take));
+        //}
 
-        public ActionResult GetComplexDataFull()
-        {
-            return this.Json(HomeController.ComplexDataBig, JsonRequestBehavior.AllowGet);
-        }
+        //public ActionResult GetComplexDataFull()
+        //{
+        //    return this.Json(HomeController.ComplexDataBig, JsonRequestBehavior.AllowGet);
+        //}
     }
 }

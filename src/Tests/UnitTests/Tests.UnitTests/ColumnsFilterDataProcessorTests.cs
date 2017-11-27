@@ -15,29 +15,29 @@
     {
         // TODO: Add case "Filter by more than one columns"
 
-        private IDataProcess<SimpleModel> filterSimpleModelProcessor;
+        private IDataProcess<AllTypesModel> filterSimpleModelProcessor;
         private IDataProcess<ComplexModel> filterComplexModelProcessor;
-        private IQueryable<SimpleModel> simpleData;
+        private IQueryable<AllTypesModel> simpleData;
         private IQueryable<ComplexModel> complexData;
 
         [SetUp]
         public void SetUp()
         {
             var resolver = new DependencyResolver();
-            this.filterSimpleModelProcessor = resolver.GetColumnsFilterDataProcessor<SimpleModel>();
+            this.filterSimpleModelProcessor = resolver.GetColumnsFilterDataProcessor<AllTypesModel>();
             this.filterComplexModelProcessor = resolver.GetColumnsFilterDataProcessor<ComplexModel>();
-            this.simpleData = new List<SimpleModel>().AsQueryable();
+            this.simpleData = new List<AllTypesModel>().AsQueryable();
             this.complexData = new List<ComplexModel>().AsQueryable();
         }
 
         [Test]
         public void ColumnFilter_ShouldReturnUntouchedDataIfNoColumnFilters()
         {
-            var data = new List<SimpleModel>
+            var data = new List<AllTypesModel>
             {
-                new SimpleModel{CharNullable = null, Integer = 1},
-                new SimpleModel{CharNullable = null, Integer = 2},
-                new SimpleModel{CharNullable = null, Integer = 3},
+                new AllTypesModel{CharNullable = null, Integer = 1},
+                new AllTypesModel{CharNullable = null, Integer = 2},
+                new AllTypesModel{CharNullable = null, Integer = 3},
             }
             .AsQueryable();
 

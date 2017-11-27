@@ -63,21 +63,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Common\DataHelpers.cs" />
-    <Compile Include="Common\DriverProvider.cs" />
-    <Compile Include="Common\Helpers.cs" />
-    <Compile Include="Common\Http.cs" />
-    <Compile Include="Common\ISettingsProvider.cs" />
-    <Compile Include="Common\AppSettingsProvider.cs" />
-    <Compile Include="Common\TableHelpers.cs" />
-    <Compile Include="FilterTests.cs" />
-    <Compile Include="Pages\ComplexDataPage.cs" />
-    <Compile Include="Pages\HomePage.cs" />
-    <Compile Include="Pages\SimpleDataPage.cs" />
-    <Compile Include="PagingTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SetUp\TestsSetupClass.cs" />
-    <Compile Include="SortingTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

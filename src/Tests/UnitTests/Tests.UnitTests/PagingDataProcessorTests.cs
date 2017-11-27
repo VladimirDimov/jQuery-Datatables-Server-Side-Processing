@@ -9,14 +9,14 @@
 
     internal class PagingDataProcessorTests
     {
-        private PagingDataProcessor<SimpleModel> filter;
-        private IQueryable<SimpleModel> simpleData;
+        private PagingDataProcessor<AllTypesModel> filter;
+        private IQueryable<AllTypesModel> simpleData;
 
         [SetUp]
         public void SetUp()
         {
-            this.filter = new PagingDataProcessor<SimpleModel>();
-            this.simpleData = new List<SimpleModel>().AsQueryable();
+            this.filter = new PagingDataProcessor<AllTypesModel>();
+            this.simpleData = new List<AllTypesModel>().AsQueryable();
         }
 
         [Test]
@@ -28,7 +28,7 @@
 
             var actualExpr = this.filter.ProcessData(this.simpleData, requestModel);
             var actualExprStr = actualExpr.Expression.ToString();
-            var expectedExprStr = $"System.Collections.Generic.List`1[{typeof(SimpleModel).FullName}]";
+            var expectedExprStr = $"System.Collections.Generic.List`1[{typeof(AllTypesModel).FullName}]";
 
             Assert.AreEqual(expectedExprStr, actualExprStr);
 
@@ -42,13 +42,13 @@
         public void ShouldReturnAppropriateResultWhenAppropriatePagingParameters()
         {
             var requestModel = TestHelpers.GetSimpleRequestInfoModel();
-            var data = new List<SimpleModel>();
+            var data = new List<AllTypesModel>();
             const int Start = 20;
             const int Length = 10;
 
             for (int i = 0; i < 30; i++)
             {
-                data.Add(new SimpleModel
+                data.Add(new AllTypesModel
                 {
                     Integer = i
                 });
@@ -59,11 +59,11 @@
 
             var actualExpr = this.filter.ProcessData(data.AsQueryable(), requestModel);
             var actualExprStr = actualExpr.Expression.ToString();
-            var expectedExprStr = $"System.Collections.Generic.List`1[{typeof(SimpleModel).FullName}].Skip({Start}).Take({Length})";
+            var expectedExprStr = $"System.Collections.Generic.List`1[{typeof(AllTypesModel).FullName}].Skip({Start}).Take({Length})";
 
             Assert.AreEqual(expectedExprStr, actualExprStr);
 
-            var actualRange = actualExpr.ToList().Select(x => ((SimpleModel)x).Integer);
+            var actualRange = actualExpr.ToList().Select(x => ((AllTypesModel)x).Integer);
             var expectedRange = Enumerable.Range(Start, Length);
             Assert.IsTrue(expectedRange.SequenceEqual(actualRange));
         }

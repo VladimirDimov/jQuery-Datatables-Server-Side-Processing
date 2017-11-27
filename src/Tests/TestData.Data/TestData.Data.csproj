@@ -49,8 +49,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataGenerator.cs" />
-    <Compile Include="Models\ComplexDataModel.cs" />
-    <Compile Include="Models\SimpleDataModel.cs" />
+    <Compile Include="Models\AllTypesModel.cs" />
+    <Compile Include="Models\ComplexModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

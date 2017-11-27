@@ -2,7 +2,7 @@
 {
     using System;
 
-    internal class SimpleModel
+    public class AllTypesModel
     {
         public string StringProperty { get; set; }
 
@@ -43,6 +43,6 @@
         public char CharProperty { get; set; }
         public char? CharNullable { get; set; }
 
-        public SimpleModel NestedModel { get; set; }
+        public AllTypesModel NestedModel { get; set; }
     }
 }
