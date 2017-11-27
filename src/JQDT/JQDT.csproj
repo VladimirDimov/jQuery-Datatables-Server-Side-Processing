@@ -52,9 +52,6 @@
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
     </Reference>
-    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
-    </Reference>
     <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
     </Reference>
@@ -76,7 +73,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Application\ApplicationBase.cs" />
-    <Compile Include="Application\ApplicationMvc.cs" />
     <Compile Include="Application\ExecuteFunctionProvider.cs" />
     <Compile Include="DataProcessing\ColumnsFilterDataProcessing\ColumnsFilterDataProcessor.cs" />
     <Compile Include="DataProcessing\Common\ConstantExpressionBuilder.cs" />
@@ -107,7 +103,6 @@
     <Compile Include="Extensions\TypeExtensions.cs" />
     <Compile Include="GlobalConstants.cs" />
     <Compile Include="ModelBinders\FormModelBinder.cs" />
-    <Compile Include="JQDataTableAttribute.cs" />
     <Compile Include="Models\Column.cs" />
     <Compile Include="Models\Custom.cs" />
     <Compile Include="Models\DataTableAjaxPostModel.cs" />

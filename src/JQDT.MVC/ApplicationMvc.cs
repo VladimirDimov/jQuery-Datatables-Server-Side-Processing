@@ -1,8 +1,9 @@
-﻿namespace JQDT.Application
+﻿namespace JQDT.MVC
 {
     using System.Collections.Specialized;
     using System.Linq;
     using System.Web.Mvc;
+    using JQDT.Application;
 
     /// <summary>
     /// Entry point for MVC projects

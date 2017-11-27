@@ -12,7 +12,7 @@
     /// Dependency Resolver
     /// </summary>
     /// <seealso cref="JQDT.DI.IDependencyResolver" />
-    internal class DependencyResolver : IDependencyResolver
+    public class DependencyResolver : IDependencyResolver
     {
         /// <summary>
         /// Gets the search data processor.

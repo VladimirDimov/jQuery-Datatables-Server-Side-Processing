@@ -8,7 +8,7 @@
     /// <summary>
     /// Creates and caches application execute function.
     /// </summary>
-    internal static class ExecuteFunctionProvider<TContext>
+    public static class ExecuteFunctionProvider<TContext>
     {
         private static ConcurrentDictionary<Type, Func<TContext, DI.IDependencyResolver, object>> executionFunctionsCache = new ConcurrentDictionary<Type, Func<TContext, DI.IDependencyResolver, object>>();
 
@@ -17,7 +17,7 @@
         /// </summary>
         /// <param name="modelType">Type of the model.</param>
         /// <returns>Application execute function.</returns>
-        internal static Func<TContext, DI.IDependencyResolver, object> GetExecuteFunction(Type modelType, Type appType)
+        public static Func<TContext, DI.IDependencyResolver, object> GetExecuteFunction(Type modelType, Type appType)
         {
             Func<TContext, DI.IDependencyResolver, object> executeFunc = null;
 

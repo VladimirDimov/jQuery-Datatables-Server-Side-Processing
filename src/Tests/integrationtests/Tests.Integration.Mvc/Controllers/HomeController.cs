@@ -2,7 +2,7 @@
 {
     using System.Linq;
     using System.Web.Mvc;
-    using JQDT;
+    using JQDT.MVC;
     using TestData.Data.Models;
 
     public class HomeController : Controller

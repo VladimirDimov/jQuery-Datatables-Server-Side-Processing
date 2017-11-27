@@ -14,7 +14,7 @@
     /// The <see cref="ApplicationBase.Execute(System.Collections.Specialized.NameValueCollection, System.Linq.IQueryable{T})"/> should be called
     /// </summary>
     /// <typeparam name="T">Data Collection Generic Type</typeparam>
-    internal abstract class ApplicationBase<T>
+    public abstract class ApplicationBase<T>
     {
         private readonly IDependencyResolver dependencyResolver;
 

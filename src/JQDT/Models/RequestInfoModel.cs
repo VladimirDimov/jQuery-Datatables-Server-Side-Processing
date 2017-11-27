@@ -3,7 +3,7 @@
     /// <summary>
     /// Request Info Model
     /// </summary>
-    internal class RequestInfoModel
+    public class RequestInfoModel
     {
         /// <summary>
         /// Gets or sets the table parameters.
@@ -11,7 +11,7 @@
         /// <value>
         /// The table parameters.
         /// </value>
-        internal DataTableAjaxPostModel TableParameters { get; set; }
+        public DataTableAjaxPostModel TableParameters { get; set; }
 
         /// <summary>
         /// Gets or sets the helpers.
@@ -19,6 +19,6 @@
         /// <value>
         /// The helpers.
         /// </value>
-        internal RequestHelpers Helpers { get; set; }
+        public RequestHelpers Helpers { get; set; }
     }
 }

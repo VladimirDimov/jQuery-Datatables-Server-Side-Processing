@@ -3,7 +3,7 @@
     /// <summary>
     /// Custom filter types
     /// </summary>
-    internal enum FilterTypes
+    public enum FilterTypes
     {
         /// <summary>
         /// Greater than or equal

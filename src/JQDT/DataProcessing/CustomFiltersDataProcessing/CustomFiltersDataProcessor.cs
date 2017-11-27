@@ -47,10 +47,10 @@
             {
                 foreach (var filter in columnFilters.Value)
                 {
-                    //if (string.IsNullOrEmpty(filter.Value))
-                    //{
-                    //    continue;
-                    //}
+                    if (string.IsNullOrEmpty(filter.Value))
+                    {
+                        continue;
+                    }
 
                     var expressionPredicate = this.GetCustomFilterExpressionPredicate(columnFilters.Key, filter);
                     processedData = processedData.Where(expressionPredicate);

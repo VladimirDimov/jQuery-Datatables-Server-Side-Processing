@@ -1,4 +1,4 @@
-﻿namespace JQDT
+﻿namespace JQDT.MVC
 {
     using System;
     using System.Web.Mvc;

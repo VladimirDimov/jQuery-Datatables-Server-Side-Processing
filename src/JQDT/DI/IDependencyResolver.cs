@@ -6,7 +6,7 @@
     /// Dependency Resolver
     /// </summary>
     /// <seealso cref="JQDT.DI.IDependencyResolver" />
-    internal interface IDependencyResolver
+    public interface IDependencyResolver
     {
         /// <summary>
         /// Gets the columns filter data processor.

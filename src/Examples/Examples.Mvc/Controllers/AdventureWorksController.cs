@@ -2,7 +2,7 @@
 using System.Web.Mvc;
 using Examples.Data;
 using Examples.Data.ViewModels;
-using JQDT;
+using JQDT.MVC;
 
 namespace Examples.Mvc.Controllers
 {

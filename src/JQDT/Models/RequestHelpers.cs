@@ -5,7 +5,7 @@
     /// <summary>
     /// Request helper information model
     /// </summary>
-    internal class RequestHelpers
+    public class RequestHelpers
     {
         /// <summary>
         /// Gets or sets the type of the model.
@@ -13,7 +13,7 @@
         /// <value>
         /// The type of the model.
         /// </value>
-        internal Type ModelType { get; set; }
+        public Type ModelType { get; set; }
 
         /// <summary>
         /// Gets or sets the type of the data collection.
@@ -21,6 +21,6 @@
         /// <value>
         /// The type of the data collection.
         /// </value>
-        internal Type DataCollectionType { get; set; }
+        public Type DataCollectionType { get; set; }
     }
 }

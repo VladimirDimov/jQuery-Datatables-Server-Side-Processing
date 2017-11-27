@@ -7,7 +7,7 @@
     /// Data processor interface
     /// </summary>
     /// <typeparam name="T">Generic data model type.</typeparam>
-    internal interface IDataProcess<T>
+    public interface IDataProcess<T>
     {
         /// <summary>
         /// Gets the processed data.

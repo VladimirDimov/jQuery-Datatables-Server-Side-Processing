@@ -7,7 +7,7 @@
     /// </summary>
     /// <seealso cref="System.Exception" />
     [Serializable]
-    internal class JQDataTablesException : Exception
+    public class JQDataTablesException : Exception
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="JQDataTablesException"/> class.

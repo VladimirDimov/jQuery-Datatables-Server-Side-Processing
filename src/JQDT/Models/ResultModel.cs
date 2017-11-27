@@ -5,7 +5,7 @@
     /// <summary>
     /// Result model that is passed to the client.
     /// </summary>
-    internal class ResultModel
+    public class ResultModel
     {
         /// <summary>
         /// Gets or sets the Draw.
@@ -13,7 +13,7 @@
         /// <value>
         /// The draw.
         /// </value>
-        internal int Draw { get; set; }
+        public int Draw { get; set; }
 
         /// <summary>
         /// Gets or sets the records total.
@@ -21,7 +21,7 @@
         /// <value>
         /// The records total.
         /// </value>
-        internal int RecordsTotal { get; set; }
+        public int RecordsTotal { get; set; }
 
         /// <summary>
         /// Gets or sets the RecordsFiltered.
@@ -29,7 +29,7 @@
         /// <value>
         /// The records filtered.
         /// </value>
-        internal object RecordsFiltered { get; set; }
+        public object RecordsFiltered { get; set; }
 
         /// <summary>
         /// Gets or sets the data.
@@ -37,7 +37,7 @@
         /// <value>
         /// The data.
         /// </value>
-        internal List<object> Data { get; set; }
+        public List<object> Data { get; set; }
 
         /// <summary>
         /// Gets or sets the error.
@@ -45,6 +45,6 @@
         /// <value>
         /// The error.
         /// </value>
-        internal string Error { get; set; }
+        public string Error { get; set; }
     }
 }

@@ -214,9 +214,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\JQDT\JQDT.csproj">
-      <Project>{C82E4675-88AB-4B78-8475-F1521BDAE330}</Project>
-      <Name>JQDT</Name>
+    <ProjectReference Include="..\..\..\JQDT.MVC\JQDT.MVC.csproj">
+      <Project>{d845ab6d-1887-4597-9256-148ad0a11459}</Project>
+      <Name>JQDT.MVC</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\TestData.Data\TestData.Data.csproj">
       <Project>{F7F12DE8-F3C3-42A4-BBE4-1868D287D388}</Project>
