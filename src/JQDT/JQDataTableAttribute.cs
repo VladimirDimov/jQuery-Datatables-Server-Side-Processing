@@ -32,7 +32,7 @@
         private void PerformOnActionExecuted(ActionExecutedContext filterContext)
         {
             var modelType = filterContext.Controller.ViewData.Model.GetType();
-            var applicationExecuteFunction = ExecuteFunctionProvider.GetExecuteFunction(modelType, typeof(ApplicationMvc<>));
+            var applicationExecuteFunction = ExecuteFunctionProvider<ActionExecutedContext>.GetExecuteFunction(modelType, typeof(ApplicationMvc<>));
             var dependencyResolver = new DI.DependencyResolver();
             var result = (ResultModel)applicationExecuteFunction(filterContext, dependencyResolver);
 
