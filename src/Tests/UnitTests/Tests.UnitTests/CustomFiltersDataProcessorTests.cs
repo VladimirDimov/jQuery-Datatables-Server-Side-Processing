@@ -10,8 +10,8 @@
     using JQDT.Exceptions;
     using JQDT.Models;
     using NUnit.Framework;
-    using Tests.UnitTests.Common;
-    using Tests.UnitTests.Models;
+    using TestData.Data;
+    using TestData.Models;
 
     internal class CustomFiltersDataProcessorTests
     {

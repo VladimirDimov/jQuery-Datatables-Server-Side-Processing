@@ -1,10 +1,9 @@
 ﻿namespace Tests.Integration.Mvc
 {
-    using System;
     using System.Web.Mvc;
     using System.Web.Optimization;
     using System.Web.Routing;
-    using Tests.Integration.Mvc.Controllers;
+    using TestData.Data;
 
     public class MvcApplication : System.Web.HttpApplication
     {

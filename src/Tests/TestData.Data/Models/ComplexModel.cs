@@ -1,4 +1,4 @@
-﻿namespace Tests.UnitTests.Models
+﻿namespace TestData.Models
 {
     using System;
 

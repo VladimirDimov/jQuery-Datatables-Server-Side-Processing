@@ -4,8 +4,8 @@
     using System.Linq;
     using JQDT.DataProcessing.PagingDataProcessing;
     using NUnit.Framework;
+    using TestData.Models;
     using Tests.UnitTests.Common;
-    using Tests.UnitTests.Models;
 
     internal class PagingDataProcessorTests
     {

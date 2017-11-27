@@ -1,10 +1,10 @@
-﻿namespace Tests.UnitTests.Common
+﻿namespace TestData.Data
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using FakeData;
-    using Tests.UnitTests.Models;
+    using TestData.Models;
 
     public static class DataGenerator
     {

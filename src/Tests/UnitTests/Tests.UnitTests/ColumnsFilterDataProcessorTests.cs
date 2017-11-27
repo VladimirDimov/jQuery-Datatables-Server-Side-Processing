@@ -8,8 +8,9 @@
     using JQDT.DI;
     using JQDT.Models;
     using NUnit.Framework;
+    using TestData.Data;
+    using TestData.Models;
     using Tests.UnitTests.Common;
-    using Tests.UnitTests.Models;
 
     internal class ColumnsFilterDataProcessorTests
     {

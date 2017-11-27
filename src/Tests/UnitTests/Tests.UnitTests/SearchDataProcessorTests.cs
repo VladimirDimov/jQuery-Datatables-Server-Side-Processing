@@ -7,8 +7,8 @@
     using JQDT.DI;
     using JQDT.Models;
     using NUnit.Framework;
-    using Tests.UnitTests.Common;
-    using Tests.UnitTests.Models;
+    using TestData.Data;
+    using TestData.Models;
 
     public class SearchDataProcessorTests
     {
