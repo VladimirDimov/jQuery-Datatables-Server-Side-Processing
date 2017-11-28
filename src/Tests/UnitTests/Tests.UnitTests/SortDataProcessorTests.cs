@@ -181,6 +181,7 @@
         [Test]
         [TestCase(1)]
         [TestCase(2)]
+        [TestCase(3)]
         public void SortByMultiplePropertiesShouldReturnCorrectExpression(int testCaseKey)
         {
             var testCases = new Dictionary<int, RequestInfoModel>
@@ -222,8 +223,30 @@
                             Order = new List<Order>
                             {
                                 new Order { Column = 0, Dir = "desc" },
-                                new Order { Column = 0, Dir = "desc" },
+                                new Order { Column = 1, Dir = "desc" },
+                                new Order { Column = 2, Dir = "asc" },
+                            }
+                        }
+                    }
+                },
+
+                {
+                    3,
+                    new RequestInfoModel
+                    {
+                        TableParameters = new DataTableAjaxPostModel
+                        {
+                            Columns = new List<Column>
+                            {
+                                new Column{ Data = nameof(AllTypesModel.IntegerNullable) },
+                                new Column{ Data = nameof(AllTypesModel.CharNullable) },
+                                new Column{ Data = nameof(AllTypesModel.StringProperty) },
+                            },
+                            Order = new List<Order>
+                            {
                                 new Order { Column = 0, Dir = "asc" },
+                                new Order { Column = 1, Dir = "asc" },
+                                new Order { Column = 2, Dir = "asc" },
                             }
                         }
                     }
