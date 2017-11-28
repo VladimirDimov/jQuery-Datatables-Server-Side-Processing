@@ -167,8 +167,8 @@
 @section Scripts {
     <script>
         var table = $('#table-simple').DataTable({
-            //"paging": true,
-            //"searching": true,
+            "paging": true,
+            "searching": true,
             "proccessing": true,
             "serverSide": true,
             "ajax": {
@@ -204,9 +204,9 @@
                 { "data": "DecimalProperty", searchable: false },
                 { "data": "DecimalNullable", searchable: false },
 
-                { "data": "DateTime", searchable: false },
+                { "data": "@nameof(TestData.Models.AllTypesModel.DateTimeProperty)", searchable: false },
                 { "data": "DateTimeNullable", searchable: false },
-                { "data": "DateTimeOffset", searchable: false },
+                { "data": "@nameof(TestData.Models.AllTypesModel.DateTimeOffsetProperty)", searchable: false },
                 { "data": "DateTimeOffsetNullable", searchable: false },
 
                 { "data": "BooleanProperty", searchable: false },
@@ -242,9 +242,9 @@
                 { "data": "NestedModel.DecimalProperty", searchable: false },
                 { "data": "NestedModel.DecimalNullable", searchable: false },
 
-                { "data": "NestedModel.DateTime", searchable: false },
+                { "data": "NestedModel.@nameof(TestData.Models.AllTypesModel.DateTimeProperty)", searchable: false },
                 { "data": "NestedModel.DateTimeNullable", searchable: false },
-                { "data": "NestedModel.DateTimeOffset", searchable: false },
+                { "data": "NestedModel.@nameof(TestData.Models.AllTypesModel.DateTimeOffsetProperty)", searchable: false },
                 { "data": "NestedModel.DateTimeOffsetNullable", searchable: false },
 
                 { "data": "NestedModel.BooleanProperty", searchable: false },
