@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Text;
     using JQDT.DataProcessing;
     using JQDT.DataProcessing.SortDataProcessing;
     using JQDT.DI;
@@ -182,7 +181,7 @@
         [Test]
         [TestCase(1)]
         [TestCase(2)]
-        public void SortByMultiplePropertiesShouldReturnCorrectExpression(int testCase)
+        public void SortByMultiplePropertiesShouldReturnCorrectExpression(int testCaseKey)
         {
             var testCases = new Dictionary<int, RequestInfoModel>
             {
@@ -201,8 +200,8 @@
                             Order = new List<Order>
                             {
                                 new Order { Column = 0, Dir = "asc" },
-                                new Order { Column = 0, Dir = "desc" },
-                                new Order { Column = 0, Dir = "asc" },
+                                new Order { Column = 2, Dir = "desc" },
+                                new Order { Column = 1, Dir = "asc" },
                             }
                         }
                     }
@@ -231,18 +230,42 @@
                 }
             };
 
-            var processedData = this.filter.ProcessData(this.data, testCases[testCase]);
-            string predicate = this.BuildDynamicLinqPredicate(testCases[testCase]);
-            var expectedData = this.data.OrderBy(predicate);
+            var requestInfoModel = testCases[testCaseKey];
+            var processedData = this.filter.ProcessData(this.data, requestInfoModel);
+            IQueryable<AllTypesModel> expectedData = this.data;
+            var columns = requestInfoModel.TableParameters.Columns;
+            var orders = requestInfoModel.TableParameters.Order;
+            bool isFirst = true;
+            foreach (var order in orders)
+            {
+                var column = columns[order.Column];
+                if (order.Dir == "asc")
+                {
+                    if (isFirst)
+                    {
+                        expectedData = expectedData.OrderBy(column.Data);
+                    }
+                    else
+                    {
+                        expectedData = ((IOrderedQueryable<AllTypesModel>)expectedData).ThenBy(column.Data);
+                    }
+                }
+                else
+                {
+                    if (isFirst)
+                    {
+                        expectedData = expectedData.OrderByDescending(column.Data);
+                    }
+                    else
+                    {
+                        expectedData = ((IOrderedQueryable<AllTypesModel>)expectedData).ThenByDescending(column.Data);
+                    }
+                }
+
+                isFirst = false;
+            }
 
             Assert.IsTrue(processedData.SequenceEqual(expectedData));
-        }
-
-        private string BuildDynamicLinqPredicate(RequestInfoModel requestInfoModel)
-        {
-            var builder = new StringBuilder();
-
-            throw new NotImplementedException();
         }
 
         [Test]
