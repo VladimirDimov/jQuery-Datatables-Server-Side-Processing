@@ -4,7 +4,9 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
+    using JQDT.DataProcessing;
     using JQDT.DataProcessing.SortDataProcessing;
+    using JQDT.DI;
     using JQDT.Models;
     using NUnit.Framework;
     using TestData.Data;
@@ -14,7 +16,7 @@
 
     internal class SortDataProcessorTests
     {
-        private SortDataProcessor<AllTypesModel> filter;
+        private IDataProcess<AllTypesModel> filter;
         private SortDataProcessor<ComplexModel> complexFilter;
         private IQueryable<AllTypesModel> data;
         private IQueryable<ComplexModel> complexData;
@@ -22,7 +24,8 @@
         [SetUp]
         public void SetUp()
         {
-            this.filter = new SortDataProcessor<AllTypesModel>();
+            var resolver = new DependencyResolver();
+            this.filter = resolver.GetSortDataProcessor<AllTypesModel>();
             this.complexFilter = new SortDataProcessor<ComplexModel>();
             this.data = DataGenerator.GenerateSimpleData(500, 500);
             this.complexData = new List<ComplexModel>().AsQueryable();
