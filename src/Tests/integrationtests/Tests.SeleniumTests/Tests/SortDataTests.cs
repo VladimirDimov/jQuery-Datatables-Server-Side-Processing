@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using System.Linq;
+using System.Linq.Expressions;
 using NUnit.Framework;
 using OpenQA.Selenium;
+using TestData.Models;
 using Tests.Helpers;
 using Tests.SeleniumTests.Common;
 using Tests.SeleniumTests.Enumerations;
@@ -39,25 +41,70 @@ namespace Tests.SeleniumTests.Tests
             var tableElement = new TableElement("table", this.driver);
             tableElement.ClickSortButton(columnName, direction);
 
+            // Assert that rows are in correct order for the first page
             AssertTextPropertyOrder(columnName, direction, tableElement);
             tableElement.GoToLastPage();
+            // Assert that rows are in correct order for the last page
             AssertTextPropertyOrder(columnName, direction, tableElement);
         }
 
-        public void Sort_SholdWorkAppropriateForNonTextTypes(string columnName, SortDirectionsEnum direction)
+        [Test]
+        [TestCase(nameof(AllTypesModel.Integer), SortDirectionsEnum.Asc, typeof(int))]
+        [TestCase(nameof(AllTypesModel.Integer), SortDirectionsEnum.Desc, typeof(int))]
+        [TestCase(nameof(AllTypesModel.IntegerNullable), SortDirectionsEnum.Asc, typeof(int?))]
+        [TestCase(nameof(AllTypesModel.UInt), SortDirectionsEnum.Asc, typeof(uint))]
+        [TestCase(nameof(AllTypesModel.UIntNullable), SortDirectionsEnum.Asc, typeof(uint?))]
+        //TODO: Add other types to test cases
+        public void Sort_SholdWorkAppropriateForNonTextTypes(string columnName, SortDirectionsEnum direction, Type propertyType)
         {
             this.navigator.AllTypesDataPage().GoTo();
             var tableElement = new TableElement("table", this.driver);
             tableElement.ClickSortButton(columnName, direction);
 
+            AssertNonTextPropertyOrder(columnName, direction, propertyType, tableElement);
+            tableElement.GoToLastPage();
+            AssertNonTextPropertyOrder(columnName, direction, propertyType, tableElement);
+        }
+
+        private void AssertNonTextPropertyOrder(string columnName, SortDirectionsEnum direction, Type propertyType, TableElement tableElement)
+        {
             var actualColumnValues = tableElement.GetColumnRowValues(columnName);
 
+            var stringParseFunction = this.GetStringParseFunction(columnName, propertyType);
             var expectedColumnValues = direction == SortDirectionsEnum.Asc ?
-                actualColumnValues.OrderBy(x => x) :
-                actualColumnValues.OrderByDescending(x => x);
+                actualColumnValues.OrderBy(stringParseFunction) :
+                actualColumnValues.OrderByDescending(stringParseFunction);
 
             Assert.IsNotEmpty(actualColumnValues);
             Assert.IsTrue(expectedColumnValues.SequenceEqual(actualColumnValues));
+        }
+
+        private Func<string, object> GetStringParseFunction(string property, Type toType)
+        {
+            if (toType == typeof(uint?))
+            {
+                return new Func<string, object>(x =>
+                {
+                    uint i;
+                    return uint.TryParse(x, out i) ? (uint?)i : null;
+                });
+            }
+            else if (toType == typeof(int?))
+            {
+                return new Func<string, object>(x =>
+                {
+                    int i;
+                    return int.TryParse(x, out i) ? (int?)i : null;
+                });
+            }
+
+            var stringParam = Expression.Parameter(typeof(string), "x");
+            var parseMethodInfo = toType.GetMethods().Where(x => x.Name == "Parse").First(x => x.GetParameters().Count() == 1);
+            var parseMethodCallExpr = Expression.Call(null, parseMethodInfo, stringParam);
+            var convertExpr = Expression.Convert(parseMethodCallExpr, typeof(object));
+            var lambda = Expression.Lambda(convertExpr, stringParam);
+
+            return (Func<string, object>)lambda.Compile();
         }
 
         private static void AssertTextPropertyOrder(string columnName, SortDirectionsEnum direction, TableElement tableElement)
@@ -70,10 +117,6 @@ namespace Tests.SeleniumTests.Tests
 
             Assert.IsNotEmpty(actualColumnValues);
             Assert.IsTrue(expectedColumnValues.SequenceEqual(actualColumnValues));
-        }
-
-        private void AssertTextPropertiesOrder(IEnumerable<string> actualColumnValues)
-        {
         }
     }
 }
