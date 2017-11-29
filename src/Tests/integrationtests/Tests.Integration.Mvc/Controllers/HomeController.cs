@@ -14,9 +14,9 @@
             return this.View();
         }
 
-        public ActionResult AllTypesData(bool isPaged = true, bool searching = true)
+        public ActionResult AllTypesData(bool paging = true, bool searching = true)
         {
-            this.ViewBag.IsPaged = isPaged.ToString().ToLower();
+            this.ViewBag.Paging = paging.ToString().ToLower();
             this.ViewBag.Searching = searching.ToString().ToLower();
 
             return View();

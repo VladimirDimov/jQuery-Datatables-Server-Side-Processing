@@ -15,7 +15,7 @@
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            HomeController.Data = DataGenerator.GenerateSimpleData(5000, 200);
+            HomeController.Data = DataGenerator.GenerateSimpleData(1000, 200);
         }
     }
 }

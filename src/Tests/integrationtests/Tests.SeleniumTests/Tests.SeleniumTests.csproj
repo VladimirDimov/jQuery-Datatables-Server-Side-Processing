@@ -63,13 +63,28 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\DriverProvider.cs" />
+    <Compile Include="Common\GlobalConstants.cs" />
+    <Compile Include="Common\Navigator.cs" />
+    <Compile Include="Common\TableElement.cs" />
+    <Compile Include="Enumerations\SortDirectionEnum.cs" />
+    <Compile Include="ExtensionMethods\EnumerableExtensionMethods.cs" />
+    <Compile Include="ExtensionMethods\SearchContextExtensionMethods.cs" />
+    <Compile Include="TestsSetupClass.cs" />
+    <Compile Include="Pages\AllTypesDataPage.cs" />
+    <Compile Include="Pages\IWebPage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tests\SortDataTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Tests.Helpers\Tests.Helpers.csproj">
+      <Project>{51c58242-648e-4b17-a249-f2c844743a1b}</Project>
+      <Name>Tests.Helpers</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\TestData.Data\TestData.Data.csproj">
       <Project>{F7F12DE8-F3C3-42A4-BBE4-1868D287D388}</Project>
       <Name>TestData.Data</Name>

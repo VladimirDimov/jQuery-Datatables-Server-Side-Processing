@@ -48,36 +48,36 @@
             <th>Nested Model IntegerNullable</th>
             <th>Nested Model UInt</th>
             <th>Nested Model UIntNullable</th>
-                             
+
             <th>Nested Model Long</th>
             <th>Nested Model LongNullable</th>
             <th>Nested Model ULong</th>
             <th>Nested Model ULongNullable</th>
-                             
+
             <th>Nested Model Short</th>
             <th>Nested Model ShortNullable</th>
             <th>Nested Model UShort</th>
             <th>Nested Model UShortNullable</th>
-                             
+
             <th>Nested Model ByteProperty</th>
             <th>Nested Model ByteNullable</th>
             <th>Nested Model SByteProperty</th>
             <th>Nested Model SByteNullable</th>
-                             
+
             <th>Nested Model DoubleProperty</th>
             <th>Nested Model DoubleNullable</th>
-                             
+
             <th>Nested Model DecimalProperty</th>
             <th>Nested Model DecimalNullable</th>
-                             
+
             <th>Nested Model DateTime</th>
             <th>Nested Model DateTimeNullable</th>
             <th>Nested Model DateTimeOffset</th>
             <th>Nested Model DateTimeOffsetNullable</th>
-                             
+
             <th>Nested Model BooleanProperty</th>
             <th>Nested Model BooleanNullable</th>
-                             
+
             <th>Nested Model CharProperty</th>
             <th>Nested Model CharNullable</th>
         </tr>
@@ -167,8 +167,8 @@
 @section Scripts {
     <script>
         var table = $('#table-simple').DataTable({
-            "paging": true,
-            "searching": true,
+            "paging": @ViewBag.Paging,
+            "searching": @ViewBag.Searching,
             "proccessing": true,
             "serverSide": true,
             "ajax": {
