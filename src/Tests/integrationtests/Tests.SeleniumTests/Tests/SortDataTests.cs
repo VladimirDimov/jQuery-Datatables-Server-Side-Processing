@@ -164,21 +164,28 @@ namespace Tests.SeleniumTests.Tests
         [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.BooleanNullable), SortDirectionsEnum.Desc, typeof(bool?))]
         [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.CharProperty), SortDirectionsEnum.Desc, typeof(char))]
         [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.CharNullable), SortDirectionsEnum.Desc, typeof(char?))]
-        //TODO: Add other types to test cases
         public void Sort_SholdWorkAppropriateForNonTextTypes(string columnName, SortDirectionsEnum direction, Type propertyType)
         {
             this.navigator.AllTypesDataPage().GoTo();
             var tableElement = new TableElement("table", this.driver);
-            tableElement.ClickSortButton(columnName, direction);
+            string columnHeader = columnName.StartsWith("NestedModel") ? this.GetHeaderForNestedModel(columnName) : columnName;
+            tableElement.ClickSortButton(columnHeader, direction);
 
-            AssertNonTextPropertyOrder(columnName, direction, propertyType, tableElement);
+            AssertNonTextPropertyOrder(columnName, columnHeader, direction, propertyType, tableElement);
             tableElement.GoToLastPage();
-            AssertNonTextPropertyOrder(columnName, direction, propertyType, tableElement);
+            AssertNonTextPropertyOrder(columnName, columnHeader, direction, propertyType, tableElement);
         }
 
-        private void AssertNonTextPropertyOrder(string columnName, SortDirectionsEnum direction, Type propertyType, TableElement tableElement)
+        private string GetHeaderForNestedModel(string columnName)
         {
-            var actualColumnValues = tableElement.GetColumnRowValues(columnName);
+            var propName = columnName.Split('.').Last();
+
+            return $"Nested Model {propName}";
+        }
+
+        private void AssertNonTextPropertyOrder(string columnName, string columnHeader, SortDirectionsEnum direction, Type propertyType, TableElement tableElement)
+        {
+            var actualColumnValues = tableElement.GetColumnRowValues(columnHeader);
 
             var stringParseFunction = this.GetStringParseFunction(columnName, propertyType);
             var expectedColumnValues = direction == SortDirectionsEnum.Asc ?

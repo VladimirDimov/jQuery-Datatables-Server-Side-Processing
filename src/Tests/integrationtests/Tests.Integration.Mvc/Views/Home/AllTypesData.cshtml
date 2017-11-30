@@ -32,9 +32,9 @@
             <th>DecimalProperty</th>
             <th>DecimalNullable</th>
 
-            <th>DateTime</th>
+            <th>DateTimeProperty</th>
             <th>DateTimeNullable</th>
-            <th>DateTimeOffset</th>
+            <th>DateTimeOffsetProperty</th>
             <th>DateTimeOffsetNullable</th>
 
             <th>BooleanProperty</th>
@@ -70,9 +70,9 @@
             <th>Nested Model DecimalProperty</th>
             <th>Nested Model DecimalNullable</th>
 
-            <th>Nested Model DateTime</th>
+            <th>Nested Model DateTimeProperty</th>
             <th>Nested Model DateTimeNullable</th>
-            <th>Nested Model DateTimeOffset</th>
+            <th>Nested Model DateTimeOffsetProperty</th>
             <th>Nested Model DateTimeOffsetNullable</th>
 
             <th>Nested Model BooleanProperty</th>
@@ -111,9 +111,9 @@
             <th>DecimalProperty</th>
             <th>DecimalNullable</th>
 
-            <th>DateTime</th>
+            <th>DateTimeProperty</th>
             <th>DateTimeNullable</th>
-            <th>DateTimeOffset</th>
+            <th>DateTimeOffsetProperty</th>
             <th>DateTimeOffsetNullable</th>
 
             <th>BooleanProperty</th>
@@ -149,9 +149,9 @@
             <th>NestedModel.DecimalProperty</th>
             <th>NestedModel.DecimalNullable</th>
 
-            <th>NestedModel.DateTime</th>
+            <th>NestedModel.DateTimeProperty</th>
             <th>NestedModel.DateTimeNullable</th>
-            <th>NestedModel.DateTimeOffset</th>
+            <th>NestedModel.DateTimeOffsetProperty</th>
             <th>NestedModel.DateTimeOffsetNullable</th>
 
             <th>NestedModel.BooleanProperty</th>
@@ -254,32 +254,123 @@
                 { "data": "NestedModel.CharNullable", searchable: true },
             ],
             "columnDefs": [
-                //{
-                //    "render": function (data, type, row) {
-                //        date = new Date(parseInt(row.DateTime.replace("/Date(", "").replace(")/", ""), 10));
+                {
+                    "render": function (data, type, row) {
+                        if (!row.DateTimeProperty) {
+                            return "";
+                        }
 
-                //        return date.toUTCString();
-                //    },
-                //    "targets": 3
-                //},
+                        date = new Date(parseInt(row.DateTimeProperty.replace("/Date(", "").replace(")/", ""), 10));
 
-                //{
-                //    "render": function (data, type, row) {
-                //        date = new Date(parseInt(row.ComplexModel.DateTime.replace("/Date(", "").replace(")/", ""), 10));
+                        return date.toUTCString();
+                    },
+                    "targets": 21
+                },
 
-                //        return date.toUTCString();
-                //    },
-                //    "targets": 8
-                //},
+                {
+                    "render": function (data, type, row) {
+                        var prop = row.DateTimeNullable;
 
-                //{
-                //    "render": function (data, type, row) {
-                //        date = new Date(parseInt(row.ComplexModel.SimpleModel.DateTime.replace("/Date(", "").replace(")/", ""), 10));
+                        if (!prop) {
+                            return "";
+                        }
 
-                //        return date.toUTCString();
-                //    },
-                //    "targets": 13
-                //}
+                        date = new Date(parseInt(prop.replace("/Date(", "").replace(")/", ""), 10));
+
+                        return date.toUTCString();
+                    },
+                    "targets": 22
+                },
+
+                {
+                    "render": function (data, type, row) {
+                        var prop = row.DateTimeOffsetProperty;
+
+                        if (!prop) {
+                            return "";
+                        }
+
+                        date = new Date(parseInt(prop.replace("/Date(", "").replace(")/", ""), 10));
+
+                        return date.toUTCString();
+                    },
+                    "targets": 23
+                },
+
+                {
+                    "render": function (data, type, row) {
+                        var prop = row.DateTimeOffsetNullable;
+
+                        if (!prop) {
+                            return "";
+                        }
+
+                        date = new Date(parseInt(prop.replace("/Date(", "").replace(")/", ""), 10));
+
+                        return date.toUTCString();
+                    },
+                    "targets": 24
+                },
+
+                {
+                    "render": function (data, type, row) {
+                        var prop = row.NestedModel.DateTimeProperty;
+
+                        if (!prop) {
+                            return "";
+                        }
+
+                        date = new Date(parseInt(prop.replace("/Date(", "").replace(")/", ""), 10));
+
+                        return date.toUTCString();
+                    },
+                    "targets": 50
+                },
+
+                {
+                    "render": function (data, type, row) {
+                        var prop = row.NestedModel.DateTimeNullable;
+
+                        if (!prop) {
+                            return "";
+                        }
+
+                        date = new Date(parseInt(prop.replace("/Date(", "").replace(")/", ""), 10));
+
+                        return date.toUTCString();
+                    },
+                    "targets": 51
+                },
+
+                {
+                    "render": function (data, type, row) {
+                        var prop = row.NestedModel.DateTimeOffsetProperty;
+
+                        if (!prop) {
+                            return "";
+                        }
+
+                        date = new Date(parseInt(prop.replace("/Date(", "").replace(")/", ""), 10));
+
+                        return date.toUTCString();
+                    },
+                    "targets": 52
+                },
+
+                {
+                    "render": function (data, type, row) {
+                        var prop = row.NestedModel.DateTimeOffsetNullable;
+
+                        if (!prop) {
+                            return "";
+                        }
+
+                        date = new Date(parseInt(prop.replace("/Date(", "").replace(")/", ""), 10));
+
+                        return date.toUTCString();
+                    },
+                    "targets": 53
+                },
             ]
         });
     </script>
