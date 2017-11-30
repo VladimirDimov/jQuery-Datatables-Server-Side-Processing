@@ -50,10 +50,120 @@ namespace Tests.SeleniumTests.Tests
 
         [Test]
         [TestCase(nameof(AllTypesModel.Integer), SortDirectionsEnum.Asc, typeof(int))]
-        [TestCase(nameof(AllTypesModel.Integer), SortDirectionsEnum.Desc, typeof(int))]
         [TestCase(nameof(AllTypesModel.IntegerNullable), SortDirectionsEnum.Asc, typeof(int?))]
         [TestCase(nameof(AllTypesModel.UInt), SortDirectionsEnum.Asc, typeof(uint))]
         [TestCase(nameof(AllTypesModel.UIntNullable), SortDirectionsEnum.Asc, typeof(uint?))]
+        [TestCase(nameof(AllTypesModel.Long), SortDirectionsEnum.Asc, typeof(long))]
+        [TestCase(nameof(AllTypesModel.LongNullable), SortDirectionsEnum.Asc, typeof(long?))]
+        [TestCase(nameof(AllTypesModel.ULong), SortDirectionsEnum.Asc, typeof(ulong))]
+        [TestCase(nameof(AllTypesModel.ULongNullable), SortDirectionsEnum.Asc, typeof(ulong?))]
+        [TestCase(nameof(AllTypesModel.Short), SortDirectionsEnum.Asc, typeof(short))]
+        [TestCase(nameof(AllTypesModel.ShortNullable), SortDirectionsEnum.Asc, typeof(short?))]
+        [TestCase(nameof(AllTypesModel.UShort), SortDirectionsEnum.Asc, typeof(ushort))]
+        [TestCase(nameof(AllTypesModel.UShortNullable), SortDirectionsEnum.Asc, typeof(ushort?))]
+        [TestCase(nameof(AllTypesModel.ByteProperty), SortDirectionsEnum.Asc, typeof(byte))]
+        [TestCase(nameof(AllTypesModel.ByteNullable), SortDirectionsEnum.Asc, typeof(byte?))]
+        [TestCase(nameof(AllTypesModel.SByteProperty), SortDirectionsEnum.Asc, typeof(sbyte))]
+        [TestCase(nameof(AllTypesModel.SByteNullable), SortDirectionsEnum.Asc, typeof(sbyte?))]
+        [TestCase(nameof(AllTypesModel.DoubleProperty), SortDirectionsEnum.Asc, typeof(double))]
+        [TestCase(nameof(AllTypesModel.DoubleNullable), SortDirectionsEnum.Asc, typeof(double?))]
+        [TestCase(nameof(AllTypesModel.DecimalProperty), SortDirectionsEnum.Asc, typeof(decimal))]
+        [TestCase(nameof(AllTypesModel.DecimalNullable), SortDirectionsEnum.Asc, typeof(decimal?))]
+        [TestCase(nameof(AllTypesModel.DateTimeProperty), SortDirectionsEnum.Asc, typeof(DateTime))]
+        [TestCase(nameof(AllTypesModel.DateTimeNullable), SortDirectionsEnum.Asc, typeof(DateTime?))]
+        [TestCase(nameof(AllTypesModel.DateTimeOffsetProperty), SortDirectionsEnum.Asc, typeof(DateTimeOffset))]
+        [TestCase(nameof(AllTypesModel.DateTimeOffsetNullable), SortDirectionsEnum.Asc, typeof(DateTimeOffset?))]
+        [TestCase(nameof(AllTypesModel.BooleanProperty), SortDirectionsEnum.Asc, typeof(bool))]
+        [TestCase(nameof(AllTypesModel.BooleanNullable), SortDirectionsEnum.Asc, typeof(bool?))]
+        [TestCase(nameof(AllTypesModel.CharProperty), SortDirectionsEnum.Asc, typeof(char))]
+        [TestCase(nameof(AllTypesModel.CharNullable), SortDirectionsEnum.Asc, typeof(char?))]
+        // ---------------------------------------------------------------------------------------------------
+        [TestCase(nameof(AllTypesModel.Integer), SortDirectionsEnum.Desc, typeof(int))]
+        [TestCase(nameof(AllTypesModel.IntegerNullable), SortDirectionsEnum.Desc, typeof(int?))]
+        [TestCase(nameof(AllTypesModel.UInt), SortDirectionsEnum.Desc, typeof(uint))]
+        [TestCase(nameof(AllTypesModel.UIntNullable), SortDirectionsEnum.Desc, typeof(uint?))]
+        [TestCase(nameof(AllTypesModel.Long), SortDirectionsEnum.Desc, typeof(long))]
+        [TestCase(nameof(AllTypesModel.LongNullable), SortDirectionsEnum.Desc, typeof(long?))]
+        [TestCase(nameof(AllTypesModel.ULong), SortDirectionsEnum.Desc, typeof(ulong))]
+        [TestCase(nameof(AllTypesModel.ULongNullable), SortDirectionsEnum.Desc, typeof(ulong?))]
+        [TestCase(nameof(AllTypesModel.Short), SortDirectionsEnum.Desc, typeof(short))]
+        [TestCase(nameof(AllTypesModel.ShortNullable), SortDirectionsEnum.Desc, typeof(short?))]
+        [TestCase(nameof(AllTypesModel.UShort), SortDirectionsEnum.Desc, typeof(ushort))]
+        [TestCase(nameof(AllTypesModel.UShortNullable), SortDirectionsEnum.Desc, typeof(ushort?))]
+        [TestCase(nameof(AllTypesModel.ByteProperty), SortDirectionsEnum.Desc, typeof(byte))]
+        [TestCase(nameof(AllTypesModel.ByteNullable), SortDirectionsEnum.Desc, typeof(byte?))]
+        [TestCase(nameof(AllTypesModel.SByteProperty), SortDirectionsEnum.Desc, typeof(sbyte))]
+        [TestCase(nameof(AllTypesModel.SByteNullable), SortDirectionsEnum.Desc, typeof(sbyte?))]
+        [TestCase(nameof(AllTypesModel.DoubleProperty), SortDirectionsEnum.Desc, typeof(double))]
+        [TestCase(nameof(AllTypesModel.DoubleNullable), SortDirectionsEnum.Desc, typeof(double?))]
+        [TestCase(nameof(AllTypesModel.DecimalProperty), SortDirectionsEnum.Desc, typeof(decimal))]
+        [TestCase(nameof(AllTypesModel.DecimalNullable), SortDirectionsEnum.Desc, typeof(decimal?))]
+        [TestCase(nameof(AllTypesModel.DateTimeProperty), SortDirectionsEnum.Desc, typeof(DateTime))]
+        [TestCase(nameof(AllTypesModel.DateTimeNullable), SortDirectionsEnum.Desc, typeof(DateTime?))]
+        [TestCase(nameof(AllTypesModel.DateTimeOffsetProperty), SortDirectionsEnum.Desc, typeof(DateTimeOffset))]
+        [TestCase(nameof(AllTypesModel.DateTimeOffsetNullable), SortDirectionsEnum.Desc, typeof(DateTimeOffset?))]
+        [TestCase(nameof(AllTypesModel.BooleanProperty), SortDirectionsEnum.Desc, typeof(bool))]
+        [TestCase(nameof(AllTypesModel.BooleanNullable), SortDirectionsEnum.Desc, typeof(bool?))]
+        [TestCase(nameof(AllTypesModel.CharProperty), SortDirectionsEnum.Desc, typeof(char))]
+        [TestCase(nameof(AllTypesModel.CharNullable), SortDirectionsEnum.Desc, typeof(char?))]
+        // ---------------------------------------------------------------------------------------------------
+        [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.Integer), SortDirectionsEnum.Asc, typeof(int))]
+        [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.IntegerNullable), SortDirectionsEnum.Asc, typeof(int?))]
+        [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.UInt), SortDirectionsEnum.Asc, typeof(uint))]
+        [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.UIntNullable), SortDirectionsEnum.Asc, typeof(uint?))]
+        [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.Long), SortDirectionsEnum.Asc, typeof(long))]
+        [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.LongNullable), SortDirectionsEnum.Asc, typeof(long?))]
+        [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.ULong), SortDirectionsEnum.Asc, typeof(ulong))]
+        [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.ULongNullable), SortDirectionsEnum.Asc, typeof(ulong?))]
+        [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.Short), SortDirectionsEnum.Asc, typeof(short))]
+        [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.ShortNullable), SortDirectionsEnum.Asc, typeof(short?))]
+        [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.UShort), SortDirectionsEnum.Asc, typeof(ushort))]
+        [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.UShortNullable), SortDirectionsEnum.Asc, typeof(ushort?))]
+        [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.ByteProperty), SortDirectionsEnum.Asc, typeof(byte))]
+        [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.ByteNullable), SortDirectionsEnum.Asc, typeof(byte?))]
+        [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.SByteProperty), SortDirectionsEnum.Asc, typeof(sbyte))]
+        [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.SByteNullable), SortDirectionsEnum.Asc, typeof(sbyte?))]
+        [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.DoubleProperty), SortDirectionsEnum.Asc, typeof(double))]
+        [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.DoubleNullable), SortDirectionsEnum.Asc, typeof(double?))]
+        [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.DecimalProperty), SortDirectionsEnum.Asc, typeof(decimal))]
+        [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.DecimalNullable), SortDirectionsEnum.Asc, typeof(decimal?))]
+        [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.DateTimeProperty), SortDirectionsEnum.Asc, typeof(DateTime))]
+        [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.DateTimeNullable), SortDirectionsEnum.Asc, typeof(DateTime?))]
+        [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.DateTimeOffsetProperty), SortDirectionsEnum.Asc, typeof(DateTimeOffset))]
+        [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.DateTimeOffsetNullable), SortDirectionsEnum.Asc, typeof(DateTimeOffset?))]
+        [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.BooleanProperty), SortDirectionsEnum.Asc, typeof(bool))]
+        [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.BooleanNullable), SortDirectionsEnum.Asc, typeof(bool?))]
+        [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.CharProperty), SortDirectionsEnum.Asc, typeof(char))]
+        [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.CharNullable), SortDirectionsEnum.Asc, typeof(char?))]
+        // ---------------------------------------------------------------------------------------------------
+        [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.Integer), SortDirectionsEnum.Desc, typeof(int))]
+        [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.IntegerNullable), SortDirectionsEnum.Desc, typeof(int?))]
+        [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.UInt), SortDirectionsEnum.Desc, typeof(uint))]
+        [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.UIntNullable), SortDirectionsEnum.Desc, typeof(uint?))]
+        [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.Long), SortDirectionsEnum.Desc, typeof(long))]
+        [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.LongNullable), SortDirectionsEnum.Desc, typeof(long?))]
+        [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.ULong), SortDirectionsEnum.Desc, typeof(ulong))]
+        [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.ULongNullable), SortDirectionsEnum.Desc, typeof(ulong?))]
+        [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.Short), SortDirectionsEnum.Desc, typeof(short))]
+        [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.ShortNullable), SortDirectionsEnum.Desc, typeof(short?))]
+        [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.UShort), SortDirectionsEnum.Desc, typeof(ushort))]
+        [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.UShortNullable), SortDirectionsEnum.Desc, typeof(ushort?))]
+        [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.ByteProperty), SortDirectionsEnum.Desc, typeof(byte))]
+        [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.ByteNullable), SortDirectionsEnum.Desc, typeof(byte?))]
+        [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.SByteProperty), SortDirectionsEnum.Desc, typeof(sbyte))]
+        [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.SByteNullable), SortDirectionsEnum.Desc, typeof(sbyte?))]
+        [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.DoubleProperty), SortDirectionsEnum.Desc, typeof(double))]
+        [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.DoubleNullable), SortDirectionsEnum.Desc, typeof(double?))]
+        [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.DecimalProperty), SortDirectionsEnum.Desc, typeof(decimal))]
+        [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.DecimalNullable), SortDirectionsEnum.Desc, typeof(decimal?))]
+        [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.DateTimeProperty), SortDirectionsEnum.Desc, typeof(DateTime))]
+        [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.DateTimeNullable), SortDirectionsEnum.Desc, typeof(DateTime?))]
+        [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.DateTimeOffsetProperty), SortDirectionsEnum.Desc, typeof(DateTimeOffset))]
+        [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.DateTimeOffsetNullable), SortDirectionsEnum.Desc, typeof(DateTimeOffset?))]
+        [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.BooleanProperty), SortDirectionsEnum.Desc, typeof(bool))]
+        [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.BooleanNullable), SortDirectionsEnum.Desc, typeof(bool?))]
+        [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.CharProperty), SortDirectionsEnum.Desc, typeof(char))]
+        [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.CharNullable), SortDirectionsEnum.Desc, typeof(char?))]
         //TODO: Add other types to test cases
         public void Sort_SholdWorkAppropriateForNonTextTypes(string columnName, SortDirectionsEnum direction, Type propertyType)
         {
@@ -83,19 +193,59 @@ namespace Tests.SeleniumTests.Tests
         {
             if (toType == typeof(uint?))
             {
-                return new Func<string, object>(x =>
-                {
-                    uint i;
-                    return uint.TryParse(x, out i) ? (uint?)i : null;
-                });
+                return this.NullableTryParseFunction<uint>();
             }
             else if (toType == typeof(int?))
             {
-                return new Func<string, object>(x =>
-                {
-                    int i;
-                    return int.TryParse(x, out i) ? (int?)i : null;
-                });
+                return this.NullableTryParseFunction<int>();
+            }
+            else if (toType == typeof(long?))
+            {
+                return this.NullableTryParseFunction<long>();
+            }
+            else if (toType == typeof(ulong?))
+            {
+                return this.NullableTryParseFunction<ulong>();
+            }
+            else if (toType == typeof(short?))
+            {
+                return this.NullableTryParseFunction<short>();
+            }
+            else if (toType == typeof(ushort?))
+            {
+                return this.NullableTryParseFunction<ushort>();
+            }
+            else if (toType == typeof(byte?))
+            {
+                return this.NullableTryParseFunction<byte>();
+            }
+            else if (toType == typeof(sbyte?))
+            {
+                return this.NullableTryParseFunction<sbyte>();
+            }
+            else if (toType == typeof(double?))
+            {
+                return this.NullableTryParseFunction<double>();
+            }
+            else if (toType == typeof(decimal?))
+            {
+                return this.NullableTryParseFunction<decimal>();
+            }
+            else if (toType == typeof(DateTime?))
+            {
+                return this.NullableTryParseFunction<DateTime>();
+            }
+            else if (toType == typeof(DateTimeOffset?))
+            {
+                return this.NullableTryParseFunction<DateTimeOffset>();
+            }
+            else if (toType == typeof(bool?))
+            {
+                return this.NullableTryParseFunction<bool>();
+            }
+            else if (toType == typeof(char?))
+            {
+                return this.NullableTryParseFunction<char>();
             }
 
             var stringParam = Expression.Parameter(typeof(string), "x");
@@ -105,6 +255,19 @@ namespace Tests.SeleniumTests.Tests
             var lambda = Expression.Lambda(convertExpr, stringParam);
 
             return (Func<string, object>)lambda.Compile();
+        }
+
+        private Func<string, object> NullableTryParseFunction<T>()
+            where T : struct
+        {
+            return new Func<string, object>(x =>
+            {
+                Nullable<T> i = null;
+                var mi = typeof(T).GetMethods().Where(m => m.Name == "TryParse").Where(m => m.GetParameters().Count() == 2).First();
+                var success = (bool)mi.Invoke(null, new object[] { x, i });
+
+                return success ? (Nullable<T>)i : null;
+            });
         }
 
         private static void AssertTextPropertyOrder(string columnName, SortDirectionsEnum direction, TableElement tableElement)
