@@ -176,6 +176,22 @@ namespace Tests.SeleniumTests.Tests
             AssertNonTextPropertyOrder(columnName, columnHeader, direction, propertyType, tableElement);
         }
 
+        [Test]
+        public void Sort_SholdWorkWithSubsecuentPropertiesSortOperations()
+        {
+            string firstColumnName = "Integer";
+            string secondColumnName = "DoubleProperty";
+
+            this.navigator.AllTypesDataPage().GoTo();
+            var tableElement = new TableElement("table", this.driver);
+            tableElement.ClickSortButton(firstColumnName, SortDirectionsEnum.Asc);
+            tableElement.ClickSortButton(secondColumnName, SortDirectionsEnum.Asc);
+
+            AssertNonTextPropertyOrder(secondColumnName, secondColumnName, SortDirectionsEnum.Asc, typeof(double), tableElement);
+            tableElement.GoToLastPage();
+            AssertNonTextPropertyOrder(secondColumnName, secondColumnName, SortDirectionsEnum.Asc, typeof(double), tableElement);
+        }
+
         private string GetHeaderForNestedModel(string columnName)
         {
             var propName = columnName.Split('.').Last();
