@@ -68,5 +68,11 @@ namespace Tests.SeleniumTests.Common
             lastPageButton.Click();
             Thread.Sleep(GlobalConstants.GlobalThreadSleep);
         }
+
+        public void TypeInSearchBox(string text)
+        {
+            var searchInputElement = this.driver.FindElementByCssSelector(".dataTables_filter input");
+            searchInputElement.SendKeys(text);
+        }
     }
 }

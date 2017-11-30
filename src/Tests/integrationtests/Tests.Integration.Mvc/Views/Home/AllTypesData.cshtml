@@ -5,7 +5,10 @@
 <table id="table-simple">
     <thead>
         <tr>
-            <th>StringProperty</th>
+            @if (ViewBag.ShowString == "true")
+            {
+                <th>StringProperty</th>
+            }
             <th>Integer</th>
             <th>IntegerNullable</th>
             <th>UInt</th>
@@ -40,10 +43,16 @@
             <th>BooleanProperty</th>
             <th>BooleanNullable</th>
 
-            <th>CharProperty</th>
-            <th>CharNullable</th>
+            @if (ViewBag.ShowChar == "true")
+            {
+                <th>CharProperty</th>
+                <th>CharNullable</th>
+            }
 
-            <th>Nested Model StringProperty</th>
+            @if (ViewBag.ShowString == "true")
+            {
+                <th>Nested Model StringProperty</th>
+            }
             <th>Nested Model Integer</th>
             <th>Nested Model IntegerNullable</th>
             <th>Nested Model UInt</th>
@@ -78,13 +87,19 @@
             <th>Nested Model BooleanProperty</th>
             <th>Nested Model BooleanNullable</th>
 
-            <th>Nested Model CharProperty</th>
-            <th>Nested Model CharNullable</th>
+            @if (ViewBag.ShowChar == "true")
+            {
+                <th>Nested Model CharProperty</th>
+                <th>Nested Model CharNullable</th>
+            }
         </tr>
     </thead>
     <tfoot>
         <tr>
-            <th>StringProperty</th>
+            @if (ViewBag.ShowString == "true")
+            {
+                <th>StringProperty</th>
+            }
             <th>Integer</th>
             <th>IntegerNullable</th>
             <th>UInt</th>
@@ -95,7 +110,7 @@
             <th>ULong</th>
             <th>ULongNullable</th>
 
-            <th>Short</th>
+            <th>Short</th>`
             <th>ShortNullable</th>
             <th>UShort</th>
             <th>UShortNullable</th>
@@ -119,46 +134,55 @@
             <th>BooleanProperty</th>
             <th>BooleanNullable</th>
 
-            <th>CharProperty</th>
-            <th>CharNullable</th>
+            @if (ViewBag.ShowChar == "true")
+            {
+                <th>CharProperty</th>
+                <th>CharNullable</th>
+            }
 
-            <th>NestedModel.StringProperty</th>
-            <th>NestedModel.Integer</th>
-            <th>NestedModel.IntegerNullable</th>
-            <th>NestedModel.UInt</th>
-            <th>NestedModel.UIntNullable</th>
+            @if (ViewBag.ShowString == "true")
+            {
+                <th>Nested Model StringProperty</th>
+            }
+            <th>Nested Model Integer</th>
+            <th>Nested Model IntegerNullable</th>
+            <th>Nested Model UInt</th>
+            <th>Nested Model UIntNullable</th>
 
-            <th>NestedModel.Long</th>
-            <th>NestedModel.LongNullable</th>
-            <th>NestedModel.ULong</th>
-            <th>NestedModel.ULongNullable</th>
+            <th>Nested Model Long</th>
+            <th>Nested Model LongNullable</th>
+            <th>Nested Model ULong</th>
+            <th>Nested Model ULongNullable</th>
 
-            <th>NestedModel.Short</th>
-            <th>NestedModel.ShortNullable</th>
-            <th>NestedModel.UShort</th>
-            <th>NestedModel.UShortNullable</th>
+            <th>Nested Model Short</th>
+            <th>Nested Model ShortNullable</th>
+            <th>Nested Model UShort</th>
+            <th>Nested Model UShortNullable</th>
 
-            <th>NestedModel.ByteProperty</th>
-            <th>NestedModel.ByteNullable</th>
-            <th>NestedModel.SByteProperty</th>
-            <th>NestedModel.SByteNullable</th>
+            <th>Nested Model ByteProperty</th>
+            <th>Nested Model ByteNullable</th>
+            <th>Nested Model SByteProperty</th>
+            <th>Nested Model SByteNullable</th>
 
-            <th>NestedModel.DoubleProperty</th>
-            <th>NestedModel.DoubleNullable</th>
+            <th>Nested Model DoubleProperty</th>
+            <th>Nested Model DoubleNullable</th>
 
-            <th>NestedModel.DecimalProperty</th>
-            <th>NestedModel.DecimalNullable</th>
+            <th>Nested Model DecimalProperty</th>
+            <th>Nested Model DecimalNullable</th>
 
-            <th>NestedModel.DateTimeProperty</th>
-            <th>NestedModel.DateTimeNullable</th>
-            <th>NestedModel.DateTimeOffsetProperty</th>
-            <th>NestedModel.DateTimeOffsetNullable</th>
+            <th>Nested Model DateTimeProperty</th>
+            <th>Nested Model DateTimeNullable</th>
+            <th>Nested Model DateTimeOffsetProperty</th>
+            <th>Nested Model DateTimeOffsetNullable</th>
 
-            <th>NestedModel.BooleanProperty</th>
-            <th>NestedModel.BooleanNullable</th>
+            <th>Nested Model BooleanProperty</th>
+            <th>Nested Model BooleanNullable</th>
 
-            <th>NestedModel.CharProperty</th>
-            <th>NestedModel.CharNullable</th>
+            @if (ViewBag.ShowChar == "true")
+            {
+                <th>Nested Model CharProperty</th>
+                <th>Nested Model CharNullable</th>
+            }
         </tr>
     </tfoot>
     <tbody></tbody>
@@ -176,7 +200,10 @@
                 type: 'POST'
             },
             "columns": [
-                { "data": "StringProperty" },
+                @if (ViewBag.ShowString == "true")
+                {
+                    @:{ "data": "StringProperty" },
+                }
 
                 { "data": "Integer", searchable: false },
                 { "data": "IntegerNullable", searchable: false },
@@ -212,10 +239,16 @@
                 { "data": "BooleanProperty", searchable: false },
                 { "data": "BooleanNullable", searchable: false },
 
-                { "data": "CharProperty", searchable: false },
-                { "data": "CharNullable", searchable: false },
-
-                { "data": "NestedModel.StringProperty", searchable: false },
+                @if (ViewBag.ShowChar == "true")
+                {
+                    @:{ "data": "CharProperty", searchable: false },
+                    @:{ "data": "CharNullable", searchable: false },
+                }
+               
+                @if (ViewBag.ShowString == "true")
+                {
+                @:{ "data": "NestedModel.StringProperty", searchable: false },
+                }
                 { "data": "NestedModel.Integer", searchable: false },
                 { "data": "NestedModel.IntegerNullable", searchable: false },
                 { "data": "NestedModel.UInt", searchable: false },
@@ -250,8 +283,11 @@
                 { "data": "NestedModel.BooleanProperty", searchable: false },
                 { "data": "NestedModel.BooleanNullable", searchable: false },
 
-                { "data": "NestedModel.CharProperty", searchable: true },
-                { "data": "NestedModel.CharNullable", searchable: true },
+                @if(ViewBag.ShowChar == "true")
+                {
+                @:{ "data": "NestedModel.CharProperty", searchable: true },
+                @:{ "data": "NestedModel.CharNullable", searchable: true },
+                }
             ],
             "columnDefs": [
                 {

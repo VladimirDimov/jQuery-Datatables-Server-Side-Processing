@@ -14,10 +14,12 @@
             return this.View();
         }
 
-        public ActionResult AllTypesData(bool paging = true, bool searching = true)
+        public ActionResult AllTypesData(bool paging = true, bool searching = true, bool showString = true, bool showChar = true)
         {
             this.ViewBag.Paging = paging.ToString().ToLower();
             this.ViewBag.Searching = searching.ToString().ToLower();
+            this.ViewBag.ShowString = showString.ToString().ToLower();
+            this.ViewBag.ShowChar = showChar.ToString().ToLower();
 
             return View();
         }
@@ -26,6 +28,11 @@
         public ActionResult GetData()
         {
             return this.View(Data);
+        }
+
+        public ActionResult GetFullData()
+        {
+            return this.Json(Data, JsonRequestBehavior.AllowGet);
         }
     }
 }
