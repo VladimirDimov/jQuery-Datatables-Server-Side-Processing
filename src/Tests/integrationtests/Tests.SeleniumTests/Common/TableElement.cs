@@ -51,6 +51,11 @@ namespace Tests.SeleniumTests.Common
             var columns = this.table.FindElementsByCssSelector("thead th");
             var colIndex = columns.FirstIndexWhere(x => x.Text.Trim().ToLower() == columnName.Trim().ToLower());
             var rows = this.GetRowElements();
+            if (rows.Count == 1 && rows.Single().FindElementsByCssSelector("td").Count == 1 && rows.Single().FindElementByCssSelector("td").GetAttribute("class").Contains("_empty"))
+            {
+                return new List<string>();
+            }
+
             var columnValues = rows.Select(x => x.FindElementsByCssSelector("td")[colIndex].Text);
 
             return columnValues;

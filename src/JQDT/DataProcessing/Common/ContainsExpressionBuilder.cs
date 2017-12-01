@@ -61,11 +61,11 @@
 
         private Expression BuildComparissonExpression(Type propertyType, Expression toLowerExpr, string search)
         {
-            // searchVal
-            var searchValExpr = Expression.Constant(search.ToLower());
-
             if (propertyType == typeof(string))
             {
+                // searchVal
+                var searchValExpr = Expression.Constant(search.ToLower());
+
                 // x => x.Contains(search)
                 var containsMethodInfo = typeof(string).GetMethod("Contains");
                 var containsExpr = Expression.Call(toLowerExpr, containsMethodInfo, searchValExpr);
@@ -79,9 +79,12 @@
                     return Expression.Constant(false);
                 }
 
+                // search value as lower case char type value
+                var searchCharValExpr = Expression.Constant(Char.ToLower(search.Single()));
+
                 // x => x == search
                 var charValue = char.Parse(search);
-                var charComparissonExpr = Expression.Equal(toLowerExpr, Expression.Constant(charValue));
+                var charComparissonExpr = Expression.Equal(toLowerExpr, searchCharValExpr);
 
                 return charComparissonExpr;
             }

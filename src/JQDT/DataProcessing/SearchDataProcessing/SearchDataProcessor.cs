@@ -20,15 +20,15 @@
         private const string HelpLink = "https://datatables.net/examples/ajax/objects.html";
 
         private RequestInfoModel requestInfoModel;
-        private ContainsExpressionBuilder commonProcessor;
+        private ContainsExpressionBuilder containsExpressionBuilder;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SearchDataProcessor{T}"/> class.
         /// </summary>
-        /// <param name="commonProcessor">The common processor.</param>
-        internal SearchDataProcessor(ContainsExpressionBuilder commonProcessor)
+        /// <param name="containsExpressionBuilder">Builder for "contains" expression.</param>
+        internal SearchDataProcessor(ContainsExpressionBuilder containsExpressionBuilder)
         {
-            this.commonProcessor = commonProcessor;
+            this.containsExpressionBuilder = containsExpressionBuilder;
         }
 
         /// <summary>
@@ -78,7 +78,7 @@
                 var propExpr = modelParamExpr.NestedProperty(propertyPath);
 
                 // x.Prop1.Prop2.ToLower().Contains(search)
-                var currentPropertyContainsExpression = this.commonProcessor.BuildExpression(search, propExpr);
+                var currentPropertyContainsExpression = this.containsExpressionBuilder.BuildExpression(search, propExpr);
                 containExpressionCollection.Add(currentPropertyContainsExpression);
             }
 
