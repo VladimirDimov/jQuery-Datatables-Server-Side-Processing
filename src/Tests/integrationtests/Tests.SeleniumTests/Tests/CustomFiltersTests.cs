@@ -51,38 +51,53 @@
 
         private static new object[] singleRangeConditionShouldWorkProperlyCases = new object[]
         {
-            new object[]{ GetExpression(x => x.DecimalProperty), new Func<string, IComparable>(x => decimal.Parse(x)), RangeOperationTypesEnum.gt },
-            new object[]{ GetExpression(x => x.DecimalNullable), new Func<string, IComparable>(x => decimal.Parse(x)), RangeOperationTypesEnum.gt },
-            new object[]{ GetExpression(x => x.DoubleProperty), new Func<string, IComparable>(x => double.Parse(x)), RangeOperationTypesEnum.gt },
-            new object[]{ GetExpression(x => x.CharProperty), new Func<string, IComparable>(x => char.Parse(x)), RangeOperationTypesEnum.gt },
-            new object[]{ GetExpression(x => x.CharNullable), new Func<string, IComparable>(x => char.Parse(x)), RangeOperationTypesEnum.gt },
-            new object[]{ GetExpression(x => x.NestedModel.DecimalProperty), new Func<string, IComparable>(x => decimal.Parse(x)), RangeOperationTypesEnum.gt },
+            new object[]{ GetExpression(x => x.DecimalProperty), new Func<string, IComparable>(x => decimal.Parse(x)), RangeOperationTypesEnum.gt, null },
+            new object[]{ GetExpression(x => x.DecimalNullable), new Func<string, IComparable>(x => decimal.Parse(x)), RangeOperationTypesEnum.gt, null  },
+            new object[]{ GetExpression(x => x.DoubleProperty), new Func<string, IComparable>(x => double.Parse(x)), RangeOperationTypesEnum.gt, null  },
+            new object[]{ GetExpression(x => x.CharProperty), new Func<string, IComparable>(x => char.Parse(x)), RangeOperationTypesEnum.gt, null  },
+            new object[]{ GetExpression(x => x.CharNullable), new Func<string, IComparable>(x => char.Parse(x)), RangeOperationTypesEnum.gt, null  },
+            new object[]{ GetExpression(x => x.NestedModel.DecimalProperty), new Func<string, IComparable>(x => decimal.Parse(x)), RangeOperationTypesEnum.gt, null  },
+            new object[]{ GetExpression(x => x.DateTimeProperty), new Func<string, IComparable>(x => DateTime.Parse(x)), RangeOperationTypesEnum.gt, new Func<object, string>(x => ((DateTime)x).ToString("r")) },
+            new object[]{ GetExpression(x => x.DateTimeNullable), new Func<string, IComparable>(x => DateTime.Parse(x)), RangeOperationTypesEnum.gt, new Func<object, string>(x => ((DateTime)x).ToString("r")) },
+            new object[]{ GetExpression(x => x.DateTimeOffsetProperty), new Func<string, IComparable>(x => DateTimeOffset.Parse(x)), RangeOperationTypesEnum.gt, new Func<object, string>(x => ((DateTimeOffset)x).ToString("r")) },
+            new object[]{ GetExpression(x => x.DateTimeOffsetNullable), new Func<string, IComparable>(x => DateTimeOffset.Parse(x)), RangeOperationTypesEnum.gt, new Func<object, string>(x => ((DateTimeOffset)x).ToString("r")) },
             // =================================================================================================================================================
-            new object[]{ GetExpression(x => x.DecimalProperty), new Func<string, IComparable>(x => decimal.Parse(x)), RangeOperationTypesEnum.gte },
-            new object[]{ GetExpression(x => x.DecimalNullable), new Func<string, IComparable>(x => decimal.Parse(x)), RangeOperationTypesEnum.gte },
-            new object[]{ GetExpression(x => x.DoubleProperty), new Func<string, IComparable>(x => double.Parse(x)), RangeOperationTypesEnum.gte },
-            new object[]{ GetExpression(x => x.CharProperty), new Func<string, IComparable>(x => char.Parse(x)), RangeOperationTypesEnum.gte },
-            new object[]{ GetExpression(x => x.CharNullable), new Func<string, IComparable>(x => char.Parse(x)), RangeOperationTypesEnum.gte },
-            new object[]{ GetExpression(x => x.NestedModel.DecimalProperty), new Func<string, IComparable>(x => decimal.Parse(x)), RangeOperationTypesEnum.gte },
+            new object[]{ GetExpression(x => x.DecimalProperty), new Func<string, IComparable>(x => decimal.Parse(x)), RangeOperationTypesEnum.gte, null  },
+            new object[]{ GetExpression(x => x.DecimalNullable), new Func<string, IComparable>(x => decimal.Parse(x)), RangeOperationTypesEnum.gte, null  },
+            new object[]{ GetExpression(x => x.DoubleProperty), new Func<string, IComparable>(x => double.Parse(x)), RangeOperationTypesEnum.gte, null  },
+            new object[]{ GetExpression(x => x.CharProperty), new Func<string, IComparable>(x => char.Parse(x)), RangeOperationTypesEnum.gte , null },
+            new object[]{ GetExpression(x => x.CharNullable), new Func<string, IComparable>(x => char.Parse(x)), RangeOperationTypesEnum.gte, null  },
+            new object[]{ GetExpression(x => x.NestedModel.DecimalProperty), new Func<string, IComparable>(x => decimal.Parse(x)), RangeOperationTypesEnum.gte, null  },
+            new object[]{ GetExpression(x => x.DateTimeProperty), new Func<string, IComparable>(x => DateTime.Parse(x)), RangeOperationTypesEnum.gte, new Func<object, string>(x => ((DateTime)x).ToString("r")) },
+            new object[]{ GetExpression(x => x.DateTimeNullable), new Func<string, IComparable>(x => DateTime.Parse(x)), RangeOperationTypesEnum.gte, new Func<object, string>(x => ((DateTime)x).ToString("r")) },
+            new object[]{ GetExpression(x => x.DateTimeOffsetProperty), new Func<string, IComparable>(x => DateTimeOffset.Parse(x)), RangeOperationTypesEnum.gte, new Func<object, string>(x => ((DateTimeOffset)x).ToString("r")) },
+            new object[]{ GetExpression(x => x.DateTimeOffsetNullable), new Func<string, IComparable>(x => DateTimeOffset.Parse(x)), RangeOperationTypesEnum.gte, new Func<object, string>(x => ((DateTimeOffset)x).ToString("r")) },
             // =================================================================================================================================================
-            new object[]{ GetExpression(x => x.DecimalProperty), new Func<string, IComparable>(x => decimal.Parse(x)), RangeOperationTypesEnum.lt },
-            new object[]{ GetExpression(x => x.DecimalNullable), new Func<string, IComparable>(x => decimal.Parse(x)), RangeOperationTypesEnum.lt },
-            new object[]{ GetExpression(x => x.DoubleProperty), new Func<string, IComparable>(x => double.Parse(x)), RangeOperationTypesEnum.lt },
-            new object[]{ GetExpression(x => x.CharProperty), new Func<string, IComparable>(x => char.Parse(x)), RangeOperationTypesEnum.lt },
-            new object[]{ GetExpression(x => x.CharNullable), new Func<string, IComparable>(x => char.Parse(x)), RangeOperationTypesEnum.lt },
-            new object[]{ GetExpression(x => x.NestedModel.DecimalProperty), new Func<string, IComparable>(x => decimal.Parse(x)), RangeOperationTypesEnum.lt },
+            new object[]{ GetExpression(x => x.DecimalProperty), new Func<string, IComparable>(x => decimal.Parse(x)), RangeOperationTypesEnum.lt, null  },
+            new object[]{ GetExpression(x => x.DecimalNullable), new Func<string, IComparable>(x => decimal.Parse(x)), RangeOperationTypesEnum.lt, null  },
+            new object[]{ GetExpression(x => x.DoubleProperty), new Func<string, IComparable>(x => double.Parse(x)), RangeOperationTypesEnum.lt, null  },
+            new object[]{ GetExpression(x => x.CharProperty), new Func<string, IComparable>(x => char.Parse(x)), RangeOperationTypesEnum.lt, null  },
+            new object[]{ GetExpression(x => x.CharNullable), new Func<string, IComparable>(x => char.Parse(x)), RangeOperationTypesEnum.lt, null  },
+            new object[]{ GetExpression(x => x.NestedModel.DecimalProperty), new Func<string, IComparable>(x => decimal.Parse(x)), RangeOperationTypesEnum.lt, null  },
+            new object[]{ GetExpression(x => x.DateTimeProperty), new Func<string, IComparable>(x => DateTime.Parse(x)), RangeOperationTypesEnum.lt, new Func<object, string>(x => ((DateTime)x).ToString("r")) },
+            new object[]{ GetExpression(x => x.DateTimeNullable), new Func<string, IComparable>(x => DateTime.Parse(x)), RangeOperationTypesEnum.lt, new Func<object, string>(x => ((DateTime)x).ToString("r")) },
+            new object[]{ GetExpression(x => x.DateTimeOffsetProperty), new Func<string, IComparable>(x => DateTimeOffset.Parse(x)), RangeOperationTypesEnum.lt, new Func<object, string>(x => ((DateTimeOffset)x).ToString("r")) },
+            new object[]{ GetExpression(x => x.DateTimeOffsetNullable), new Func<string, IComparable>(x => DateTimeOffset.Parse(x)), RangeOperationTypesEnum.lt, new Func<object, string>(x => ((DateTimeOffset)x).ToString("r")) },
             // =================================================================================================================================================
-            new object[]{ GetExpression(x => x.DecimalProperty), new Func<string, IComparable>(x => decimal.Parse(x)), RangeOperationTypesEnum.lte },
-            new object[]{ GetExpression(x => x.DecimalNullable), new Func<string, IComparable>(x => decimal.Parse(x)), RangeOperationTypesEnum.lte },
-            new object[]{ GetExpression(x => x.DoubleProperty), new Func<string, IComparable>(x => double.Parse(x)), RangeOperationTypesEnum.lte },
-            new object[]{ GetExpression(x => x.CharProperty), new Func<string, IComparable>(x => char.Parse(x)), RangeOperationTypesEnum.lte },
-            new object[]{ GetExpression(x => x.CharNullable), new Func<string, IComparable>(x => char.Parse(x)), RangeOperationTypesEnum.lte },
-            new object[]{ GetExpression(x => x.NestedModel.DecimalProperty), new Func<string, IComparable>(x => decimal.Parse(x)), RangeOperationTypesEnum.lte },
-
+            new object[]{ GetExpression(x => x.DecimalProperty), new Func<string, IComparable>(x => decimal.Parse(x)), RangeOperationTypesEnum.lte, null  },
+            new object[]{ GetExpression(x => x.DecimalNullable), new Func<string, IComparable>(x => decimal.Parse(x)), RangeOperationTypesEnum.lte, null  },
+            new object[]{ GetExpression(x => x.DoubleProperty), new Func<string, IComparable>(x => double.Parse(x)), RangeOperationTypesEnum.lte, null  },
+            new object[]{ GetExpression(x => x.CharProperty), new Func<string, IComparable>(x => char.Parse(x)), RangeOperationTypesEnum.lte, null  },
+            new object[]{ GetExpression(x => x.CharNullable), new Func<string, IComparable>(x => char.Parse(x)), RangeOperationTypesEnum.lte, null  },
+            new object[]{ GetExpression(x => x.NestedModel.DecimalProperty), new Func<string, IComparable>(x => decimal.Parse(x)), RangeOperationTypesEnum.lte, null  },
+            new object[]{ GetExpression(x => x.DateTimeProperty), new Func<string, IComparable>(x => DateTime.Parse(x)), RangeOperationTypesEnum.lte, new Func<object, string>(x => ((DateTime)x).ToString("r")) },
+            new object[]{ GetExpression(x => x.DateTimeNullable), new Func<string, IComparable>(x => DateTime.Parse(x)), RangeOperationTypesEnum.lte, new Func<object, string>(x => ((DateTime)x).ToString("r")) },
+            new object[]{ GetExpression(x => x.DateTimeOffsetProperty), new Func<string, IComparable>(x => DateTimeOffset.Parse(x)), RangeOperationTypesEnum.lte, new Func<object, string>(x => ((DateTimeOffset)x).ToString("r")) },
+            new object[]{ GetExpression(x => x.DateTimeOffsetNullable), new Func<string, IComparable>(x => DateTimeOffset.Parse(x)), RangeOperationTypesEnum.lte, new Func<object, string>(x => ((DateTimeOffset)x).ToString("r")) },
         };
 
         [Test, TestCaseSource(nameof(singleRangeConditionShouldWorkProperlyCases))]
-        public void SingleRangeConditionShouldWorkProperly(Expression<Func<AllTypesModel, IComparable>> selector, Func<string, IComparable> parseFunc, RangeOperationTypesEnum operationType)
+        public void SingleRangeConditionShouldWorkProperly(Expression<Func<AllTypesModel, IComparable>> selector, Func<string, IComparable> parseFunc, RangeOperationTypesEnum operationType, Func<object, string> inputFormat = null)
         {
             this.navigator.AllTypesDataPage().GoTo();
 
@@ -90,27 +105,27 @@
             var filterValue = this.GetRandomValue(selector.Compile());
             var table = new TableElement("table", this.driver);
             var filterContainer = new CustomFilterContainer(this.driver, "#custom-filters-container");
-
+            inputFormat = inputFormat ?? new Func<object, string>(x => x.ToString());
             switch (operationType)
             {
                 case RangeOperationTypesEnum.gt:
-                    filterContainer.Gt(colName, filterValue.ToString());
+                    filterContainer.Gt(colName, inputFormat(filterValue));
                     break;
 
                 case RangeOperationTypesEnum.gte:
-                    filterContainer.Gte(colName, filterValue.ToString());
+                    filterContainer.Gte(colName, inputFormat(filterValue));
                     break;
 
                 case RangeOperationTypesEnum.lt:
-                    filterContainer.Lt(colName, filterValue.ToString());
+                    filterContainer.Lt(colName, inputFormat(filterValue));
                     break;
 
                 case RangeOperationTypesEnum.lte:
-                    filterContainer.Lte(colName, filterValue.ToString());
+                    filterContainer.Lte(colName, inputFormat(filterValue));
                     break;
 
                 case RangeOperationTypesEnum.eq:
-                    filterContainer.Eq(colName, filterValue.ToString());
+                    filterContainer.Eq(colName, inputFormat(filterValue));
                     break;
 
                 default:
