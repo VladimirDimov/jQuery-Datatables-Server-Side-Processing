@@ -79,5 +79,13 @@ namespace Tests.SeleniumTests.Common
             var searchInputElement = this.driver.FindElementByCssSelector(".dataTables_filter input");
             searchInputElement.SendKeys(text);
         }
+
+        public void TypeInInput(string inputCssSelector, string value)
+        {
+            var input = this.table.FindElementByCssSelector(inputCssSelector);
+            input.SendKeys(value);
+            input.SendKeys(Keys.Enter);
+            Thread.Sleep(GlobalConstants.GlobalThreadSleep);
+        }
     }
 }

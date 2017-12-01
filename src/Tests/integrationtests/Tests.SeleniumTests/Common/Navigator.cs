@@ -1,8 +1,8 @@
-﻿using OpenQA.Selenium;
-using Tests.SeleniumTests.Pages;
-
-namespace Tests.SeleniumTests.Common
+﻿namespace Tests.SeleniumTests.Common
 {
+    using OpenQA.Selenium;
+    using SeleniumTests.Pages;
+
     public class Navigator
     {
         private readonly IWebDriver driver;

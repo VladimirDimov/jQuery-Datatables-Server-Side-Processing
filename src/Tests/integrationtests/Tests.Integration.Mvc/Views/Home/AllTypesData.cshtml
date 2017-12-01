@@ -190,6 +190,7 @@
 
 @section Scripts {
     <script>
+
         var table = $('#table-simple').DataTable({
             "paging": @ViewBag.Paging,
             "searching": @ViewBag.Searching,
@@ -244,7 +245,7 @@
                     @:{ "data": "CharProperty", searchable: false },
                     @:{ "data": "CharNullable", searchable: false },
                 }
-               
+
                 @if (ViewBag.ShowString == "true")
                 {
                 @:{ "data": "NestedModel.StringProperty", searchable: false },
@@ -409,5 +410,29 @@
                 },
             ]
         });
+
+        String.prototype.replaceAll = function (search, replacement) {
+            var target = this;
+            return target.replace(new RegExp(search, 'g'), replacement);
+        };
+
+        $('table tfoot th').each(function () {
+            var title = $(this).text();
+            var formatWhiteSpacesTitle = title.replaceAll(' ', '-');
+            $(this).html('<input id="column-search-' + formatWhiteSpacesTitle + '" type="text" placeholder="Search ' + title + '" />');
+        });
+
+        table.columns().every(function () {
+            var that = this;
+
+            $('input', this.footer()).on('change', function () {
+                if (that.search() !== this.value) {
+                    that
+                        .search(this.value)
+                        .draw();
+                }
+            });
+        });
+        
     </script>
 }

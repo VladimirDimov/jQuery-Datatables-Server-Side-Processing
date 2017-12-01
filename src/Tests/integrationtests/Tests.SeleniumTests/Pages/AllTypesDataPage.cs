@@ -3,7 +3,7 @@
     using Common;
     using OpenQA.Selenium;
 
-    internal class AllTypesDataPage : IWebPage
+    public class AllTypesDataPage : IWebPage
     {
         private readonly IWebDriver driver;
 

@@ -68,6 +68,7 @@
     <Compile Include="Common\GlobalConstants.cs" />
     <Compile Include="Common\Navigator.cs" />
     <Compile Include="Common\TableElement.cs" />
+    <Compile Include="Enumerations\ComparissonTypesEnum.cs" />
     <Compile Include="Enumerations\SortDirectionEnum.cs" />
     <Compile Include="ExtensionMethods\EnumerableExtensionMethods.cs" />
     <Compile Include="ExtensionMethods\SearchContextExtensionMethods.cs" />
@@ -75,6 +76,7 @@
     <Compile Include="Pages\AllTypesDataPage.cs" />
     <Compile Include="Pages\IWebPage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tests\ColumnFiltersIntegrationTests.cs" />
     <Compile Include="Tests\SearchTests.cs" />
     <Compile Include="Tests\SortDataTests.cs" />
   </ItemGroup>

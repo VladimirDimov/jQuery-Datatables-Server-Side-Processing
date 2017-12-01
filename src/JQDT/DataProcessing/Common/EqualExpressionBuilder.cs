@@ -28,7 +28,6 @@
         /// <returns><see cref="Expression"/></returns>
         internal Expression BuildExpression(MemberExpression propertyExpr, Expression constantExpr)
         {
-            // TODO: Add validation for operation type
             if (propertyExpr.Type == typeof(DateTime) || propertyExpr.Type == typeof(DateTimeOffset) || propertyExpr.Type == typeof(DateTime?) || propertyExpr.Type == typeof(DateTimeOffset?))
             {
                 var propertyExpressionBuilderFunction = this.GetPropertyExpressionFunction(propertyExpr.Type.IsGenericType);
@@ -84,6 +83,11 @@
 
         private MemberExpression BuildNonNullablePropertyExpression(Expression member, string propName)
         {
+            if (member.Type == typeof(DateTimeOffset))
+            {
+                member = Expression.Property(member, "UtcDateTime");
+            }
+
             var propExpr = Expression.Property(member, propName);
 
             return propExpr;
@@ -92,6 +96,11 @@
         private MemberExpression BuildNullablePropertyExpression(Expression member, string propName)
         {
             var valueExpr = Expression.Property(member, "Value");
+            if (valueExpr.Type == typeof(DateTimeOffset))
+            {
+                valueExpr = Expression.Property(valueExpr, "UtcDateTime");
+            }
+
             var propExpr = Expression.Property(valueExpr, propName);
 
             return propExpr;
