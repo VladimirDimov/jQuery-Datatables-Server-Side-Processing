@@ -113,6 +113,36 @@
             this.AssertColumnValues(columnValues, filterValueObj, comparissonType);
         }
 
+        private static readonly object[] filterByMultipleColumnShouldWorkProperlyParameters =
+        {
+            new object[]  { "Two numerics", new Expression<Func<AllTypesModel, object>>[] {x => x.Integer,x => x.Long} },
+            new object[]  { "Numeric and DateTime", new Expression<Func<AllTypesModel, object>>[] {x => x.Integer,x => x.DateTimeProperty} },
+            new object[]  { "String and numeric", new Expression<Func<AllTypesModel, object>>[] {x => x.StringProperty,x => x.Long} },
+        };
+
+        [Test, TestCaseSource(nameof(filterByMultipleColumnShouldWorkProperlyParameters))]
+        public void FilterByMultipleColumnShouldWorkProperly(string testCase, Expression<Func<AllTypesModel, object>>[] selectors)
+        {
+            this.navigator.AllTypesDataPage().GoTo();
+
+            string firstColumnName = this.GetColumnName(selectors.First());
+            var firstInputId = "column-search-" + firstColumnName.Replace(' ', '-');
+            var table = new TableElement("table", this.driver);
+            var filterValue = this.GetRandomValue(selectors.First().Compile());
+            table.TypeInInput($"#{firstInputId}", filterValue.ToString());
+
+            string secondColumnName = this.GetColumnName(selectors.Last());
+            var secondColumnValues = table.GetColumnRowValues(secondColumnName);
+            var secondFilterValue = secondColumnValues.First();
+            var secondInputId = "column-search-" + secondColumnName.Replace(' ', '-');
+            table.TypeInInput($"#{secondInputId}", secondFilterValue);
+
+            var columnValues = table.GetColumnRowValues(firstColumnName);
+            this.AssertColumnValues(columnValues, filterValue, ComparissonTypesEnum.Equal);
+            columnValues = table.GetColumnRowValues(secondColumnName);
+            this.AssertColumnValues(columnValues, secondFilterValue, ComparissonTypesEnum.Equal);
+        }
+
         private static Expression<Func<AllTypesModel, object>> GetExpression(Expression<Func<AllTypesModel, object>> expr)
         {
             return expr;
