@@ -2,12 +2,95 @@
     ViewBag.Title = "Simple Data";
 }
 
+<div id="custom-filters-container">
+    <div id="custom-filter-Integer" class="reload-table">
+        <span>Integer</span>
+        <input data-eq placeholder="eq" />
+        <input data-gt placeholder="gt" />
+        <input data-gte placeholder="gte" />
+        <input data-lt placeholder="lt" />
+        <input data-lte placeholder="lte" />
+    </div>
+
+    <div id="custom-filter-IntegerNullable" class="reload-table">
+        <span>Integer Nullable</span>
+        <input data-eq placeholder="eq" />
+        <input data-gt placeholder="gt" />
+        <input data-gte placeholder="gte" />
+        <input data-lt placeholder="lt" />
+        <input data-lte placeholder="lte" />
+    </div>
+
+    <div id="custom-filter-StringProperty" class="reload-table">
+        <span>String</span>
+        <input data-eq placeholder="eq" />
+        <input data-gt placeholder="gt" />
+        <input data-gte placeholder="gte" />
+        <input data-lt placeholder="lt" />
+        <input data-lte placeholder="lte" />
+    </div>
+
+    <div id="custom-filter-CharProperty" class="reload-table">
+        <span>CharProperty</span>
+        <input data-eq placeholder="eq" />
+        <input data-gt placeholder="gt" />
+        <input data-gte placeholder="gte" />
+        <input data-lt placeholder="lt" />
+        <input data-lte placeholder="lte" />
+    </div>
+
+    <div id="custom-filter-CharNullable" class="reload-table">
+        <span>CharNullable</span>
+        <input data-eq placeholder="eq" />
+        <input data-gt placeholder="gt" />
+        <input data-gte placeholder="gte" />
+        <input data-lt placeholder="lt" />
+        <input data-lte placeholder="lte" />
+    </div>
+
+    <div id="custom-filter-NestedModel-Integer" class="reload-table">
+        <span>NestedModel.Integer</span>
+        <input data-eq placeholder="eq" />
+        <input data-gt placeholder="gt" />
+        <input data-gte placeholder="gte" />
+        <input data-lt placeholder="lt" />
+        <input data-lte placeholder="lte" />
+    </div>
+
+    <div id="custom-filter-DecimalProperty" class="reload-table">
+        <span>DecimalProperty</span>
+        <input data-eq placeholder="eq" />
+        <input data-gt placeholder="gt" />
+        <input data-gte placeholder="gte" />
+        <input data-lt placeholder="lt" />
+        <input data-lte placeholder="lte" />
+    </div>
+
+    <div id="custom-filter-DecimalNullable" class="reload-table">
+        <span>DecimalNullable</span>
+        <input data-eq placeholder="eq" />
+        <input data-gt placeholder="gt" />
+        <input data-gte placeholder="gte" />
+        <input data-lt placeholder="lt" />
+        <input data-lte placeholder="lte" />
+    </div>
+
+    <div id="custom-filter-DoubleProperty" class="reload-table">
+        <span>DoubleProperty</span>
+        <input data-eq placeholder="eq" />
+        <input data-gt placeholder="gt" />
+        <input data-gte placeholder="gte" />
+        <input data-lt placeholder="lt" />
+        <input data-lte placeholder="lte" />
+    </div>
+</div>
+
 <table id="table-simple">
     <thead>
         <tr>
             @if (ViewBag.ShowString == "true")
             {
-                <th>StringProperty</th>
+            <th>StringProperty</th>
             }
             <th>Integer</th>
             <th>IntegerNullable</th>
@@ -45,13 +128,13 @@
 
             @if (ViewBag.ShowChar == "true")
             {
-                <th>CharProperty</th>
-                <th>CharNullable</th>
+            <th>CharProperty</th>
+            <th>CharNullable</th>
             }
 
             @if (ViewBag.ShowString == "true")
             {
-                <th>Nested Model StringProperty</th>
+            <th>Nested Model StringProperty</th>
             }
             <th>Nested Model Integer</th>
             <th>Nested Model IntegerNullable</th>
@@ -89,8 +172,8 @@
 
             @if (ViewBag.ShowChar == "true")
             {
-                <th>Nested Model CharProperty</th>
-                <th>Nested Model CharNullable</th>
+            <th>Nested Model CharProperty</th>
+            <th>Nested Model CharNullable</th>
             }
         </tr>
     </thead>
@@ -98,7 +181,7 @@
         <tr>
             @if (ViewBag.ShowString == "true")
             {
-                <th>StringProperty</th>
+            <th>StringProperty</th>
             }
             <th>Integer</th>
             <th>IntegerNullable</th>
@@ -136,13 +219,13 @@
 
             @if (ViewBag.ShowChar == "true")
             {
-                <th>CharProperty</th>
-                <th>CharNullable</th>
+            <th>CharProperty</th>
+            <th>CharNullable</th>
             }
 
             @if (ViewBag.ShowString == "true")
             {
-                <th>Nested Model StringProperty</th>
+            <th>Nested Model StringProperty</th>
             }
             <th>Nested Model Integer</th>
             <th>Nested Model IntegerNullable</th>
@@ -180,8 +263,8 @@
 
             @if (ViewBag.ShowChar == "true")
             {
-                <th>Nested Model CharProperty</th>
-                <th>Nested Model CharNullable</th>
+            <th>Nested Model CharProperty</th>
+            <th>Nested Model CharNullable</th>
             }
         </tr>
     </tfoot>
@@ -191,6 +274,18 @@
 @section Scripts {
     <script>
 
+        function getCustomFilterForColumn(colName) {
+            var divSelector = 'div#custom-filter-' + colName;
+
+            return {
+                "eq": $(divSelector + ' input[data-eq]').val(),
+                "gt": $(divSelector + ' input[data-gt]').val(),
+                "gte": $(divSelector + ' input[data-gte]').val(),
+                "lt": $(divSelector + ' input[data-lt]').val(),
+                "lte": $(divSelector + ' input[data-lte]').val(),
+            }
+        }
+
         var table = $('#table-simple').DataTable({
             "paging": @ViewBag.Paging,
             "searching": @ViewBag.Searching,
@@ -198,7 +293,26 @@
             "serverSide": true,
             "ajax": {
                 url: "/home/GetData",
-                type: 'POST'
+                type: 'POST',
+                "data": function (d) {
+                    d.custom = {
+                        "filters": {
+                            "Integer": getCustomFilterForColumn('Integer'),
+                            "IntegerNullable": getCustomFilterForColumn('IntegerNullable'),
+                            "NestedModel.Integer": getCustomFilterForColumn('NestedModel-Integer'),
+
+                            "StringProperty": getCustomFilterForColumn('StringProperty'),
+
+                            "CharProperty": getCustomFilterForColumn('CharProperty'),
+                            "CharNullable": getCustomFilterForColumn('CharNullable'),
+
+                            "DecimalProperty": getCustomFilterForColumn('DecimalProperty'),
+                            "DecimalNullable": getCustomFilterForColumn('DecimalNullable'),
+
+                            "DoubleProperty": getCustomFilterForColumn('DoubleProperty'),
+                        }
+                    }
+                }
             },
             "columns": [
                 @if (ViewBag.ShowString == "true")
@@ -433,6 +547,9 @@
                 }
             });
         });
-        
+
+        $('.reload-table').on('change', function () {
+            table.ajax.reload();
+        });
     </script>
 }
