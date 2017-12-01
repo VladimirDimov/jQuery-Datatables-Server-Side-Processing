@@ -89,12 +89,6 @@ namespace Tests.SeleniumTests.Tests
             }
         }
 
-        [Test]
-        public void SearchShouldIncludeAllTextFields()
-        {
-            Assert.Warn(GlobalConstants.NotCompletedTest);
-        }
-
         private IEnumerable<string> ConcatItems(params IList<string>[] collections)
         {
             var result = new string[collections.First().Count()];
