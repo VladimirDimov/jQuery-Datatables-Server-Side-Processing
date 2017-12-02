@@ -77,6 +77,7 @@
     <Compile Include="Enumerations\SortDirectionEnum.cs" />
     <Compile Include="ExtensionMethods\EnumerableExtensionMethods.cs" />
     <Compile Include="ExtensionMethods\SearchContextExtensionMethods.cs" />
+    <Compile Include="Models\MinMaxRandomModel.cs" />
     <Compile Include="TestsSetupClass.cs" />
     <Compile Include="Pages\AllTypesDataPage.cs" />
     <Compile Include="Pages\IWebPage.cs" />

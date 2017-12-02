@@ -164,6 +164,56 @@
             }
         }
 
+        [Test]
+        public void MultipleCustomFiltersOnSameColumn()
+        {
+            var column = "Integer";
+            this.navigator.AllTypesDataPage().GoTo();
+            var table = new TableElement("table", this.driver);
+            var filterContainer = new CustomFilterContainer(this.driver, "#custom-filters-container");
+            filterContainer.Gt(column, "5");
+            filterContainer.Lt(column, "10");
+
+            table.ClickSortButton(column);
+            var resultColumnValues = table.GetColumnRowValues(column).Select(x => int.Parse(x));
+            Assert.IsTrue(resultColumnValues.All(x => 5 < x && x < 10));
+
+            table.ClickSortButton(column);
+            resultColumnValues = table.GetColumnRowValues(column).Select(x => int.Parse(x));
+            Assert.IsTrue(resultColumnValues.All(x => 5 < x && x < 10));
+        }
+
+        [Test]
+        public void MultipleCustomFiltersOnTwoColumns()
+        {
+            var firstColumn = "Integer";
+            var secondColumn = "CharProperty";
+
+            this.navigator.AllTypesDataPage().GoTo();
+            var table = new TableElement("table", this.driver);
+            var filterContainer = new CustomFilterContainer(this.driver, "#custom-filters-container");
+            filterContainer.Gt(firstColumn, "5");
+            filterContainer.Lt(firstColumn, "10");
+            filterContainer.Gte(secondColumn, "a");
+            filterContainer.Lte(secondColumn, "j");
+
+            table.ClickSortButton(firstColumn);
+            var resultFirstColumnValues = table.GetColumnRowValues(firstColumn).Select(x => int.Parse(x));
+            Assert.IsTrue(resultFirstColumnValues.All(x => 5 < x && x < 10));
+
+            table.ClickSortButton(firstColumn);
+            resultFirstColumnValues = table.GetColumnRowValues(firstColumn).Select(x => int.Parse(x));
+            Assert.IsTrue(resultFirstColumnValues.All(x => 5 < x && x < 10));
+
+            table.ClickSortButton(secondColumn);
+            var resultsecondColumnValues = table.GetColumnRowValues(secondColumn).Select(x => char.Parse(x));
+            Assert.IsTrue(resultsecondColumnValues.All(x => 'a' <= x && x <= 'j'));
+
+            table.ClickSortButton(firstColumn);
+            resultsecondColumnValues = table.GetColumnRowValues(secondColumn).Select(x => char.Parse(x));
+            Assert.IsTrue(resultsecondColumnValues.All(x => 'a' <= x && x <= 'j'));
+        }
+
         private static Expression<Func<AllTypesModel, IComparable>> GetExpression(Expression<Func<AllTypesModel, IComparable>> expr)
         {
             return expr;
