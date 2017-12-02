@@ -7,7 +7,7 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 
-    <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="@Tests.Integration.Mvc.Configuration.SettingsProvider.Get("jQueryDataTablesCssCdn")" rel="stylesheet" />
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -37,7 +37,7 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
-    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script src="@Tests.Integration.Mvc.Configuration.SettingsProvider.Get("jQueryDataTablesJsCdn")"></script>
     @RenderSection("scripts", required: false)
 </body>
 </html>
