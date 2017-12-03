@@ -4,6 +4,8 @@
 
     public class AllTypesModel
     {
+        public int Id { get; set; }
+
         public string StringProperty { get; set; }
 
         public int Integer { get; set; }
