@@ -25,7 +25,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;USE_UTYPES, USE_STYPES, USE_CHARTYPE, USE_DTOFFSET</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -78,6 +78,7 @@
     <Compile Include="Common\CustomFilterContainer.cs" />
     <Compile Include="Common\Data.cs" />
     <Compile Include="Common\DriverSingletonProvider.cs" />
+    <Compile Include="Common\ExceptionsHandler.cs" />
     <Compile Include="Common\GlobalConstants.cs" />
     <Compile Include="Common\Navigator.cs" />
     <Compile Include="Common\TableElement.cs" />

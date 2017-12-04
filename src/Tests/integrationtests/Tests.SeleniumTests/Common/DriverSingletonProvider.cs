@@ -9,6 +9,12 @@ namespace Tests.SeleniumTests.Common
 
         public static IWebDriver GetDriver()
         {
+            if (driver == null)
+            {
+                driver = GetNewDriverInstance();
+                driver.Manage().Timeouts().PageLoad = new System.TimeSpan(0, 0, 5);
+            }
+
             return driver;
         }
 
@@ -20,11 +26,7 @@ namespace Tests.SeleniumTests.Common
             }
 
             driver.Dispose();
-        }
-
-        static DriverSingletonProvider()
-        {
-            DriverSingletonProvider.driver = GetNewDriverInstance();
+            driver = null;
         }
 
         private static IWebDriver GetNewDriverInstance()

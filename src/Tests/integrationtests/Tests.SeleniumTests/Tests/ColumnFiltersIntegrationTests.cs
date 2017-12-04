@@ -80,42 +80,52 @@
         [Test, TestCaseSource(nameof(searchByColumnShouldWorkProperlyNonDateTimesParameters))]
         public void FilterByColumnShouldWorkProperlyForNonDateTimes(Expression<Func<AllTypesModel, object>> selector, ComparissonTypesEnum comparissonType)
         {
-            string columnName = this.GetColumnName(selector);
-            if (selector.ToString().ToLower().Contains("nestedmodel"))
+            ExceptionsHandler.Hande(() =>
             {
-                columnName = "Nested Model " + columnName;
-            }
+                string columnName = this.GetColumnName(selector);
+                if (selector.ToString().ToLower().Contains("nestedmodel"))
+                {
+                    columnName = "Nested Model " + columnName;
+                }
 
-            this.navigator.AllTypesDataPage().GoTo();
-            var inputId = "column-search-" + columnName.Replace(' ', '-');
-            var table = new TableElement("table", this.driver);
-            var filterValue = this.GetRandomValue(selector.Compile());
-            table.TypeInInput($"#{inputId}", filterValue.ToString());
-            var columnValues = table.GetColumnRowValues(columnName);
-            this.AssertColumnValues(columnValues, filterValue, comparissonType);
+                this.navigator.AllTypesDataPage().GoTo();
+                var inputId = "column-search-" + columnName.Replace(' ', '-');
+                var table = new TableElement("table", this.driver);
+                var filterValue = this.GetRandomValue(selector.Compile());
+                table.TypeInInput($"#{inputId}", filterValue.ToString());
+                var columnValues = table.GetColumnRowValues(columnName);
+                this.AssertColumnValues(columnValues, filterValue, comparissonType);
+            },
+            this.driver);
         }
 
         private static readonly object[] searchByColumnShouldWorkProperlyDateTimesParameters =
         {
             new object[]  { GetExpression(x => x.DateTimeProperty) , ComparissonTypesEnum.DateTime },
             new object[]  { GetExpression(x => x.DateTimeNullable) , ComparissonTypesEnum.DateTime },
+#if USE_DTOFFSET
             new object[]  { GetExpression(x => x.DateTimeOffsetProperty) , ComparissonTypesEnum.DateTimeOffset },
             new object[]  { GetExpression(x => x.DateTimeOffsetNullable) , ComparissonTypesEnum.DateTimeOffset },
+#endif
         };
 
         [Test, TestCaseSource(nameof(searchByColumnShouldWorkProperlyDateTimesParameters))]
         public void FilterByColumnShouldWorkProperlyForDateTimes(Expression<Func<AllTypesModel, object>> selector, ComparissonTypesEnum comparissonType)
         {
-            string columnName = this.GetColumnName(selector);
-            this.navigator.AllTypesDataPage().GoTo();
-            var inputId = "column-search-" + columnName.Replace(' ', '-');
-            var table = new TableElement("table", this.driver);
-            var filterValueObj = this.GetRandomValue(selector.Compile());
-            var filterValueDT = comparissonType == ComparissonTypesEnum.DateTime ? (DateTime)filterValueObj : ((DateTimeOffset)filterValueObj).DateTime;
+            ExceptionsHandler.Hande(() =>
+            {
+                string columnName = this.GetColumnName(selector);
+                this.navigator.AllTypesDataPage().GoTo();
+                var inputId = "column-search-" + columnName.Replace(' ', '-');
+                var table = new TableElement("table", this.driver);
+                var filterValueObj = this.GetRandomValue(selector.Compile());
+                var filterValueDT = comparissonType == ComparissonTypesEnum.DateTime ? (DateTime)filterValueObj : ((DateTimeOffset)filterValueObj).DateTime;
 
-            table.TypeInInput($"#{inputId}", filterValueDT.ToString("r"));
-            var columnValues = table.GetColumnRowValues(columnName);
-            this.AssertColumnValues(columnValues, filterValueObj, comparissonType);
+                table.TypeInInput($"#{inputId}", filterValueDT.ToString("r"));
+                var columnValues = table.GetColumnRowValues(columnName);
+                this.AssertColumnValues(columnValues, filterValueObj, comparissonType);
+            },
+            this.driver);
         }
 
         private static readonly object[] filterByMultipleColumnShouldWorkProperlyParameters =
@@ -128,24 +138,28 @@
         [Test, TestCaseSource(nameof(filterByMultipleColumnShouldWorkProperlyParameters))]
         public void FilterByMultipleColumnShouldWorkProperly(string testCase, Expression<Func<AllTypesModel, object>>[] selectors)
         {
-            this.navigator.AllTypesDataPage().GoTo();
+            ExceptionsHandler.Hande(() =>
+            {
+                this.navigator.AllTypesDataPage().GoTo();
 
-            string firstColumnName = this.GetColumnName(selectors.First());
-            var firstInputId = "column-search-" + firstColumnName.Replace(' ', '-');
-            var table = new TableElement("table", this.driver);
-            var filterValue = this.GetRandomValue(selectors.First().Compile());
-            table.TypeInInput($"#{firstInputId}", filterValue.ToString());
+                string firstColumnName = this.GetColumnName(selectors.First());
+                var firstInputId = "column-search-" + firstColumnName.Replace(' ', '-');
+                var table = new TableElement("table", this.driver);
+                var filterValue = this.GetRandomValue(selectors.First().Compile());
+                table.TypeInInput($"#{firstInputId}", filterValue.ToString());
 
-            string secondColumnName = this.GetColumnName(selectors.Last());
-            var secondColumnValues = table.GetColumnRowValues(secondColumnName);
-            var secondFilterValue = secondColumnValues.First();
-            var secondInputId = "column-search-" + secondColumnName.Replace(' ', '-');
-            table.TypeInInput($"#{secondInputId}", secondFilterValue);
+                string secondColumnName = this.GetColumnName(selectors.Last());
+                var secondColumnValues = table.GetColumnRowValues(secondColumnName);
+                var secondFilterValue = secondColumnValues.First();
+                var secondInputId = "column-search-" + secondColumnName.Replace(' ', '-');
+                table.TypeInInput($"#{secondInputId}", secondFilterValue);
 
-            var columnValues = table.GetColumnRowValues(firstColumnName);
-            this.AssertColumnValues(columnValues, filterValue, ComparissonTypesEnum.Equal);
-            columnValues = table.GetColumnRowValues(secondColumnName);
-            this.AssertColumnValues(columnValues, secondFilterValue, ComparissonTypesEnum.Equal);
+                var columnValues = table.GetColumnRowValues(firstColumnName);
+                this.AssertColumnValues(columnValues, filterValue, ComparissonTypesEnum.Equal);
+                columnValues = table.GetColumnRowValues(secondColumnName);
+                this.AssertColumnValues(columnValues, secondFilterValue, ComparissonTypesEnum.Equal);
+            },
+            this.driver);
         }
 
         private static Expression<Func<AllTypesModel, object>> GetExpression(Expression<Func<AllTypesModel, object>> expr)
@@ -245,10 +259,22 @@
             var dataLength = data.Count();
             var startIndex = random.Next((int)(0.3 * dataLength), (int)(0.7 * dataLength));
             var lookInDataPart = data.Skip(startIndex);
-            var item = lookInDataPart.First(x => selector(x) != null && selector.ToString() != string.Empty);
+            var item = lookInDataPart.First(x => this.IsNotNull(selector, x));
             var value = selector(item);
 
             return value;
+        }
+
+        private bool IsNotNull<T>(Func<AllTypesModel, T> selector, AllTypesModel obj)
+        {
+            try
+            {
+                return selector(obj) != null && selector.ToString() != string.Empty;
+            }
+            catch (NullReferenceException)
+            {
+                return false;
+            }
         }
     }
 }

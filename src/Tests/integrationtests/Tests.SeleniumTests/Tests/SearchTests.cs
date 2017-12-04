@@ -31,26 +31,30 @@ namespace Tests.SeleniumTests.Tests
         [Test, TestCaseSource(nameof(searchByStringTestCases))]
         public void SearchByStringFiledShouldWorkProperlyAndCaseInsensitive(int caseNumber, Func<AllTypesModel, string> selector)
         {
-            var columnName1 = "StringProperty";
-            var columnName2 = "Nested Model StringProperty";
-
-            for (int i = 0; i < 5; i++)
+            ExceptionsHandler.Hande(() =>
             {
-                this.navigator.AllTypesDataPage().GoTo("?showChar=false");
-                var tableElement = new TableElement("table", this.driver);
-                var searchValue = this.GetRandomSubstringContainedInData(selector).RandomiseCase();
-                tableElement.TypeInSearchBox(searchValue);
-                Thread.Sleep(GlobalConstants.GlobalThreadSleep);
-                var filteredValues1 = tableElement.GetColumnRowValues(columnName1).ToList();
-                var filteredValues2 = tableElement.GetColumnRowValues(columnName2).ToList();
-                var joinedColumns = new List<string>();
-                for (int j = 0; j < filteredValues1.Count(); j++)
-                {
-                    joinedColumns.Add(filteredValues1[j] + filteredValues2[j]);
-                }
+                var columnName1 = "StringProperty";
+                var columnName2 = "Nested Model StringProperty";
 
-                Assert.IsTrue(joinedColumns.All(x => x.ToLower().Contains(searchValue.ToLower())));
-            }
+                for (int i = 0; i < 5; i++)
+                {
+                    this.navigator.AllTypesDataPage().GoTo("?showChar=false");
+                    var tableElement = new TableElement("table", this.driver);
+                    var searchValue = this.GetRandomSubstringContainedInData(selector).RandomiseCase();
+                    tableElement.TypeInSearchBox(searchValue);
+                    Thread.Sleep(GlobalConstants.GlobalThreadSleep);
+                    var filteredValues1 = tableElement.GetColumnRowValues(columnName1).ToList();
+                    var filteredValues2 = tableElement.GetColumnRowValues(columnName2).ToList();
+                    var joinedColumns = new List<string>();
+                    for (int j = 0; j < filteredValues1.Count(); j++)
+                    {
+                        joinedColumns.Add(filteredValues1[j] + filteredValues2[j]);
+                    }
+
+                    Assert.IsTrue(joinedColumns.All(x => x.ToLower().Contains(searchValue.ToLower())));
+                }
+            },
+            this.driver);
         }
 
         private static readonly object[] searchByCharTestCases =
@@ -64,29 +68,33 @@ namespace Tests.SeleniumTests.Tests
         [Test, TestCaseSource(nameof(searchByCharTestCases))]
         public void SearchByCharFiledShouldWorkProperlyAndCaseInsensitive(int testCase, Func<AllTypesModel, string> selector)
         {
-            var colNames = new string[]
+            ExceptionsHandler.Hande(() =>
             {
-                "CharProperty", "CharNullable", "Nested Model CharProperty", "Nested Model CharNullable"
-            };
-
-            for (int i = 0; i < 5; i++)
-            {
-                this.navigator.AllTypesDataPage().GoTo("?showString=false");
-                var tableElement = new TableElement("table", this.driver);
-                var searchValue = this.GetRandomCharContainedInDataSwitchedCase(selector).ToString().RandomiseCase();
-                tableElement.TypeInSearchBox(searchValue);
-                Thread.Sleep(GlobalConstants.GlobalThreadSleep);
-                var columnValuesCollection = new List<IList<string>>();
-                foreach (var colName in colNames)
+                var colNames = new string[]
                 {
-                    columnValuesCollection.Add(tableElement.GetColumnRowValues(colName).ToList());
+                "CharProperty", "CharNullable", "Nested Model CharProperty", "Nested Model CharNullable"
+                };
+
+                for (int i = 0; i < 5; i++)
+                {
+                    this.navigator.AllTypesDataPage().GoTo("?showString=false");
+                    var tableElement = new TableElement("table", this.driver);
+                    var searchValue = this.GetRandomCharContainedInDataSwitchedCase(selector).ToString().RandomiseCase();
+                    tableElement.TypeInSearchBox(searchValue);
+                    Thread.Sleep(GlobalConstants.GlobalThreadSleep);
+                    var columnValuesCollection = new List<IList<string>>();
+                    foreach (var colName in colNames)
+                    {
+                        columnValuesCollection.Add(tableElement.GetColumnRowValues(colName).ToList());
+                    }
+
+                    var joinedColumns = this.ConcatItems(columnValuesCollection.ToArray());
+
+                    Assert.IsNotEmpty(joinedColumns);
+                    Assert.IsTrue(joinedColumns.All(x => x.ToLower().Contains(searchValue.ToLower())));
                 }
-
-                var joinedColumns = this.ConcatItems(columnValuesCollection.ToArray());
-
-                Assert.IsNotEmpty(joinedColumns);
-                Assert.IsTrue(joinedColumns.All(x => x.ToLower().Contains(searchValue.ToLower())));
-            }
+            },
+            this.driver);
         }
 
         private IEnumerable<string> ConcatItems(params IList<string>[] collections)
@@ -129,11 +137,23 @@ namespace Tests.SeleniumTests.Tests
             var dataLength = data.Count();
             var startIndex = random.Next((int)(0.3 * dataLength), (int)(0.7 * dataLength));
             var lookInDataPart = data.Skip(startIndex);
-            var item = lookInDataPart.First(x => selector(x) != null && selector(x).ToString() != string.Empty);
+            var item = lookInDataPart.First(x => this.IsNotNull(selector, x));
             var character = selector(item)[0];
             var switchedCaseChar = Char.IsLower(character) ? Char.ToUpper(character) : Char.ToLower(character);
 
             return switchedCaseChar;
+        }
+
+        private bool IsNotNull<T>(Func<AllTypesModel, T> selector, AllTypesModel obj)
+        {
+            try
+            {
+                return selector(obj) != null && selector.ToString() != string.Empty;
+            }
+            catch (NullReferenceException)
+            {
+                return false;
+            }
         }
     }
 }
