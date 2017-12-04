@@ -1,11 +1,15 @@
 ﻿namespace Tests.Integration.Mvc
 {
+#if TEST_SQL
+
     using System.Linq;
+
+#endif
+
     using System.Web.Mvc;
     using System.Web.Optimization;
     using System.Web.Routing;
     using TestData.Data;
-    using Tests.Integration.Mvc.Configuration;
     using Tests.Integration.Mvc.Controllers;
 
     public class MvcApplication : System.Web.HttpApplication
@@ -22,27 +26,18 @@
 
         private void SetUpData()
         {
-            var dataSource = SettingsProvider.Get("dataSource");
             var data = DataGenerator.GenerateSimpleData(1000, 200);
-            switch (dataSource)
+#if TEST_SQL
+            var context = new EntityFrameworkClasses.AppContext();
+            if (!context.AllTypesModels.Any())
             {
-                case "sql":
-                    var context = new EntityFrameworkClasses.AppContext();
-                    if (!context.AllTypesModels.Any())
-                    {
-                        context.Seed(data);
-                    }
-
-                    HomeController.Data = context.AllTypesModels;
-                    break;
-
-                case "mem":
-                    HomeController.Data = data;
-                    break;
-
-                default:
-                    break;
+                context.Seed(data);
             }
+
+            HomeController.Data = context.AllTypesModels;
+#else
+            HomeController.Data = data;
+#endif
         }
     }
 }

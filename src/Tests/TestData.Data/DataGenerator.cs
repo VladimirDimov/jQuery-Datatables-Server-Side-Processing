@@ -31,14 +31,23 @@
             {
                 Long = NumberData.GetNumber(min, max),
                 LongNullable = RandomiseNullable(NumberData.GetNumber(min, max)),
+#if USE_UTYPES
                 ULong = (ulong)NumberData.GetNumber(0, max),
                 ULongNullable = RandomiseNullable((ulong)NumberData.GetNumber(0, max)),
-
+#else
+                ULong = (long)NumberData.GetNumber(0, max),
+                ULongNullable = (long?)RandomiseNullable(NumberData.GetNumber(0, max)),
+#endif
                 Integer = random.Next(min, max),
                 IntegerNullable = RandomiseNullable(FakeData.NumberData.GetNumber(min, max)),
+
+#if USE_UTYPES
                 UInt = (uint)NumberData.GetNumber(0, max),
                 UIntNullable = (uint?)RandomiseNullable(NumberData.GetNumber(0, max)),
-
+#else
+                UInt = (int)NumberData.GetNumber(0, max),
+                UIntNullable = (int?)RandomiseNullable(NumberData.GetNumber(0, max)),
+#endif
                 DoubleProperty = NumberData.GetDouble(),
                 DoubleNullable = RandomiseNullable(NumberData.GetDouble()),
 
@@ -47,16 +56,30 @@
 
                 Short = (short)NumberData.GetNumber(min, max),
                 ShortNullable = (short?)(NumberData.GetNumber(min, max)),
+#if USE_UTYPES
                 UShort = (ushort)NumberData.GetNumber(0, max),
                 UShortNullable = (ushort?)RandomiseNullable(NumberData.GetNumber(0, max)),
-
+#else
+                UShort = (short)NumberData.GetNumber(0, max),
+                UShortNullable = (short?)RandomiseNullable(NumberData.GetNumber(0, max)),
+#endif
                 ByteProperty = RandomByte(),
                 ByteNullable = RandomiseNullable(RandomByte()),
+#if USE_STYPES
                 SByteProperty = RandomSByte(),
                 SByteNullable = RandomiseNullable(RandomSByte()),
+#else
+                SByteProperty = RandomByte(),
+                SByteNullable = RandomiseNullable(RandomByte()),
+#endif
 
+#if USE_CHARTYPE
                 CharProperty = FakeData.TextData.GetAlphabetical(1)[0],
                 CharNullable = RandomiseNullable(FakeData.TextData.GetAlphabetical(1)[0]),
+#else
+                CharProperty = FakeData.TextData.GetAlphabetical(1)[0].ToString(),
+                CharNullable = RandomiseNullable(TextData.GetAlphaNumeric(1), 0.3),
+#endif
 
                 BooleanProperty = BooleanData.GetBoolean(),
                 BooleanNullable = RandomiseNullable(BooleanData.GetBoolean()),

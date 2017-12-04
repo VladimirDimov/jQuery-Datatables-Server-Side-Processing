@@ -26,9 +26,34 @@
             var filterProc = new DependencyResolver().GetSearchDataProcessor<AllTypesModel>();
             var data = new List<AllTypesModel>()
             {
-                new AllTypesModel{ StringProperty = "aaa", CharProperty = 'q' },
-                new AllTypesModel{ StringProperty = null, CharProperty = 'q', CharNullable = 'b' },
-                new AllTypesModel{ StringProperty = "bbb", CharNullable = null },
+                new AllTypesModel
+                {
+                    StringProperty = "aaa",
+#if USE_CHARTYPE
+                    CharProperty = 'q'
+#else
+                    CharProperty = 'q'.ToString()
+#endif
+                },
+                new AllTypesModel
+                {
+                    StringProperty = null,
+#if USE_CHARTYPE
+                    CharProperty = 'q',
+#else
+                    CharProperty = 'q'.ToString(),
+#endif
+#if USE_CHARTYPE
+                    CharNullable = 'b'
+#else
+                    CharNullable = 'b'.ToString()
+#endif
+                },
+                new AllTypesModel
+                {
+                    StringProperty = "bbb",
+                    CharNullable = null
+                },
             }
             .AsQueryable();
             var processedData = filterProc.ProcessData(data, new RequestInfoModel()
