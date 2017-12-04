@@ -35,7 +35,7 @@
         };
 
         [Test, TestCaseSource(nameof(equalTestCases))]
-        public void EqualShouldWorkProperly(Expression<Func<AllTypesModel, object>> selector)
+        public void EqualShouldWorkProperly(Expression<Func<AllTypesModel, IComparable>> selector)
         {
             this.navigator.AllTypesDataPage().GoTo();
 

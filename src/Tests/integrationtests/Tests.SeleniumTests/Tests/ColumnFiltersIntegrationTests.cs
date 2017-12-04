@@ -81,6 +81,11 @@
         public void FilterByColumnShouldWorkProperlyForNonDateTimes(Expression<Func<AllTypesModel, object>> selector, ComparissonTypesEnum comparissonType)
         {
             string columnName = this.GetColumnName(selector);
+            if (selector.ToString().ToLower().Contains("nestedmodel"))
+            {
+                columnName = "Nested Model " + columnName;
+            }
+
             this.navigator.AllTypesDataPage().GoTo();
             var inputId = "column-search-" + columnName.Replace(' ', '-');
             var table = new TableElement("table", this.driver);

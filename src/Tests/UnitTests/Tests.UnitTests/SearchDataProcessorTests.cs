@@ -213,7 +213,7 @@
                 }
             });
 #if USE_CHARTYPE
-            Assert.IsTrue(processedData.All(x => x.NestedModel.CharProperty.ToString().ToLower()[0] == searchValue));
+            Assert.IsTrue(processedData.All(x => x.NestedModel.CharProperty.ToString().ToLower()[0] == searchValue.ToString().ToLower()[0]));
 #else
             Assert.IsTrue(processedData.All(x => x.NestedModel.CharProperty.ToLower() == searchValue.ToLower()));
 #endif
