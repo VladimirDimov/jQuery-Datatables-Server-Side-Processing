@@ -62,6 +62,7 @@
         [TestCase("NestedModel.IntegerNullable", FilterTypes.eq, int.MaxValue)]
         [TestCase("NestedModel.IntegerNullable", FilterTypes.eq, int.MinValue)]
         // ---------------------------------------------------------------
+#if USE_UTYPES
         [TestCase("UInt", FilterTypes.gt, "25")]
         [TestCase("UInt", FilterTypes.gte, "25")]
         [TestCase("UInt", FilterTypes.lt, "25")]
@@ -93,6 +94,7 @@
         [TestCase("NestedModel.UIntNullable", FilterTypes.eq, "99999999")]
         [TestCase("NestedModel.UIntNullable", FilterTypes.eq, uint.MaxValue)]
         [TestCase("NestedModel.UIntNullable", FilterTypes.eq, uint.MinValue)]
+#endif
         // ---------------------------------------------------------------
         [TestCase("Long", FilterTypes.gt, "25")]
         [TestCase("Long", FilterTypes.gte, "25")]
@@ -134,6 +136,7 @@
         [TestCase("NestedModel.LongNullable", FilterTypes.eq, long.MaxValue)]
         [TestCase("NestedModel.LongNullable", FilterTypes.eq, long.MinValue)]
         // ---------------------------------------------------------------
+#if USE_UTYPES
         [TestCase("ULong", FilterTypes.gt, "25")]
         [TestCase("ULong", FilterTypes.gte, "25")]
         [TestCase("ULong", FilterTypes.lt, "25")]
@@ -169,6 +172,7 @@
         [TestCase("NestedModel.ULongNullable", FilterTypes.eq, "0")]
         [TestCase("NestedModel.ULongNullable", FilterTypes.eq, ulong.MaxValue)]
         [TestCase("NestedModel.ULongNullable", FilterTypes.eq, ulong.MinValue)]
+#endif
         // ---------------------------------------------------------------
         [TestCase("Short", FilterTypes.gt, "25")]
         [TestCase("Short", FilterTypes.gte, "25")]
@@ -205,6 +209,7 @@
         [TestCase("NestedModel.ShortNullable", FilterTypes.eq, "0")]
         [TestCase("NestedModel.ShortNullable", FilterTypes.eq, short.MaxValue)]
         [TestCase("NestedModel.ShortNullable", FilterTypes.eq, short.MinValue)]
+#if USE_UTYPES
         // ---------------------------------------------------------------
         [TestCase("UShort", FilterTypes.gt, "25")]
         [TestCase("UShort", FilterTypes.gte, "25")]
@@ -240,6 +245,7 @@
         [TestCase("NestedModel.UShortNullable", FilterTypes.eq, "9999")]
         [TestCase("NestedModel.UShortNullable", FilterTypes.eq, ushort.MaxValue)]
         [TestCase("NestedModel.UShortNullable", FilterTypes.eq, ushort.MinValue)]
+#endif
         // ---------------------------------------------------------------
         [TestCase("ByteProperty", FilterTypes.gt, "25")]
         [TestCase("ByteProperty", FilterTypes.gte, "25")]
@@ -274,6 +280,7 @@
         [TestCase("NestedModel.ByteNullable", FilterTypes.eq, "0")]
         [TestCase("NestedModel.ByteNullable", FilterTypes.eq, byte.MaxValue)]
         [TestCase("NestedModel.ByteNullable", FilterTypes.eq, byte.MinValue)]
+#if USE_STYPES
         // ---------------------------------------------------------------
         [TestCase("SByteProperty", FilterTypes.gt, "25")]
         [TestCase("SByteProperty", FilterTypes.gte, "25")]
@@ -312,6 +319,7 @@
         [TestCase("NestedModel.SByteNullable", FilterTypes.eq, "0")]
         [TestCase("NestedModel.SByteNullable", FilterTypes.eq, sbyte.MaxValue)]
         [TestCase("NestedModel.SByteNullable", FilterTypes.eq, sbyte.MinValue)]
+#endif
         // ---------------------------------------------------------------
         [TestCase("DoubleProperty", FilterTypes.gt, "25.1543254325")]
         [TestCase("DoubleProperty", FilterTypes.gte, "25.1543254325")]
@@ -407,6 +415,7 @@
         [TestCase("NestedModel.BooleanNullable", FilterTypes.eq, "true")]
         [TestCase("NestedModel.BooleanNullable", FilterTypes.eq, "fALse")]
         // ---------------------------------------------------------------
+#if USE_CHARTYPE
         [TestCase("CharProperty", FilterTypes.gt, "n", @"'n'")]
         [TestCase("CharProperty", FilterTypes.gte, "n", @"'n'")]
         [TestCase("CharProperty", FilterTypes.lt, 'n', @"'n'")]
@@ -417,6 +426,8 @@
         [TestCase("NestedModel.CharProperty", FilterTypes.lt, 'n', @"'n'")]
         [TestCase("NestedModel.CharProperty", FilterTypes.lte, 'n', @"'n'")]
         [TestCase("NestedModel.CharProperty", FilterTypes.eq, "n", @"'n'")]
+#endif
+#if USE_CHARTYPE
         // ---------------------------------------------------------------
         [TestCase("CharNullable", FilterTypes.gt, "n", @"'n'")]
         [TestCase("CharNullable", FilterTypes.gte, "n", @"'n'")]
@@ -428,6 +439,7 @@
         [TestCase("NestedModel.CharNullable", FilterTypes.lt, 'n', @"'n'")]
         [TestCase("NestedModel.CharNullable", FilterTypes.lte, 'n', @"'n'")]
         [TestCase("NestedModel.CharNullable", FilterTypes.eq, "n", @"'n'")]
+#endif
         // ---------------------------------------------------------------
         [TestCase("StringProperty", FilterTypes.gt, typeof(InvalidTypeForOperationException))]
         [TestCase("StringProperty", FilterTypes.gte, typeof(InvalidTypeForOperationException))]
@@ -606,7 +618,11 @@
             var predicates = new Dictionary<int, string>
             {
                 { 1, $"Integer > {min} && Integer < {max}" },
+#if USE_CHARTYPE
                 { 2, $"Integer > {min} && Integer < {max} && CharProperty == 'a'" },
+#else
+                { 2, $"Integer > {min} && Integer < {max} && CharProperty == \"a\"" },
+#endif
             };
 
             var custom = testCases[testCaseKey];

@@ -62,7 +62,9 @@
         [TestCase("Long", "-9223372036854775808")]
         [TestCase("LongNullable", null)]
         [TestCase("ULong", null)]
+#if USE_UTYPES
         [TestCase("ULong", "18446744073709551615")]
+#endif
         [TestCase("ULongNullable", null)]
         [TestCase("Short", null)]
         [TestCase("ShortNullable", null)]

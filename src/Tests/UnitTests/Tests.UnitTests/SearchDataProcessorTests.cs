@@ -188,7 +188,11 @@
         {
             var filterProc = this.GetFilterDataProcessor<AllTypesModel>();
             var data = DataGenerator.GenerateSimpleData(5000);
+#if USE_CHARTYPE
             char searchValue = 'Z';
+#else
+            string searchValue = "Z";
+#endif
 
             var processedData = filterProc.ProcessData(data, new RequestInfoModel()
             {
@@ -208,8 +212,11 @@
                     }
                 }
             });
-
+#if USE_CHARTYPE
             Assert.IsTrue(processedData.All(x => x.NestedModel.CharProperty.ToString().ToLower()[0] == searchValue));
+#else
+            Assert.IsTrue(processedData.All(x => x.NestedModel.CharProperty.ToLower() == searchValue.ToLower()));
+#endif
         }
 
         [Test]
