@@ -403,46 +403,46 @@
 
                 @if (ViewBag.ShowString == "true")
                 {
-                @:{ "data": "NestedModel.StringProperty", searchable: false },
+                @:{ "data": "NestedModel.StringProperty", searchable: false, "defaultContent": "" },
                 }
-                { "data": "NestedModel.Integer", searchable: false },
-                { "data": "NestedModel.IntegerNullable", searchable: false },
-                { "data": "NestedModel.UInt", searchable: false },
-                { "data": "NestedModel.UIntNullable", searchable: false },
+                { "data": "NestedModel.Integer", searchable: false, "defaultContent": "" },
+                { "data": "NestedModel.IntegerNullable", searchable: false, "defaultContent": "" },
+                { "data": "NestedModel.UInt", searchable: false, "defaultContent": "" },
+                { "data": "NestedModel.UIntNullable", searchable: false, "defaultContent": "" },
 
-                { "data": "NestedModel.Long", searchable: false },
-                { "data": "NestedModel.LongNullable", searchable: false },
-                { "data": "NestedModel.ULong", searchable: false },
-                { "data": "NestedModel.ULongNullable", searchable: false },
+                { "data": "NestedModel.Long", searchable: false, "defaultContent": "" },
+                { "data": "NestedModel.LongNullable", searchable: false, "defaultContent": "" },
+                { "data": "NestedModel.ULong", searchable: false, "defaultContent": "" },
+                { "data": "NestedModel.ULongNullable", searchable: false, "defaultContent": "" },
 
-                { "data": "NestedModel.Short", searchable: false },
-                { "data": "NestedModel.ShortNullable", searchable: false },
-                { "data": "NestedModel.UShort", searchable: false },
-                { "data": "NestedModel.UShortNullable", searchable: false },
+                { "data": "NestedModel.Short", searchable: false, "defaultContent": "" },
+                { "data": "NestedModel.ShortNullable", searchable: false, "defaultContent": "" },
+                { "data": "NestedModel.UShort", searchable: false, "defaultContent": "" },
+                { "data": "NestedModel.UShortNullable", searchable: false, "defaultContent": "" },
 
-                { "data": "NestedModel.ByteProperty", searchable: false },
-                { "data": "NestedModel.ByteNullable", searchable: false },
-                { "data": "NestedModel.SByteProperty", searchable: false },
-                { "data": "NestedModel.SByteNullable", searchable: false },
+                { "data": "NestedModel.ByteProperty", searchable: false, "defaultContent": "" },
+                { "data": "NestedModel.ByteNullable", searchable: false, "defaultContent": "" },
+                { "data": "NestedModel.SByteProperty", searchable: false, "defaultContent": "" },
+                { "data": "NestedModel.SByteNullable", searchable: false, "defaultContent": "" },
 
-                { "data": "NestedModel.DoubleProperty", searchable: false },
-                { "data": "NestedModel.DoubleNullable", searchable: false },
+                { "data": "NestedModel.DoubleProperty", searchable: false, "defaultContent": "" },
+                { "data": "NestedModel.DoubleNullable", searchable: false, "defaultContent": "" },
 
-                { "data": "NestedModel.DecimalProperty", searchable: false },
-                { "data": "NestedModel.DecimalNullable", searchable: false },
+                { "data": "NestedModel.DecimalProperty", searchable: false, "defaultContent": "" },
+                { "data": "NestedModel.DecimalNullable", searchable: false, "defaultContent": "" },
 
-                { "data": "NestedModel.@nameof(TestData.Models.AllTypesModel.DateTimeProperty)", searchable: false },
+                { "data": "NestedModel.@nameof(TestData.Models.AllTypesModel.DateTimeProperty)", searchable: false, "defaultContent": "" },
                 { "data": "NestedModel.DateTimeNullable", searchable: false },
-                { "data": "NestedModel.@nameof(TestData.Models.AllTypesModel.DateTimeOffsetProperty)", searchable: false },
-                { "data": "NestedModel.DateTimeOffsetNullable", searchable: false },
+                { "data": "NestedModel.@nameof(TestData.Models.AllTypesModel.DateTimeOffsetProperty)", searchable: false, "defaultContent": "" },
+                { "data": "NestedModel.DateTimeOffsetNullable", searchable: false, "defaultContent": "" },
 
-                { "data": "NestedModel.BooleanProperty", searchable: false },
-                { "data": "NestedModel.BooleanNullable", searchable: false },
+                { "data": "NestedModel.BooleanProperty", searchable: false, "defaultContent": "" },
+                { "data": "NestedModel.BooleanNullable", searchable: false, "defaultContent": "" },
 
                 @if(ViewBag.ShowChar == "true")
                 {
-                @:{ "data": "NestedModel.CharProperty", searchable: true },
-                @:{ "data": "NestedModel.CharNullable", searchable: true },
+                @:{ "data": "NestedModel.CharProperty", searchable: true, "defaultContent": "" },
+                @:{ "data": "NestedModel.CharNullable", searchable: true, "defaultContent": "" },
                 }
             ],
             "columnDefs": [
@@ -506,6 +506,8 @@
 
                 {
                     "render": function (data, type, row) {
+                        if (!row.NestedModel) return '';
+
                         var prop = row.NestedModel.DateTimeProperty;
 
                         if (!prop) {
@@ -521,6 +523,8 @@
 
                 {
                     "render": function (data, type, row) {
+                        if (!row.NestedModel) return '';
+
                         var prop = row.NestedModel.DateTimeNullable;
 
                         if (!prop) {
@@ -536,6 +540,8 @@
 
                 {
                     "render": function (data, type, row) {
+                        if (!row.NestedModel) return '';
+
                         var prop = row.NestedModel.DateTimeOffsetProperty;
 
                         if (!prop) {
@@ -551,6 +557,8 @@
 
                 {
                     "render": function (data, type, row) {
+                        if (!row.NestedModel) return '';
+
                         var prop = row.NestedModel.DateTimeOffsetNullable;
 
                         if (!prop) {
