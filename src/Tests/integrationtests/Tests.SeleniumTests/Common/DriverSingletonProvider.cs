@@ -24,7 +24,18 @@ namespace Tests.SeleniumTests.Common
 
         static DriverSingletonProvider()
         {
-            DriverSingletonProvider.driver = new ChromeDriver();
+            DriverSingletonProvider.driver = GetNewDriverInstance();
+        }
+
+        private static IWebDriver GetNewDriverInstance()
+        {
+            var options = new ChromeOptions
+            {
+                UnhandledPromptBehavior = UnhandledPromptBehavior.Dismiss,
+                AcceptInsecureCertificates = true,
+            };
+
+            return new ChromeDriver(options);
         }
     }
 }

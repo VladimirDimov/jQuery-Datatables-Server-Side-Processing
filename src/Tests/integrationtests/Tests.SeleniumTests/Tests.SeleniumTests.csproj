@@ -77,7 +77,7 @@
   <ItemGroup>
     <Compile Include="Common\CustomFilterContainer.cs" />
     <Compile Include="Common\Data.cs" />
-    <Compile Include="Common\DriverProvider.cs" />
+    <Compile Include="Common\DriverSingletonProvider.cs" />
     <Compile Include="Common\GlobalConstants.cs" />
     <Compile Include="Common\Navigator.cs" />
     <Compile Include="Common\TableElement.cs" />
