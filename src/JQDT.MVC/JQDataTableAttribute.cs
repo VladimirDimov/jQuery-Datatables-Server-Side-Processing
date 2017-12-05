@@ -21,6 +21,12 @@
         {
             try
             {
+                if (!filterContext.RequestContext.HttpContext.Request.IsAjaxRequest())
+                {
+                    filterContext.Result = new HttpNotFoundResult();
+                    return;
+                }
+
                 this.PerformOnActionExecuted(filterContext);
             }
             catch (Exception ex)
