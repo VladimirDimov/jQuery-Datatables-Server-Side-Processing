@@ -51,16 +51,22 @@ namespace Tests.SeleniumTests.Tests
         [Test]
         [TestCase(nameof(AllTypesModel.Integer), SortDirectionsEnum.Asc, typeof(int))]
         [TestCase(nameof(AllTypesModel.IntegerNullable), SortDirectionsEnum.Asc, typeof(int?))]
+#if USE_UTYPES
         [TestCase(nameof(AllTypesModel.UInt), SortDirectionsEnum.Asc, typeof(uint))]
         [TestCase(nameof(AllTypesModel.UIntNullable), SortDirectionsEnum.Asc, typeof(uint?))]
+#endif
         [TestCase(nameof(AllTypesModel.Long), SortDirectionsEnum.Asc, typeof(long))]
         [TestCase(nameof(AllTypesModel.LongNullable), SortDirectionsEnum.Asc, typeof(long?))]
+#if USE_UTYPES
         [TestCase(nameof(AllTypesModel.ULong), SortDirectionsEnum.Asc, typeof(ulong))]
         [TestCase(nameof(AllTypesModel.ULongNullable), SortDirectionsEnum.Asc, typeof(ulong?))]
+#endif
         [TestCase(nameof(AllTypesModel.Short), SortDirectionsEnum.Asc, typeof(short))]
         [TestCase(nameof(AllTypesModel.ShortNullable), SortDirectionsEnum.Asc, typeof(short?))]
+#if USE_UTYPES
         [TestCase(nameof(AllTypesModel.UShort), SortDirectionsEnum.Asc, typeof(ushort))]
         [TestCase(nameof(AllTypesModel.UShortNullable), SortDirectionsEnum.Asc, typeof(ushort?))]
+#endif
         [TestCase(nameof(AllTypesModel.ByteProperty), SortDirectionsEnum.Asc, typeof(byte))]
         [TestCase(nameof(AllTypesModel.ByteNullable), SortDirectionsEnum.Asc, typeof(byte?))]
         [TestCase(nameof(AllTypesModel.SByteProperty), SortDirectionsEnum.Asc, typeof(sbyte))]
@@ -71,8 +77,10 @@ namespace Tests.SeleniumTests.Tests
         [TestCase(nameof(AllTypesModel.DecimalNullable), SortDirectionsEnum.Asc, typeof(decimal?))]
         [TestCase(nameof(AllTypesModel.DateTimeProperty), SortDirectionsEnum.Asc, typeof(DateTime))]
         [TestCase(nameof(AllTypesModel.DateTimeNullable), SortDirectionsEnum.Asc, typeof(DateTime?))]
+#if USE_DTOFFSET
         [TestCase(nameof(AllTypesModel.DateTimeOffsetProperty), SortDirectionsEnum.Asc, typeof(DateTimeOffset))]
         [TestCase(nameof(AllTypesModel.DateTimeOffsetNullable), SortDirectionsEnum.Asc, typeof(DateTimeOffset?))]
+#endif
         [TestCase(nameof(AllTypesModel.BooleanProperty), SortDirectionsEnum.Asc, typeof(bool))]
         [TestCase(nameof(AllTypesModel.BooleanNullable), SortDirectionsEnum.Asc, typeof(bool?))]
         [TestCase(nameof(AllTypesModel.CharProperty), SortDirectionsEnum.Asc, typeof(char))]
@@ -80,28 +88,38 @@ namespace Tests.SeleniumTests.Tests
         // ---------------------------------------------------------------------------------------------------
         [TestCase(nameof(AllTypesModel.Integer), SortDirectionsEnum.Desc, typeof(int))]
         [TestCase(nameof(AllTypesModel.IntegerNullable), SortDirectionsEnum.Desc, typeof(int?))]
+#if USE_UTYPES
         [TestCase(nameof(AllTypesModel.UInt), SortDirectionsEnum.Desc, typeof(uint))]
         [TestCase(nameof(AllTypesModel.UIntNullable), SortDirectionsEnum.Desc, typeof(uint?))]
+#endif
         [TestCase(nameof(AllTypesModel.Long), SortDirectionsEnum.Desc, typeof(long))]
         [TestCase(nameof(AllTypesModel.LongNullable), SortDirectionsEnum.Desc, typeof(long?))]
+#if USE_UTYPES
         [TestCase(nameof(AllTypesModel.ULong), SortDirectionsEnum.Desc, typeof(ulong))]
         [TestCase(nameof(AllTypesModel.ULongNullable), SortDirectionsEnum.Desc, typeof(ulong?))]
+#endif
         [TestCase(nameof(AllTypesModel.Short), SortDirectionsEnum.Desc, typeof(short))]
         [TestCase(nameof(AllTypesModel.ShortNullable), SortDirectionsEnum.Desc, typeof(short?))]
+#if USE_UTYPES
         [TestCase(nameof(AllTypesModel.UShort), SortDirectionsEnum.Desc, typeof(ushort))]
         [TestCase(nameof(AllTypesModel.UShortNullable), SortDirectionsEnum.Desc, typeof(ushort?))]
+#endif
         [TestCase(nameof(AllTypesModel.ByteProperty), SortDirectionsEnum.Desc, typeof(byte))]
         [TestCase(nameof(AllTypesModel.ByteNullable), SortDirectionsEnum.Desc, typeof(byte?))]
+#if USE_STYPES
         [TestCase(nameof(AllTypesModel.SByteProperty), SortDirectionsEnum.Desc, typeof(sbyte))]
         [TestCase(nameof(AllTypesModel.SByteNullable), SortDirectionsEnum.Desc, typeof(sbyte?))]
+#endif
         [TestCase(nameof(AllTypesModel.DoubleProperty), SortDirectionsEnum.Desc, typeof(double))]
         [TestCase(nameof(AllTypesModel.DoubleNullable), SortDirectionsEnum.Desc, typeof(double?))]
         [TestCase(nameof(AllTypesModel.DecimalProperty), SortDirectionsEnum.Desc, typeof(decimal))]
         [TestCase(nameof(AllTypesModel.DecimalNullable), SortDirectionsEnum.Desc, typeof(decimal?))]
         [TestCase(nameof(AllTypesModel.DateTimeProperty), SortDirectionsEnum.Desc, typeof(DateTime))]
         [TestCase(nameof(AllTypesModel.DateTimeNullable), SortDirectionsEnum.Desc, typeof(DateTime?))]
+#if USE_DTOFFSET
         [TestCase(nameof(AllTypesModel.DateTimeOffsetProperty), SortDirectionsEnum.Desc, typeof(DateTimeOffset))]
         [TestCase(nameof(AllTypesModel.DateTimeOffsetNullable), SortDirectionsEnum.Desc, typeof(DateTimeOffset?))]
+#endif
         [TestCase(nameof(AllTypesModel.BooleanProperty), SortDirectionsEnum.Desc, typeof(bool))]
         [TestCase(nameof(AllTypesModel.BooleanNullable), SortDirectionsEnum.Desc, typeof(bool?))]
         [TestCase(nameof(AllTypesModel.CharProperty), SortDirectionsEnum.Desc, typeof(char))]
@@ -109,28 +127,38 @@ namespace Tests.SeleniumTests.Tests
         // ---------------------------------------------------------------------------------------------------
         [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.Integer), SortDirectionsEnum.Asc, typeof(int))]
         [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.IntegerNullable), SortDirectionsEnum.Asc, typeof(int?))]
+#if USE_UTYPES
         [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.UInt), SortDirectionsEnum.Asc, typeof(uint))]
         [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.UIntNullable), SortDirectionsEnum.Asc, typeof(uint?))]
+#endif
         [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.Long), SortDirectionsEnum.Asc, typeof(long))]
         [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.LongNullable), SortDirectionsEnum.Asc, typeof(long?))]
+#if USE_UTYPES
         [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.ULong), SortDirectionsEnum.Asc, typeof(ulong))]
         [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.ULongNullable), SortDirectionsEnum.Asc, typeof(ulong?))]
+#endif
         [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.Short), SortDirectionsEnum.Asc, typeof(short))]
         [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.ShortNullable), SortDirectionsEnum.Asc, typeof(short?))]
+#if USE_UTYPES
         [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.UShort), SortDirectionsEnum.Asc, typeof(ushort))]
         [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.UShortNullable), SortDirectionsEnum.Asc, typeof(ushort?))]
+#endif
         [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.ByteProperty), SortDirectionsEnum.Asc, typeof(byte))]
         [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.ByteNullable), SortDirectionsEnum.Asc, typeof(byte?))]
+#if USE_STYPES
         [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.SByteProperty), SortDirectionsEnum.Asc, typeof(sbyte))]
         [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.SByteNullable), SortDirectionsEnum.Asc, typeof(sbyte?))]
+#endif
         [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.DoubleProperty), SortDirectionsEnum.Asc, typeof(double))]
         [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.DoubleNullable), SortDirectionsEnum.Asc, typeof(double?))]
         [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.DecimalProperty), SortDirectionsEnum.Asc, typeof(decimal))]
         [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.DecimalNullable), SortDirectionsEnum.Asc, typeof(decimal?))]
         [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.DateTimeProperty), SortDirectionsEnum.Asc, typeof(DateTime))]
         [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.DateTimeNullable), SortDirectionsEnum.Asc, typeof(DateTime?))]
+#if USE_DTOFFSET
         [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.DateTimeOffsetProperty), SortDirectionsEnum.Asc, typeof(DateTimeOffset))]
         [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.DateTimeOffsetNullable), SortDirectionsEnum.Asc, typeof(DateTimeOffset?))]
+#endif
         [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.BooleanProperty), SortDirectionsEnum.Asc, typeof(bool))]
         [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.BooleanNullable), SortDirectionsEnum.Asc, typeof(bool?))]
         [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.CharProperty), SortDirectionsEnum.Asc, typeof(char))]
@@ -138,28 +166,38 @@ namespace Tests.SeleniumTests.Tests
         // ---------------------------------------------------------------------------------------------------
         [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.Integer), SortDirectionsEnum.Desc, typeof(int))]
         [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.IntegerNullable), SortDirectionsEnum.Desc, typeof(int?))]
+#if USE_UTYPES
         [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.UInt), SortDirectionsEnum.Desc, typeof(uint))]
         [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.UIntNullable), SortDirectionsEnum.Desc, typeof(uint?))]
+#endif
         [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.Long), SortDirectionsEnum.Desc, typeof(long))]
         [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.LongNullable), SortDirectionsEnum.Desc, typeof(long?))]
+#if USE_UTYPES
         [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.ULong), SortDirectionsEnum.Desc, typeof(ulong))]
         [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.ULongNullable), SortDirectionsEnum.Desc, typeof(ulong?))]
+#endif
         [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.Short), SortDirectionsEnum.Desc, typeof(short))]
         [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.ShortNullable), SortDirectionsEnum.Desc, typeof(short?))]
+#if USE_UTYPES
         [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.UShort), SortDirectionsEnum.Desc, typeof(ushort))]
         [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.UShortNullable), SortDirectionsEnum.Desc, typeof(ushort?))]
+#endif
         [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.ByteProperty), SortDirectionsEnum.Desc, typeof(byte))]
         [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.ByteNullable), SortDirectionsEnum.Desc, typeof(byte?))]
+#if USE_STYPES
         [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.SByteProperty), SortDirectionsEnum.Desc, typeof(sbyte))]
         [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.SByteNullable), SortDirectionsEnum.Desc, typeof(sbyte?))]
+#endif
         [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.DoubleProperty), SortDirectionsEnum.Desc, typeof(double))]
         [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.DoubleNullable), SortDirectionsEnum.Desc, typeof(double?))]
         [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.DecimalProperty), SortDirectionsEnum.Desc, typeof(decimal))]
         [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.DecimalNullable), SortDirectionsEnum.Desc, typeof(decimal?))]
         [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.DateTimeProperty), SortDirectionsEnum.Desc, typeof(DateTime))]
         [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.DateTimeNullable), SortDirectionsEnum.Desc, typeof(DateTime?))]
+#if USE_DTOFFSET
         [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.DateTimeOffsetProperty), SortDirectionsEnum.Desc, typeof(DateTimeOffset))]
         [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.DateTimeOffsetNullable), SortDirectionsEnum.Desc, typeof(DateTimeOffset?))]
+#endif
         [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.BooleanProperty), SortDirectionsEnum.Desc, typeof(bool))]
         [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.BooleanNullable), SortDirectionsEnum.Desc, typeof(bool?))]
         [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.CharProperty), SortDirectionsEnum.Desc, typeof(char))]
