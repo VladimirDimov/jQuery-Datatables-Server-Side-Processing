@@ -69,7 +69,7 @@ namespace Tests.SeleniumTests.Tests
                 "CharProperty", "CharNullable", "Nested Model CharProperty", "Nested Model CharNullable"
             };
 
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 2; i++)
             {
                 this.navigator.AllTypesDataPage().GoTo("?showString=false");
                 var tableElement = new TableElement("table", this.driver);
