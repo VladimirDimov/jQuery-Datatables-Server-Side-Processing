@@ -37,15 +37,19 @@ namespace Tests.SeleniumTests.Tests
         [TestCase("Nested Model CharNullable", SortDirectionsEnum.Desc)]
         public void Sort_SholdWorkAppropriateForTextTypes(string columnName, SortDirectionsEnum direction)
         {
-            this.navigator.AllTypesDataPage().GoTo();
-            var tableElement = new TableElement("table", this.driver);
-            tableElement.ClickSortButton(columnName, direction);
+            ExceptionsHandler.Hande(() =>
+            {
+                this.navigator.AllTypesDataPage().GoTo();
+                var tableElement = new TableElement("table", this.driver);
+                tableElement.ClickSortButton(columnName, direction);
 
-            // Assert that rows are in correct order for the first page
-            AssertTextPropertyOrder(columnName, direction, tableElement);
-            tableElement.GoToLastPage();
-            // Assert that rows are in correct order for the last page
-            AssertTextPropertyOrder(columnName, direction, tableElement);
+                // Assert that rows are in correct order for the first page
+                AssertTextPropertyOrder(columnName, direction, tableElement);
+                tableElement.GoToLastPage();
+                // Assert that rows are in correct order for the last page
+                AssertTextPropertyOrder(columnName, direction, tableElement);
+            },
+            this.driver);
         }
 
         [Test]
@@ -204,30 +208,38 @@ namespace Tests.SeleniumTests.Tests
         [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.CharNullable), SortDirectionsEnum.Desc, typeof(char?))]
         public void Sort_SholdWorkAppropriateForNonTextTypes(string columnName, SortDirectionsEnum direction, Type propertyType)
         {
-            this.navigator.AllTypesDataPage().GoTo();
-            var tableElement = new TableElement("table", this.driver);
-            string columnHeader = columnName.StartsWith("NestedModel") ? this.GetHeaderForNestedModel(columnName) : columnName;
-            tableElement.ClickSortButton(columnHeader, direction);
+            ExceptionsHandler.Hande(() =>
+            {
+                this.navigator.AllTypesDataPage().GoTo();
+                var tableElement = new TableElement("table", this.driver);
+                string columnHeader = columnName.StartsWith("NestedModel") ? this.GetHeaderForNestedModel(columnName) : columnName;
+                tableElement.ClickSortButton(columnHeader, direction);
 
-            AssertNonTextPropertyOrder(columnName, columnHeader, direction, propertyType, tableElement);
-            tableElement.GoToLastPage();
-            AssertNonTextPropertyOrder(columnName, columnHeader, direction, propertyType, tableElement);
+                AssertNonTextPropertyOrder(columnName, columnHeader, direction, propertyType, tableElement);
+                tableElement.GoToLastPage();
+                AssertNonTextPropertyOrder(columnName, columnHeader, direction, propertyType, tableElement);
+            },
+            this.driver);
         }
 
         [Test]
         public void Sort_SholdWorkWithSubsecuentPropertiesSortOperations()
         {
-            string firstColumnName = "Integer";
-            string secondColumnName = "DoubleProperty";
+            ExceptionsHandler.Hande(() =>
+            {
+                string firstColumnName = "Integer";
+                string secondColumnName = "DoubleProperty";
 
-            this.navigator.AllTypesDataPage().GoTo();
-            var tableElement = new TableElement("table", this.driver);
-            tableElement.ClickSortButton(firstColumnName, SortDirectionsEnum.Asc);
-            tableElement.ClickSortButton(secondColumnName, SortDirectionsEnum.Asc);
+                this.navigator.AllTypesDataPage().GoTo();
+                var tableElement = new TableElement("table", this.driver);
+                tableElement.ClickSortButton(firstColumnName, SortDirectionsEnum.Asc);
+                tableElement.ClickSortButton(secondColumnName, SortDirectionsEnum.Asc);
 
-            AssertNonTextPropertyOrder(secondColumnName, secondColumnName, SortDirectionsEnum.Asc, typeof(double), tableElement);
-            tableElement.GoToLastPage();
-            AssertNonTextPropertyOrder(secondColumnName, secondColumnName, SortDirectionsEnum.Asc, typeof(double), tableElement);
+                AssertNonTextPropertyOrder(secondColumnName, secondColumnName, SortDirectionsEnum.Asc, typeof(double), tableElement);
+                tableElement.GoToLastPage();
+                AssertNonTextPropertyOrder(secondColumnName, secondColumnName, SortDirectionsEnum.Asc, typeof(double), tableElement);
+            },
+            this.driver);
         }
 
         private string GetHeaderForNestedModel(string columnName)
