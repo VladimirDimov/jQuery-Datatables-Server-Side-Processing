@@ -5,6 +5,7 @@
     using System.Linq;
     using System.Linq.Dynamic;
     using System.Linq.Expressions;
+    using System.Threading;
     using global::Tests.SeleniumTests.Enumerations;
     using NUnit.Framework;
     using OpenQA.Selenium;
@@ -54,46 +55,62 @@
             new object[]{ GetExpression(x => x.DecimalProperty), new Func<string, IComparable>(x => decimal.Parse(x)), RangeOperationTypesEnum.gt, null },
             new object[]{ GetExpression(x => x.DecimalNullable), new Func<string, IComparable>(x => decimal.Parse(x)), RangeOperationTypesEnum.gt, null  },
             new object[]{ GetExpression(x => x.DoubleProperty), new Func<string, IComparable>(x => double.Parse(x)), RangeOperationTypesEnum.gt, null  },
+#if USE_CHARTYPE
             new object[]{ GetExpression(x => x.CharProperty), new Func<string, IComparable>(x => char.Parse(x)), RangeOperationTypesEnum.gt, null  },
             new object[]{ GetExpression(x => x.CharNullable), new Func<string, IComparable>(x => char.Parse(x)), RangeOperationTypesEnum.gt, null  },
+#endif
             new object[]{ GetExpression(x => x.NestedModel.DecimalProperty), new Func<string, IComparable>(x => decimal.Parse(x)), RangeOperationTypesEnum.gt, null  },
             new object[]{ GetExpression(x => x.DateTimeProperty), new Func<string, IComparable>(x => DateTime.Parse(x)), RangeOperationTypesEnum.gt, new Func<object, string>(x => ((DateTime)x).ToString("r")) },
             new object[]{ GetExpression(x => x.DateTimeNullable), new Func<string, IComparable>(x => DateTime.Parse(x)), RangeOperationTypesEnum.gt, new Func<object, string>(x => ((DateTime)x).ToString("r")) },
+#if USE_DTOFFSET
             new object[]{ GetExpression(x => x.DateTimeOffsetProperty), new Func<string, IComparable>(x => DateTimeOffset.Parse(x)), RangeOperationTypesEnum.gt, new Func<object, string>(x => ((DateTimeOffset)x).ToString("r")) },
             new object[]{ GetExpression(x => x.DateTimeOffsetNullable), new Func<string, IComparable>(x => DateTimeOffset.Parse(x)), RangeOperationTypesEnum.gt, new Func<object, string>(x => ((DateTimeOffset)x).ToString("r")) },
+#endif
             // =================================================================================================================================================
             new object[]{ GetExpression(x => x.DecimalProperty), new Func<string, IComparable>(x => decimal.Parse(x)), RangeOperationTypesEnum.gte, null  },
             new object[]{ GetExpression(x => x.DecimalNullable), new Func<string, IComparable>(x => decimal.Parse(x)), RangeOperationTypesEnum.gte, null  },
             new object[]{ GetExpression(x => x.DoubleProperty), new Func<string, IComparable>(x => double.Parse(x)), RangeOperationTypesEnum.gte, null  },
+#if USE_CHARTYPE
             new object[]{ GetExpression(x => x.CharProperty), new Func<string, IComparable>(x => char.Parse(x)), RangeOperationTypesEnum.gte , null },
             new object[]{ GetExpression(x => x.CharNullable), new Func<string, IComparable>(x => char.Parse(x)), RangeOperationTypesEnum.gte, null  },
+#endif
             new object[]{ GetExpression(x => x.NestedModel.DecimalProperty), new Func<string, IComparable>(x => decimal.Parse(x)), RangeOperationTypesEnum.gte, null  },
             new object[]{ GetExpression(x => x.DateTimeProperty), new Func<string, IComparable>(x => DateTime.Parse(x)), RangeOperationTypesEnum.gte, new Func<object, string>(x => ((DateTime)x).ToString("r")) },
             new object[]{ GetExpression(x => x.DateTimeNullable), new Func<string, IComparable>(x => DateTime.Parse(x)), RangeOperationTypesEnum.gte, new Func<object, string>(x => ((DateTime)x).ToString("r")) },
+#if USE_DTOFFSET
             new object[]{ GetExpression(x => x.DateTimeOffsetProperty), new Func<string, IComparable>(x => DateTimeOffset.Parse(x)), RangeOperationTypesEnum.gte, new Func<object, string>(x => ((DateTimeOffset)x).ToString("r")) },
             new object[]{ GetExpression(x => x.DateTimeOffsetNullable), new Func<string, IComparable>(x => DateTimeOffset.Parse(x)), RangeOperationTypesEnum.gte, new Func<object, string>(x => ((DateTimeOffset)x).ToString("r")) },
+#endif
             // =================================================================================================================================================
             new object[]{ GetExpression(x => x.DecimalProperty), new Func<string, IComparable>(x => decimal.Parse(x)), RangeOperationTypesEnum.lt, null  },
             new object[]{ GetExpression(x => x.DecimalNullable), new Func<string, IComparable>(x => decimal.Parse(x)), RangeOperationTypesEnum.lt, null  },
             new object[]{ GetExpression(x => x.DoubleProperty), new Func<string, IComparable>(x => double.Parse(x)), RangeOperationTypesEnum.lt, null  },
+#if USE_CHARTYPE
             new object[]{ GetExpression(x => x.CharProperty), new Func<string, IComparable>(x => char.Parse(x)), RangeOperationTypesEnum.lt, null  },
             new object[]{ GetExpression(x => x.CharNullable), new Func<string, IComparable>(x => char.Parse(x)), RangeOperationTypesEnum.lt, null  },
+#endif
             new object[]{ GetExpression(x => x.NestedModel.DecimalProperty), new Func<string, IComparable>(x => decimal.Parse(x)), RangeOperationTypesEnum.lt, null  },
             new object[]{ GetExpression(x => x.DateTimeProperty), new Func<string, IComparable>(x => DateTime.Parse(x)), RangeOperationTypesEnum.lt, new Func<object, string>(x => ((DateTime)x).ToString("r")) },
             new object[]{ GetExpression(x => x.DateTimeNullable), new Func<string, IComparable>(x => DateTime.Parse(x)), RangeOperationTypesEnum.lt, new Func<object, string>(x => ((DateTime)x).ToString("r")) },
+#if USE_DTOFFSET
             new object[]{ GetExpression(x => x.DateTimeOffsetProperty), new Func<string, IComparable>(x => DateTimeOffset.Parse(x)), RangeOperationTypesEnum.lt, new Func<object, string>(x => ((DateTimeOffset)x).ToString("r")) },
             new object[]{ GetExpression(x => x.DateTimeOffsetNullable), new Func<string, IComparable>(x => DateTimeOffset.Parse(x)), RangeOperationTypesEnum.lt, new Func<object, string>(x => ((DateTimeOffset)x).ToString("r")) },
+#endif
             // =================================================================================================================================================
             new object[]{ GetExpression(x => x.DecimalProperty), new Func<string, IComparable>(x => decimal.Parse(x)), RangeOperationTypesEnum.lte, null  },
             new object[]{ GetExpression(x => x.DecimalNullable), new Func<string, IComparable>(x => decimal.Parse(x)), RangeOperationTypesEnum.lte, null  },
             new object[]{ GetExpression(x => x.DoubleProperty), new Func<string, IComparable>(x => double.Parse(x)), RangeOperationTypesEnum.lte, null  },
+#if USE_CHARTYPE
             new object[]{ GetExpression(x => x.CharProperty), new Func<string, IComparable>(x => char.Parse(x)), RangeOperationTypesEnum.lte, null  },
             new object[]{ GetExpression(x => x.CharNullable), new Func<string, IComparable>(x => char.Parse(x)), RangeOperationTypesEnum.lte, null  },
+#endif
             new object[]{ GetExpression(x => x.NestedModel.DecimalProperty), new Func<string, IComparable>(x => decimal.Parse(x)), RangeOperationTypesEnum.lte, null  },
             new object[]{ GetExpression(x => x.DateTimeProperty), new Func<string, IComparable>(x => DateTime.Parse(x)), RangeOperationTypesEnum.lte, new Func<object, string>(x => ((DateTime)x).ToString("r")) },
             new object[]{ GetExpression(x => x.DateTimeNullable), new Func<string, IComparable>(x => DateTime.Parse(x)), RangeOperationTypesEnum.lte, new Func<object, string>(x => ((DateTime)x).ToString("r")) },
+#if USE_DTOFFSET
             new object[]{ GetExpression(x => x.DateTimeOffsetProperty), new Func<string, IComparable>(x => DateTimeOffset.Parse(x)), RangeOperationTypesEnum.lte, new Func<object, string>(x => ((DateTimeOffset)x).ToString("r")) },
             new object[]{ GetExpression(x => x.DateTimeOffsetNullable), new Func<string, IComparable>(x => DateTimeOffset.Parse(x)), RangeOperationTypesEnum.lte, new Func<object, string>(x => ((DateTimeOffset)x).ToString("r")) },
+#endif
         };
 
         [Test, TestCaseSource(nameof(singleRangeConditionShouldWorkProperlyCases))]
@@ -175,11 +192,12 @@
             filterContainer.Lt(column, "10");
 
             table.ClickSortButton(column);
-            var resultColumnValues = table.GetColumnRowValues(column).Select(x => int.Parse(x));
+            Thread.Sleep(GlobalConstants.GlobalThreadSleep);
+            var resultColumnValues = table.GetColumnRowValuesUntilAny(column).Select(x => int.Parse(x));
             Assert.IsTrue(resultColumnValues.All(x => 5 < x && x < 10));
 
             table.ClickSortButton(column);
-            resultColumnValues = table.GetColumnRowValues(column).Select(x => int.Parse(x));
+            resultColumnValues = table.GetColumnRowValuesUntilAny(column).Select(x => int.Parse(x));
             Assert.IsTrue(resultColumnValues.All(x => 5 < x && x < 10));
         }
 
@@ -187,31 +205,31 @@
         public void MultipleCustomFiltersOnTwoColumns()
         {
             var firstColumn = "Integer";
-            var secondColumn = "CharProperty";
+            var secondColumn = "IntegerNullable";
 
             this.navigator.AllTypesDataPage().GoTo();
             var table = new TableElement("table", this.driver);
             var filterContainer = new CustomFilterContainer(this.driver, "#custom-filters-container");
             filterContainer.Gt(firstColumn, "5");
-            filterContainer.Lt(firstColumn, "10");
-            filterContainer.Gte(secondColumn, "a");
-            filterContainer.Lte(secondColumn, "j");
+            filterContainer.Lt(firstColumn, "70");
+            filterContainer.Gte(secondColumn, "20");
+            filterContainer.Lte(secondColumn, "50");
 
             table.ClickSortButton(firstColumn);
-            var resultFirstColumnValues = table.GetColumnRowValues(firstColumn).Select(x => int.Parse(x));
-            Assert.IsTrue(resultFirstColumnValues.All(x => 5 < x && x < 10));
+            var resultFirstColumnValues = table.GetColumnRowValuesUntilAny(firstColumn).Select(x => int.Parse(x));
+            Assert.IsTrue(resultFirstColumnValues.All(x => 5 < x && x < 70));
 
             table.ClickSortButton(firstColumn);
-            resultFirstColumnValues = table.GetColumnRowValues(firstColumn).Select(x => int.Parse(x));
-            Assert.IsTrue(resultFirstColumnValues.All(x => 5 < x && x < 10));
+            resultFirstColumnValues = table.GetColumnRowValuesUntilAny(firstColumn).Select(x => int.Parse(x));
+            Assert.IsTrue(resultFirstColumnValues.All(x => 5 < x && x < 70));
 
             table.ClickSortButton(secondColumn);
-            var resultsecondColumnValues = table.GetColumnRowValues(secondColumn).Select(x => char.Parse(x));
-            Assert.IsTrue(resultsecondColumnValues.All(x => 'a' <= x && x <= 'j'));
+            var resultsecondColumnValues = table.GetColumnRowValuesUntilAny(secondColumn).Select(x => int.Parse(x));
+            Assert.IsTrue(resultsecondColumnValues.All(x => 20 <= x && x <= 50));
 
             table.ClickSortButton(firstColumn);
-            resultsecondColumnValues = table.GetColumnRowValues(secondColumn).Select(x => char.Parse(x));
-            Assert.IsTrue(resultsecondColumnValues.All(x => 'a' <= x && x <= 'j'));
+            resultsecondColumnValues = table.GetColumnRowValuesUntilAny(secondColumn).Select(x => int.Parse(x));
+            Assert.IsTrue(resultsecondColumnValues.All(x => 20 <= x && x <= 50));
         }
 
         private static Expression<Func<AllTypesModel, IComparable>> GetExpression(Expression<Func<AllTypesModel, IComparable>> expr)

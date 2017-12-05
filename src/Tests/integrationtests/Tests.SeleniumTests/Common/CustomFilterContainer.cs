@@ -43,7 +43,7 @@ namespace Tests.SeleniumTests.Common
         private void GenericInput(string property, string text, string filterType)
         {
             property = property.Replace('.', '-');
-            var inputElement = this.filtersContainer.FindElementByCssSelector($"#custom-filter-{property} [data-{filterType}]");
+            var inputElement = this.driver.FindElementByCssSelector($"#custom-filter-{property} [data-{filterType}]");
             inputElement.SendKeys(text);
             inputElement.SendKeys(Keys.Enter);
             Thread.Sleep(GlobalConstants.GlobalThreadSleep);
