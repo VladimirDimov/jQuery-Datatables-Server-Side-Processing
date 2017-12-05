@@ -150,7 +150,7 @@
             }
 
             Thread.Sleep(GlobalConstants.GlobalThreadSleep);
-            var columnFilteredValues = table.GetColumnRowValues(colName);
+            var columnFilteredValues = table.GetColumnRowValuesUntilAny(colName);
             var parsedValues = columnFilteredValues.Select(parseFunc);
 
             Assert.IsNotEmpty(parsedValues);
