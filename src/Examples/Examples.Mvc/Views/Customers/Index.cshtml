@@ -1,0 +1,81 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<table class="display" cellspacing="0" width="100%">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>First Name</th>
+            <th>Store Name</th>
+        </tr>
+    </thead>
+
+    <tfoot>
+        <tr>
+            <th>Id</th>
+            <th>First Name</th>
+            <th>Store Name</th>
+        </tr>
+    </tfoot>
+</table>
+
+@section Scripts {
+    <script>
+        $('tfoot th').each(function () {
+            var title = $(this).text();
+            $(this).html('<input type="text" placeholder="Search ' + title + '" />');
+        });
+
+        var table = $('table').DataTable({
+            "proccessing": true,
+            "serverSide": true,
+            "ajax": {
+                url: "@Url.Action("GetCustomersData", "Customers")",
+                type: 'POST'
+            },
+            "language": {
+                "search": "",
+                "searchPlaceholder": "Search..."
+            },
+           "columns": [
+               { "data": "CustomerID", "searchable": false },
+               { "data": "Person.FirstName", "searchable": true },
+               { "data": "Store.Name", "searchable": true },
+            ],
+            //"columnDefs": [
+            //    {
+            //        "render": function (data, type, row) {
+            //            date = new Date(parseInt(row.ModifiedDate.replace("/Date(", "").replace(")/", ""), 10));
+
+            //            return date.toISOString();
+            //        },
+            //        "targets": 4
+            //    },
+            //    {
+            //        "render": function (data, type, row) {
+            //            if (!row.DiscontinuedDate) return '';
+            //            date = new Date(parseInt(row.DiscontinuedDate.replace("/Date(", "").replace(")/", ""), 10));
+
+            //            return date.toLocaleDateString();
+            //        },
+            //        "targets": 5
+            //    }
+            //]
+        });
+
+        table.columns().every(function () {
+            var that = this;
+
+            $('input', this.footer()).on('change', function () {
+                if (that.search() !== this.value) {
+                    that
+                        .search(this.value)
+                        .draw();
+                }
+            });
+        });
+    </script>
+}

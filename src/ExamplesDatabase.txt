@@ -1,0 +1,2 @@
+Download examples database from here, restore it and fix the connection string in the web.config file of the Examples.Mvc project.
+https://msftdbprodsamples.codeplex.com/downloads/get/880661
