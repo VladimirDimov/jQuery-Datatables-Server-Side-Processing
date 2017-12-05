@@ -1,5 +1,7 @@
 ﻿namespace Tests.Integration.Mvc
 {
+    using System.Data.Entity;
+
 #if TEST_SQL
 
     using System.Linq;
@@ -11,6 +13,7 @@
     using System.Web.Routing;
     using TestData.Data;
     using Tests.Integration.Mvc.Controllers;
+    using Tests.Integration.Mvc.EntityFrameworkClasses;
 
     public class MvcApplication : System.Web.HttpApplication
     {
@@ -28,13 +31,15 @@
         {
             var data = DataGenerator.GenerateSimpleData(1000, 200);
 #if TEST_SQL
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion<AppContext, Migrations.Configuration>());
+
             var context = new EntityFrameworkClasses.AppContext();
             if (!context.AllTypesModels.Any())
             {
                 context.Seed(data);
             }
 
-            HomeController.Data = context.AllTypesModels;
+            HomeController.Data = context.AllTypesModels.Where(x => x.NestedModel != null);
 #else
             HomeController.Data = data;
 #endif

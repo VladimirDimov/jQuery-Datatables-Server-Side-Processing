@@ -29,5 +29,12 @@
                 }
             }
         }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<AllTypesModel>().Property(x => x.DecimalProperty).HasPrecision(16, 16);
+
+            base.OnModelCreating(modelBuilder);
+        }
     }
 }

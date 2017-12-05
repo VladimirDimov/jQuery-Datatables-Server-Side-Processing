@@ -15,13 +15,26 @@ namespace Tests.SeleniumTests.Common
                 return (T)cachedData[typeof(T)];
             }
 
-            var http = new HttpClient();
-            var result = http.GetAsync(url).Result;
-            var jsonString = result.Content.ReadAsStringAsync().Result;
-            var json = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(jsonString);
-            cachedData.Add(typeof(T), json);
+            Exception outerEx = null; ;
+            for (int i = 0; i < 5; i++)
+            {
+                try
+                {
+                    var http = new HttpClient();
+                    var result = http.GetAsync(url).Result;
+                    var jsonString = result.Content.ReadAsStringAsync().Result;
+                    Console.WriteLine(jsonString);
+                    var json = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(jsonString);
+                    cachedData.Add(typeof(T), json);
+                    return json;
+                }
+                catch (Exception ex)
+                {
+                    outerEx = ex;
+                }
+            }
 
-            return json;
+            throw outerEx;
         }
     }
 }

@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Linq.Expressions;
+    using System.Threading;
     using global::Tests.SeleniumTests.Enumerations;
     using NUnit.Framework;
     using OpenQA.Selenium;
@@ -27,20 +28,28 @@
             new object[]  { GetExpression(x => x.StringProperty) , ComparissonTypesEnum.Contains },
             new object[]  { GetExpression(x => x.IntegerNullable) , ComparissonTypesEnum.Equal },
             new object[]  { GetExpression(x => x.IntegerNullable) , ComparissonTypesEnum.Equal },
+#if USE_UTYPES
             new object[]  { GetExpression(x => x.UInt) , ComparissonTypesEnum.Equal },
             new object[]  { GetExpression(x => x.UIntNullable) , ComparissonTypesEnum.Equal },
+#endif
             new object[]  { GetExpression(x => x.Long) , ComparissonTypesEnum.Equal },
             new object[]  { GetExpression(x => x.LongNullable) , ComparissonTypesEnum.Equal },
+#if USE_UTYPES
             new object[]  { GetExpression(x => x.ULong) , ComparissonTypesEnum.Equal },
             new object[]  { GetExpression(x => x.ULongNullable) , ComparissonTypesEnum.Equal },
+#endif
             new object[]  { GetExpression(x => x.Short) , ComparissonTypesEnum.Equal },
             new object[]  { GetExpression(x => x.ShortNullable) , ComparissonTypesEnum.Equal },
+#if USE_UTYPES
             new object[]  { GetExpression(x => x.UShort) , ComparissonTypesEnum.Equal },
             new object[]  { GetExpression(x => x.UShortNullable) , ComparissonTypesEnum.Equal },
+#endif
             new object[]  { GetExpression(x => x.ByteProperty) , ComparissonTypesEnum.Equal },
             new object[]  { GetExpression(x => x.ByteNullable) , ComparissonTypesEnum.Equal },
+#if USE_STYPES
             new object[]  { GetExpression(x => x.SByteProperty) , ComparissonTypesEnum.Equal },
             new object[]  { GetExpression(x => x.SByteNullable) , ComparissonTypesEnum.Equal },
+#endif
             //new object[]  { GetExpression(x => x.DoubleProperty) , ComparissonTypesEnum.Equal },
             //new object[]  { GetExpression(x => x.DoubleNullable) , ComparissonTypesEnum.Equal },
             new object[]  { GetExpression(x => x.DecimalProperty) , ComparissonTypesEnum.Equal },
@@ -53,16 +62,22 @@
             new object[]  { GetExpression(x => x.NestedModel.StringProperty) , ComparissonTypesEnum.Contains },
             new object[]  { GetExpression(x => x.NestedModel.IntegerNullable) , ComparissonTypesEnum.Equal },
             new object[]  { GetExpression(x => x.NestedModel.IntegerNullable) , ComparissonTypesEnum.Equal },
+#if USE_UTYPES
             new object[]  { GetExpression(x => x.NestedModel.UInt) , ComparissonTypesEnum.Equal },
             new object[]  { GetExpression(x => x.NestedModel.UIntNullable) , ComparissonTypesEnum.Equal },
+#endif
             new object[]  { GetExpression(x => x.NestedModel.Long) , ComparissonTypesEnum.Equal },
             new object[]  { GetExpression(x => x.NestedModel.LongNullable) , ComparissonTypesEnum.Equal },
+#if USE_UTYPES
             new object[]  { GetExpression(x => x.NestedModel.ULong) , ComparissonTypesEnum.Equal },
             new object[]  { GetExpression(x => x.NestedModel.ULongNullable) , ComparissonTypesEnum.Equal },
+#endif
             new object[]  { GetExpression(x => x.NestedModel.Short) , ComparissonTypesEnum.Equal },
             new object[]  { GetExpression(x => x.NestedModel.ShortNullable) , ComparissonTypesEnum.Equal },
+#if USE_UTYPES
             new object[]  { GetExpression(x => x.NestedModel.UShort) , ComparissonTypesEnum.Equal },
             new object[]  { GetExpression(x => x.NestedModel.UShortNullable) , ComparissonTypesEnum.Equal },
+#endif
             new object[]  { GetExpression(x => x.NestedModel.ByteProperty) , ComparissonTypesEnum.Equal },
             new object[]  { GetExpression(x => x.NestedModel.ByteNullable) , ComparissonTypesEnum.Equal },
             new object[]  { GetExpression(x => x.NestedModel.SByteProperty) , ComparissonTypesEnum.Equal },
@@ -91,7 +106,7 @@
             var table = new TableElement("table", this.driver);
             var filterValue = this.GetRandomValue(selector.Compile());
             table.TypeInInput($"#{inputId}", filterValue.ToString());
-            var columnValues = table.GetColumnRowValues(columnName);
+            var columnValues = table.GetColumnRowValuesUntilAny(columnName);
             this.AssertColumnValues(columnValues, filterValue, comparissonType);
         }
 
@@ -99,8 +114,10 @@
         {
             new object[]  { GetExpression(x => x.DateTimeProperty) , ComparissonTypesEnum.DateTime },
             new object[]  { GetExpression(x => x.DateTimeNullable) , ComparissonTypesEnum.DateTime },
+#if USE_DTOFFSET
             new object[]  { GetExpression(x => x.DateTimeOffsetProperty) , ComparissonTypesEnum.DateTimeOffset },
             new object[]  { GetExpression(x => x.DateTimeOffsetNullable) , ComparissonTypesEnum.DateTimeOffset },
+#endif
         };
 
         [Test, TestCaseSource(nameof(searchByColumnShouldWorkProperlyDateTimesParameters))]
@@ -113,8 +130,9 @@
             var filterValueObj = this.GetRandomValue(selector.Compile());
             var filterValueDT = comparissonType == ComparissonTypesEnum.DateTime ? (DateTime)filterValueObj : ((DateTimeOffset)filterValueObj).DateTime;
 
+            Thread.Sleep(GlobalConstants.GlobalThreadSleep);
             table.TypeInInput($"#{inputId}", filterValueDT.ToString("r"));
-            var columnValues = table.GetColumnRowValues(columnName);
+            var columnValues = table.GetColumnRowValuesUntilAny(columnName);
             this.AssertColumnValues(columnValues, filterValueObj, comparissonType);
         }
 
@@ -137,7 +155,7 @@
             table.TypeInInput($"#{firstInputId}", filterValue.ToString());
 
             string secondColumnName = this.GetColumnName(selectors.Last());
-            var secondColumnValues = table.GetColumnRowValues(secondColumnName);
+            var secondColumnValues = table.GetColumnRowValuesUntilAny(secondColumnName);
             var secondFilterValue = secondColumnValues.First();
             var secondInputId = "column-search-" + secondColumnName.Replace(' ', '-');
             table.TypeInInput($"#{secondInputId}", secondFilterValue);
@@ -179,7 +197,7 @@
 
         private void AssertColumnValues(IEnumerable<string> columnValues, object filterValue, ComparissonTypesEnum comparissonType)
         {
-            Assert.IsNotEmpty(columnValues);
+            Assert.IsNotEmpty(columnValues, $"Filter value: {filterValue}");
 
             switch (comparissonType)
             {

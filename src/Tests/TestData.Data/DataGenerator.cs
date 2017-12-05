@@ -88,8 +88,13 @@
 
                 DateTimeProperty = RandomDate(max),
                 DateTimeNullable = RandomiseNullable(RandomDate(max)),
+#if USE_DTOFFSET
                 DateTimeOffsetProperty = RandomDateTimeOffset(max),
                 DateTimeOffsetNullable = RandomiseNullable(RandomDateTimeOffset(max))
+#else
+                DateTimeOffsetProperty = RandomDate(max),
+                DateTimeOffsetNullable = RandomiseNullable(RandomDate(max)),
+#endif
             };
 
             return itemToAdd;

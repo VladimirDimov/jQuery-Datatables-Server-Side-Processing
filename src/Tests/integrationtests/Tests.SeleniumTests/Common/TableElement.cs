@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
 using Tests.SeleniumTests.Enumerations;
 using Tests.SeleniumTests.ExtensionMethods;
@@ -61,6 +62,24 @@ namespace Tests.SeleniumTests.Common
             return columnValues;
         }
 
+        public IEnumerable<string> GetColumnRowValuesUntilAny(string columnName)
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                var columnValues = this.GetColumnRowValues(columnName);
+
+                if (columnValues.Any())
+                {
+                    return columnValues;
+                }
+
+                Thread.Sleep(GlobalConstants.GlobalThreadSleep);
+            }
+
+            Assert.Fail("Unexpected empty result");
+            return new List<string>();
+        }
+
         public ReadOnlyCollection<IWebElement> GetRowElements()
         {
             return this.table.FindElementsByCssSelector("tbody tr");
@@ -85,6 +104,7 @@ namespace Tests.SeleniumTests.Common
             var input = this.table.FindElementByCssSelector(inputCssSelector);
             input.SendKeys(value);
             input.SendKeys(Keys.Enter);
+            Thread.Sleep(GlobalConstants.GlobalThreadSleep);
             Thread.Sleep(GlobalConstants.GlobalThreadSleep);
         }
     }

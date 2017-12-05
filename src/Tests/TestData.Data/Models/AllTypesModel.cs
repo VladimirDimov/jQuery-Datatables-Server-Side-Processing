@@ -1,9 +1,12 @@
 ﻿namespace TestData.Models
 {
     using System;
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
 
     public class AllTypesModel
     {
+        [Key]
         public int Id { get; set; }
 
         public string StringProperty { get; set; }
@@ -52,9 +55,13 @@
 
         public DateTime DateTimeProperty { get; set; }
         public DateTime? DateTimeNullable { get; set; }
+#if USE_DTOFFSET
         public DateTimeOffset DateTimeOffsetProperty { get; set; }
         public DateTimeOffset? DateTimeOffsetNullable { get; set; }
-
+#else
+        public DateTime DateTimeOffsetProperty { get; set; }
+        public DateTime? DateTimeOffsetNullable { get; set; }
+#endif
         public bool BooleanProperty { get; set; }
         public bool? BooleanNullable { get; set; }
 #if USE_CHARTYPE
@@ -64,6 +71,8 @@
         public string CharProperty { get; set; }
         public string CharNullable { get; set; }
 #endif
-        public AllTypesModel NestedModel { get; set; }
+
+        public int? NestedModelId { get; set; }
+        public virtual AllTypesModel NestedModel { get; set; }
     }
 }
