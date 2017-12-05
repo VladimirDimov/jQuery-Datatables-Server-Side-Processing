@@ -86,8 +86,10 @@
         [TestCase("DateTimeOffsetNullable", null)]
         [TestCase("BooleanProperty", "true")]
         [TestCase("BooleanNullable", "false")]
+#if USE_CHARTYPE
         [TestCase("CharProperty", null)]
         [TestCase("CharNullable", null)]
+#endif
         public void ColumnFilter_ShouldWorkAppropriateWithAllSupportedTypesNoNestedProperties(string column, string searchValue)
         {
             var data = DataGenerator.GenerateSimpleData(1000);
