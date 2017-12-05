@@ -149,6 +149,7 @@
                     break;
             }
 
+            Thread.Sleep(GlobalConstants.GlobalThreadSleep);
             var columnFilteredValues = table.GetColumnRowValues(colName);
             var parsedValues = columnFilteredValues.Select(parseFunc);
 
@@ -197,6 +198,7 @@
             Assert.IsTrue(resultColumnValues.All(x => 5 < x && x < 10));
 
             table.ClickSortButton(column);
+            Thread.Sleep(GlobalConstants.GlobalThreadSleep);
             resultColumnValues = table.GetColumnRowValuesUntilAny(column).Select(x => int.Parse(x));
             Assert.IsTrue(resultColumnValues.All(x => 5 < x && x < 10));
         }
