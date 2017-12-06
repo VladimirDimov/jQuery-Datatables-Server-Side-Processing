@@ -8,8 +8,13 @@ Supports:
 - Custom filters: Less Than, Less than or equal, Greater than, Greater than or equal and Equal;
 - Nested objects;
 
+Currently tested with Entity Framework 6.0.0 and 6.2.0 
+
+## Install
+// TODO:
+
 ## How to use
-Add the `[JQDataTable]` attribute to the ajax controller action. Return 'View(data)' where 'data' is of type IQueryable<>
+Add the `[JQDataTable]` attribute to the ajax controller action. Return 'View(data)' where 'data' is of type IQueryable<>. On the client side configure the table for server side processing acccording to the jQuery Data Tables documentation https://datatables.net/examples/data_sources/server_side.html.
 
 ### Example
 
