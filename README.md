@@ -8,6 +8,6 @@ Supports:
 - Custom filters: Less Than, Less than or equal, Greater than, Greater than or equal and Equal;
 - Nested objects;
 
-Currently tested with Entity Framework 6.0.0 and 6.2.0 
+Currently tested with Entity Framework versions 6.0.0 and 6.2.0 and Datatables version 1.10.16.
 
 
