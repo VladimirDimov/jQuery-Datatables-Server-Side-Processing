@@ -1,9 +1,9 @@
 ﻿namespace Examples.Mvc.Controllers
 {
-    using System;
     using System.Linq;
     using System.Web.Mvc;
     using Examples.Data;
+    using Examples.Mvc.ViewModels;
     using JQDT.MVC;
 
     public class ProductsController : Controller
@@ -53,54 +53,5 @@
 
             return this.View(data);
         }
-    }
-
-    public partial class ProductViewModel
-    {
-        public string Name { get; set; }
-
-        public string Color { get; set; }
-
-        public short ReorderPoint { get; set; }
-
-        public decimal ListPrice { get; set; }
-
-        public int DaysToManufacture { get; set; }
-
-        public DateTime SellStartDate { get; set; }
-
-        public DateTime? DiscontinuedDate { get; set; }
-
-        public virtual UnitMeasureViewModel UnitMeasure { get; set; }
-
-        public virtual ProductModelViewModel ProductModel { get; set; }
-
-        public virtual ProductSubcategoryViewModel ProductSubcategory { get; set; }
-    }
-
-    public partial class UnitMeasureViewModel
-    {
-        public string Name { get; set; }
-    }
-
-    public partial class ProductModelViewModel
-    {
-        public string Name { get; set; }
-
-        public DateTime? ModifiedDate { get; set; }
-    }
-
-    public partial class ProductSubcategoryViewModel
-    {
-        public string Name { get; set; }
-
-        public virtual ProductCategoryViewModel ProductCategory { get; set; }
-    }
-
-    public partial class ProductCategoryViewModel
-    {
-        public int ProductCategoryID { get; set; }
-
-        public string Name { get; set; }
     }
 }

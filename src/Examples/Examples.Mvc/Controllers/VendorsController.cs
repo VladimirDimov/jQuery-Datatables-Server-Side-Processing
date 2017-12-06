@@ -1,11 +1,10 @@
-﻿using System.Linq;
-using System.Web.Mvc;
-using Examples.Data;
-using Examples.Data.ViewModels;
-using JQDT.MVC;
-
-namespace Examples.Mvc.Controllers
+﻿namespace Examples.Mvc.Controllers
 {
+    using System.Linq;
+    using System.Web.Mvc;
+    using Examples.Data;
+    using JQDT.MVC;
+
     public class VendorsController : Controller
     {
         private readonly AdventureWorks context;
@@ -13,7 +12,7 @@ namespace Examples.Mvc.Controllers
         public VendorsController()
         {
             this.context = new Examples.Data.AdventureWorks();
-        }     
+        }
 
         public ActionResult Index()
         {
