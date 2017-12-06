@@ -1,7 +1,7 @@
 ## Install
-Install appropriate nuget package:
-- for MVC: link
+[Install nuget package](http://link)
 
+`Install-Package JQDTServerSide.Mvc`
 ## How to use
 Add the `[JQDataTable]` attribute to the ajax controller action. Return 'View(data)' where 'data' is of type IQueryable<>. On the client side configure the table for server side processing acccording to the jQuery Data Tables documentation https://datatables.net/examples/data_sources/server_side.html.
 
@@ -9,70 +9,88 @@ Add the `[JQDataTable]` attribute to the ajax controller action. Return 'View(da
 
 #### Server
 ```cs
-        private ApplicationDbContext context;
-        
-        [JQDataTable]
-        public ActionResult GetVendorsData()
+    public class CustomersController : Controller
+    {
+        private AdventureWorks context;
+
+        public CustomersController()
         {
-            var data = this.context.Employees.Select(x => new
+            this.context = new Data.AdventureWorks();
+        }
+
+        // GET: Customer
+        public ActionResult Index()
+        {
+            return View();
+        }
+
+        [JQDataTable]
+        public ActionResult GetCustomersData()
+        {
+            var data = this.context.Customers.Select(x => new CustomerViewModel
             {
-                FirstName = x.FirstName,
-                LastName = x.LastName,
-                Address = new AddressViewModel
+                CustomerID = x.CustomerID,
+                AccountNumber = x.AccountNumber,
+                Person = new PersonViewModel
                 {
-                    Country = x.Address.Country,
-                    City = x.Address.City
+                    FirstName = x.Person.FirstName,
+                    LastName = x.Person.LastName,
+                },
+                Store = new StoreViewModel
+                {
+                    Name = x.Store.Name,
                 }
             });
 
             return this.View(data);
         }
+    }
 ```
 
 #### Client
 ```html
-        <table id="myTable" class="display" cellspacing="0" width="100">
-            <thead>
-                <tr>
-                    <th>Title</th>
-                    <th>FirstName</th>
-                    <th>MiddleName</th>
-                    <th>LastName</th>
-                    <th>BusinessEntityID</th>
-                </tr>
-            </thead>
-            <tfoot>
-                <tr>
-                    <th>Title</th>
-                    <th>FirstName</th>
-                    <th>MiddleName</th>
-                    <th>LastName</th>
-                    <th>BusinessEntityID</th>
-                </tr>
-            </tfoot>
-        </table>
+<table class="display" cellspacing="0" width="100%">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Store Name</th>
+        </tr>
+    </thead>
 
-        @section Scripts {
-            <script>
-                var table = $('#myTable').DataTable({
-                    "proccessing": true,
-                    "serverSide": true,
-                    "ajax": {
-                        url: "@Url.Action("GetPeopleData", "AdventureWorks")",
-                        type: 'POST'
-                    },
-                    "language": {
-                        "search": "",
-                        "searchPlaceholder": "Search..."
-                    },
-                   "columns": [
-                       { "data": "Title" },
-                       { "data": "FirstName" },
-                       { "data": "MiddleName" },
-                       { "data": "LastName"},
-                       { "data": "Employee.BusinessEntityID"},
-                    ]
-                });
-            </script>
-        }
+    <tfoot>
+        <tr>
+            <th>Id</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Store Name</th>
+        </tr>
+    </tfoot>
+</table>
+
+@section Scripts {
+    <script>
+
+        var table = $('table').DataTable({
+            "proccessing": true,
+            "serverSide": true,
+            "ajax": {
+                url: "@Url.Action("GetCustomersData", "Customers")",
+                type: 'POST'
+            },
+            "language": {
+                "search": "",
+                "searchPlaceholder": "Search..."
+            },
+           "columns": [
+               { "data": "CustomerID", "searchable": false },
+               { "data": "Person.FirstName", "searchable": true },
+               { "data": "Person.LastName", "searchable": true },
+               { "data": "Store.Name", "searchable": true },
+            ]
+        });
+
+    </script>
+}
 ```
