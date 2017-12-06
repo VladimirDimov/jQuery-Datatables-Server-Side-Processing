@@ -1,24 +1,24 @@
 <?xml version="1.0"?>
 <package >
   <metadata>
-    <id>JQDTServerSide</id>
-    <version>1.0.0</version>
+    <id>JQDTServerSide.MVC</id>
+    <version>1.0.0-rc</version>
     <authors>Vladimir Dimov</authors>
     <owners>Vladimir Dimov</owners>
     <licenseUrl>https://github.com/VladimirDimov/jQuery-Datatables-Server-Side-Processing/blob/master/License.md</licenseUrl>
     <projectUrl>https://github.com/VladimirDimov/jQuery-Datatables-Server-Side-Processing</projectUrl>
     <!--<iconUrl></iconUrl>-->
-    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Plugin for server side processing of the jQuery Data Tables ajax request. Builds IQueryable object which can be processed by an ORM framework like Entity Framework.</description>
     <releaseNotes></releaseNotes>
     <copyright>Copyright 2016</copyright>
     <tags>data table datatable serverside jquery datatables data-tables mvc asp mvc5 server side server-side</tags>
     <dependencies>
-      <dependency id=".NET 4.5" version="5.2.3.0" />
+      <!-- <dependency id="net45" version="4.5" /> -->
     </dependencies>
   </metadata>
   <files>
-    <file src="JQDT.MVC\bin\Release\JQDT.MVC.dll" target="release\1.0.0\lib\JQDT.MVC.dll"/>
-    <file src="JQDT.MVC\bin\Release\JQDT.dll" target="release\1.0.0\lib\JQDT.dll"/>
+    <file src="JQDT.MVC\bin\Release\JQDT.MVC.dll" target="lib\JQDTServerSide\MVC\JQDT.MVC.dll"/>
+    <file src="JQDT.MVC\bin\Release\JQDT.dll" target="lib\JQDTServerSide\MVC\JQDT.dll"/>
   </files>
 </package>
