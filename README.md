@@ -1,10 +1,12 @@
 # jQuery Datatables Server Side Processing
-MVC plugin for server side processing for jQuery datatables.
+MVC component which adds functionality for automatic server side processing for the famous table plugin for jQuery.
 
 Supports:
-- Searching.
-- Filter by range.
-- Filter by fixed value
+- Paging;
+- Searching;
+- Sorting;
+- Custom filters: Less Than, Less than or equal, Greater than, Greater than or equal and Equal;
+- Nested objects;
 
 ## How to use
 Add the `[JQDataTable]` attribute to the ajax controller action. Return 'View(data)' where 'data' is of type IQueryable<>
