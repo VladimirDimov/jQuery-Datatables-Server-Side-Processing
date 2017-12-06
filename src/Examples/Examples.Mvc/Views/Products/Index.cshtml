@@ -1,0 +1,99 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<table id="SearchResultTable" class="display" cellspacing="0" width="100%">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Color</th>
+            <th>ListPrice</th>
+            <th>DaysToManufacture</th>
+            <th>DiscontinuedDate</th>
+            <th>SellStartDate</th>
+            <th>ReorderPoint</th>
+            <th>ProductModel.Name</th>
+            <th>ProductModel.ModifiedDate</th>
+            <th>ProductSubcategory.Name</th>
+            <th>ProductSubcategory.ProductCategory.Name</th>
+            <th>UnitMeasure.Name</th>
+        </tr>
+    </thead>
+    <tfoot>
+        <tr>
+            <th>Name</th>
+            <th>Color</th>
+            <th>ListPrice</th>
+            <th>DaysToManufacture</th>
+            <th>DiscontinuedDate</th>
+            <th>SellStartDate</th>
+            <th>ReorderPoint</th>
+            <th>ProductModel.Name</th>
+            <th>ProductModel.ModifiedDate</th>
+            <th>ProductSubcategory.Name</th>
+            <th>ProductSubcategory.ProductCategory.Name</th>
+            <th>UnitMeasure.Name</th>
+        </tr>
+    </tfoot>
+</table>
+
+@section Scripts {
+    <script>
+        $('#SearchResultTable tfoot th').each(function () {
+            var title = $(this).text();
+            $(this).html('<input type="text" placeholder="Search ' + title + '" />');
+        });
+
+        var table = $('#SearchResultTable').DataTable({
+            "proccessing": true,
+            "serverSide": true,
+            "ajax": {
+                url: "@Url.Action("GetProductsData", "Products")",
+                type: 'POST'
+            },
+            "language": {
+                "search": "",
+                "searchPlaceholder": "Search..."
+            },
+           "columns": [
+               { "data": "Name", "searchable": true },
+               { "data": "Color", "searchable": true },
+               { "data": "ListPrice", "searchable": false },
+               { "data": "DaysToManufacture", "searchable": false },
+               { "data": "DiscontinuedDate", "searchable": false },
+               { "data": "SellStartDate", "searchable": false },
+               { "data": "ReorderPoint", "searchable": false },
+               { "data": "ProductModel.Name", "searchable": true },
+               { "data": "ProductModel.ModifiedDate", "searchable": false },
+               { "data": "ProductSubcategory.Name", "searchable": true },
+               { "data": "ProductSubcategory.ProductCategory.Name", "searchable": true },
+               { "data": "UnitMeasure.Name", "searchable": true },
+            ],
+            "columnDefs": [
+                {
+                    "render": function (data, type, row) {
+                        date = new Date(parseInt(row.SellStartDate.replace("/Date(", "").replace(")/", ""), 10));
+
+                        return date.toLocaleString();
+                    },
+                    "targets": 5
+                },
+            ]
+        });
+
+        table.columns().every(function () {
+            var that = this;
+
+            $('input', this.footer()).on('change', function () {
+                if (that.search() !== this.value) {
+                    that
+                        .search(this.value)
+                        .draw();
+                }
+            });
+        });
+    </script>
+}
+

@@ -47,11 +47,11 @@ namespace Examples.Mvc.Controllers
         [JQDataTable]
         public ActionResult GetProductsData()
         {
-            var people = this.context.Products.Select(x => new ProductViewModel
+            var people = this.context.Products.Select(x => new Examples.Data.ViewModels.ProductViewModel
             {
                 Id = x.ProductID,
                 Name = x.Name,
-                ProductModel = new ProductModelViewModel
+                ProductModel = new Examples.Data.ViewModels.ProductModelViewModel
                 {
                     Name = x.ProductModel.Name,
                     ProductSubcategory = x.ProductSubcategory.Name
