@@ -24,22 +24,37 @@
         [JQDataTable]
         public ActionResult GetCustomersData()
         {
-            return this.View(this.context.Customers.Select(x => new
+            var data = this.context.Customers.Select(x => new CustomerViewModel
             {
                 CustomerID = x.CustomerID,
-                Person = new PersonModel
+                AccountNumber = x.AccountNumber,
+                Person = new PersonViewModel
                 {
-                    FirstName = x.Person.FirstName
+                    FirstName = x.Person.FirstName,
+                    LastName = x.Person.LastName,                    
                 },
-                Store = new StoreModel
+                Store = new StoreViewModel
                 {
-                    Name = x.Store.Name
+                    Name = x.Store.Name,
                 }
-            }));
+            });
+
+            return this.View(data);
         }
     }
 
-    public partial class PersonModel
+    public class CustomerViewModel
+    {
+        public string AccountNumber { get; set; }
+
+        public int CustomerID { get; set; }
+
+        public PersonViewModel Person { get; set; }
+
+        public StoreViewModel Store { get; set; }
+    }
+
+    public class PersonViewModel
     {
         public int BusinessEntityID { get; set; }
 
@@ -72,7 +87,7 @@
         public virtual BusinessEntity BusinessEntity { get; set; }
     }
 
-    public partial class StoreModel
+    public class StoreViewModel
     {
         public int BusinessEntityID { get; set; }
 

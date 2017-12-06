@@ -24,13 +24,13 @@ namespace Examples.Mvc.Controllers
         [JQDataTable]
         public ActionResult GetPeopleData()
         {
-            var people = this.context.People.Select(x => new PersonViewModel
+            var people = this.context.People.Select(x => new Data.ViewModels.PersonViewModel
             {
                 FirstName = x.FirstName,
                 LastName = x.LastName,
                 MiddleName = x.MiddleName,
                 Title = x.Title,
-                Employee = new EmployeeViewModel
+                Employee = new Data.ViewModels.EmployeeViewModel
                 {
                     BusinessEntityID = x.Employee.BusinessEntityID,
                 }

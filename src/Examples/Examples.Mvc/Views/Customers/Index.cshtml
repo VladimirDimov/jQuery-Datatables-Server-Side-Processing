@@ -9,6 +9,7 @@
         <tr>
             <th>Id</th>
             <th>First Name</th>
+            <th>Last Name</th>
             <th>Store Name</th>
         </tr>
     </thead>
@@ -17,6 +18,7 @@
         <tr>
             <th>Id</th>
             <th>First Name</th>
+            <th>Last Name</th>
             <th>Store Name</th>
         </tr>
     </tfoot>
@@ -43,27 +45,9 @@
            "columns": [
                { "data": "CustomerID", "searchable": false },
                { "data": "Person.FirstName", "searchable": true },
+               { "data": "Person.LastName", "searchable": true },
                { "data": "Store.Name", "searchable": true },
-            ],
-            //"columnDefs": [
-            //    {
-            //        "render": function (data, type, row) {
-            //            date = new Date(parseInt(row.ModifiedDate.replace("/Date(", "").replace(")/", ""), 10));
-
-            //            return date.toISOString();
-            //        },
-            //        "targets": 4
-            //    },
-            //    {
-            //        "render": function (data, type, row) {
-            //            if (!row.DiscontinuedDate) return '';
-            //            date = new Date(parseInt(row.DiscontinuedDate.replace("/Date(", "").replace(")/", ""), 10));
-
-            //            return date.toLocaleDateString();
-            //        },
-            //        "targets": 5
-            //    }
-            //]
+            ]
         });
 
         table.columns().every(function () {
