@@ -1,5 +1,5 @@
 # jQuery Datatables Server Side Processing
-MVC component which adds functionality for automatic server side processing for the famous table plugin for jQuery.
+ASP NET component which adds functionality for automatic server side processing for the famous table plugin for jQuery.
 
 Supports:
 - Paging;
