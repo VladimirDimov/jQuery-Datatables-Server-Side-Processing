@@ -10,7 +10,7 @@ using Tests.SeleniumTests.Common;
 
 namespace Tests.SeleniumTests.Tests
 {
-    public class SearchTests
+    public class SearchIntegrationTests
     {
         private IWebDriver driver;
         private Navigator navigator;

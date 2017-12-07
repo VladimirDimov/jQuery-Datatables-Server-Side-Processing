@@ -12,7 +12,7 @@
     using SeleniumTests.Common;
     using TestData.Models;
 
-    public class CustomFiltersTests
+    public class CustomFiltersIntegrationTests
     {
         private IWebDriver driver;
         private Navigator navigator;

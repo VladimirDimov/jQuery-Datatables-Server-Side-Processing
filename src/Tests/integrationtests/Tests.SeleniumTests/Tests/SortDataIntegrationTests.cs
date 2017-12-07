@@ -10,7 +10,7 @@ using Tests.SeleniumTests.Enumerations;
 
 namespace Tests.SeleniumTests.Tests
 {
-    public class SortDataTests
+    public class SortDataIntegrationTests
     {
         private IWebDriver driver;
         private Navigator navigator;
@@ -116,6 +116,8 @@ namespace Tests.SeleniumTests.Tests
 #endif
         [TestCase(nameof(AllTypesModel.DoubleProperty), SortDirectionsEnum.Desc, typeof(double))]
         [TestCase(nameof(AllTypesModel.DoubleNullable), SortDirectionsEnum.Desc, typeof(double?))]
+        [TestCase(nameof(AllTypesModel.Float), SortDirectionsEnum.Desc, typeof(double))]
+        [TestCase(nameof(AllTypesModel.FloatNullable), SortDirectionsEnum.Desc, typeof(double?))]
         [TestCase(nameof(AllTypesModel.DecimalProperty), SortDirectionsEnum.Desc, typeof(decimal))]
         [TestCase(nameof(AllTypesModel.DecimalNullable), SortDirectionsEnum.Desc, typeof(decimal?))]
         [TestCase(nameof(AllTypesModel.DateTimeProperty), SortDirectionsEnum.Desc, typeof(DateTime))]
@@ -155,6 +157,8 @@ namespace Tests.SeleniumTests.Tests
 #endif
         [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.DoubleProperty), SortDirectionsEnum.Asc, typeof(double))]
         [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.DoubleNullable), SortDirectionsEnum.Asc, typeof(double?))]
+        [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.Float), SortDirectionsEnum.Asc, typeof(double))]
+        [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.FloatNullable), SortDirectionsEnum.Asc, typeof(double?))]
         [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.DecimalProperty), SortDirectionsEnum.Asc, typeof(decimal))]
         [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.DecimalNullable), SortDirectionsEnum.Asc, typeof(decimal?))]
         [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.DateTimeProperty), SortDirectionsEnum.Asc, typeof(DateTime))]

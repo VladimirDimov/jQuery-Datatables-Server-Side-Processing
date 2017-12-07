@@ -68,6 +68,10 @@
 #endif
             new object[]  { GetExpression(x => x.NestedModel.Long) , ComparissonTypesEnum.Equal },
             new object[]  { GetExpression(x => x.NestedModel.LongNullable) , ComparissonTypesEnum.Equal },
+
+            new object[]  { GetExpression(x => x.NestedModel.Float) , ComparissonTypesEnum.Equal },
+            new object[]  { GetExpression(x => x.NestedModel.FloatNullable) , ComparissonTypesEnum.Equal },
+
 #if USE_UTYPES
             new object[]  { GetExpression(x => x.NestedModel.ULong) , ComparissonTypesEnum.Equal },
             new object[]  { GetExpression(x => x.NestedModel.ULongNullable) , ComparissonTypesEnum.Equal },

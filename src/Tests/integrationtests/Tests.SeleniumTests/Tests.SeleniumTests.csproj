@@ -93,9 +93,9 @@
     <Compile Include="Pages\IWebPage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tests\ColumnFiltersIntegrationTests.cs" />
-    <Compile Include="Tests\CustomFiltersTests.cs" />
-    <Compile Include="Tests\SearchTests.cs" />
-    <Compile Include="Tests\SortDataTests.cs" />
+    <Compile Include="Tests\CustomFiltersIntegrationTests.cs" />
+    <Compile Include="Tests\SearchIntegrationTests.cs" />
+    <Compile Include="Tests\SortDataIntegrationTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
