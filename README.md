@@ -14,12 +14,14 @@ Currently tested with Entity Framework versions 6.0.0 and 6.2.0 and Datatables v
 #### MVC 5
 [Install nuget package](https://www.nuget.org/packages/jQDataTables.ServerSide.MVC5/)
 
-`Install-Package JQDTServerSide.Mvc`
+`Install-Package jQDataTables.ServerSide.MVC5`
 
 [How to use with MVC 5](https://github.com/VladimirDimov/jQuery-Datatables-Server-Side-Processing/blob/master/README.Mvc.md)
 
 ## How to use on the client side
-To use it on the client side the jquery datatables library must be loaded on the browser. Follow the official jQuery Datatables guide for serverside processing [here](https://datatables.net/examples/data_sources/server_side.html).
+For how to install the jQuery Datatables plugin refer to the official documentation [here](https://datatables.net/manual/installation) 
+
+[Here](https://datatables.net/examples/data_sources/server_side.html) you can find how to configure for server side processing.
 
 In order to map the ajax response to the correct columns the columns property must be configure in the configuration object.
 ### Example:
