@@ -9,7 +9,7 @@
     <projectUrl>https://github.com/VladimirDimov/jQuery-Datatables-Server-Side-Processing</projectUrl>
     <!--<iconUrl></iconUrl>-->
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>MVC component which adds functionality for automatic server side processing for the famous table plugin for jQuery. Supports paging, searching, sorting and custom filters (Less Than, Less than or equal, Greater than, Greater than or equal and Equal) and nested objects.</description>
+    <description>MVC component which adds functionality for automatic server side processing for the famous table plugin for jQuery - DataTables. Supports paging, searching, sorting and custom filters (Less Than, Less than or equal, Greater than, Greater than or equal and Equal) and nested objects.</description>
     <releaseNotes></releaseNotes>
     <copyright>Copyright 2017</copyright>
     <tags>data table datatable serverside jquery datatables data-tables mvc asp mvc5 server side server-side</tags>

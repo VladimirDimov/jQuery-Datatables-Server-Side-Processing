@@ -1,7 +1,3 @@
-## Install
-[Install nuget package](http://link)
-
-`Install-Package JQDTServerSide.Mvc`
 ## How to use
 Add the `[JQDataTable]` attribute to the ajax controller action. Return 'View(data)' where 'data' is of type IQueryable<>. On the client side configure the table for server side processing acccording to the jQuery Data Tables documentation https://datatables.net/examples/data_sources/server_side.html.
 
