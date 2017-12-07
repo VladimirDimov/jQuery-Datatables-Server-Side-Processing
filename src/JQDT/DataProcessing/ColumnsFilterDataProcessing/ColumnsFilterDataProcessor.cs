@@ -73,6 +73,10 @@
                 {
                     currentPredicateExpr = this.rangeOrEqualsExpressionBuilder.BuildExpression(modelParam, column.Data, new FilterModel { Type = FilterTypes.eq, Value = column.Search.Value });
                 }
+                else
+                {
+                    throw new ArgumentException($"Not supported type {propType} for column individual filtering.");
+                }
 
                 predicateExpressions.Add(currentPredicateExpr);
             }

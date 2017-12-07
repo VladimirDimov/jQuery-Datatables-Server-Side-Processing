@@ -12,7 +12,7 @@
     using TestData.Models;
     using Tests.UnitTests.Common;
 
-    internal class ColumnsFilterDataProcessorTests
+    internal class ColumnsFilterDataProcessorUnitTests
     {
         // TODO: Add case "Filter by more than one columns"
 
@@ -75,6 +75,8 @@
         [TestCase("SByteProperty", null)]
         [TestCase("SByteNullable", null)]
         [TestCase("DoubleProperty", null)]
+        [TestCase(nameof(AllTypesModel.Float), null)]
+        [TestCase(nameof(AllTypesModel.FloatNullable), null)]
         [TestCase("DoubleNullable", null)]
         [TestCase("DecimalProperty", null)]
         [TestCase("DecimalProperty", "79228162514264337593543950335")]
@@ -155,6 +157,30 @@
 
             Assert.IsTrue(processedData.All(x => x.NestedModel.DateTimeNullable.HasValue && x.NestedModel.DateTimeNullable.ToString().ToLower() == searchValue.ToLower()));
             Trace.WriteLine(nameof(ColumnFilter_ShouldWorkAppropriateWithAllSupportedTypesNoNestedProperties) + $" number of items: {processedData.Count}  case: {column} / {searchValue}");
+        }
+
+        [Test]
+        public void ColumnFilter_ShouldThrowIfUnsupportedType()
+        {
+            Assert.Throws<ArgumentException>(() =>
+            {
+                var data = DataGenerator.GenerateSimpleData(1000);
+                var column = "NestedModel";
+
+                var searchValue = "123";
+
+                var requestModel = TestHelpers.GetSimpleRequestInfoModel();
+                requestModel.TableParameters.Columns = new List<Column>
+                {
+                    new Column{ Data = column, Search = new Search{ Value = searchValue } }
+                };
+
+                var processedData = this.filterSimpleModelProcessor.ProcessData(data, requestModel).ToList();
+
+                Assert.IsTrue(processedData.All(x => x.NestedModel.DateTimeNullable.HasValue && x.NestedModel.DateTimeNullable.ToString().ToLower() == searchValue.ToLower()));
+                Trace.WriteLine(nameof(ColumnFilter_ShouldWorkAppropriateWithAllSupportedTypesNoNestedProperties) + $" number of items: {processedData.Count}  case: {column} / {searchValue}");
+
+            });
         }
     }
 }

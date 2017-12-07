@@ -63,8 +63,14 @@
             typeof(ulong),
             typeof(ulong?),
 
+            typeof(decimal),
+            typeof(decimal?),
+
             typeof(double),
             typeof(double?),
+
+            typeof(float),
+            typeof(float?),
 
             typeof(short),
             typeof(short?),
@@ -78,6 +84,9 @@
 
             typeof(char),
             typeof(char?),
+
+            typeof(bool),
+            typeof(bool?),
 
             typeof(DateTime),
             typeof(DateTime?),
@@ -185,6 +194,16 @@
                     return false;
                 }
             }
+
+            if (operationTypes.HasFlag(OperationTypesEnum.Equals))
+            {
+                var isEqualValidType = supportedEqualOperationTypes.Contains(type);
+                if (!isEqualValidType)
+                {
+                    return false;
+                }
+            }
+
 
             return true;
         }
