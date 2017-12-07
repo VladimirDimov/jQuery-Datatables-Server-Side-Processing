@@ -13,7 +13,7 @@
     using TestData.Data;
     using TestData.Models;
 
-    internal class CustomFiltersDataProcessorTests
+    internal class CustomFiltersDataProcessorUnitTests
     {
         private IDataProcess<AllTypesModel> filter;
         private IQueryable<AllTypesModel> data;
@@ -358,6 +358,25 @@
         [TestCase("NestedModel.DoubleNullable", FilterTypes.eq, "0")]
         [TestCase("NestedModel.DoubleNullable", FilterTypes.eq, 1.7976931348623157)]
         [TestCase("NestedModel.DoubleNullable", FilterTypes.eq, -1.7976931348623157)]
+        // ---------------------------------------------------------------
+        [TestCase(nameof(AllTypesModel.Float), FilterTypes.gt, "25.1543254325")]
+        [TestCase(nameof(AllTypesModel.Float), FilterTypes.gte, "25.1543254325")]
+        [TestCase(nameof(AllTypesModel.Float), FilterTypes.lt, "25.1543254325")]
+        [TestCase(nameof(AllTypesModel.Float), FilterTypes.lte, "25.1543254325")]
+        [TestCase(nameof(AllTypesModel.Float), FilterTypes.eq, "25.1543254325")]
+        [TestCase(nameof(AllTypesModel.Float), FilterTypes.eq, "-25.1543254325")]
+        [TestCase(nameof(AllTypesModel.Float), FilterTypes.eq, "0")]
+        [TestCase(nameof(AllTypesModel.Float), FilterTypes.eq, 1.7976931348623157)]
+        [TestCase(nameof(AllTypesModel.Float), FilterTypes.eq, -1.7976931348623157)]
+        [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.Float), FilterTypes.gt, "25.1543254325")]
+        [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.Float), FilterTypes.gte, "25.1543254325")]
+        [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.Float), FilterTypes.lt, "25.1543254325")]
+        [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.Float), FilterTypes.lte, "25.1543254325")]
+        [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.Float), FilterTypes.eq, "25.1543254325")]
+        [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.Float), FilterTypes.eq, "-25.1543254325")]
+        [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.Float), FilterTypes.eq, "0")]
+        [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.Float), FilterTypes.eq, 1.7976931348623157)]
+        [TestCase(nameof(AllTypesModel.NestedModel) + "." + nameof(AllTypesModel.Float), FilterTypes.eq, -1.7976931348623157)]
         // ---------------------------------------------------------------
         [TestCase("DecimalProperty", FilterTypes.gt, "25.1543254325")]
         [TestCase("DecimalProperty", FilterTypes.gte, "25.1543254325")]

@@ -30,6 +30,9 @@
             typeof(double),
             typeof(double?),
 
+            typeof(float),
+            typeof(float?),
+
             typeof(short),
             typeof(short?),
             typeof(ushort),
@@ -203,7 +206,6 @@
                     return false;
                 }
             }
-
 
             return true;
         }

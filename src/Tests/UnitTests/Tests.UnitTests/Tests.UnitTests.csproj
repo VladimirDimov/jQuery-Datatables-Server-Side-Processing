@@ -68,7 +68,7 @@
   <ItemGroup>
     <Compile Include="ColumnsFilterDataProcessorUnitTests.cs" />
     <Compile Include="Common\TestHelpers.cs" />
-    <Compile Include="CustomFiltersDataProcessorTests.cs" />
+    <Compile Include="CustomFiltersDataProcessorUnitTests.cs" />
     <Compile Include="PagingDataProcessorTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SearchDataProcessorTests.cs" />
