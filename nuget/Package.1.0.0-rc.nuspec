@@ -18,7 +18,7 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="JQDT.MVC\bin\Release\JQDT.MVC.dll" target="lib\JQDTServerSide\MVC\JQDT.MVC.dll"/>
-    <file src="JQDT.MVC\bin\Release\JQDT.dll" target="lib\JQDTServerSide\MVC\JQDT.dll"/>
+    <file src="..\src\JQDT.MVC\bin\Release\JQDT.MVC.dll" target="lib\JQDTServerSide\MVC\JQDT.MVC.dll"/>
+    <file src="..\src\JQDT.MVC\bin\Release\JQDT.dll" target="lib\JQDTServerSide\MVC\JQDT.dll"/>
   </files>
 </package>
