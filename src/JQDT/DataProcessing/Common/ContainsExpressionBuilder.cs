@@ -80,7 +80,7 @@
                 }
 
                 // search value as lower case char type value
-                var searchCharValExpr = Expression.Constant(Char.ToLower(search.Single()));
+                var searchCharValExpr = Expression.Constant(char.ToLower(search.Single()));
 
                 // x => x == search
                 var charValue = char.Parse(search);
