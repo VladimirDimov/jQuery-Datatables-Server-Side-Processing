@@ -1,7 +1,8 @@
 <?xml version="1.0"?>
 <package >
   <metadata>
-    <id>JQDTServerSide.MVC</id>
+    <id>jQDataTables.ServerSide.MVC5</id>
+    <title>jQDataTables.ServerSide.MVC5</title>
     <version>1.0.0-rc</version>
     <authors>Vladimir Dimov</authors>
     <owners>Vladimir Dimov</owners>
@@ -10,7 +11,8 @@
     <!--<iconUrl></iconUrl>-->
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>MVC component which adds functionality for automatic server side processing for the famous table plugin for jQuery - DataTables. Supports paging, searching, sorting and custom filters (Less Than, Less than or equal, Greater than, Greater than or equal and Equal) and nested objects.</description>
-    <releaseNotes></releaseNotes>
+    <releaseNotes>This is a pre-release version. Any changes may be introduced in the next version in case significant bugs emerge.</releaseNotes>
+    <summary>MVC component which adds functionality for automatic server side processing for the famous table plugin for jQuery - DataTables. Supports paging, searching, sorting and custom filters (Less Than, Less than or equal, Greater than, Greater than or equal and Equal) and nested objects.</summary>
     <copyright>Copyright 2017</copyright>
     <tags>data table datatable serverside jquery datatables data-tables mvc asp mvc5 server side server-side</tags>
     <dependencies>
