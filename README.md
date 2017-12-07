@@ -14,7 +14,7 @@ Currently tested with Entity Framework versions 6.0.0 and 6.2.0 and Datatables v
 #### MVC 5
 [Install nuget package](http://link)
 
-`Install-Package JQDTServerSide.Mvc`
+`Install-Package jQDataTables.ServerSide.MVC5`
 
 [How to use with MVC 5](https://github.com/VladimirDimov/jQuery-Datatables-Server-Side-Processing/blob/master/README.Mvc.md)
 
