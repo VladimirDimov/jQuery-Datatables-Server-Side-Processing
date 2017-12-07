@@ -119,6 +119,16 @@
         <input data-lt placeholder="lt" />
         <input data-lte placeholder="lte" />
     </div>
+
+    <div id="custom-filter-Float" class="reload-table">
+        <span>Float</span>
+        <input data-eq placeholder="eq" />
+        <input data-gt placeholder="gt" />
+        <input data-gte placeholder="gte" />
+        <input data-lt placeholder="lt" />
+        <input data-lte placeholder="lte" />
+    </div>
+
 </div>
 
 <table id="table-simple">
@@ -150,6 +160,9 @@
 
             <th>DoubleProperty</th>
             <th>DoubleNullable</th>
+
+            <th>Float</th>
+            <th>FloatNullable</th>
 
             <th>DecimalProperty</th>
             <th>DecimalNullable</th>
@@ -198,6 +211,9 @@
             <th>Nested Model DecimalProperty</th>
             <th>Nested Model DecimalNullable</th>
 
+            <th>Nested Model Float</th>
+            <th>Nested Model FloatNullable</th>
+
             <th>Nested Model DateTimeProperty</th>
             <th>Nested Model DateTimeNullable</th>
             <th>Nested Model DateTimeOffsetProperty</th>
@@ -242,6 +258,9 @@
             <th>DoubleProperty</th>
             <th>DoubleNullable</th>
 
+            <th>Float</th>
+            <th>FloatNullable</th>
+
             <th>DecimalProperty</th>
             <th>DecimalNullable</th>
 
@@ -285,6 +304,9 @@
 
             <th>Nested Model DoubleProperty</th>
             <th>Nested Model DoubleNullable</th>
+
+            <th>Nested Model Float</th>
+            <th>Nested Model FloatNullable</th>
 
             <th>Nested Model DecimalProperty</th>
             <th>Nested Model DecimalNullable</th>
@@ -351,6 +373,7 @@
                             "DateTimeNullable": getCustomFilterForColumn('DateTimeNullable'),
                             "DateTimeOffsetProperty": getCustomFilterForColumn('DateTimeOffsetProperty'),
                             "DateTimeOffsetNullable": getCustomFilterForColumn('DateTimeOffsetNullable'),
+                            "Float": getCustomFilterForColumn('Float'),
                         }
                     }
                 }
@@ -383,6 +406,9 @@
 
                 { "data": "DoubleProperty", searchable: false },
                 { "data": "DoubleNullable", searchable: false },
+
+                { "data": "Float", searchable: false },
+                { "data": "FloatNullable", searchable: false },
 
                 { "data": "DecimalProperty", searchable: false },
                 { "data": "DecimalNullable", searchable: false },
@@ -427,6 +453,9 @@
 
                 { "data": "NestedModel.DoubleProperty", searchable: false, "defaultContent": "" },
                 { "data": "NestedModel.DoubleNullable", searchable: false, "defaultContent": "" },
+
+                { "data": "NestedModel.Float", searchable: false },
+                { "data": "NestedModel.FloatNullable", searchable: false },
 
                 { "data": "NestedModel.DecimalProperty", searchable: false, "defaultContent": "" },
                 { "data": "NestedModel.DecimalNullable", searchable: false, "defaultContent": "" },
