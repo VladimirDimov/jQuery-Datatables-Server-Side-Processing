@@ -2,7 +2,6 @@
 {
     using System;
     using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
 
     public class AllTypesModel
     {
@@ -49,6 +48,9 @@
 #endif
         public double DoubleProperty { get; set; }
         public double? DoubleNullable { get; set; }
+
+        public float Float { get; set; }
+        public float? FloatNullable { get; set; }
 
         public decimal DecimalProperty { get; set; }
         public decimal? DecimalNullable { get; set; }

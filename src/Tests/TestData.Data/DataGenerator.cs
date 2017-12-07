@@ -51,6 +51,9 @@
                 DoubleProperty = NumberData.GetDouble(),
                 DoubleNullable = RandomiseNullable(NumberData.GetDouble()),
 
+                Float = (float)NumberData.GetDouble(),
+                FloatNullable = RandomiseNullable((float)NumberData.GetDouble()),
+
                 DecimalProperty = (decimal)NumberData.GetDouble(),
                 DecimalNullable = (decimal?)RandomiseNullable(NumberData.GetDouble()),
 
