@@ -1,5 +1,5 @@
 ## How to use
-Add the `[JQDataTable]` attribute to the ajax controller action. Return 'View(data)' where 'data' is of type IQueryable<>. On the client side configure the table for server side processing acccording to the jQuery Data Tables documentation https://datatables.net/examples/data_sources/server_side.html.
+Add the `[JQDataTable]` attribute to the ajax controller action. Return from the controller View with IQueryable collection of a strongly typed view model. This component uses IQueryable<T> interface to construct query expressions to your data collection which can be processed by an ORM like Entity Framework. On the client side configure the table for server side processing acccording to the jQuery Data Tables documentation https://datatables.net/examples/data_sources/server_side.html.
 
 ### Example
 
