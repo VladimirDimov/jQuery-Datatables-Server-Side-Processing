@@ -175,6 +175,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\JQDT.WebAPI\JQDT.WebAPI.csproj">
+      <Project>{a57f2edc-8dc9-4a9a-bd3d-5ca31ee56910}</Project>
+      <Name>JQDT.WebAPI</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Examples.Data\Examples.Data.csproj">
       <Project>{082a75a9-d2ae-4ba6-84ef-606852b1b88a}</Project>
       <Name>Examples.Data</Name>

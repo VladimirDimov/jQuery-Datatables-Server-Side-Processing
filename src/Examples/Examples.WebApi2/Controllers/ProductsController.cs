@@ -4,6 +4,7 @@
     using System.Web.Http;
     using Examples.Data;
     using Examples.Mvc.ViewModels;
+    using JQDT.WebAPI;
 
     public class ProductsController : ApiController
     {
@@ -14,7 +15,9 @@
             this.context = new Data.AdventureWorks();
         }
 
-        public IHttpActionResult Index()
+        [HttpPost]
+        [JQDataTable]
+        public IHttpActionResult Post()
         {
             var data = this.context.Products.Select(x => new ProductViewModel
             {

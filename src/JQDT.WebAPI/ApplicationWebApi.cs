@@ -1,6 +1,7 @@
 ﻿namespace JQDT.WebAPI
 {
     using System.Collections.Specialized;
+    using System.IO;
     using System.Linq;
     using System.Web.Http.Filters;
     using JQDT.Application;
@@ -18,7 +19,9 @@
 
         protected override NameValueCollection GetAjaxForm()
         {
-            throw new System.NotImplementedException();
+            var result = actionExecutedContext.Request.Properties as NameValueCollection;
+
+            return result;
         }
 
         protected override IQueryable<T> GetData()
