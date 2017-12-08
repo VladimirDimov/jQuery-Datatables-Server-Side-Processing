@@ -34,8 +34,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		Settings.StyleCop = Settings.StyleCop
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests.Helpers", "Tests.Helpers\Tests.Helpers.csproj", "{51C58242-648E-4B17-A249-F2C844743A1B}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Notes", "Notes", "{E67DAB1D-82C4-415C-AB45-812BFF3091A7}"
 	ProjectSection(SolutionItems) = preProject
 		TypesSwitches.txt = TypesSwitches.txt
@@ -45,6 +43,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "db", "db", "{E0C08F20-EB2E-
 	ProjectSection(SolutionItems) = preProject
 		ExamplesDatabase.txt = ExamplesDatabase.txt
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests.Helpers", "Tests\Tests.Helpers\Tests.Helpers.csproj", "{51C58242-648E-4B17-A249-F2C844743A1B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -126,9 +126,9 @@ Global
 		{082A75A9-D2AE-4BA6-84EF-606852B1B88A} = {AD505AC4-1EFE-4ABF-ACAC-1A8F40606F60}
 		{E1320C08-8FC3-449D-8978-1D14D205DE03} = {AD505AC4-1EFE-4ABF-ACAC-1A8F40606F60}
 		{647240F0-6F49-426C-A49F-BE7BA6DDBD81} = {B9F020C7-E6AF-4839-A5F6-2FA6EFBB9D95}
-		{51C58242-648E-4B17-A249-F2C844743A1B} = {EDCECD8E-0A03-4B35-878C-567E148A83BD}
 		{E67DAB1D-82C4-415C-AB45-812BFF3091A7} = {EDCECD8E-0A03-4B35-878C-567E148A83BD}
 		{E0C08F20-EB2E-4FC5-8260-5BA8D0CAD7E7} = {AD505AC4-1EFE-4ABF-ACAC-1A8F40606F60}
+		{51C58242-648E-4B17-A249-F2C844743A1B} = {EDCECD8E-0A03-4B35-878C-567E148A83BD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {131DA7AE-7C14-4656-82C0-6F592D155809}

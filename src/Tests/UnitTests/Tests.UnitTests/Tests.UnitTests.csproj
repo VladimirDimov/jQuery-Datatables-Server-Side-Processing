@@ -82,13 +82,13 @@
       <Project>{c82e4675-88ab-4b78-8475-f1521bdae330}</Project>
       <Name>JQDT</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\Tests.Helpers\Tests.Helpers.csproj">
-      <Project>{51c58242-648e-4b17-a249-f2c844743a1b}</Project>
-      <Name>Tests.Helpers</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\TestData.Data\TestData.Data.csproj">
       <Project>{f7f12de8-f3c3-42a4-bbe4-1868d287d388}</Project>
       <Name>TestData.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Tests.Helpers\Tests.Helpers.csproj">
+      <Project>{51c58242-648e-4b17-a249-f2c844743a1b}</Project>
+      <Name>Tests.Helpers</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

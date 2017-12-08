@@ -102,13 +102,13 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Tests.Helpers\Tests.Helpers.csproj">
-      <Project>{51c58242-648e-4b17-a249-f2c844743a1b}</Project>
-      <Name>Tests.Helpers</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\TestData.Data\TestData.Data.csproj">
       <Project>{F7F12DE8-F3C3-42A4-BBE4-1868D287D388}</Project>
       <Name>TestData.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Tests.Helpers\Tests.Helpers.csproj">
+      <Project>{51c58242-648e-4b17-a249-f2c844743a1b}</Project>
+      <Name>Tests.Helpers</Name>
     </ProjectReference>
     <ProjectReference Include="..\Tests.Integration.Mvc\Tests.Integration.Mvc.csproj">
       <Project>{D6951034-15BA-4526-AE6F-90F7F9A386B9}</Project>
