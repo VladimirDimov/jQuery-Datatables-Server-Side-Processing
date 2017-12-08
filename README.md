@@ -1,5 +1,5 @@
 # jQuery Datatables Server Side Processing
-ASP NET component which adds functionality for automatic server side processing for the famous table plugin for jQuery.
+ASP NET component which adds functionality for automatic server side processing for the famous table plugin for jQuery. It uses IQueryable<T> interface to construct query expressions to your data collection which can be processed by an ORM like Entity Framework.
 
 Supports:
 - Paging;
