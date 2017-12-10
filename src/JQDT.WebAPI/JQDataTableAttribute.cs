@@ -6,8 +6,16 @@
     using JQDT.Application;
     using JQDT.Models;
 
+    /// <summary>
+    /// Used to decorate the action that returns data table response
+    /// </summary>
+    /// <seealso cref="System.Web.Http.Filters.ActionFilterAttribute" />
     public class JQDataTableAttribute : ActionFilterAttribute
     {
+        /// <summary>
+        /// Occurs after the action method is invoked.
+        /// </summary>
+        /// <param name="actionExecutedContext">The action executed context.</param>
         public override void OnActionExecuted(HttpActionExecutedContext actionExecutedContext)
         {
             this.PerformOnActionExecuted(actionExecutedContext);
