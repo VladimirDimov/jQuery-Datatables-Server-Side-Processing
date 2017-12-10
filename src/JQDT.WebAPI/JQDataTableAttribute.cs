@@ -1,9 +1,11 @@
 ﻿namespace JQDT.WebAPI
 {
+    using System;
     using System.Net.Http;
     using System.Net.Http.Formatting;
     using System.Web.Http.Filters;
     using JQDT.Application;
+    using JQDT.Exceptions;
     using JQDT.Models;
 
     /// <summary>
@@ -18,7 +20,14 @@
         /// <param name="actionExecutedContext">The action executed context.</param>
         public override void OnActionExecuted(HttpActionExecutedContext actionExecutedContext)
         {
-            this.PerformOnActionExecuted(actionExecutedContext);
+            try
+            {
+                this.PerformOnActionExecuted(actionExecutedContext);
+            }
+            catch (Exception ex)
+            {
+                throw new JQDataTablesException("Unhandled JQDataTable exception", ex);
+            }
 
             base.OnActionExecuted(actionExecutedContext);
         }
