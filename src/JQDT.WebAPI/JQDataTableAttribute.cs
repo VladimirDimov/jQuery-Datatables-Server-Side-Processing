@@ -1,7 +1,7 @@
 ﻿namespace JQDT.WebAPI
 {
-    using System;
-    using System.Linq;
+    using System.Net.Http;
+    using System.Net.Http.Formatting;
     using System.Web.Http.Filters;
     using JQDT.Application;
     using JQDT.Models;
@@ -21,15 +21,20 @@
             var applicationExecuteFunction = ExecuteFunctionProvider<HttpActionExecutedContext>.GetExecuteFunction(modelType, typeof(ApplicationWebApi<>));
             var dependencyResolver = new DI.DependencyResolver();
             var result = (ResultModel)applicationExecuteFunction(actionExecutedContext, dependencyResolver);
+            var formattedObjectResult = this.GetObjectResult(result);
+            actionExecutedContext.Response.Content = new ObjectContent(typeof(object), formattedObjectResult, new JsonMediaTypeFormatter());
+        }
 
-            //filterContext.Result = this.FormatResult(new
-            //{
-            //    draw = result.Draw,
-            //    recordsTotal = result.RecordsTotal,
-            //    recordsFiltered = result.RecordsFiltered,
-            //    data = result.Data,
-            //    error = result.Error
-            //});
+        private object GetObjectResult(ResultModel result)
+        {
+            return new
+            {
+                draw = result.Draw,
+                recordsTotal = result.RecordsTotal,
+                recordsFiltered = result.RecordsFiltered,
+                data = result.Data,
+                error = result.Error
+            };
         }
     }
 }

@@ -6,6 +6,7 @@
     using Examples.Mvc.ViewModels;
     using JQDT.WebAPI;
 
+    [EnableCors]
     public class ProductsController : ApiController
     {
         private AdventureWorks context;
