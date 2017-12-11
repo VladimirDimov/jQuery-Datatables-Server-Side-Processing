@@ -20,6 +20,8 @@
             this.ViewBag.Searching = searching.ToString().ToLower();
             this.ViewBag.ShowString = showString.ToString().ToLower();
             this.ViewBag.ShowChar = showChar.ToString().ToLower();
+            this.ViewBag.dataSourceApp = Configuration.SettingsProvider.Get("dataSourceApp");
+            this.ViewBag.WebApi2Url = Configuration.SettingsProvider.Get("webApi2Url");
 
             return View();
         }

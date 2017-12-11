@@ -350,7 +350,13 @@
             "proccessing": true,
             "serverSide": true,
             "ajax": {
-                url: "/home/GetData",
+                @if (ViewBag.dataSourceApp == "mvc")
+                {
+                    @:url: "/home/GetData",
+                } else if(ViewBag.dataSourceApp == "webapi2")
+                {
+                    @:url: "@ViewBag.WebApi2Url/home",
+                }
                 type: 'POST',
                 "data": function (d) {
                     d.custom = {
