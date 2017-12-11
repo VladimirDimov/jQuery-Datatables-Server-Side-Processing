@@ -16,7 +16,7 @@
             return this.Ok(Data);
         }
 
-        public IHttpActionResult GetFullData()
+        public IHttpActionResult Get()
         {
             return this.Ok(Data.ToList());
         }

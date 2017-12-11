@@ -1,6 +1,9 @@
 ﻿namespace Tests.Integration.Mvc.Controllers
 {
+    using System;
+    using System.Collections.Generic;
     using System.Linq;
+    using System.Net.Http;
     using System.Web.Mvc;
     using JQDT.MVC;
     using TestData.Models;
@@ -34,7 +37,26 @@
 
         public ActionResult GetFullData()
         {
-            return this.Json(Data, JsonRequestBehavior.AllowGet);
+            var dataSourceApp = Configuration.SettingsProvider.Get("dataSourceApp");
+            if (dataSourceApp == "mvc")
+            {
+                return this.Json(Data, JsonRequestBehavior.AllowGet);
+            }
+            else if (dataSourceApp == "webapi2")
+            {
+                var http = new HttpClient();
+                var url = Configuration.SettingsProvider.Get("webApi2Url") + "/home";
+                var result = http.GetAsync(url).Result;
+                var jsonString = result.Content.ReadAsStringAsync().Result;
+                var json = Newtonsoft.Json.JsonConvert.DeserializeObject<IEnumerable<AllTypesModel>>(jsonString);
+                Console.WriteLine(jsonString);
+
+                return this.Json(json, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                throw new ArgumentException("Invalid data source app " + dataSourceApp);
+            }
         }
     }
 }
