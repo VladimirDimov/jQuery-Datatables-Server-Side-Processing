@@ -14,8 +14,6 @@ namespace Tests.Integration.WebApi2
 
         public override void OnActionExecuting(HttpActionContext actionContext)
         {
-            actionContext.Response.Content.Headers.Add("Access-Control-Allow-Origin", "*");
-
             base.OnActionExecuting(actionContext);
         }
     }
