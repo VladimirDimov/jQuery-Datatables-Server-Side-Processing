@@ -5,6 +5,7 @@
     using System.Linq;
     using System.Linq.Expressions;
     using JQDT.DataProcessing.Common;
+    using JQDT.Enumerations;
     using JQDT.Extensions;
     using JQDT.Models;
 
@@ -76,6 +77,11 @@
             {
                 // x.Prop1.Prop2
                 var propExpr = modelParamExpr.NestedProperty(propertyPath);
+                if (!propExpr.Type.IsValidForOperation(OperationTypesEnum.Search))
+                {
+                    // If the property is of type that is not valid for search operations it is ignored.
+                    continue;
+                }
 
                 // x.Prop1.Prop2.ToLower().Contains(search)
                 var currentPropertyContainsExpression = this.containsExpressionBuilder.BuildExpression(search, propExpr);
