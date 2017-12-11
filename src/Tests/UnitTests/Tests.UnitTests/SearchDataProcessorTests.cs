@@ -21,7 +21,7 @@
         }
 
         [Test]
-        public void SearchWithTwoSearchableProperties()
+        public void GlobalSearch_SearchWithTwoSearchableProperties()
         {
             var filterProc = new DependencyResolver().GetSearchDataProcessor<AllTypesModel>();
             var data = new List<AllTypesModel>()
@@ -90,7 +90,7 @@
         }
 
         [Test]
-        public void SearchWithSingleSearchableProperty()
+        public void GlobalSearch_SearchWithSingleSearchableProperty()
         {
             var filterProc = this.GetFilterDataProcessor<AllTypesModel>();
             var data = new List<AllTypesModel>()
@@ -125,7 +125,7 @@
         }
 
         [Test]
-        public void ShouldThrowAppropriateExceptionIfSearchValueWithNoSearchableProperties()
+        public void GlobalSearch_ShouldThrowAppropriateExceptionIfSearchValueWithNoSearchableProperties()
         {
             var exception = Assert.Throws<ArgumentException>(() =>
             {
@@ -155,7 +155,7 @@
         }
 
         [Test]
-        public void SearchBySingleNestedStringPropertyShouldWork()
+        public void GlobalSearch_SearchBySingleNestedStringPropertyShouldWork()
         {
             var filterProc = this.GetFilterDataProcessor<AllTypesModel>();
             var data = DataGenerator.GenerateSimpleData(5000);
@@ -184,7 +184,7 @@
         }
 
         [Test]
-        public void SearchBySingleNestedCharPropertyShouldWork()
+        public void GlobalSearch_SearchBySingleNestedCharPropertyShouldWork()
         {
             var filterProc = this.GetFilterDataProcessor<AllTypesModel>();
             var data = DataGenerator.GenerateSimpleData(5000);
@@ -220,7 +220,7 @@
         }
 
         [Test]
-        public void ShouldReturnUntouchedDataIfNoSeachValue()
+        public void GlobalSearch_ShouldReturnUntouchedDataIfNoSeachValue()
         {
             var filterProc = this.GetFilterDataProcessor<ComplexModel>();
             var data = new List<ComplexModel>().AsQueryable();
@@ -248,6 +248,40 @@
             var expectedExpressionStr = $"System.Collections.Generic.List`1[{typeof(ComplexModel).FullName}]";
 
             Assert.AreEqual(expectedExpressionStr, actualExpressionStr);
+        }
+
+        [Test]
+        public void GlobalSearchShouldIgnoreNonStringProperties()
+        {
+            var filterProc = this.GetFilterDataProcessor<AllTypesModel>();
+            var data = DataGenerator.GenerateSimpleData(200).ToList().AsQueryable();
+            var searchValue = data.First(x => !string.IsNullOrEmpty(x.StringProperty) && x.StringProperty.Length > 2).StringProperty.Substring(0, 2);
+            var processedData = filterProc.ProcessData(data, new RequestInfoModel()
+            {
+                Helpers = new RequestHelpers { ModelType = typeof(ComplexModel) },
+                TableParameters = new DataTableAjaxPostModel
+                {
+                    Search = new Search
+                    {
+                        Value = searchValue
+                    },
+                    Columns = new List<Column>
+                    {
+                        new Column{
+                            Data = $"{nameof(AllTypesModel.StringProperty)}",
+                            Searchable = true
+                        },
+
+                            new Column{
+                            Data = $"{nameof(AllTypesModel.Integer)}",
+                            Searchable = true
+                        },
+                    }
+                }
+            });
+
+            var expectedData = data.Where(x => x.StringProperty != null && x.StringProperty.ToLower().Contains(searchValue.ToLower())).ToList();
+            Assert.IsTrue(expectedData.SequenceEqual(processedData));
         }
 
         private IDataProcess<T> GetFilterDataProcessor<T>()
