@@ -16,16 +16,16 @@
         /// <summary>
         /// Gets the execute function.
         /// </summary>
-        /// <param name="modelType">Type of the model.</param>
+        /// <param name="dataCollectionType">The type of the data collection.</param>
         /// <param name="appType">Type of the application.</param>
         /// <returns>Application execute function.</returns>
-        public static Func<TContext, DI.IDependencyResolver, object> GetExecuteFunction(Type modelType, Type appType)
+        public static Func<TContext, DI.IDependencyResolver, object> GetExecuteFunction(Type dataCollectionType, Type appType)
         {
             Func<TContext, DI.IDependencyResolver, object> executeFunc = null;
 
-            if (!executionFunctionsCache.TryGetValue(modelType, out executeFunc))
+            if (!executionFunctionsCache.TryGetValue(dataCollectionType, out executeFunc))
             {
-                Type[] typeArgs = { modelType.GenericTypeArguments.First() };
+                Type[] typeArgs = { dataCollectionType.GenericTypeArguments.First() };
                 var genericAppType = appType.MakeGenericType(typeArgs);
 
                 var contextExpr = Expression.Parameter(typeof(TContext), "context");
@@ -37,7 +37,7 @@
                 var lambda = Expression.Lambda(executeCallExpr, contextExpr, dependencyResolverExpr);
 
                 executeFunc = (Func<TContext, DI.IDependencyResolver, object>)lambda.Compile();
-                executionFunctionsCache.TryAdd(modelType, executeFunc);
+                executionFunctionsCache.TryAdd(dataCollectionType, executeFunc);
             }
 
             return executeFunc;
