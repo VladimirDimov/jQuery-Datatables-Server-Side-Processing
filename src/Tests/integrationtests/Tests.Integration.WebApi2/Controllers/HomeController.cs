@@ -15,5 +15,10 @@
         {
             return this.Ok(Data);
         }
+
+        public IHttpActionResult GetFullData()
+        {
+            return this.Ok(Data.ToList());
+        }
     }
 }
