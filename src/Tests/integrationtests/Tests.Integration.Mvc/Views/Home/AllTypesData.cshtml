@@ -482,7 +482,7 @@
             ],
             @if (ViewBag.dataSourceApp == "mvc")
             {
-             @:               "columnDefs": [
+             @:   "columnDefs": [
              @:   {
              @:           "render": function(data, type, row) {
              @:               if (!row.DateTimeProperty) {
@@ -594,9 +594,15 @@
              @:
              @:   {
              @:           "render": function(data, type, row) {
-             @:               if (!row.NestedModel) return '';
+             @:                if (!row.NestedModel) return '';
              @:
-             @:               var prop = if;
+             @:               var prop = row.NestedModel.DateTimeOffsetProperty;
+             @:
+             @:               if (!prop) {
+             @:                   return "";
+             @:               }
+             @:
+             @:               date = new Date(parseInt(prop.replace("/Date(", "").replace(")/", ""), 10));
              @:
              @:               return date.toUTCString();
              @:           },
