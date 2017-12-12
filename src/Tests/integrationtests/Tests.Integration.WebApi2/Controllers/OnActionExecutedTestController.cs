@@ -1,23 +1,15 @@
-﻿namespace Tests.Integration.Mvc.Controllers
+﻿namespace Tests.Integration.WebApi2.Controllers
 {
     using System.Collections.Generic;
     using System.Linq;
-    using System.Web.Mvc;
+    using System.Web.Http;
     using JQDT.Models;
     using TestData.Data.Models;
 
-    public class TestOnActionExecutedController : Controller
+    public class OnActionExecutedTestController : ApiController
     {
-        public ActionResult Index()
-        {
-            this.ViewBag.dataSourceApp = Configuration.SettingsProvider.Get("dataSourceApp");
-            this.ViewBag.WebApi2Url = Configuration.SettingsProvider.Get("webApi2Url");
-
-            return View();
-        }
-
         [CustomOnActionExecuted]
-        public ActionResult GetData()
+        public IHttpActionResult Post()
         {
             var data = new List<OnActionExecutedTestModel>();
             for (int i = 1; i <= 5; i++)
@@ -25,11 +17,11 @@
                 data.Add(new OnActionExecutedTestModel { Number = i });
             }
 
-            return this.View(data.AsQueryable());
+            return this.Ok(data.AsQueryable());
         }
     }
 
-    public class CustomOnActionExecutedAttribute : JQDT.MVC.JQDataTableAttribute
+    public class CustomOnActionExecutedAttribute : JQDT.WebAPI.JQDataTableAttribute
     {
         public override void OnDataProcessed(ref object data, RequestInfoModel requestInfoModel)
         {

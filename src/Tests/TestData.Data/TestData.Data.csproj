@@ -61,6 +61,7 @@
     <Compile Include="DataGenerator.cs" />
     <Compile Include="Models\AllTypesModel.cs" />
     <Compile Include="Models\ComplexModel.cs" />
+    <Compile Include="Models\OnActionExecutedTestModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

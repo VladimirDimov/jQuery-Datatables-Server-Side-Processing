@@ -5,7 +5,6 @@
     using JQDT.WebAPI;
     using TestData.Models;
 
-    [EnableCors]
     public class HomeController : ApiController
     {
         public static IQueryable<AllTypesModel> Data { get; set; }

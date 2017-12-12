@@ -42,6 +42,7 @@
         /// <param name="requestInfoModel">The request information model.</param>
         public virtual void OnDataProcessed(ref object data, RequestInfoModel requestInfoModel)
         {
+            // No data processing logic by default;
         }
 
         private void PerformOnActionExecuted(ActionExecutedContext filterContext)

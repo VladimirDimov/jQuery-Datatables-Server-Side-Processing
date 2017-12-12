@@ -1,9 +1,7 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 
 @{
     ViewBag.Title = "Index";
@@ -30,8 +28,14 @@
             "proccessing": true,
             "serverSide": true,
             "ajax": {
-                url: "@Url.Action("GetData", "TestOnActionExecuted")",
-                type: 'POST'
+                @if (ViewBag.dataSourceApp == "mvc")
+                {
+                @:url: "@Url.Action("GetData", "TestOnActionExecuted")",
+                } else if (ViewBag.dataSourceApp == "webapi2")
+                {
+                @:url: "@ViewBag.WebApi2Url/OnActionExecutedTest",
+                }
+                type: 'POST',
             },
            "columns": [
                { "data": "Number" },
@@ -39,4 +43,3 @@
         });
     </script>
 }
-

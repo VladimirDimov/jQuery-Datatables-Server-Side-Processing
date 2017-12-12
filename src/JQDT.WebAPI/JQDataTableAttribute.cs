@@ -32,15 +32,31 @@
             base.OnActionExecuted(actionExecutedContext);
         }
 
+        /// <summary>
+        /// Called when [data processed].
+        /// </summary>
+        /// <param name="data">The data.</param>
+        /// <param name="requestInfoModel">The request information model.</param>
+        public virtual void OnDataProcessed(ref object data, RequestInfoModel requestInfoModel)
+        {
+            // No data processing logic by default;
+        }
+
         private void PerformOnActionExecuted(HttpActionExecutedContext actionExecutedContext)
         {
             var modelType = ((System.Net.Http.ObjectContent)actionExecutedContext.Response.Content).ObjectType;
             var applicationInitizlizationFunction = ExecuteFunctionProvider<HttpActionExecutedContext>.GetAppInicializationFunc(modelType, typeof(ApplicationWebApi<>));
             var dependencyResolver = new DI.DependencyResolver();
             var webApiApplication = applicationInitizlizationFunction(actionExecutedContext, dependencyResolver);
+            this.SubscribeToEvents(webApiApplication);
             var result = (ResultModel)webApiApplication.Execute();
             var formattedObjectResult = this.GetObjectResult(result);
             actionExecutedContext.Response.Content = new ObjectContent(typeof(object), formattedObjectResult, new JsonMediaTypeFormatter());
+        }
+
+        private void SubscribeToEvents(IApplicationBase application)
+        {
+            application.OnDataProcessed += this.OnDataProcessed;
         }
 
         private object GetObjectResult(ResultModel result)
