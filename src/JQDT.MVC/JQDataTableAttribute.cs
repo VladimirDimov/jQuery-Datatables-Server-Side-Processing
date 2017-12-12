@@ -45,7 +45,92 @@
             // No data processing logic by default;
         }
 
-        public virtual void OnSearchnDataProcessing(ref object data, RequestInfoModel requestInfoModel)
+        /// <summary>
+        /// Called when [search data processing].
+        /// </summary>
+        /// <param name="data">The data.</param>
+        /// <param name="requestInfoModel">The request information model.</param>
+        public virtual void OnSearchDataProcessing(ref object data, RequestInfoModel requestInfoModel)
+        {
+            // No data processing logic by default;
+        }
+
+        /// <summary>
+        /// Called when [custom filters data processing].
+        /// </summary>
+        /// <param name="data">The data.</param>
+        /// <param name="requestInfoModel">The request information model.</param>
+        public virtual void OnCustomFiltersDataProcessing(ref object data, RequestInfoModel requestInfoModel)
+        {
+            // No data processing logic by default;
+        }
+
+        /// <summary>
+        /// Called when [custom filters data processed].
+        /// </summary>
+        /// <param name="data">The data.</param>
+        /// <param name="requestInfoModel">The request information model.</param>
+        public virtual void OnCustomFiltersDataProcessed(ref object data, RequestInfoModel requestInfoModel)
+        {
+            // No data processing logic by default;
+        }
+
+        /// <summary>
+        /// Called when [columns filter data processing].
+        /// </summary>
+        /// <param name="data">The data.</param>
+        /// <param name="requestInfoModel">The request information model.</param>
+        public virtual void OnColumnsFilterDataProcessing(ref object data, RequestInfoModel requestInfoModel)
+        {
+            // No data processing logic by default;
+        }
+
+        /// <summary>
+        /// Called when [columns filter data processed].
+        /// </summary>
+        /// <param name="data">The data.</param>
+        /// <param name="requestInfoModel">The request information model.</param>
+        public virtual void OnColumnsFilterDataProcessed(ref object data, RequestInfoModel requestInfoModel)
+        {
+            // No data processing logic by default;
+        }
+
+        /// <summary>
+        /// Called when [sort data processing].
+        /// </summary>
+        /// <param name="data">The data.</param>
+        /// <param name="requestInfoModel">The request information model.</param>
+        public virtual void OnSortDataProcessing(ref object data, RequestInfoModel requestInfoModel)
+        {
+            // No data processing logic by default;
+        }
+
+        /// <summary>
+        /// Called when [sort data processed].
+        /// </summary>
+        /// <param name="data">The data.</param>
+        /// <param name="requestInfoModel">The request information model.</param>
+        public virtual void OnSortDataProcessed(ref object data, RequestInfoModel requestInfoModel)
+        {
+            // No data processing logic by default;
+        }
+
+        /// <summary>
+        /// Called when [paging data processing].
+        /// </summary>
+        /// <param name="data">The data.</param>
+        /// <param name="requestInfoModel">The request information model.</param>
+        public virtual void OnPagingDataProcessing(ref object data, RequestInfoModel requestInfoModel)
+        {
+            // No data processing logic by default;
+        }
+
+        /// <summary>
+        /// Called when [paging data processed].
+        /// </summary>
+        /// <param name="data">The data.</param>
+        /// <param name="requestInfoModel">The request information model.</param>
+        public virtual void OnPagingDataProcessed(ref object data, RequestInfoModel requestInfoModel)
         {
             // No data processing logic by default;
         }
@@ -74,7 +159,19 @@
         private void SubscribeToEvents(IApplicationBase application)
         {
             application.OnDataProcessedEvent += this.OnDataProcessed;
-            application.OnSearchDataProcessingEvent += this.OnSearchnDataProcessing;
+            application.OnSearchDataProcessingEvent += this.OnSearchDataProcessing;
+
+            application.OnCustomFiltersDataProcessingEvent += this.OnCustomFiltersDataProcessing;
+            application.OnCustomFiltersDataProcessedEvent += this.OnCustomFiltersDataProcessed;
+
+            application.OnColumnsFilterDataProcessingEvent += this.OnColumnsFilterDataProcessing;
+            application.OnColumnsFilterDataProcessedEvent += this.OnColumnsFilterDataProcessed;
+
+            application.OnSortDataProcessingEvent += this.OnSortDataProcessing;
+            application.OnSortDataProcessedEvent += this.OnSortDataProcessed;
+
+            application.OnPagingDataProcessingEvent += this.OnPagingDataProcessing;
+            application.OnPagingDataProcessedEvent += this.OnPagingDataProcessed;
         }
 
         private ActionResult FormatResult(object resultModel)

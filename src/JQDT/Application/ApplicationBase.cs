@@ -39,6 +39,51 @@
         public event DataProcessorEventHandler OnSearchDataProcessingEvent = delegate { };
 
         /// <summary>
+        /// Occurs when [on search data processed event].
+        /// </summary>
+        public event DataProcessorEventHandler OnSearchDataProcessedEvent = delegate { };
+
+        /// <summary>
+        /// Occurs when [on custom filters data processing event].
+        /// </summary>
+        public event DataProcessorEventHandler OnCustomFiltersDataProcessingEvent = delegate { };
+
+        /// <summary>
+        /// Occurs when [on custom filters data processed event].
+        /// </summary>
+        public event DataProcessorEventHandler OnCustomFiltersDataProcessedEvent = delegate { };
+
+        /// <summary>
+        /// Occurs when [on columns filter data processing event].
+        /// </summary>
+        public event DataProcessorEventHandler OnColumnsFilterDataProcessingEvent = delegate { };
+
+        /// <summary>
+        /// Occurs when [on columns filter data processed event].
+        /// </summary>
+        public event DataProcessorEventHandler OnColumnsFilterDataProcessedEvent = delegate { };
+
+        /// <summary>
+        /// Occurs when [on sort data processing event].
+        /// </summary>
+        public event DataProcessorEventHandler OnSortDataProcessingEvent = delegate { };
+
+        /// <summary>
+        /// Occurs when [on sort data processed event].
+        /// </summary>
+        public event DataProcessorEventHandler OnSortDataProcessedEvent = delegate { };
+
+        /// <summary>
+        /// Occurs when [on paging data processing event].
+        /// </summary>
+        public event DataProcessorEventHandler OnPagingDataProcessingEvent = delegate { };
+
+        /// <summary>
+        /// Occurs when [on paging data processed event].
+        /// </summary>
+        public event DataProcessorEventHandler OnPagingDataProcessedEvent = delegate { };
+
+        /// <summary>
         /// Application entry point method. Executes all data processors.
         /// </summary>
         /// <returns>
@@ -123,25 +168,31 @@
             var dataProcessChain = new DataProcessChain<T>();
 
             var searchDataProcessor = this.dependencyResolver.GetSearchDataProcessor<T>();
-            this.AttachEventsToDataprocessor((DataProcessBase<T>)searchDataProcessor);
+            ((DataProcessBase<T>)searchDataProcessor).OnDataProcessingEvent += this.OnSearchDataProcessingEvent;
+            ((DataProcessBase<T>)searchDataProcessor).OnDataProcessedEvent += this.OnSearchDataProcessedEvent;
             dataProcessChain.AddDataProcessor(searchDataProcessor);
 
-            dataProcessChain.AddDataProcessor(this.dependencyResolver.GetCustomFiltersDataProcessor<T>());
-            dataProcessChain.AddDataProcessor(this.dependencyResolver.GetColumnsFilterDataProcessor<T>());
-            dataProcessChain.AddDataProcessor(this.dependencyResolver.GetSortDataProcessor<T>());
-            dataProcessChain.AddDataProcessor(this.dependencyResolver.GetPagingDataProcessor<T>());
+            var customFiltersDataProcessor = this.dependencyResolver.GetCustomFiltersDataProcessor<T>();
+            ((DataProcessBase<T>)customFiltersDataProcessor).OnDataProcessingEvent += this.OnCustomFiltersDataProcessingEvent;
+            ((DataProcessBase<T>)customFiltersDataProcessor).OnDataProcessedEvent += this.OnCustomFiltersDataProcessedEvent;
+            dataProcessChain.AddDataProcessor(customFiltersDataProcessor);
+
+            var columnsFilterDataProcessor = this.dependencyResolver.GetColumnsFilterDataProcessor<T>();
+            ((DataProcessBase<T>)columnsFilterDataProcessor).OnDataProcessingEvent += this.OnColumnsFilterDataProcessingEvent;
+            ((DataProcessBase<T>)columnsFilterDataProcessor).OnDataProcessedEvent += this.OnColumnsFilterDataProcessedEvent;
+            dataProcessChain.AddDataProcessor(columnsFilterDataProcessor);
+
+            var sortDataProcessor = this.dependencyResolver.GetSortDataProcessor<T>();
+            ((DataProcessBase<T>)sortDataProcessor).OnDataProcessingEvent += this.OnSortDataProcessingEvent;
+            ((DataProcessBase<T>)sortDataProcessor).OnDataProcessedEvent += this.OnSortDataProcessedEvent;
+            dataProcessChain.AddDataProcessor(sortDataProcessor);
+
+            var pagingDataProcessor = this.dependencyResolver.GetPagingDataProcessor<T>();
+            ((DataProcessBase<T>)pagingDataProcessor).OnDataProcessingEvent += this.OnPagingDataProcessingEvent;
+            ((DataProcessBase<T>)pagingDataProcessor).OnDataProcessedEvent += this.OnPagingDataProcessedEvent;
+            dataProcessChain.AddDataProcessor(pagingDataProcessor);
 
             return dataProcessChain;
-        }
-
-        private void AttachEventsToDataprocessor(DataProcessBase<T> dataProcessor)
-        {
-            dataProcessor.OnDataProcessingEvent += this.OnSearchDataProcessing;
-        }
-
-        public void OnSearchDataProcessing(ref object data, RequestInfoModel requestInfoModel)
-        {
-            this.OnSearchDataProcessingEvent(ref data, requestInfoModel);
         }
     }
 }

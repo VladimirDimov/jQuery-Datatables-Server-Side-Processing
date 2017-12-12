@@ -53,7 +53,7 @@
             data = list.AsQueryable();
         }
 
-        public override void OnSearchnDataProcessing(ref object data, RequestInfoModel requestInfoModel)
+        public override void OnSearchDataProcessing(ref object data, RequestInfoModel requestInfoModel)
         {
             var queryable = data as IOrderedQueryable<CustomerViewModel>;
             data = queryable.Where(x => x.CustomerID % 2 == 0);
