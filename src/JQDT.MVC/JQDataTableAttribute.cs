@@ -38,9 +38,10 @@
         private void PerformOnActionExecuted(ActionExecutedContext filterContext)
         {
             var dataCollectionType = filterContext.Controller.ViewData.Model.GetType();
-            var applicationExecuteFunction = ExecuteFunctionProvider<ActionExecutedContext>.GetExecuteFunction(dataCollectionType, typeof(ApplicationMvc<>));
             var dependencyResolver = new DI.DependencyResolver();
-            var result = (ResultModel)applicationExecuteFunction(filterContext, dependencyResolver);
+            var applicationInitizlizationFunction = ExecuteFunctionProvider<ActionExecutedContext>.GetAppInicializationFunc(dataCollectionType, typeof(ApplicationMvc<>));
+            var mvcApplication = applicationInitizlizationFunction(filterContext, dependencyResolver);
+            var result = (ResultModel)mvcApplication.Execute();
 
             filterContext.Result = this.FormatResult(new
             {

@@ -35,9 +35,10 @@
         private void PerformOnActionExecuted(HttpActionExecutedContext actionExecutedContext)
         {
             var modelType = ((System.Net.Http.ObjectContent)actionExecutedContext.Response.Content).ObjectType;
-            var applicationExecuteFunction = ExecuteFunctionProvider<HttpActionExecutedContext>.GetExecuteFunction(modelType, typeof(ApplicationWebApi<>));
+            var applicationInitizlizationFunction = ExecuteFunctionProvider<HttpActionExecutedContext>.GetAppInicializationFunc(modelType, typeof(ApplicationWebApi<>));
             var dependencyResolver = new DI.DependencyResolver();
-            var result = (ResultModel)applicationExecuteFunction(actionExecutedContext, dependencyResolver);
+            var webApiApplication = applicationInitizlizationFunction(actionExecutedContext, dependencyResolver);
+            var result = (ResultModel)webApiApplication.Execute();
             var formattedObjectResult = this.GetObjectResult(result);
             actionExecutedContext.Response.Content = new ObjectContent(typeof(object), formattedObjectResult, new JsonMediaTypeFormatter());
         }

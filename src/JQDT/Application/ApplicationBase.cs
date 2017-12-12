@@ -14,7 +14,7 @@
     /// The <see cref="ApplicationBase.Execute(System.Collections.Specialized.NameValueCollection, System.Linq.IQueryable{T})"/> should be called
     /// </summary>
     /// <typeparam name="T">Data Collection Generic Type</typeparam>
-    public abstract class ApplicationBase<T>
+    public abstract class ApplicationBase<T> : IApplicationBase
     {
         private readonly IDependencyResolver dependencyResolver;
 
@@ -28,9 +28,11 @@
         }
 
         /// <summary>
-        /// Application entry point method. Should be called from the ActionFilter.
+        /// Application entry point method. Executes all data processors.
         /// </summary>
-        /// <returns><see cref="ResultModel"/></returns>
+        /// <returns>
+        /// Processed data as <see cref="ResultModel" />
+        /// </returns>
         public ResultModel Execute()
         {
             ResultModel result = new ResultModel();
