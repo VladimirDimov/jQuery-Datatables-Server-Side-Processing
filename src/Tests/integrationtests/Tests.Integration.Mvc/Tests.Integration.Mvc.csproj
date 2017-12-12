@@ -152,6 +152,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Configuration\SettingsProvider.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\TestOnActionExecutedController.cs" />
     <Compile Include="EntityFrameworkClasses\AppContext.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -213,6 +214,7 @@
     <Content Include="Scripts\jquery-3.2.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.2.1.min.map" />
     <None Include="Views\Home\AllTypesData.cshtml" />
+    <Content Include="Views\TestOnActionExecuted\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -225,6 +227,10 @@
     <ProjectReference Include="..\..\..\JQDT.MVC\JQDT.MVC.csproj">
       <Project>{d845ab6d-1887-4597-9256-148ad0a11459}</Project>
       <Name>JQDT.MVC</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\JQDT\JQDT.csproj">
+      <Project>{C82E4675-88AB-4B78-8475-F1521BDAE330}</Project>
+      <Name>JQDT</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\TestData.Data\TestData.Data.csproj">
       <Project>{F7F12DE8-F3C3-42A4-BBE4-1868D287D388}</Project>

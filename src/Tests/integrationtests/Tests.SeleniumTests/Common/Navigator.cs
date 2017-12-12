@@ -16,5 +16,10 @@
         {
             return new AllTypesDataPage(this.driver);
         }
+
+        public IWebPage OnDataExecutedEventTestsPage()
+        {
+            return new OnDataProcessedTestsPage(this.driver);
+        }
     }
 }

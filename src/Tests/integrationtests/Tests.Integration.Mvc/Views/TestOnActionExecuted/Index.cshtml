@@ -1,0 +1,42 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<table class="display" cellspacing="0" width="100%">
+    <thead>
+        <tr>
+            <th>Test</th>
+        </tr>
+    </thead>
+
+    <tfoot>
+        <tr>
+            <th>Test</th>
+        </tr>
+    </tfoot>
+</table>
+
+@section Scripts {
+    <script>
+        var table = $('table').DataTable({
+            "proccessing": true,
+            "serverSide": true,
+            "ajax": {
+                url: "@Url.Action("GetData", "TestOnActionExecuted")",
+                type: 'POST'
+            },
+           "columns": [
+               { "data": "Number" },
+            ]
+        });
+    </script>
+}
+
