@@ -52,7 +52,8 @@
                 var dataProcessChain = this.GetDataProcessChain(requestModel.Helpers.DataCollectionType);
                 var processedData = dataProcessChain.ProcessData(data, requestModel);
 
-                this.OnDataProcessed(processedData, requestModel);
+                // Call on data processed event
+                this.PerformDataProcessorEventHandler(ref processedData, requestModel);
 
                 result.Data = processedData.ToList().Select(x => (object)x).ToList();
                 result.Draw = requestModel.TableParameters.Draw;
@@ -78,6 +79,18 @@
         /// </summary>
         /// <returns>Data collection as <see cref="IQueryable{T}"/></returns>
         protected abstract IQueryable<T> GetData();
+
+        /// <summary>
+        /// Performs the data processor event handler. Boxes the data collection, pass it by reference and then unbox it.
+        /// </summary>
+        /// <param name="data">The data.</param>
+        /// <param name="requestInfoModel">The request information model.</param>
+        private void PerformDataProcessorEventHandler(ref IQueryable<T> data, RequestInfoModel requestInfoModel)
+        {
+            var dataAsObj = (object)data;
+            this.OnDataProcessed(ref dataAsObj, requestInfoModel);
+            data = (IQueryable<T>)dataAsObj;
+        }
 
         private string FormatException(Exception ex)
         {

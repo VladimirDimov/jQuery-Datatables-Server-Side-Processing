@@ -46,11 +46,11 @@
 
     public class CustomJQDataTableAttribute : JQDataTableAttribute
     {
-        public override void OnDataProcessed(object data, RequestInfoModel requestInfoModel)
+        public override void OnDataProcessed(ref object data, RequestInfoModel requestInfoModel)
         {
-            var processedData = ((IQueryable<CustomerViewModel>)data).Where(x => x.CustomerID > 10 && x.CustomerID < 20);
-            var list = processedData.ToList();
-            data = list;
+            var list = ((IQueryable<CustomerViewModel>)data).ToList();
+            list.ForEach(x => x.Person.FirstName = $"FN {x.Person.FirstName}");
+            data = list.AsQueryable();
         }
     }
 }

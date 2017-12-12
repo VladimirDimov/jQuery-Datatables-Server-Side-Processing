@@ -7,5 +7,5 @@
     /// </summary>
     /// <param name="data">The data.</param>
     /// <param name="requestInfoModel">The request information model.</param>
-    public delegate void DataProcessorEventHandler(object data, RequestInfoModel requestInfoModel);
+    public delegate void DataProcessorEventHandler(ref object data, RequestInfoModel requestInfoModel);
 }

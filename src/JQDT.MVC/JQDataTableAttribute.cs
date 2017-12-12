@@ -40,7 +40,7 @@
         /// </summary>
         /// <param name="data">The data.</param>
         /// <param name="requestInfoModel">The request information model.</param>
-        public virtual void OnDataProcessed(object data, RequestInfoModel requestInfoModel)
+        public virtual void OnDataProcessed(ref object data, RequestInfoModel requestInfoModel)
         {
         }
 
