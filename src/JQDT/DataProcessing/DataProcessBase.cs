@@ -2,6 +2,7 @@
 {
     using System;
     using System.Linq;
+    using JQDT.Delegates;
     using JQDT.Models;
 
     /// <summary>
@@ -15,6 +16,10 @@
         private const string NullRequestInfoModelExceptionMessage = "Invalid null value for request info model argument in data processor.";
 
         private IQueryable<T> processedData;
+
+        public event DataProcessorEventHandler OnDataProcessingEvent = delegate { };
+
+        public event DataProcessorEventHandler OnDataProcessedEvent = delegate { };
 
         /// <summary>
         /// Gets the processed data.
@@ -50,7 +55,13 @@
                 throw new ArgumentNullException(NullRequestInfoModelExceptionMessage);
             }
 
+            // Execute events prior data processing
+            this.ExecuteOnDataprocessingEvents(ref data, requestInfoModel);
+
             this.processedData = this.OnProcessData(data, requestInfoModel);
+
+            // Execute events after the data has been processed
+            this.ExecuteOnDataprocessedEvents(ref data, requestInfoModel);
 
             return this.ProcessedData;
         }
@@ -62,5 +73,19 @@
         /// <param name="requestInfoModel">The request information model.</param>
         /// <returns><see cref="IQueryable{T}"/></returns>
         protected abstract IQueryable<T> OnProcessData(IQueryable<T> data, RequestInfoModel requestInfoModel);
+
+        private void ExecuteOnDataprocessingEvents(ref IQueryable<T> data, RequestInfoModel requestInfoModel)
+        {
+            var dataAsObj = (object)data;
+            this.OnDataProcessingEvent(ref dataAsObj, requestInfoModel);
+            data = (IQueryable<T>)dataAsObj;
+        }
+
+        private void ExecuteOnDataprocessedEvents(ref IQueryable<T> data, RequestInfoModel requestInfoModel)
+        {
+            var dataAsObj = (object)data;
+            this.OnDataProcessedEvent(ref dataAsObj, requestInfoModel);
+            data = (IQueryable<T>)dataAsObj;
+        }
     }
 }

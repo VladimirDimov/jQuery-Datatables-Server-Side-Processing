@@ -45,6 +45,11 @@
             // No data processing logic by default;
         }
 
+        public virtual void OnSearchnDataProcessing(ref object data, RequestInfoModel requestInfoModel)
+        {
+            // No data processing logic by default;
+        }
+
         private void PerformOnActionExecuted(ActionExecutedContext filterContext)
         {
             var dataCollectionType = filterContext.Controller.ViewData.Model.GetType();
@@ -68,7 +73,8 @@
 
         private void SubscribeToEvents(IApplicationBase application)
         {
-            application.OnDataProcessed += this.OnDataProcessed;
+            application.OnDataProcessedEvent += this.OnDataProcessed;
+            application.OnSearchDataProcessingEvent += this.OnSearchnDataProcessing;
         }
 
         private ActionResult FormatResult(object resultModel)

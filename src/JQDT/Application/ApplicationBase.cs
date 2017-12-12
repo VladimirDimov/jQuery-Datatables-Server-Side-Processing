@@ -31,7 +31,12 @@
         /// <summary>
         /// Occurs when [on data processed].
         /// </summary>
-        public event DataProcessorEventHandler OnDataProcessed;
+        public event DataProcessorEventHandler OnDataProcessedEvent = delegate { };
+
+        /// <summary>
+        /// Occurs when [on search data processing event].
+        /// </summary>
+        public event DataProcessorEventHandler OnSearchDataProcessingEvent = delegate { };
 
         /// <summary>
         /// Application entry point method. Executes all data processors.
@@ -88,7 +93,7 @@
         private void PerformDataProcessorEventHandler(ref IQueryable<T> data, RequestInfoModel requestInfoModel)
         {
             var dataAsObj = (object)data;
-            this.OnDataProcessed(ref dataAsObj, requestInfoModel);
+            this.OnDataProcessedEvent(ref dataAsObj, requestInfoModel);
             data = (IQueryable<T>)dataAsObj;
         }
 
@@ -117,13 +122,26 @@
         {
             var dataProcessChain = new DataProcessChain<T>();
 
-            dataProcessChain.AddDataProcessor(this.dependencyResolver.GetSearchDataProcessor<T>());
+            var searchDataProcessor = this.dependencyResolver.GetSearchDataProcessor<T>();
+            this.AttachEventsToDataprocessor((DataProcessBase<T>)searchDataProcessor);
+            dataProcessChain.AddDataProcessor(searchDataProcessor);
+
             dataProcessChain.AddDataProcessor(this.dependencyResolver.GetCustomFiltersDataProcessor<T>());
             dataProcessChain.AddDataProcessor(this.dependencyResolver.GetColumnsFilterDataProcessor<T>());
             dataProcessChain.AddDataProcessor(this.dependencyResolver.GetSortDataProcessor<T>());
             dataProcessChain.AddDataProcessor(this.dependencyResolver.GetPagingDataProcessor<T>());
 
             return dataProcessChain;
+        }
+
+        private void AttachEventsToDataprocessor(DataProcessBase<T> dataProcessor)
+        {
+            dataProcessor.OnDataProcessingEvent += this.OnSearchDataProcessing;
+        }
+
+        public void OnSearchDataProcessing(ref object data, RequestInfoModel requestInfoModel)
+        {
+            this.OnSearchDataProcessingEvent(ref data, requestInfoModel);
         }
     }
 }

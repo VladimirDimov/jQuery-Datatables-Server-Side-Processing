@@ -11,7 +11,12 @@
         /// <summary>
         /// Occurs when [on data processed].
         /// </summary>
-        event DataProcessorEventHandler OnDataProcessed;
+        event DataProcessorEventHandler OnDataProcessedEvent;
+
+        /// <summary>
+        /// Occurs when [on search data processing event].
+        /// </summary>
+        event DataProcessorEventHandler OnSearchDataProcessingEvent;
 
         /// <summary>
         /// Application entry point method. Executes all data processors.

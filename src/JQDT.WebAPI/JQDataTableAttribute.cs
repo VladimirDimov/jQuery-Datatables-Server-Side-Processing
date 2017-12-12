@@ -56,7 +56,7 @@
 
         private void SubscribeToEvents(IApplicationBase application)
         {
-            application.OnDataProcessed += this.OnDataProcessed;
+            application.OnDataProcessedEvent += this.OnDataProcessed;
         }
 
         private object GetObjectResult(ResultModel result)
