@@ -80,6 +80,7 @@
     <Compile Include="DataProcessing\IDataProcessChain.cs" />
     <Compile Include="DataProcessing\SortDataProcessing\SortDataProcessor.cs" />
     <Compile Include="DataProcessing\PagingDataProcessing\PagingDataProcessor.cs" />
+    <Compile Include="Delegates\DataProcessorEventHandler.cs" />
     <Compile Include="DI\DependencyResolver.cs" />
     <Compile Include="DI\IDependencyResolver.cs" />
     <Compile Include="Enumerations\OperationTypesEnum.cs" />

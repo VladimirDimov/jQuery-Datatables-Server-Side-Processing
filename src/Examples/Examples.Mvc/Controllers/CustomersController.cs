@@ -4,6 +4,7 @@
     using System.Web.Mvc;
     using Examples.Data;
     using Examples.Mvc.ViewModels;
+    using JQDT.Models;
     using JQDT.MVC;
 
     public class CustomersController : Controller
@@ -21,7 +22,7 @@
             return View();
         }
 
-        [JQDataTable]
+        [CustomJQDataTable]
         public ActionResult GetCustomersData()
         {
             var data = this.context.Customers.Select(x => new CustomerViewModel
@@ -40,6 +41,16 @@
             });
 
             return this.View(data);
+        }
+    }
+
+    public class CustomJQDataTableAttribute : JQDataTableAttribute
+    {
+        public override void OnDataProcessed(object data, RequestInfoModel requestInfoModel)
+        {
+            var processedData = ((IQueryable<CustomerViewModel>)data).Where(x => x.CustomerID > 10 && x.CustomerID < 20);
+            var list = processedData.ToList();
+            data = list;
         }
     }
 }

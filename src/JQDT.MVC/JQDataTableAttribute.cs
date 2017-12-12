@@ -35,12 +35,22 @@
             }
         }
 
+        /// <summary>
+        /// Called when [data processed].
+        /// </summary>
+        /// <param name="data">The data.</param>
+        /// <param name="requestInfoModel">The request information model.</param>
+        public virtual void OnDataProcessed(object data, RequestInfoModel requestInfoModel)
+        {
+        }
+
         private void PerformOnActionExecuted(ActionExecutedContext filterContext)
         {
             var dataCollectionType = filterContext.Controller.ViewData.Model.GetType();
             var dependencyResolver = new DI.DependencyResolver();
             var applicationInitizlizationFunction = ExecuteFunctionProvider<ActionExecutedContext>.GetAppInicializationFunc(dataCollectionType, typeof(ApplicationMvc<>));
             var mvcApplication = applicationInitizlizationFunction(filterContext, dependencyResolver);
+            this.SubscribeToEvents(mvcApplication);
             var result = (ResultModel)mvcApplication.Execute();
 
             filterContext.Result = this.FormatResult(new
@@ -53,6 +63,11 @@
             });
 
             base.OnActionExecuted(filterContext);
+        }
+
+        private void SubscribeToEvents(IApplicationBase application)
+        {
+            application.OnDataProcessed += this.OnDataProcessed;
         }
 
         private ActionResult FormatResult(object resultModel)

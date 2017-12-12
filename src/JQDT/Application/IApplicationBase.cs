@@ -1,5 +1,6 @@
 ﻿namespace JQDT.Application
 {
+    using JQDT.Delegates;
     using JQDT.Models;
 
     /// <summary>
@@ -7,6 +8,11 @@
     /// </summary>
     public interface IApplicationBase
     {
+        /// <summary>
+        /// Occurs when [on data processed].
+        /// </summary>
+        event DataProcessorEventHandler OnDataProcessed;
+
         /// <summary>
         /// Application entry point method. Executes all data processors.
         /// </summary>

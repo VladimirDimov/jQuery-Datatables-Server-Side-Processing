@@ -5,6 +5,7 @@
     using System.Linq;
     using System.Text;
     using JQDT.DataProcessing;
+    using JQDT.Delegates;
     using JQDT.DI;
     using JQDT.ModelBinders;
     using JQDT.Models;
@@ -28,6 +29,11 @@
         }
 
         /// <summary>
+        /// Occurs when [on data processed].
+        /// </summary>
+        public event DataProcessorEventHandler OnDataProcessed;
+
+        /// <summary>
         /// Application entry point method. Executes all data processors.
         /// </summary>
         /// <returns>
@@ -45,6 +51,8 @@
 
                 var dataProcessChain = this.GetDataProcessChain(requestModel.Helpers.DataCollectionType);
                 var processedData = dataProcessChain.ProcessData(data, requestModel);
+
+                this.OnDataProcessed(processedData, requestModel);
 
                 result.Data = processedData.ToList().Select(x => (object)x).ToList();
                 result.Draw = requestModel.TableParameters.Draw;

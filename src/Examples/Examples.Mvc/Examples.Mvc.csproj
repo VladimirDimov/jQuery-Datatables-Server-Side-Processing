@@ -282,6 +282,10 @@
       <Project>{d845ab6d-1887-4597-9256-148ad0a11459}</Project>
       <Name>JQDT.MVC</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\JQDT\JQDT.csproj">
+      <Project>{C82E4675-88AB-4B78-8475-F1521BDAE330}</Project>
+      <Name>JQDT</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Examples.Data\Examples.Data.csproj">
       <Project>{082A75A9-D2AE-4BA6-84EF-606852B1B88A}</Project>
       <Name>Examples.Data</Name>
