@@ -36,11 +36,21 @@
         }
 
         /// <summary>
-        /// Called when [data processed].
+        /// Called after all data processors execute.
         /// </summary>
         /// <param name="data">The data.</param>
         /// <param name="requestInfoModel">The request information model.</param>
         public virtual void OnDataProcessed(ref object data, RequestInfoModel requestInfoModel)
+        {
+            // No data processing logic by default;
+        }
+
+        /// <summary>
+        /// Called before all data processors execute.
+        /// </summary>
+        /// <param name="data">The data.</param>
+        /// <param name="requestInfoModel">The request information model.</param>
+        public virtual void OnDataProcessing(ref object data, RequestInfoModel requestInfoModel)
         {
             // No data processing logic by default;
         }
@@ -51,6 +61,16 @@
         /// <param name="data">The data.</param>
         /// <param name="requestInfoModel">The request information model.</param>
         public virtual void OnSearchDataProcessing(ref object data, RequestInfoModel requestInfoModel)
+        {
+            // No data processing logic by default;
+        }
+
+        /// <summary>
+        /// Called when [search data processed].
+        /// </summary>
+        /// <param name="data">The data.</param>
+        /// <param name="requestInfoModel">The request information model.</param>
+        public virtual void OnSearchDataProcessed(ref object data, RequestInfoModel requestInfoModel)
         {
             // No data processing logic by default;
         }
@@ -158,8 +178,11 @@
 
         private void SubscribeToEvents(IApplicationBase application)
         {
+            application.OnDataProcessingEvent += this.OnDataProcessing;
             application.OnDataProcessedEvent += this.OnDataProcessed;
+
             application.OnSearchDataProcessingEvent += this.OnSearchDataProcessing;
+            application.OnSearchDataProcessedEvent += this.OnSearchDataProcessed;
 
             application.OnCustomFiltersDataProcessingEvent += this.OnCustomFiltersDataProcessing;
             application.OnCustomFiltersDataProcessedEvent += this.OnCustomFiltersDataProcessed;

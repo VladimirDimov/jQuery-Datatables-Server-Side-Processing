@@ -28,6 +28,8 @@
             this.dependencyResolver = dependencyResolver;
         }
 
+        public event DataProcessorEventHandler OnDataProcessingEvent = delegate { };
+
         /// <summary>
         /// Occurs when [on data processed].
         /// </summary>
@@ -100,9 +102,13 @@
                 var requestModel = modelBinder.BindModel(ajaxForm, data);
 
                 var dataProcessChain = this.GetDataProcessChain(requestModel.Helpers.DataCollectionType);
+
+                // Call events before the data is processed
+                this.PerformDataProcessorEventHandler(ref data, requestModel);
+
                 var processedData = dataProcessChain.ProcessData(data, requestModel);
 
-                // Call on data processed event
+                // Call events after the data is processed
                 this.PerformDataProcessorEventHandler(ref processedData, requestModel);
 
                 result.Data = processedData.ToList().Select(x => (object)x).ToList();

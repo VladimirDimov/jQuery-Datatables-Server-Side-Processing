@@ -9,6 +9,11 @@
     public interface IApplicationBase
     {
         /// <summary>
+        /// Occurs when [on data processing event].
+        /// </summary>
+        event DataProcessorEventHandler OnDataProcessingEvent;
+
+        /// <summary>
         /// Occurs when [on data processed].
         /// </summary>
         event DataProcessorEventHandler OnDataProcessedEvent;
@@ -17,6 +22,11 @@
         /// Occurs when [on search data processing event].
         /// </summary>
         event DataProcessorEventHandler OnSearchDataProcessingEvent;
+
+        /// <summary>
+        /// Occurs when [on search data processed event].
+        /// </summary>
+        event DataProcessorEventHandler OnSearchDataProcessedEvent;
 
         /// <summary>
         /// Occurs when [on custom filters data processing event].
