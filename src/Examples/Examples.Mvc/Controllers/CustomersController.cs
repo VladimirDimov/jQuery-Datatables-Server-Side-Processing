@@ -55,8 +55,12 @@
 
         public override void OnSearchDataProcessing(ref object data, RequestInfoModel requestInfoModel)
         {
-            var queryable = data as IOrderedQueryable<CustomerViewModel>;
-            data = queryable.Where(x => x.CustomerID % 2 == 0);
+            if (requestInfoModel.TableParameters.Search.Value.ToLower() == "even")
+            {
+                var queryable = data as IOrderedQueryable<CustomerViewModel>;
+                data = queryable.Where(x => x.CustomerID % 2 == 0);
+                requestInfoModel.TableParameters.Search.Value = "";
+            }
         }
     }
 }

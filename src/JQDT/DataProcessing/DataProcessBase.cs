@@ -17,8 +17,14 @@
 
         private IQueryable<T> processedData;
 
+        /// <summary>
+        /// Occurs when [on data processing event].
+        /// </summary>
         public event DataProcessorEventHandler OnDataProcessingEvent = delegate { };
 
+        /// <summary>
+        /// Occurs when [on data processed event].
+        /// </summary>
         public event DataProcessorEventHandler OnDataProcessedEvent = delegate { };
 
         /// <summary>
