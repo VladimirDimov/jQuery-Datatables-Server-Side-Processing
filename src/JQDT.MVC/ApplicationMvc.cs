@@ -4,6 +4,7 @@
     using System.Linq;
     using System.Web.Mvc;
     using JQDT.Application;
+    using JQDT.ModelBinders;
 
     /// <summary>
     /// Entry point for MVC projects
@@ -19,8 +20,8 @@
         /// </summary>
         /// <param name="filterContext">The filter context.</param>
         /// <param name="serviceLocator">The service locator.</param>
-        public ApplicationMvc(ActionExecutedContext filterContext, DI.IServiceLocator serviceLocator)
-            : base(serviceLocator)
+        public ApplicationMvc(ActionExecutedContext filterContext, DI.IServiceLocator serviceLocator, IFormModelBinder modelBinder)
+            : base(serviceLocator, modelBinder)
         {
             this.filterContext = filterContext;
         }

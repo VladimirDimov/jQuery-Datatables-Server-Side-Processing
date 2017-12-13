@@ -90,6 +90,7 @@
     <Compile Include="Extensions\TypeExtensions.cs" />
     <Compile Include="GlobalConstants.cs" />
     <Compile Include="ModelBinders\FormModelBinder.cs" />
+    <Compile Include="ModelBinders\IFormModelBinder.cs" />
     <Compile Include="Models\Column.cs" />
     <Compile Include="Models\Custom.cs" />
     <Compile Include="Models\DataTableAjaxPostModel.cs" />

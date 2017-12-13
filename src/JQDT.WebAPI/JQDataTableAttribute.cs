@@ -47,7 +47,8 @@
             var modelType = ((System.Net.Http.ObjectContent)actionExecutedContext.Response.Content).ObjectType;
             var applicationInitizlizationFunction = ExecuteFunctionProvider<HttpActionExecutedContext>.GetAppInicializationFunc(modelType, typeof(ApplicationWebApi<>));
             var serviceLocator = new DI.ServiceLocator();
-            var webApiApplication = applicationInitizlizationFunction(actionExecutedContext, serviceLocator);
+            var formModelBinder = serviceLocator.GetFormModelBinder();
+            var webApiApplication = applicationInitizlizationFunction(actionExecutedContext, serviceLocator, formModelBinder);
             this.SubscribeToEvents(webApiApplication);
             var result = (ResultModel)webApiApplication.Execute();
             var formattedObjectResult = this.GetObjectResult(result);

@@ -18,14 +18,16 @@
     public abstract class ApplicationBase<T> : IApplicationBase
     {
         private readonly IServiceLocator serviceLocator;
+        private readonly IFormModelBinder modelBinder;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ApplicationBase{T}"/> class.
         /// </summary>
         /// <param name="sreviceLocator">The service locator.</param>
-        public ApplicationBase(IServiceLocator sreviceLocator)
+        public ApplicationBase(IServiceLocator sreviceLocator, IFormModelBinder modelBinder)
         {
             this.serviceLocator = sreviceLocator;
+            this.modelBinder = modelBinder;
         }
 
         public event DataProcessorEventHandler OnDataProcessingEvent = delegate { };
@@ -96,7 +98,6 @@
             ResultModel result = new ResultModel();
             try
             {
-                var modelBinder = new FormModelBinder();
                 var ajaxForm = this.GetAjaxForm();
                 var data = this.GetData();
                 var requestModel = modelBinder.BindModel(ajaxForm, data);

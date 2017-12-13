@@ -158,9 +158,10 @@
         private void PerformOnActionExecuted(ActionExecutedContext filterContext)
         {
             var dataCollectionType = filterContext.Controller.ViewData.Model.GetType();
-            var serviceLocator = new DI.ServiceLocator();
             var applicationInitizlizationFunction = ExecuteFunctionProvider<ActionExecutedContext>.GetAppInicializationFunc(dataCollectionType, typeof(ApplicationMvc<>));
-            var mvcApplication = applicationInitizlizationFunction(filterContext, serviceLocator);
+            var serviceLocator = new DI.ServiceLocator();
+            var formModelBinder = serviceLocator.GetFormModelBinder();
+            var mvcApplication = applicationInitizlizationFunction(filterContext, serviceLocator, formModelBinder);
             this.SubscribeToEvents(mvcApplication);
             var result = (ResultModel)mvcApplication.Execute();
 

@@ -7,6 +7,7 @@
     using System.Web.Http.Filters;
     using JQDT.Application;
     using JQDT.DI;
+    using JQDT.ModelBinders;
 
     /// <summary>
     /// Entry point for Web API 2 projects
@@ -22,8 +23,8 @@
         /// </summary>
         /// <param name="actionExecutedContext">The action executed context.</param>
         /// <param name="serviceLocator">The dependency resolver.</param>
-        public ApplicationWebApi(HttpActionExecutedContext actionExecutedContext, IServiceLocator serviceLocator)
-            : base(serviceLocator)
+        public ApplicationWebApi(HttpActionExecutedContext actionExecutedContext, IServiceLocator serviceLocator, IFormModelBinder formModelBinder)
+            : base(serviceLocator, formModelBinder)
         {
             this.actionExecutedContext = actionExecutedContext;
         }

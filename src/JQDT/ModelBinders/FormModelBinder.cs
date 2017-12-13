@@ -11,7 +11,7 @@
     /// <summary>
     /// Model binder for the ajax form.
     /// </summary>
-    internal class FormModelBinder
+    public class FormModelBinder : IFormModelBinder
     {
         private const string NullAjaxFormException = "Ajax form cannot be null.";
         private const string EmptyAjaxForm = "Ajax form cannot be empty.";
@@ -41,7 +41,7 @@
         /// <param name="data">The data collection.</param>
         /// <typeparam name="T">Generic data model type.</typeparam>
         /// <returns><see cref="RequestInfoModel"/></returns>
-        internal RequestInfoModel BindModel<T>(NameValueCollection ajaxForm, T data)
+        public RequestInfoModel BindModel<T>(NameValueCollection ajaxForm, T data)
         {
             if (ajaxForm == null)
             {

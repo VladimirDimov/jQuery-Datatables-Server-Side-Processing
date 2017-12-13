@@ -7,6 +7,7 @@
     using JQDT.DataProcessing.PagingDataProcessing;
     using JQDT.DataProcessing.SearchDataProcessing;
     using JQDT.DataProcessing.SortDataProcessing;
+    using JQDT.ModelBinders;
 
     /// <summary>
     /// Service Locator
@@ -82,6 +83,15 @@
         public IDataProcess<T> GetPagingDataProcessor<T>()
         {
             return new PagingDataProcessor<T>();
+        }
+
+        /// <summary>
+        /// Gets the form model binder.
+        /// </summary>
+        /// <returns></returns>
+        public IFormModelBinder GetFormModelBinder()
+        {
+            return new FormModelBinder();
         }
     }
 }
