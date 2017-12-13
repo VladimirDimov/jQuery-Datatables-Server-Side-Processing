@@ -22,7 +22,7 @@
         [SetUp]
         public void SetUp()
         {
-            var resolver = new DependencyResolver();
+            var resolver = new ServiceLocator();
             this.filter = resolver.GetCustomFiltersDataProcessor<AllTypesModel>();
             this.data = DataGenerator.GenerateSimpleData(5000, RangeConstant);
         }

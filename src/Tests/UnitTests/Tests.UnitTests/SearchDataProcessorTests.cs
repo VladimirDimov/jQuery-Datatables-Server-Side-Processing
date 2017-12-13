@@ -23,7 +23,7 @@
         [Test]
         public void GlobalSearch_SearchWithTwoSearchableProperties()
         {
-            var filterProc = new DependencyResolver().GetSearchDataProcessor<AllTypesModel>();
+            var filterProc = new ServiceLocator().GetSearchDataProcessor<AllTypesModel>();
             var data = new List<AllTypesModel>()
             {
                 new AllTypesModel
@@ -286,7 +286,7 @@
 
         private IDataProcess<T> GetFilterDataProcessor<T>()
         {
-            var filterProc = new DependencyResolver().GetSearchDataProcessor<T>();
+            var filterProc = new ServiceLocator().GetSearchDataProcessor<T>();
 
             return filterProc;
         }

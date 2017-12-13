@@ -3,10 +3,10 @@
     using JQDT.DataProcessing;
 
     /// <summary>
-    /// Dependency Resolver
+    /// Service Locator Interface
     /// </summary>
-    /// <seealso cref="JQDT.DI.IDependencyResolver" />
-    public interface IDependencyResolver
+    /// <seealso cref="JQDT.DI.IServiceLocator" />
+    public interface IServiceLocator
     {
         /// <summary>
         /// Gets the columns filter data processor.

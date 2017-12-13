@@ -24,7 +24,7 @@
         [SetUp]
         public void SetUp()
         {
-            var resolver = new DependencyResolver();
+            var resolver = new ServiceLocator();
             this.filterSimpleModelProcessor = resolver.GetColumnsFilterDataProcessor<AllTypesModel>();
             this.filterComplexModelProcessor = resolver.GetColumnsFilterDataProcessor<ComplexModel>();
             this.simpleData = new List<AllTypesModel>().AsQueryable();

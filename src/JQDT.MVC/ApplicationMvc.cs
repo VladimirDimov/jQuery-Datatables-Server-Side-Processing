@@ -18,9 +18,9 @@
         /// Initializes a new instance of the <see cref="ApplicationMvc{T}"/> class.
         /// </summary>
         /// <param name="filterContext">The filter context.</param>
-        /// <param name="dependencyResolver">The dependency resolver.</param>
-        public ApplicationMvc(ActionExecutedContext filterContext, DI.IDependencyResolver dependencyResolver)
-            : base(dependencyResolver)
+        /// <param name="serviceLocator">The service locator.</param>
+        public ApplicationMvc(ActionExecutedContext filterContext, DI.IServiceLocator serviceLocator)
+            : base(serviceLocator)
         {
             this.filterContext = filterContext;
         }

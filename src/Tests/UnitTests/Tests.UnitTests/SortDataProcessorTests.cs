@@ -23,7 +23,7 @@
         [SetUp]
         public void SetUp()
         {
-            var resolver = new DependencyResolver();
+            var resolver = new ServiceLocator();
             this.filter = resolver.GetSortDataProcessor<AllTypesModel>();
             this.complexFilter = new SortDataProcessor<ComplexModel>();
             this.data = DataGenerator.GenerateSimpleData(500, 500);

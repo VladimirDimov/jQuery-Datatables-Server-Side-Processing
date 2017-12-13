@@ -158,9 +158,9 @@
         private void PerformOnActionExecuted(ActionExecutedContext filterContext)
         {
             var dataCollectionType = filterContext.Controller.ViewData.Model.GetType();
-            var dependencyResolver = new DI.DependencyResolver();
+            var serviceLocator = new DI.ServiceLocator();
             var applicationInitizlizationFunction = ExecuteFunctionProvider<ActionExecutedContext>.GetAppInicializationFunc(dataCollectionType, typeof(ApplicationMvc<>));
-            var mvcApplication = applicationInitizlizationFunction(filterContext, dependencyResolver);
+            var mvcApplication = applicationInitizlizationFunction(filterContext, serviceLocator);
             this.SubscribeToEvents(mvcApplication);
             var result = (ResultModel)mvcApplication.Execute();
 

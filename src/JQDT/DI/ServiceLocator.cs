@@ -9,10 +9,10 @@
     using JQDT.DataProcessing.SortDataProcessing;
 
     /// <summary>
-    /// Dependency Resolver
+    /// Service Locator
     /// </summary>
-    /// <seealso cref="JQDT.DI.IDependencyResolver" />
-    public class DependencyResolver : IDependencyResolver
+    /// <seealso cref="JQDT.DI.IServiceLocator" />
+    public class ServiceLocator : IServiceLocator
     {
         /// <summary>
         /// Gets the search data processor.

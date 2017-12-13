@@ -17,15 +17,15 @@
     /// <typeparam name="T">Data Collection Generic Type</typeparam>
     public abstract class ApplicationBase<T> : IApplicationBase
     {
-        private readonly IDependencyResolver dependencyResolver;
+        private readonly IServiceLocator serviceLocator;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ApplicationBase{T}"/> class.
         /// </summary>
-        /// <param name="dependencyResolver">The dependency resolver.</param>
-        public ApplicationBase(IDependencyResolver dependencyResolver)
+        /// <param name="sreviceLocator">The service locator.</param>
+        public ApplicationBase(IServiceLocator sreviceLocator)
         {
-            this.dependencyResolver = dependencyResolver;
+            this.serviceLocator = sreviceLocator;
         }
 
         public event DataProcessorEventHandler OnDataProcessingEvent = delegate { };
@@ -173,27 +173,27 @@
         {
             var dataProcessChain = new DataProcessChain<T>();
 
-            var searchDataProcessor = this.dependencyResolver.GetSearchDataProcessor<T>();
+            var searchDataProcessor = this.serviceLocator.GetSearchDataProcessor<T>();
             ((DataProcessBase<T>)searchDataProcessor).OnDataProcessingEvent += this.OnSearchDataProcessingEvent;
             ((DataProcessBase<T>)searchDataProcessor).OnDataProcessedEvent += this.OnSearchDataProcessedEvent;
             dataProcessChain.AddDataProcessor(searchDataProcessor);
 
-            var customFiltersDataProcessor = this.dependencyResolver.GetCustomFiltersDataProcessor<T>();
+            var customFiltersDataProcessor = this.serviceLocator.GetCustomFiltersDataProcessor<T>();
             ((DataProcessBase<T>)customFiltersDataProcessor).OnDataProcessingEvent += this.OnCustomFiltersDataProcessingEvent;
             ((DataProcessBase<T>)customFiltersDataProcessor).OnDataProcessedEvent += this.OnCustomFiltersDataProcessedEvent;
             dataProcessChain.AddDataProcessor(customFiltersDataProcessor);
 
-            var columnsFilterDataProcessor = this.dependencyResolver.GetColumnsFilterDataProcessor<T>();
+            var columnsFilterDataProcessor = this.serviceLocator.GetColumnsFilterDataProcessor<T>();
             ((DataProcessBase<T>)columnsFilterDataProcessor).OnDataProcessingEvent += this.OnColumnsFilterDataProcessingEvent;
             ((DataProcessBase<T>)columnsFilterDataProcessor).OnDataProcessedEvent += this.OnColumnsFilterDataProcessedEvent;
             dataProcessChain.AddDataProcessor(columnsFilterDataProcessor);
 
-            var sortDataProcessor = this.dependencyResolver.GetSortDataProcessor<T>();
+            var sortDataProcessor = this.serviceLocator.GetSortDataProcessor<T>();
             ((DataProcessBase<T>)sortDataProcessor).OnDataProcessingEvent += this.OnSortDataProcessingEvent;
             ((DataProcessBase<T>)sortDataProcessor).OnDataProcessedEvent += this.OnSortDataProcessedEvent;
             dataProcessChain.AddDataProcessor(sortDataProcessor);
 
-            var pagingDataProcessor = this.dependencyResolver.GetPagingDataProcessor<T>();
+            var pagingDataProcessor = this.serviceLocator.GetPagingDataProcessor<T>();
             ((DataProcessBase<T>)pagingDataProcessor).OnDataProcessingEvent += this.OnPagingDataProcessingEvent;
             ((DataProcessBase<T>)pagingDataProcessor).OnDataProcessedEvent += this.OnPagingDataProcessedEvent;
             dataProcessChain.AddDataProcessor(pagingDataProcessor);

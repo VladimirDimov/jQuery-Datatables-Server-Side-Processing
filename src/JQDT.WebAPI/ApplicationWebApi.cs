@@ -21,9 +21,9 @@
         /// Initializes a new instance of the <see cref="ApplicationWebApi{T}"/> class.
         /// </summary>
         /// <param name="actionExecutedContext">The action executed context.</param>
-        /// <param name="dependencyResolver">The dependency resolver.</param>
-        public ApplicationWebApi(HttpActionExecutedContext actionExecutedContext, IDependencyResolver dependencyResolver)
-            : base(dependencyResolver)
+        /// <param name="serviceLocator">The dependency resolver.</param>
+        public ApplicationWebApi(HttpActionExecutedContext actionExecutedContext, IServiceLocator serviceLocator)
+            : base(serviceLocator)
         {
             this.actionExecutedContext = actionExecutedContext;
         }
