@@ -88,7 +88,7 @@
         /// <summary>
         /// Gets the form model binder.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A new instance of <see cref="IFormModelBinder"/></returns>
         public IFormModelBinder GetFormModelBinder()
         {
             return new FormModelBinder();

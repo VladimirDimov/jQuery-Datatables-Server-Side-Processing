@@ -47,7 +47,7 @@
         /// <summary>
         /// Gets the form model binder.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A new instance of <see cref="IFormModelBinder"/></returns>
         IFormModelBinder GetFormModelBinder();
     }
 }

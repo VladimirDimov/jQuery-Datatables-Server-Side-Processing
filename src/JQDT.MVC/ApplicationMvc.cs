@@ -20,6 +20,7 @@
         /// </summary>
         /// <param name="filterContext">The filter context.</param>
         /// <param name="serviceLocator">The service locator.</param>
+        /// <param name="modelBinder">The model binder.</param>
         public ApplicationMvc(ActionExecutedContext filterContext, DI.IServiceLocator serviceLocator, IFormModelBinder modelBinder)
             : base(serviceLocator, modelBinder)
         {

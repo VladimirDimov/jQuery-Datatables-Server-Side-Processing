@@ -23,37 +23,41 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="ApplicationBase{T}"/> class.
         /// </summary>
-        /// <param name="sreviceLocator">The service locator.</param>
-        public ApplicationBase(IServiceLocator sreviceLocator, IFormModelBinder modelBinder)
+        /// <param name="serviceLocator">The service locator.</param>
+        /// <param name="modelBinder">The model binder.</param>
+        public ApplicationBase(IServiceLocator serviceLocator, IFormModelBinder modelBinder)
         {
-            this.serviceLocator = sreviceLocator;
+            this.serviceLocator = serviceLocator;
             this.modelBinder = modelBinder;
         }
 
+        /// <summary>
+        /// Occurs before the data is processed.
+        /// </summary>
         public event DataProcessorEventHandler OnDataProcessingEvent = delegate { };
 
         /// <summary>
-        /// Occurs when [on data processed].
+        /// Occurs when after the data is processed.
         /// </summary>
         public event DataProcessorEventHandler OnDataProcessedEvent = delegate { };
 
         /// <summary>
-        /// Occurs when [on search data processing event].
+        /// Occurs before search data processing.
         /// </summary>
         public event DataProcessorEventHandler OnSearchDataProcessingEvent = delegate { };
 
         /// <summary>
-        /// Occurs when [on search data processed event].
+        /// Occurs after search data processing.
         /// </summary>
         public event DataProcessorEventHandler OnSearchDataProcessedEvent = delegate { };
 
         /// <summary>
-        /// Occurs when [on custom filters data processing event].
+        /// Occurs before custom filters data processing.
         /// </summary>
         public event DataProcessorEventHandler OnCustomFiltersDataProcessingEvent = delegate { };
 
         /// <summary>
-        /// Occurs when [on custom filters data processed event].
+        /// Occurs after custom filters data processing.
         /// </summary>
         public event DataProcessorEventHandler OnCustomFiltersDataProcessedEvent = delegate { };
 
@@ -100,7 +104,7 @@
             {
                 var ajaxForm = this.GetAjaxForm();
                 var data = this.GetData();
-                var requestModel = modelBinder.BindModel(ajaxForm, data);
+                var requestModel = this.modelBinder.BindModel(ajaxForm, data);
 
                 var dataProcessChain = this.GetDataProcessChain(requestModel.Helpers.DataCollectionType);
 
@@ -142,6 +146,7 @@
         /// </summary>
         /// <param name="data">The data.</param>
         /// <param name="requestInfoModel">The request information model.</param>
+        /// <param name="eventHandler">The event handler.</param>
         private void PerformDataProcessorEventHandler(ref IQueryable<T> data, RequestInfoModel requestInfoModel, DataProcessorEventHandler eventHandler)
         {
             var dataAsObj = (object)data;
