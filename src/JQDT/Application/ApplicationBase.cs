@@ -32,62 +32,62 @@
         }
 
         /// <summary>
-        /// Occurs before the data is processed.
+        /// Occurs before all data processors execute
         /// </summary>
         public event DataProcessorEventHandler OnDataProcessingEvent = delegate { };
 
         /// <summary>
-        /// Occurs when after the data is processed.
+        /// Occurs after all data processors execute
         /// </summary>
         public event DataProcessorEventHandler OnDataProcessedEvent = delegate { };
 
         /// <summary>
-        /// Occurs before search data processing.
+        /// Occurs before search data processor executes
         /// </summary>
         public event DataProcessorEventHandler OnSearchDataProcessingEvent = delegate { };
 
         /// <summary>
-        /// Occurs after search data processing.
+        /// Occurs after search data processor executes
         /// </summary>
         public event DataProcessorEventHandler OnSearchDataProcessedEvent = delegate { };
 
         /// <summary>
-        /// Occurs before custom filters data processing.
+        /// Occurs before custom filters data processor executes
         /// </summary>
         public event DataProcessorEventHandler OnCustomFiltersDataProcessingEvent = delegate { };
 
         /// <summary>
-        /// Occurs after custom filters data processing.
+        /// Occurs after custom filters data processor executes
         /// </summary>
         public event DataProcessorEventHandler OnCustomFiltersDataProcessedEvent = delegate { };
 
         /// <summary>
-        /// Occurs when [on columns filter data processing event].
+        /// Occurs before column filters data processor executes
         /// </summary>
         public event DataProcessorEventHandler OnColumnsFilterDataProcessingEvent = delegate { };
 
         /// <summary>
-        /// Occurs when [on columns filter data processed event].
+        /// Occurs after column filters data processor executes
         /// </summary>
         public event DataProcessorEventHandler OnColumnsFilterDataProcessedEvent = delegate { };
 
         /// <summary>
-        /// Occurs when [on sort data processing event].
+        /// Occurs before sort data processor executes
         /// </summary>
         public event DataProcessorEventHandler OnSortDataProcessingEvent = delegate { };
 
         /// <summary>
-        /// Occurs when [on sort data processed event].
+        /// Occurs after sort data processor executes
         /// </summary>
         public event DataProcessorEventHandler OnSortDataProcessedEvent = delegate { };
 
         /// <summary>
-        /// Occurs when [on paging data processing event].
+        /// Occurs before paging data processor executes
         /// </summary>
         public event DataProcessorEventHandler OnPagingDataProcessingEvent = delegate { };
 
         /// <summary>
-        /// Occurs when [on paging data processed event].
+        /// Occurs after paging data processor executes
         /// </summary>
         public event DataProcessorEventHandler OnPagingDataProcessedEvent = delegate { };
 

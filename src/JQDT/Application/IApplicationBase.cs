@@ -9,62 +9,62 @@
     public interface IApplicationBase
     {
         /// <summary>
-        /// Occurs when [on data processing event].
+        /// Occurs before all data processors execute
         /// </summary>
         event DataProcessorEventHandler OnDataProcessingEvent;
 
         /// <summary>
-        /// Occurs when [on data processed].
+        /// Occurs after all data processors execute
         /// </summary>
         event DataProcessorEventHandler OnDataProcessedEvent;
 
         /// <summary>
-        /// Occurs when [on search data processing event].
+        /// Occurs before search data processor executes
         /// </summary>
         event DataProcessorEventHandler OnSearchDataProcessingEvent;
 
         /// <summary>
-        /// Occurs when [on search data processed event].
+        /// Occurs after search data processor executes
         /// </summary>
         event DataProcessorEventHandler OnSearchDataProcessedEvent;
 
         /// <summary>
-        /// Occurs when [on custom filters data processing event].
+        /// Occurs before custom filters data processor executes
         /// </summary>
         event DataProcessorEventHandler OnCustomFiltersDataProcessingEvent;
 
         /// <summary>
-        /// Occurs when [on custom filters data processed event].
+        /// Occurs after custom filters data processor executes
         /// </summary>
         event DataProcessorEventHandler OnCustomFiltersDataProcessedEvent;
 
         /// <summary>
-        /// Occurs when [on columns filter data processing event].
+        /// Occurs before column filters data processor executes
         /// </summary>
         event DataProcessorEventHandler OnColumnsFilterDataProcessingEvent;
 
         /// <summary>
-        /// Occurs when [on columns filter data processed event].
+        /// Occurs after column filters data processor executes
         /// </summary>
         event DataProcessorEventHandler OnColumnsFilterDataProcessedEvent;
 
         /// <summary>
-        /// Occurs when [on sort data processing event].
+        /// Occurs before sort data processor executes
         /// </summary>
         event DataProcessorEventHandler OnSortDataProcessingEvent;
 
         /// <summary>
-        /// Occurs when [on sort data processed event].
+        /// Occurs after sort data processor executes
         /// </summary>
         event DataProcessorEventHandler OnSortDataProcessedEvent;
 
         /// <summary>
-        /// Occurs when [on paging data processing event].
+        /// Occurs before paging data processor executes
         /// </summary>
         event DataProcessorEventHandler OnPagingDataProcessingEvent;
 
         /// <summary>
-        /// Occurs when [on paging data processed event].
+        /// Occurs after paging data processor executes
         /// </summary>
         event DataProcessorEventHandler OnPagingDataProcessedEvent;
 

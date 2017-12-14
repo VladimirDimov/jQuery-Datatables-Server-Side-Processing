@@ -57,16 +57,6 @@
         }
 
         /// <summary>
-        /// Called after all data processors execute.
-        /// </summary>
-        /// <param name="data">The data.</param>
-        /// <param name="requestInfoModel">The request information model.</param>
-        public virtual void OnDataProcessed(ref object data, RequestInfoModel requestInfoModel)
-        {
-            // No data processing logic by default;
-        }
-
-        /// <summary>
         /// Called before all data processors execute.
         /// </summary>
         /// <param name="data">The data.</param>
@@ -77,7 +67,17 @@
         }
 
         /// <summary>
-        /// Called when [search data processing].
+        /// Called after all data processors execute.
+        /// </summary>
+        /// <param name="data">The data.</param>
+        /// <param name="requestInfoModel">The request information model.</param>
+        public virtual void OnDataProcessed(ref object data, RequestInfoModel requestInfoModel)
+        {
+            // No data processing logic by default;
+        }
+
+        /// <summary>
+        /// Called before search data processor executes.
         /// </summary>
         /// <param name="data">The data.</param>
         /// <param name="requestInfoModel">The request information model.</param>
@@ -87,7 +87,7 @@
         }
 
         /// <summary>
-        /// Called when [search data processed].
+        /// Called after search data processor executes.
         /// </summary>
         /// <param name="data">The data.</param>
         /// <param name="requestInfoModel">The request information model.</param>
@@ -97,7 +97,7 @@
         }
 
         /// <summary>
-        /// Called when [custom filters data processing].
+        /// Called before custom filters data processor executes.
         /// </summary>
         /// <param name="data">The data.</param>
         /// <param name="requestInfoModel">The request information model.</param>
@@ -107,7 +107,7 @@
         }
 
         /// <summary>
-        /// Called when [custom filters data processed].
+        /// Called after custom filters data processor executes.
         /// </summary>
         /// <param name="data">The data.</param>
         /// <param name="requestInfoModel">The request information model.</param>
@@ -117,7 +117,7 @@
         }
 
         /// <summary>
-        /// Called when [columns filter data processing].
+        /// Called before columns filters data processor executes.
         /// </summary>
         /// <param name="data">The data.</param>
         /// <param name="requestInfoModel">The request information model.</param>
@@ -127,7 +127,7 @@
         }
 
         /// <summary>
-        /// Called when [columns filter data processed].
+        /// Called after columns filters data processor executes.
         /// </summary>
         /// <param name="data">The data.</param>
         /// <param name="requestInfoModel">The request information model.</param>
@@ -137,7 +137,7 @@
         }
 
         /// <summary>
-        /// Called when [sort data processing].
+        /// Called before sort data processor executes.
         /// </summary>
         /// <param name="data">The data.</param>
         /// <param name="requestInfoModel">The request information model.</param>
@@ -147,7 +147,7 @@
         }
 
         /// <summary>
-        /// Called when [sort data processed].
+        /// Called after sort data processor executes.
         /// </summary>
         /// <param name="data">The data.</param>
         /// <param name="requestInfoModel">The request information model.</param>
@@ -157,7 +157,7 @@
         }
 
         /// <summary>
-        /// Called when [paging data processing].
+        /// Called before paging data processor executes.
         /// </summary>
         /// <param name="data">The data.</param>
         /// <param name="requestInfoModel">The request information model.</param>
@@ -167,7 +167,7 @@
         }
 
         /// <summary>
-        /// Called when [paging data processed].
+        /// Called after paging data processor executes.
         /// </summary>
         /// <param name="data">The data.</param>
         /// <param name="requestInfoModel">The request information model.</param>
@@ -180,8 +180,8 @@
         {
             var dataCollectionType = filterContext.Controller.ViewData.Model.GetType();
             var applicationInitizlizationFunction = ExecuteFunctionProvider<ActionExecutedContext>.GetAppInicializationFunc(dataCollectionType, typeof(ApplicationMvc<>));
-            var formModelBinder = serviceLocator.GetFormModelBinder();
-            var mvcApplication = applicationInitizlizationFunction(filterContext, serviceLocator, formModelBinder);
+            var formModelBinder = this.serviceLocator.GetFormModelBinder();
+            var mvcApplication = applicationInitizlizationFunction(filterContext, this.serviceLocator, formModelBinder);
             this.SubscribeToEvents(mvcApplication);
             var result = (ResultModel)mvcApplication.Execute();
 
