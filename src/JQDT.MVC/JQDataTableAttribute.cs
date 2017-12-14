@@ -3,6 +3,7 @@
     using System;
     using System.Web.Mvc;
     using JQDT.Application;
+    using JQDT.DI;
     using JQDT.Exceptions;
     using JQDT.Models;
 
@@ -13,6 +14,26 @@
     [AttributeUsage(validOn: AttributeTargets.Method, AllowMultiple = false)]
     public class JQDataTableAttribute : ActionFilterAttribute
     {
+        private readonly IServiceLocator serviceLocator;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="JQDataTableAttribute"/> class.
+        /// </summary>
+        public JQDataTableAttribute()
+            : this(new ServiceLocator())
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="JQDataTableAttribute"/> class.
+        /// This constructor is used for testing purposes.
+        /// </summary>
+        /// <param name="serviceLocator">The service locator.</param>
+        internal JQDataTableAttribute(IServiceLocator serviceLocator)
+        {
+            this.serviceLocator = serviceLocator;
+        }
+
         /// <summary>
         /// Called by the ASP.NET MVC framework after the action method executes.
         /// </summary>
@@ -159,7 +180,6 @@
         {
             var dataCollectionType = filterContext.Controller.ViewData.Model.GetType();
             var applicationInitizlizationFunction = ExecuteFunctionProvider<ActionExecutedContext>.GetAppInicializationFunc(dataCollectionType, typeof(ApplicationMvc<>));
-            var serviceLocator = new DI.ServiceLocator();
             var formModelBinder = serviceLocator.GetFormModelBinder();
             var mvcApplication = applicationInitizlizationFunction(filterContext, serviceLocator, formModelBinder);
             this.SubscribeToEvents(mvcApplication);
