@@ -1,6 +1,7 @@
 ﻿namespace JQDT.DataProcessing
 {
     using System.Linq;
+    using JQDT.Delegates;
     using JQDT.Models;
 
     /// <summary>
@@ -9,6 +10,16 @@
     /// <typeparam name="T">Generic data model type.</typeparam>
     public interface IDataProcess<T>
     {
+        /// <summary>
+        /// Occurs when [on data processing event].
+        /// </summary>
+        event DataProcessorEventHandler OnDataProcessingEvent;
+
+        /// <summary>
+        /// Occurs when [on data processed event].
+        /// </summary>
+        event DataProcessorEventHandler OnDataProcessedEvent;
+
         /// <summary>
         /// Gets the processed data.
         /// </summary>

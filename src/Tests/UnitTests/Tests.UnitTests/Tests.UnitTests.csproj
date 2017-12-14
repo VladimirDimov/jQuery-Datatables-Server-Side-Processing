@@ -47,6 +47,9 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Castle.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Castle.Core.4.2.1\lib\net45\Castle.Core.dll</HintPath>
+    </Reference>
     <Reference Include="FakeData, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\FakeData.1.0.0\lib\FakeData.dll</HintPath>
     </Reference>
@@ -56,19 +59,27 @@
     <Reference Include="Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\MSTest.TestFramework.1.2.0\lib\net45\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.dll</HintPath>
     </Reference>
+    <Reference Include="Moq, Version=4.7.145.0, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Moq.4.7.145\lib\net45\Moq.dll</HintPath>
+    </Reference>
     <Reference Include="nunit.framework, Version=3.9.0.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\NUnit.3.9.0\lib\net45\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Linq.Dynamic, Version=1.0.6132.35681, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\System.Linq.Dynamic.1.0.7\lib\net40\System.Linq.Dynamic.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApplicationBaseUnitTests.cs" />
+    <Compile Include="Mocks\AppMock.cs" />
     <Compile Include="ColumnsFilterDataProcessorUnitTests.cs" />
     <Compile Include="Common\TestHelpers.cs" />
     <Compile Include="CustomFiltersDataProcessorUnitTests.cs" />
+    <Compile Include="Mocks\DataProcessorMockModel.cs" />
+    <Compile Include="Models\IntModel.cs" />
     <Compile Include="PagingDataProcessorTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SearchDataProcessorTests.cs" />
@@ -78,6 +89,14 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\JQDT.MVC\JQDT.MVC.csproj">
+      <Project>{d845ab6d-1887-4597-9256-148ad0a11459}</Project>
+      <Name>JQDT.MVC</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\JQDT.WebAPI\JQDT.WebAPI.csproj">
+      <Project>{a57f2edc-8dc9-4a9a-bd3d-5ca31ee56910}</Project>
+      <Name>JQDT.WebAPI</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\JQDT\JQDT.csproj">
       <Project>{c82e4675-88ab-4b78-8475-f1521bdae330}</Project>
       <Name>JQDT</Name>

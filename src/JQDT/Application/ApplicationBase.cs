@@ -105,12 +105,12 @@
                 var dataProcessChain = this.GetDataProcessChain(requestModel.Helpers.DataCollectionType);
 
                 // Call events before the data is processed
-                this.PerformDataProcessorEventHandler(ref data, requestModel);
+                this.PerformDataProcessorEventHandler(ref data, requestModel, this.OnDataProcessingEvent);
 
                 var processedData = dataProcessChain.ProcessData(data, requestModel);
 
                 // Call events after the data is processed
-                this.PerformDataProcessorEventHandler(ref processedData, requestModel);
+                this.PerformDataProcessorEventHandler(ref processedData, requestModel, this.OnDataProcessedEvent);
 
                 result.Data = processedData.ToList().Select(x => (object)x).ToList();
                 result.Draw = requestModel.TableParameters.Draw;
@@ -142,10 +142,10 @@
         /// </summary>
         /// <param name="data">The data.</param>
         /// <param name="requestInfoModel">The request information model.</param>
-        private void PerformDataProcessorEventHandler(ref IQueryable<T> data, RequestInfoModel requestInfoModel)
+        private void PerformDataProcessorEventHandler(ref IQueryable<T> data, RequestInfoModel requestInfoModel, DataProcessorEventHandler eventHandler)
         {
             var dataAsObj = (object)data;
-            this.OnDataProcessedEvent(ref dataAsObj, requestInfoModel);
+            eventHandler(ref dataAsObj, requestInfoModel);
             data = (IQueryable<T>)dataAsObj;
         }
 
@@ -175,28 +175,28 @@
             var dataProcessChain = new DataProcessChain<T>();
 
             var searchDataProcessor = this.serviceLocator.GetSearchDataProcessor<T>();
-            ((DataProcessBase<T>)searchDataProcessor).OnDataProcessingEvent += this.OnSearchDataProcessingEvent;
-            ((DataProcessBase<T>)searchDataProcessor).OnDataProcessedEvent += this.OnSearchDataProcessedEvent;
+            searchDataProcessor.OnDataProcessingEvent += this.OnSearchDataProcessingEvent;
+            searchDataProcessor.OnDataProcessedEvent += this.OnSearchDataProcessedEvent;
             dataProcessChain.AddDataProcessor(searchDataProcessor);
 
             var customFiltersDataProcessor = this.serviceLocator.GetCustomFiltersDataProcessor<T>();
-            ((DataProcessBase<T>)customFiltersDataProcessor).OnDataProcessingEvent += this.OnCustomFiltersDataProcessingEvent;
-            ((DataProcessBase<T>)customFiltersDataProcessor).OnDataProcessedEvent += this.OnCustomFiltersDataProcessedEvent;
+            customFiltersDataProcessor.OnDataProcessingEvent += this.OnCustomFiltersDataProcessingEvent;
+            customFiltersDataProcessor.OnDataProcessedEvent += this.OnCustomFiltersDataProcessedEvent;
             dataProcessChain.AddDataProcessor(customFiltersDataProcessor);
 
             var columnsFilterDataProcessor = this.serviceLocator.GetColumnsFilterDataProcessor<T>();
-            ((DataProcessBase<T>)columnsFilterDataProcessor).OnDataProcessingEvent += this.OnColumnsFilterDataProcessingEvent;
-            ((DataProcessBase<T>)columnsFilterDataProcessor).OnDataProcessedEvent += this.OnColumnsFilterDataProcessedEvent;
+            columnsFilterDataProcessor.OnDataProcessingEvent += this.OnColumnsFilterDataProcessingEvent;
+            columnsFilterDataProcessor.OnDataProcessedEvent += this.OnColumnsFilterDataProcessedEvent;
             dataProcessChain.AddDataProcessor(columnsFilterDataProcessor);
 
             var sortDataProcessor = this.serviceLocator.GetSortDataProcessor<T>();
-            ((DataProcessBase<T>)sortDataProcessor).OnDataProcessingEvent += this.OnSortDataProcessingEvent;
-            ((DataProcessBase<T>)sortDataProcessor).OnDataProcessedEvent += this.OnSortDataProcessedEvent;
+            sortDataProcessor.OnDataProcessingEvent += this.OnSortDataProcessingEvent;
+            sortDataProcessor.OnDataProcessedEvent += this.OnSortDataProcessedEvent;
             dataProcessChain.AddDataProcessor(sortDataProcessor);
 
             var pagingDataProcessor = this.serviceLocator.GetPagingDataProcessor<T>();
-            ((DataProcessBase<T>)pagingDataProcessor).OnDataProcessingEvent += this.OnPagingDataProcessingEvent;
-            ((DataProcessBase<T>)pagingDataProcessor).OnDataProcessedEvent += this.OnPagingDataProcessedEvent;
+            pagingDataProcessor.OnDataProcessingEvent += this.OnPagingDataProcessingEvent;
+            pagingDataProcessor.OnDataProcessedEvent += this.OnPagingDataProcessedEvent;
             dataProcessChain.AddDataProcessor(pagingDataProcessor);
 
             return dataProcessChain;

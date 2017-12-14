@@ -1,6 +1,7 @@
 ﻿namespace JQDT.DI
 {
     using JQDT.DataProcessing;
+    using JQDT.ModelBinders;
 
     /// <summary>
     /// Service Locator Interface
@@ -42,5 +43,11 @@
         /// <typeparam name="T">Generic data model type</typeparam>
         /// <returns>Instance of sort data processor</returns>
         IDataProcess<T> GetSortDataProcessor<T>();
+
+        /// <summary>
+        /// Gets the form model binder.
+        /// </summary>
+        /// <returns></returns>
+        IFormModelBinder GetFormModelBinder();
     }
 }
