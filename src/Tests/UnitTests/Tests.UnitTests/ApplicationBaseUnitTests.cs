@@ -4,6 +4,7 @@
     using System.Collections.Specialized;
     using System.Diagnostics;
     using System.Linq;
+    using JQDT.Application;
     using JQDT.DataProcessing;
     using JQDT.DI;
     using JQDT.ModelBinders;
@@ -205,6 +206,92 @@
             app.Execute();
 
             Assert.IsTrue(flag);
+        }
+
+        [Test]
+        public void AppBaseEventsShouldBeCalledInCorrectOrder()
+        {
+            var app = this.GetAppMock();
+            var flags = new List<string>();
+            app.OnDataProcessingEvent += (ref object data, RequestInfoModel requestInfoModel) =>
+            {
+                flags.Add(nameof(ApplicationBase<IntModel>.OnDataProcessingEvent));
+            };
+
+            app.OnSearchDataProcessingEvent += (ref object data, RequestInfoModel requestInfoModel) =>
+            {
+                flags.Add(nameof(ApplicationBase<IntModel>.OnSearchDataProcessingEvent));
+            };
+
+            app.OnSearchDataProcessedEvent += (ref object data, RequestInfoModel requestInfoModel) =>
+            {
+                flags.Add(nameof(ApplicationBase<IntModel>.OnSearchDataProcessedEvent));
+            };
+
+            app.OnCustomFiltersDataProcessingEvent += (ref object data, RequestInfoModel requestInfoModel) =>
+            {
+                flags.Add(nameof(ApplicationBase<IntModel>.OnCustomFiltersDataProcessingEvent));
+            };
+
+            app.OnCustomFiltersDataProcessedEvent += (ref object data, RequestInfoModel requestInfoModel) =>
+            {
+                flags.Add(nameof(ApplicationBase<IntModel>.OnCustomFiltersDataProcessedEvent));
+            };
+
+            app.OnColumnsFilterDataProcessingEvent += (ref object data, RequestInfoModel requestInfoModel) =>
+            {
+                flags.Add(nameof(ApplicationBase<IntModel>.OnColumnsFilterDataProcessingEvent));
+            };
+
+            app.OnColumnsFilterDataProcessedEvent += (ref object data, RequestInfoModel requestInfoModel) =>
+            {
+                flags.Add(nameof(ApplicationBase<IntModel>.OnColumnsFilterDataProcessedEvent));
+            };
+
+            app.OnSortDataProcessingEvent += (ref object data, RequestInfoModel requestInfoModel) =>
+            {
+                flags.Add(nameof(ApplicationBase<IntModel>.OnSortDataProcessingEvent));
+            };
+
+            app.OnSortDataProcessedEvent += (ref object data, RequestInfoModel requestInfoModel) =>
+            {
+                flags.Add(nameof(ApplicationBase<IntModel>.OnSortDataProcessedEvent));
+            };
+
+            app.OnPagingDataProcessingEvent += (ref object data, RequestInfoModel requestInfoModel) =>
+            {
+                flags.Add(nameof(ApplicationBase<IntModel>.OnPagingDataProcessingEvent));
+            };
+
+            app.OnPagingDataProcessedEvent += (ref object data, RequestInfoModel requestInfoModel) =>
+            {
+                flags.Add(nameof(ApplicationBase<IntModel>.OnPagingDataProcessedEvent));
+            };
+
+            app.OnDataProcessedEvent += (ref object data, RequestInfoModel requestInfoModel) =>
+            {
+                flags.Add(nameof(ApplicationBase<IntModel>.OnDataProcessedEvent));
+            };
+
+            app.Execute();
+
+            var expectedEventsCall = new List<string>
+            {
+                nameof(ApplicationBase<IntModel>.OnDataProcessingEvent),
+                nameof(ApplicationBase<IntModel>.OnSearchDataProcessingEvent),
+                nameof(ApplicationBase<IntModel>.OnSearchDataProcessedEvent),
+                nameof(ApplicationBase<IntModel>.OnCustomFiltersDataProcessingEvent),
+                nameof(ApplicationBase<IntModel>.OnCustomFiltersDataProcessedEvent),
+                nameof(ApplicationBase<IntModel>.OnColumnsFilterDataProcessingEvent),
+                nameof(ApplicationBase<IntModel>.OnColumnsFilterDataProcessedEvent),
+                nameof(ApplicationBase<IntModel>.OnSortDataProcessingEvent),
+                nameof(ApplicationBase<IntModel>.OnSortDataProcessedEvent),
+                nameof(ApplicationBase<IntModel>.OnPagingDataProcessingEvent),
+                nameof(ApplicationBase<IntModel>.OnPagingDataProcessedEvent),
+                nameof(ApplicationBase<IntModel>.OnDataProcessedEvent),
+            };
+
+            Assert.IsTrue(expectedEventsCall.SequenceEqual(flags));
         }
 
         public AppMock<IntModel> GetAppMock()
