@@ -78,7 +78,10 @@
     <Compile Include="ColumnsFilterDataProcessorUnitTests.cs" />
     <Compile Include="Common\TestHelpers.cs" />
     <Compile Include="CustomFiltersDataProcessorUnitTests.cs" />
+    <Compile Include="Mocks\AppServiceLocatorMockModel.cs" />
+    <Compile Include="Mocks\DataProcessorFilterFake.cs" />
     <Compile Include="Mocks\DataProcessorMockModel.cs" />
+    <Compile Include="Mocks\DataProcessorNotFilterFake.cs" />
     <Compile Include="Models\IntModel.cs" />
     <Compile Include="PagingDataProcessorTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
