@@ -106,7 +106,7 @@
                 var data = this.GetData();
                 var requestModel = this.modelBinder.BindModel(ajaxForm, data);
 
-                var dataProcessChain = this.GetDataProcessChain(requestModel.Helpers.DataCollectionType);
+                var dataProcessChain = this.GetDataProcessChain(typeof(T));
 
                 // Call events before the data is processed
                 this.PerformDataProcessorEventHandler(ref data, requestModel, this.OnDataProcessingEvent);
