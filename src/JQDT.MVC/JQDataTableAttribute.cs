@@ -2,6 +2,7 @@
 {
     using System;
     using System.Web.Mvc;
+    using JQDT.ActionFilters;
     using JQDT.Application;
     using JQDT.DI;
     using JQDT.Exceptions;
@@ -12,7 +13,7 @@
     /// </summary>
     /// <seealso cref="System.Web.Mvc.ActionFilterAttribute" />
     [AttributeUsage(validOn: AttributeTargets.Method, AllowMultiple = false)]
-    public class JQDataTableAttribute : ActionFilterAttribute
+    public class JQDataTableAttribute : ActionFilterAttribute, IJQDTActionFilter
     {
         private readonly IServiceLocator serviceLocator;
 
@@ -63,7 +64,6 @@
         /// <param name="requestInfoModel">The request information model.</param>
         public virtual void OnDataProcessing(ref object data, RequestInfoModel requestInfoModel)
         {
-            // No data processing logic by default;
         }
 
         /// <summary>
@@ -73,7 +73,6 @@
         /// <param name="requestInfoModel">The request information model.</param>
         public virtual void OnDataProcessed(ref object data, RequestInfoModel requestInfoModel)
         {
-            // No data processing logic by default;
         }
 
         /// <summary>
@@ -83,7 +82,6 @@
         /// <param name="requestInfoModel">The request information model.</param>
         public virtual void OnSearchDataProcessing(ref object data, RequestInfoModel requestInfoModel)
         {
-            // No data processing logic by default;
         }
 
         /// <summary>
@@ -93,7 +91,6 @@
         /// <param name="requestInfoModel">The request information model.</param>
         public virtual void OnSearchDataProcessed(ref object data, RequestInfoModel requestInfoModel)
         {
-            // No data processing logic by default;
         }
 
         /// <summary>
@@ -103,7 +100,6 @@
         /// <param name="requestInfoModel">The request information model.</param>
         public virtual void OnCustomFiltersDataProcessing(ref object data, RequestInfoModel requestInfoModel)
         {
-            // No data processing logic by default;
         }
 
         /// <summary>
@@ -113,7 +109,6 @@
         /// <param name="requestInfoModel">The request information model.</param>
         public virtual void OnCustomFiltersDataProcessed(ref object data, RequestInfoModel requestInfoModel)
         {
-            // No data processing logic by default;
         }
 
         /// <summary>
@@ -123,7 +118,6 @@
         /// <param name="requestInfoModel">The request information model.</param>
         public virtual void OnColumnsFilterDataProcessing(ref object data, RequestInfoModel requestInfoModel)
         {
-            // No data processing logic by default;
         }
 
         /// <summary>
@@ -133,7 +127,6 @@
         /// <param name="requestInfoModel">The request information model.</param>
         public virtual void OnColumnsFilterDataProcessed(ref object data, RequestInfoModel requestInfoModel)
         {
-            // No data processing logic by default;
         }
 
         /// <summary>
@@ -143,7 +136,6 @@
         /// <param name="requestInfoModel">The request information model.</param>
         public virtual void OnSortDataProcessing(ref object data, RequestInfoModel requestInfoModel)
         {
-            // No data processing logic by default;
         }
 
         /// <summary>
@@ -153,7 +145,6 @@
         /// <param name="requestInfoModel">The request information model.</param>
         public virtual void OnSortDataProcessed(ref object data, RequestInfoModel requestInfoModel)
         {
-            // No data processing logic by default;
         }
 
         /// <summary>
@@ -163,7 +154,6 @@
         /// <param name="requestInfoModel">The request information model.</param>
         public virtual void OnPagingDataProcessing(ref object data, RequestInfoModel requestInfoModel)
         {
-            // No data processing logic by default;
         }
 
         /// <summary>
@@ -173,7 +163,6 @@
         /// <param name="requestInfoModel">The request information model.</param>
         public virtual void OnPagingDataProcessed(ref object data, RequestInfoModel requestInfoModel)
         {
-            // No data processing logic by default;
         }
 
         private void PerformOnActionExecuted(ActionExecutedContext filterContext)
