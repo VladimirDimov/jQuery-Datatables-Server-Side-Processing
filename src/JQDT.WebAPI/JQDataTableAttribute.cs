@@ -33,6 +33,7 @@
         /// This constructor is provided for testing purposes.
         /// </summary>
         /// <param name="serviceLocator">The service locator.</param>
+        /// <param name="executeFunctionProvider">The execute function provider.</param>
         internal JQDataTableAttribute(IServiceLocator serviceLocator, IExecuteFunctionProvider<HttpActionExecutedContext> executeFunctionProvider)
         {
             this.serviceLocator = serviceLocator;
