@@ -6,6 +6,7 @@
     using System.Web.Http.Filters;
     using JQDT.ActionFilters;
     using JQDT.Application;
+    using JQDT.DI;
     using JQDT.Exceptions;
     using JQDT.Models;
 
@@ -16,6 +17,26 @@
     /// <seealso cref="System.Web.Http.Filters.ActionFilterAttribute" />
     public class JQDataTableAttribute : ActionFilterAttribute, IJQDTActionFilter
     {
+        private readonly IServiceLocator serviceLocator;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="JQDataTableAttribute"/> class.
+        /// </summary>
+        public JQDataTableAttribute()
+            : this(new ServiceLocator())
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="JQDataTableAttribute"/> class.
+        /// This constructor is provided for testing purposes.
+        /// </summary>
+        /// <param name="serviceLocator">The service locator.</param>
+        internal JQDataTableAttribute(IServiceLocator serviceLocator)
+        {
+            this.serviceLocator = serviceLocator;
+        }
+
         /// <summary>
         /// Occurs after the action method is invoked.
         /// </summary>
@@ -42,7 +63,6 @@
         /// <param name="requestInfoModel">The request information model.</param>
         public virtual void OnDataProcessed(ref object data, RequestInfoModel requestInfoModel)
         {
-            // No data processing logic by default;
         }
 
         /// <summary>

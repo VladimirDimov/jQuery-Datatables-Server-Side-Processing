@@ -27,7 +27,7 @@
 
         /// <summary>
         /// Initializes a new instance of the <see cref="JQDataTableAttribute"/> class.
-        /// This constructor is used for testing purposes.
+        /// This constructor is provided for testing purposes.
         /// </summary>
         /// <param name="serviceLocator">The service locator.</param>
         internal JQDataTableAttribute(IServiceLocator serviceLocator)
