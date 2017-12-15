@@ -60,20 +60,20 @@
         }
 
         /// <summary>
-        /// Called when [data processed].
-        /// </summary>
-        /// <param name="data">The data.</param>
-        /// <param name="requestInfoModel">The request information model.</param>
-        public virtual void OnDataProcessed(ref object data, RequestInfoModel requestInfoModel)
-        {
-        }
-
-        /// <summary>
         /// Called before all data processors execute.
         /// </summary>
         /// <param name="data">The data.</param>
         /// <param name="requestInfoModel">The request information model.</param>
         public void OnDataProcessing(ref object data, RequestInfoModel requestInfoModel)
+        {
+        }
+
+        /// <summary>
+        /// Called after all data processors execute.
+        /// </summary>
+        /// <param name="data">The data.</param>
+        /// <param name="requestInfoModel">The request information model.</param>
+        public virtual void OnDataProcessed(ref object data, RequestInfoModel requestInfoModel)
         {
         }
 
