@@ -77,6 +77,22 @@
             Assert.IsTrue(expectedEventsCalls.SequenceEqual(calledEvents));
         }
 
+        [Test]
+        public void ExpectToThrowOnInappropriateDataTypeInsideEventSubscriberFunction()
+        {
+            var serviceLocatorMock = this.GetServiceLocatorMock();
+            var executeFunctionMock = this.GetExecuteFunctionProviderMock(serviceLocatorMock);
+            var contextMock = this.GetHttpContextMock();
+
+            var testAttr = new JQDataTableThrowExceptionTestAttribute(serviceLocatorMock.Object, executeFunctionMock.Object);
+
+            testAttr.OnActionExecuted(contextMock.Object);
+            var jsonResult = (JsonResult)contextMock.Object.Result;
+            var jsonResultString = jsonResult.Data.ToString();
+            
+            Assert.IsTrue(jsonResultString.Contains("error = Inappropriate data collection type inside event subscriber function. The data collection type must be IQueryable<>."));
+        }
+
         private Mock<IServiceLocator> GetServiceLocatorMock()
         {
             var serviceLocatorMock = new Mock<IServiceLocator>();
@@ -159,6 +175,19 @@
         protected override IQueryable<T> GetData()
         {
             return new List<T>().AsQueryable();
+        }
+    }
+
+    public class JQDataTableThrowExceptionTestAttribute : JQDataTableAttribute
+    {
+        internal JQDataTableThrowExceptionTestAttribute(IServiceLocator serviceLocator, IExecuteFunctionProvider<ActionExecutedContext> executeFunctionProvider)
+            : base(serviceLocator, executeFunctionProvider)
+        {
+        }
+
+        public override void OnDataProcessed(ref object data, RequestInfoModel requestInfoModel)
+        {
+            data = new List<IntModel>();
         }
     }
 

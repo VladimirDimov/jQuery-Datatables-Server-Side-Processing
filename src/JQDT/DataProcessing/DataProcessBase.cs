@@ -84,6 +84,13 @@
         {
             var dataAsObj = (object)data;
             this.OnDataProcessingEvent(ref dataAsObj, requestInfoModel);
+
+            // Assert that the data type remains proper inside the event subscriber function.
+            if (!typeof(IQueryable<T>).IsAssignableFrom(dataAsObj.GetType()))
+            {
+                throw new ArgumentException($"Inappropriate data collection type inside event subscriber function. The data collection type must be IQueryable<>.");
+            }
+
             data = (IQueryable<T>)dataAsObj;
         }
 
