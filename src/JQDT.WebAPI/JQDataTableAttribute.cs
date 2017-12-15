@@ -18,12 +18,13 @@
     public class JQDataTableAttribute : ActionFilterAttribute, IJQDTActionFilter
     {
         private readonly IServiceLocator serviceLocator;
+        private readonly IExecuteFunctionProvider<HttpActionExecutedContext> executeFunctionProvider;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="JQDataTableAttribute"/> class.
         /// </summary>
         public JQDataTableAttribute()
-            : this(new ServiceLocator())
+            : this(new ServiceLocator(), new ExecuteFunctionProvider<HttpActionExecutedContext>())
         {
         }
 
@@ -32,9 +33,10 @@
         /// This constructor is provided for testing purposes.
         /// </summary>
         /// <param name="serviceLocator">The service locator.</param>
-        internal JQDataTableAttribute(IServiceLocator serviceLocator)
+        internal JQDataTableAttribute(IServiceLocator serviceLocator, IExecuteFunctionProvider<HttpActionExecutedContext> executeFunctionProvider)
         {
             this.serviceLocator = serviceLocator;
+            this.executeFunctionProvider = executeFunctionProvider;
         }
 
         /// <summary>
@@ -167,7 +169,7 @@
         private void PerformOnActionExecuted(HttpActionExecutedContext actionExecutedContext)
         {
             var modelType = ((System.Net.Http.ObjectContent)actionExecutedContext.Response.Content).ObjectType;
-            var applicationInitizlizationFunction = ExecuteFunctionProvider<HttpActionExecutedContext>.GetAppInicializationFunc(modelType, typeof(ApplicationWebApi<>));
+            var applicationInitizlizationFunction = this.executeFunctionProvider.GetAppInicializationFunc(modelType, typeof(ApplicationWebApi<>));
             var serviceLocator = new DI.ServiceLocator();
             var formModelBinder = serviceLocator.GetFormModelBinder();
             var webApiApplication = applicationInitizlizationFunction(actionExecutedContext, serviceLocator, formModelBinder);

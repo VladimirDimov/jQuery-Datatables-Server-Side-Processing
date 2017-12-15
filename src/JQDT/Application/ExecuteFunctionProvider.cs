@@ -10,7 +10,7 @@
     /// Creates and caches application execute function.
     /// </summary>
     /// <typeparam name="TContext">The type of the request context.</typeparam>
-    public static class ExecuteFunctionProvider<TContext>
+    public class ExecuteFunctionProvider<TContext> : IExecuteFunctionProvider<TContext>
     {
         private static ConcurrentDictionary<Type, Func<TContext, DI.IServiceLocator, IFormModelBinder, IApplicationBase>> appInitFunctionsCache = new ConcurrentDictionary<Type, Func<TContext, DI.IServiceLocator, IFormModelBinder, IApplicationBase>>();
 
@@ -20,7 +20,7 @@
         /// <param name="dataCollectionType">Type of the data collection.</param>
         /// <param name="appType">Type of the application.</param>
         /// <returns><see cref="Func{T, TResult}"/> that return new <see cref="IApplicationBaseIFormModelBinder"/> instance</returns>
-        public static Func<TContext, DI.IServiceLocator, IFormModelBinder, IApplicationBase> GetAppInicializationFunc(Type dataCollectionType, Type appType)
+        public Func<TContext, DI.IServiceLocator, IFormModelBinder, IApplicationBase> GetAppInicializationFunc(Type dataCollectionType, Type appType)
         {
             Func<TContext, DI.IServiceLocator, IFormModelBinder, IApplicationBase> executeFunc = null;
 

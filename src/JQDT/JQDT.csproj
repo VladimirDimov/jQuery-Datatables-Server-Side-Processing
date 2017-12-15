@@ -61,6 +61,7 @@
     <Compile Include="Application\ApplicationBase.cs" />
     <Compile Include="Application\ExecuteFunctionProvider.cs" />
     <Compile Include="Application\IApplicationBase.cs" />
+    <Compile Include="Application\IExecuteFunctionProvider.cs" />
     <Compile Include="DataProcessing\ColumnsFilterDataProcessing\ColumnsFilterDataProcessor.cs" />
     <Compile Include="DataProcessing\Common\ConstantExpressionBuilder.cs" />
     <Compile Include="DataProcessing\Common\ContainsExpressionBuilder.cs" />

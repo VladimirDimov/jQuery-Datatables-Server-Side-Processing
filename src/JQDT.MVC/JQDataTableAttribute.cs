@@ -16,12 +16,13 @@
     public class JQDataTableAttribute : ActionFilterAttribute, IJQDTActionFilter
     {
         private readonly IServiceLocator serviceLocator;
+        private readonly IExecuteFunctionProvider<ActionExecutedContext> executeFunctionProvider;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="JQDataTableAttribute"/> class.
         /// </summary>
         public JQDataTableAttribute()
-            : this(new ServiceLocator())
+            : this(new ServiceLocator(), new ExecuteFunctionProvider<ActionExecutedContext>())
         {
         }
 
@@ -30,9 +31,10 @@
         /// This constructor is provided for testing purposes.
         /// </summary>
         /// <param name="serviceLocator">The service locator.</param>
-        internal JQDataTableAttribute(IServiceLocator serviceLocator)
+        internal JQDataTableAttribute(IServiceLocator serviceLocator, IExecuteFunctionProvider<ActionExecutedContext> executeFunctionProvider)
         {
             this.serviceLocator = serviceLocator;
+            this.executeFunctionProvider = executeFunctionProvider;
         }
 
         /// <summary>
@@ -168,7 +170,7 @@
         private void PerformOnActionExecuted(ActionExecutedContext filterContext)
         {
             var dataCollectionType = filterContext.Controller.ViewData.Model.GetType();
-            var applicationInitizlizationFunction = ExecuteFunctionProvider<ActionExecutedContext>.GetAppInicializationFunc(dataCollectionType, typeof(ApplicationMvc<>));
+            var applicationInitizlizationFunction = this.executeFunctionProvider.GetAppInicializationFunc(dataCollectionType, typeof(ApplicationMvc<>));
             var formModelBinder = this.serviceLocator.GetFormModelBinder();
             var mvcApplication = applicationInitizlizationFunction(filterContext, this.serviceLocator, formModelBinder);
             this.SubscribeToEvents(mvcApplication);
