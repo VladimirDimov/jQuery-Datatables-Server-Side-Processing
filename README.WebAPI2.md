@@ -1,5 +1,5 @@
 ## How to use
-Add the `[JQDataTable]` attribute to the controller action which provides the data. Return from the action `View` containing `IQueryable<>` collection of a strongly typed view model. On the client side configure the table for server side processing according to the jQuery Datatables documentation https://datatables.net/examples/data_sources/server_side.html.
+Add the `[JQDataTable]` attribute to the controller action which provides the data. Return from the action View containing IQueryable collection of a strongly typed view model. On the client side configure the table for server side processing according to the jQuery Datatables documentation https://datatables.net/examples/data_sources/server_side.html.
 
 ### Example
 
@@ -23,35 +23,23 @@ Add the `[JQDataTable]` attribute to the controller action which provides the da
         [JQDataTable]
         public ActionResult GetCustomersData()
         {
-            IQueryable<Customer> data = this.context.Customers;
+            var data = this.context.Customers.Select(x => new CustomerViewModel
+            {
+                CustomerID = x.CustomerID,
+                AccountNumber = x.AccountNumber,
+                Person = new PersonViewModel
+                {
+                    FirstName = x.Person.FirstName,
+                    LastName = x.Person.LastName,
+                },
+                Store = new StoreViewModel
+                {
+                    Name = x.Store.Name,
+                }
+            });
 
             return this.View(data);
         }
-    }
-
-    public class Customer
-    {
-        public int CustomerId { get; set; }
-        public Person Person { get; set; }
-        public Store Store { get; set; }
-        ...
-        ...
-    }
-
-    public class Person
-    {
-        ...
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        ...
-        ...
-    }
-
-    public class Store
-    {
-        ...
-        public string Name { get; set; }
-        ...
     }
 ```
 
@@ -92,10 +80,10 @@ Add the `[JQDataTable]` attribute to the controller action which provides the da
                 "searchPlaceholder": "Search..."
             },
            "columns": [
-               { "data": "CustomerID" },
-               { "data": "Person.FirstName" },
-               { "data": "Person.LastName" },
-               { "data": "Store.Name" },
+               { "data": "CustomerID", "searchable": false },
+               { "data": "Person.FirstName", "searchable": true },
+               { "data": "Person.LastName", "searchable": true },
+               { "data": "Store.Name", "searchable": true },
             ]
         });
 
