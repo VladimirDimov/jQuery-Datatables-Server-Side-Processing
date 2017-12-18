@@ -64,7 +64,7 @@
         /// </summary>
         /// <param name="data">The data.</param>
         /// <param name="requestInfoModel">The request information model.</param>
-        public void OnDataProcessing(ref object data, RequestInfoModel requestInfoModel)
+        public virtual void OnDataProcessing(ref object data, RequestInfoModel requestInfoModel)
         {
         }
 
@@ -82,7 +82,7 @@
         /// </summary>
         /// <param name="data">The data.</param>
         /// <param name="requestInfoModel">The request information model.</param>
-        public void OnSearchDataProcessing(ref object data, RequestInfoModel requestInfoModel)
+        public virtual void OnSearchDataProcessing(ref object data, RequestInfoModel requestInfoModel)
         {
         }
 
@@ -91,7 +91,7 @@
         /// </summary>
         /// <param name="data">The data.</param>
         /// <param name="requestInfoModel">The request information model.</param>
-        public void OnSearchDataProcessed(ref object data, RequestInfoModel requestInfoModel)
+        public virtual void OnSearchDataProcessed(ref object data, RequestInfoModel requestInfoModel)
         {
         }
 
@@ -100,7 +100,7 @@
         /// </summary>
         /// <param name="data">The data.</param>
         /// <param name="requestInfoModel">The request information model.</param>
-        public void OnCustomFiltersDataProcessing(ref object data, RequestInfoModel requestInfoModel)
+        public virtual void OnCustomFiltersDataProcessing(ref object data, RequestInfoModel requestInfoModel)
         {
         }
 
@@ -109,7 +109,7 @@
         /// </summary>
         /// <param name="data">The data.</param>
         /// <param name="requestInfoModel">The request information model.</param>
-        public void OnCustomFiltersDataProcessed(ref object data, RequestInfoModel requestInfoModel)
+        public virtual void OnCustomFiltersDataProcessed(ref object data, RequestInfoModel requestInfoModel)
         {
         }
 
@@ -118,7 +118,7 @@
         /// </summary>
         /// <param name="data">The data.</param>
         /// <param name="requestInfoModel">The request information model.</param>
-        public void OnColumnsFilterDataProcessing(ref object data, RequestInfoModel requestInfoModel)
+        public virtual void OnColumnsFilterDataProcessing(ref object data, RequestInfoModel requestInfoModel)
         {
         }
 
@@ -127,7 +127,7 @@
         /// </summary>
         /// <param name="data">The data.</param>
         /// <param name="requestInfoModel">The request information model.</param>
-        public void OnColumnsFilterDataProcessed(ref object data, RequestInfoModel requestInfoModel)
+        public virtual void OnColumnsFilterDataProcessed(ref object data, RequestInfoModel requestInfoModel)
         {
         }
 
@@ -136,7 +136,7 @@
         /// </summary>
         /// <param name="data">The data.</param>
         /// <param name="requestInfoModel">The request information model.</param>
-        public void OnSortDataProcessing(ref object data, RequestInfoModel requestInfoModel)
+        public virtual void OnSortDataProcessing(ref object data, RequestInfoModel requestInfoModel)
         {
         }
 
@@ -145,7 +145,7 @@
         /// </summary>
         /// <param name="data">The data.</param>
         /// <param name="requestInfoModel">The request information model.</param>
-        public void OnSortDataProcessed(ref object data, RequestInfoModel requestInfoModel)
+        public virtual void OnSortDataProcessed(ref object data, RequestInfoModel requestInfoModel)
         {
         }
 
@@ -154,7 +154,7 @@
         /// </summary>
         /// <param name="data">The data.</param>
         /// <param name="requestInfoModel">The request information model.</param>
-        public void OnPagingDataProcessing(ref object data, RequestInfoModel requestInfoModel)
+        public virtual void OnPagingDataProcessing(ref object data, RequestInfoModel requestInfoModel)
         {
         }
 
@@ -163,7 +163,7 @@
         /// </summary>
         /// <param name="data">The data.</param>
         /// <param name="requestInfoModel">The request information model.</param>
-        public void OnPagingDataProcessed(ref object data, RequestInfoModel requestInfoModel)
+        public virtual void OnPagingDataProcessed(ref object data, RequestInfoModel requestInfoModel)
         {
         }
 
