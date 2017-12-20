@@ -21,6 +21,8 @@ Currently tested with Entity Framework versions 6.0.0 and 6.2.0 and Datatables v
 
 [How to use with MVC 5](/resources/documentation/README.Mvc.md)
 
+[How to use with Web Api 2](/resources/documentation/README.WebAPI2.md)
+
 ## How to use on the client side
 For how to install the jQuery Datatables plugin refer to the official documentation [here](https://datatables.net/manual/installation) 
 
@@ -36,15 +38,11 @@ In order to map the ajax response to the correct columns the columns property mu
             url: "path to the data source",
             type: 'POST'
         },
-        "language": {
-            "search": "",
-            "searchPlaceholder": "Search..."
-        },
         "columns": [
-            { "data": "CustomerID", "searchable": false },
-            { "data": "Person.FirstName", "searchable": true },
-            { "data": "Person.LastName", "searchable": true },
-            { "data": "Store.Name", "searchable": true },
+            { "data": "CustomerID" },
+            { "data": "Person.FirstName" },
+            { "data": "Person.LastName" },
+            { "data": "Store.Name" },
         ]
     });
 ```
@@ -71,97 +69,8 @@ The following custom filters are supported on the server side:
 - `lt` : less than;
 - `lte` : less than or equal;
 - `eq` : eqaul;
-##### Example:
-```html
-<div>
-    CreditRating: from <input type="number" id="minCreditRating" value="1" class="reload-table" />
-    to <input type="number" id="maxCreditRating" value="3" class="reload-table" />
-</div>
 
-<div>
-    Business Entity ID = <input type="number" id="businessEntityId" value="" class="reload-table" />
-</div>
-
-<div>
-    Modified Date = <input type="date" id="modifiedDate" value="" class="reload-table" />
-</div>
-
-<div>
-    Account Number = <input type="text" id="accountNumber" value="" class="reload-table" />
-</div>
-
-<table id="SearchResultTable" class="display" cellspacing="0" width="100">
-    <thead>
-        <tr>
-            <th>BusinessEntityID</th>
-            <th>CreditRating</th>
-            <th>ActiveFlag</th>
-            <th>AccountNumber</th>
-            <th>ModifiedDate</th>
-        </tr>
-    </thead>
-    <tfoot>
-        <tr>
-            <th>BusinessEntityID</th>
-            <th>CreditRating</th>
-            <th>ActiveFlag</th>
-            <th>AccountNumber</th>
-            <th>ModifiedDate</th>
-        </tr>
-    </tfoot>
-</table>
-
-@section Scripts {
-    <script>
-
-
-        var table = $('#SearchResultTable').DataTable({
-            "proccessing": true,
-            "serverSide": true,
-            "ajax": {
-                url: "@Url.Action("GetVendorsData", "Vendors")",
-                type: 'POST',
-                "data": function (d) {
-                    d.custom = {
-                        "filters": {
-                            "CreditRating": { "gte": $('#minCreditRating').val(), "lte": $('#maxCreditRating').val() },
-                            "BusinessEntityID": { "eq": $('#businessEntityId').val() },
-                            "ModifiedDate": { "eq": $('#modifiedDate').val() },
-                            "AccountNumber": { "eq": $('#accountNumber').val() },
-                        }
-                    }
-                }
-            },
-            "language": {
-                "search": "",
-                "searchPlaceholder": "Search..."
-            },
-           "columns": [
-               { "data": "BusinessEntityID", searchable: false },
-               { "data": "CreditRating", searchable: false },
-               { "data": "ActiveFlag", "searchable": false },
-               { "data": "AccountNumber", searchable: true },
-               { "data": "ModifiedDate", "searchable": false},
-            ],
-           "columnDefs": [
-               {
-                   "render": function (data, type, row) {
-                       date = new Date(parseInt(row.ModifiedDate.replace("/Date(", "").replace(")/", ""), 10));
-
-                       return date.toLocaleDateString();
-                   },
-                   "targets": 4
-               }
-           ]
-
-        });
-
-        $('.reload-table').on('change', function () {
-            table.ajax.reload();
-        });
-    </script>
-}
-```
+[Custom filters example](/resources/documentation/example-custom-filters.md)
 
 #### Extensibility Points
 You can insert custom logic at any point of the data processing pipe line. The following extensibility points are provided (in order of execution):
