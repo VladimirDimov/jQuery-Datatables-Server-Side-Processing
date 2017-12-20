@@ -1,4 +1,4 @@
-## How to use
+## How to use with Web Api 2
 Add the `[JQDataTable]` attribute to the controller action which provides the data. Return from the action `OkNegotiatedContentResult` containing IQueryable collection of a strongly typed view model. On the client side configure the table for server side processing according to the jQuery Datatables documentation https://datatables.net/examples/data_sources/server_side.html.
 
 ### Example
