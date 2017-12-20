@@ -1,3 +1,4 @@
+### Custom filters example
 ```html
 <div>
     CreditRating: from <input type="number" id="minCreditRating" value="1" class="reload-table" />
