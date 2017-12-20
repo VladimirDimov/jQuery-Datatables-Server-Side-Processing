@@ -7,6 +7,7 @@ Supports:
 - Sorting;
 - Custom filters: Less Than, Less than or equal, Greater than, Greater than or equal and Equal;
 - Nested objects;
+- Option to add custom server side logic using the provided extensibility points;
 
 Currently tested with Entity Framework versions 6.0.0 and 6.2.0 and Datatables version 1.10.16.
 
@@ -159,5 +160,50 @@ The following custom filters are supported on the server side:
             table.ajax.reload();
         });
     </script>
+}
+```
+
+#### Extensibility Points
+You can insert custom logic at any point of the data processing pipe line. The following extensibility points are provided (in order of execution):
+- OnDataProcessing - Called before all data processors execute.
+- OnSearchDataProcessing - Called before search data processor executes.
+- OnSearchDataProcessed - Called after search data processor executes.
+- OnCustomFiltersDataProcessing - Called before custom filters data processor executes.
+- OnCustomFiltersDataProcessed - Called after custom filters data processor executes.
+- OnColumnsFilterDataProcessing - Called before columns filters data processor executes.
+- OnColumnsFilterDataProcessed - Called after columns filters data processor executes.
+- OnSortDataProcessing - Called before sort data processor executes.
+- OnSortDataProcessed - Called after sort data processor executes.
+- OnPagingDataProcessing - Called before paging data processor executes.
+- OnPagingDataProcessed - Called after paging data processor executes.
+- OnDataProcessed - Called after all data processors execute.
+
+##### How to use the extensibility points?
+Create a new class which inherrits from `JQDataTableAttribute` class. The extensibility points are implemented as virtual methods which can be overriden.
+###### Example
+```cs
+MyCustomDataTableAttribute : JQDataTableAttribute
+{
+    // This method will modify the collection and only the customers 
+    // with even ID number will be included in the result
+    public override void OnSearchDataProcessing(ref object data, RequestInfoModel requestInfoModel)
+    {
+        var dataAsQueryable = data as IQueryable<CustomerViewModel>;
+        data = dataAsQueryable.Where(x => x.CustomerID % 2 == 0);
+    }
+}
+```
+
+Apply the new attribute on the controller action:
+```cs
+
+CustomersController : Controller
+{
+    [MyCustomDataTableAttribute]
+    public ActionResult GetCustomersData()
+    {
+        ...
+        return this.View(data);
+    }
 }
 ```

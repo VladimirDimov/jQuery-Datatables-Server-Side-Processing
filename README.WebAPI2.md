@@ -1,45 +1,45 @@
 ## How to use
-Add the `[JQDataTable]` attribute to the controller action which provides the data. Return from the action View containing IQueryable collection of a strongly typed view model. On the client side configure the table for server side processing according to the jQuery Datatables documentation https://datatables.net/examples/data_sources/server_side.html.
+Add the `[JQDataTable]` attribute to the controller action which provides the data. Return from the action `OkNegotiatedContentResult` containing IQueryable collection of a strongly typed view model. On the client side configure the table for server side processing according to the jQuery Datatables documentation https://datatables.net/examples/data_sources/server_side.html.
 
 ### Example
 
 #### Server
 ```cs
-    public class CustomersController : Controller
+    public class CustomersController : ApiController
     {
-        private AdventureWorks context;
-
-        public CustomersController()
-        {
-            this.context = new Data.AdventureWorks();
-        }
-
-        // GET: Customer
-        public ActionResult Index()
-        {
-            return View();
-        }
-
         [JQDataTable]
-        public ActionResult GetCustomersData()
+        public Post GetCustomersData()
         {
-            var data = this.context.Customers.Select(x => new CustomerViewModel
-            {
-                CustomerID = x.CustomerID,
-                AccountNumber = x.AccountNumber,
-                Person = new PersonViewModel
-                {
-                    FirstName = x.Person.FirstName,
-                    LastName = x.Person.LastName,
-                },
-                Store = new StoreViewModel
-                {
-                    Name = x.Store.Name,
-                }
-            });
+            var context = new Data.AdventureWorks();
+            var data = context.Customers;
 
-            return this.View(data);
+            return this.Ok(data);
         }
+    }
+
+    public class Customer
+    {
+        public int CustomerId { get; set; }
+        public Person Person { get; set; }
+        public Store Store { get; set; }
+        ...
+        ...
+    }
+
+    public class Person
+    {
+        ...
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        ...
+        ...
+    }
+
+    public class Store
+    {
+        ...
+        public string Name { get; set; }
+        ...
     }
 ```
 
@@ -72,18 +72,17 @@ Add the `[JQDataTable]` attribute to the controller action which provides the da
             "proccessing": true,
             "serverSide": true,
             "ajax": {
-                url: "@Url.Action("GetCustomersData", "Customers")",
+                url: "api/customers",
                 type: 'POST'
             },
             "language": {
                 "search": "",
-                "searchPlaceholder": "Search..."
             },
            "columns": [
-               { "data": "CustomerID", "searchable": false },
-               { "data": "Person.FirstName", "searchable": true },
-               { "data": "Person.LastName", "searchable": true },
-               { "data": "Store.Name", "searchable": true },
+               { "data": "CustomerID" },
+               { "data": "Person.FirstName" },
+               { "data": "Person.LastName" },
+               { "data": "Store.Name" },
             ]
         });
 

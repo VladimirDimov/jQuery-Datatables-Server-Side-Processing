@@ -7,14 +7,7 @@ Add the `[JQDataTable]` attribute to the controller action which provides the da
 ```cs
     public class CustomersController : Controller
     {
-        private AdventureWorks context;
-
-        public CustomersController()
-        {
-            this.context = new Data.AdventureWorks();
-        }
-
-        // GET: Customer
+        // GET: Customers view
         public ActionResult Index()
         {
             return View();
@@ -23,7 +16,8 @@ Add the `[JQDataTable]` attribute to the controller action which provides the da
         [JQDataTable]
         public ActionResult GetCustomersData()
         {
-            IQueryable<Customer> data = this.context.Customers;
+            var context = new Data.AdventureWorks();
+            IQueryable<Customer> data = context.Customers;
 
             return this.View(data);
         }
