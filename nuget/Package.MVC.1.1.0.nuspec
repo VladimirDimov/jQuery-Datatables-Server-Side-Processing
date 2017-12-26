@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>jQDataTables.ServerSide.MVC5</id>
+    <title>jQDataTables.ServerSide.MVC5</title>
+    <version>1.1.0</version>
+    <authors>Vladimir Dimov</authors>
+    <owners>Vladimir Dimov</owners>
+    <licenseUrl>https://github.com/VladimirDimov/jQuery-Datatables-Server-Side-Processing/blob/master/License.md</licenseUrl>
+    <projectUrl>https://github.com/VladimirDimov/jQuery-Datatables-Server-Side-Processing</projectUrl>
+    <!--<iconUrl></iconUrl>-->
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>MVC component which adds functionality for automatic server side processing for the famous table plugin for jQuery - DataTables. Supports paging, searching, sorting and custom filters (Less Than, Less than or equal, Greater than, Greater than or equal and Equal) and nested objects.</description>
+    <releaseNotes>
+    - Added extensibility points;
+    - No need to explicitly disable searching for non string properties;
+    </releaseNotes>
+    <summary>MVC component which adds functionality for automatic server side processing for the famous table plugin for jQuery - DataTables. Supports paging, searching, sorting and custom filters (Less Than, Less than or equal, Greater than, Greater than or equal and Equal) and nested objects.</summary>
+    <copyright>Copyright 2017</copyright>
+    <tags>data table datatable serverside jquery datatables data-tables mvc asp mvc5 server side server-side</tags>
+    <dependencies>
+      <dependency id="Microsoft.AspNet.MVC" version="5.0.0" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="..\src\JQDT.MVC\bin\Release\JQDT.MVC.dll" target="lib\JQDTServerSide\MVC\JQDT.MVC.dll"/>
+    <file src="..\src\JQDT.MVC\bin\Release\JQDT.dll" target="lib\JQDTServerSide\MVC\JQDT.dll"/>
+  </files>
+</package>

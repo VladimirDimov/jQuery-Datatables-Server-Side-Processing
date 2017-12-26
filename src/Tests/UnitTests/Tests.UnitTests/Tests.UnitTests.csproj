@@ -110,8 +110,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationBaseUnitTests.cs" />
-    <Compile Include="JQDataTableAttributeMvcUnitTests.cs" />
-    <Compile Include="JQDataTableAttributeWebApi2UnitTests.cs" />
     <Compile Include="Mocks\AppMock.cs" />
     <Compile Include="ColumnsFilterDataProcessorUnitTests.cs" />
     <Compile Include="Common\TestHelpers.cs" />
