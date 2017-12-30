@@ -12,10 +12,17 @@ Supports:
 Currently tested with Entity Framework versions 6.0.0 and 6.2.0 and Datatables version 1.10.16.
 
 ## Install
+
 #### MVC 5
 [Install nuget package](https://www.nuget.org/packages/jQDataTables.ServerSide.MVC5/)
 
 `Install-Package jQDataTables.ServerSide.MVC5`
+
+#### WebApi 2
+[Install nuget package](https://www.nuget.org/packages/jQDataTables.ServerSide.WebApi/)
+
+`Install-Package jQDataTables.ServerSide.WebApi`
+
 
 ## How to use on the server side
 
