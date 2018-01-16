@@ -22,6 +22,7 @@
         private const string CustomFiltersPatternFormKey = @"^custom\[filters\]\[(.+)\]\[(gte|gt|lte|lt|eq)\]$";
         private const string ColumnsOrderableFormKey = "columns[{0}][orderable]";
         private const string ColumnsSearchableFormKey = "columns[{0}][searchable]";
+        private const string DrawFormKey = "draw";
 
         private const string ColumnsFormKeyPattern = @"^columns\[(\d+)\]\[data\]$";
         private const string ColumnsSearchValueFormKeyPattern = "columns[{0}][search][value]";
@@ -77,7 +78,8 @@
                 },
                 Order = this.GetOrderList(),
                 Columns = this.GetColumns(),
-                Custom = this.GetCustom()
+                Custom = this.GetCustom(),
+                Draw = this.GetDraw()
             };
 
             var requestInfoModel = new RequestInfoModel
@@ -91,6 +93,15 @@
             };
 
             return requestInfoModel;
+        }
+
+        private int GetDraw()
+        {
+            string drawAsString;
+            this.ajaxFormDictionary.TryGetValue(DrawFormKey, out drawAsString);
+            var draw = int.Parse(drawAsString);
+
+            return draw;
         }
 
         private Type GetModelType(object data)
