@@ -1,4 +1,4 @@
-||  USE_UTYPES		||  switches types like uint, ulong, etc
+||  USE_UTYPES		||  toggles types like uint, ulong, etc
 ||  USE_STYPES		||  sbyte
 ||  USE_CHARTYPE	||	char
 ||  USE_DTOFFSET	||  DateTimeOffset
