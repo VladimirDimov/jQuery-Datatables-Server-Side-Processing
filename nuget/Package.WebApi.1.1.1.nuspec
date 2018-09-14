@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>jQDataTables.ServerSide.WebApi</id>
+    <title>jQDataTables.ServerSide.WebApi</title>
+    <version>1.1.1</version>
+    <authors>Vladimir Dimov</authors>
+    <owners>Vladimir Dimov</owners>
+    <licenseUrl>https://github.com/VladimirDimov/jQuery-Datatables-Server-Side-Processing/blob/master/License.md</licenseUrl>
+    <projectUrl>https://github.com/VladimirDimov/jQuery-Datatables-Server-Side-Processing</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>WebApi component which adds functionality for automatic server side processing for the famous table plugin for jQuery - DataTables. Supports paging, searching, sorting and custom filters (Less Than, Less than or equal, Greater than, Greater than or equal and Equal) and nested objects.</description>
+    <releaseNotes>
+    - draw parameter fixed on the server side;
+    </releaseNotes>
+    <summary>WebAPI component which adds functionality for automatic server side processing for the famous table plugin for jQuery - DataTables. Supports paging, searching, sorting and custom filters (Less Than, Less than or equal, Greater than, Greater than or equal and Equal) and nested objects.</summary>
+    <copyright>Copyright 2017</copyright>
+    <tags>data table datatable serverside jquery datatables data-tables WebApi asp WebAPI api API server side server-side</tags>
+    <dependencies>
+      <dependency id="Microsoft.AspNet.WebApi" version="5.0.0" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="..\src\JQDT.WebAPI\bin\Release\JQDT.WebAPI.dll" target="lib\JQDTServerSide\WebAPI\JQDT.WebAPI.dll"/>
+    <file src="..\src\JQDT.WebAPI\bin\Release\JQDT.dll" target="lib\JQDTServerSide\WebAPI\JQDT.dll"/>
+  </files>
+</package>
