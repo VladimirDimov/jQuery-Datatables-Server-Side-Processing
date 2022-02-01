@@ -215,7 +215,8 @@
             var jsonResult = new JsonResult
             {
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet,
-                Data = resultModel
+                Data = resultModel,
+                MaxJsonLength = int.MaxValue
             };
 
             return jsonResult;
